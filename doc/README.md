@@ -1,3 +1,3 @@
 # some random documentation
 
-![](example_1.gif)
+![](example_3.gif)
