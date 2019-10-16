@@ -3,6 +3,8 @@
 PythonVoiceCodingPlugin is a Sublime Text 3 plugin meant to enhance user experience 
 when coding python 3 by voice. 
 
+[](doc/example_5.gif)
+
 ## Motivation
 
 The project was inspired by article on this state of voice coding  and my personal experiences
@@ -23,6 +25,10 @@ In that way we could use higher level commands such as "select argument three" o
 ## Documentation
 
 Documentation is available here [Documentation](doc/README.md)
+
+## Support for voice coding framework
+
+
 
 ## License
 
