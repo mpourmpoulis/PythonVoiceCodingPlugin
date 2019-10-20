@@ -1,6 +1,8 @@
 # PythonVoiceCodingPlugin
 
-[![License](https://img.shields.io/badge/License-BSD%202--Clause-orange.svg)](https://opensource.org/licenses/BSD-2-Clause)ythonVoiceCodingPlugin is a Sublime Text 3 plugin meant to enhance user experience 
+[![License](https://img.shields.io/badge/License-BSD%202--Clause-orange.svg)](https://opensource.org/licenses/BSD-2-Clause)
+
+PythonVoiceCodingPlugin is a Sublime Text 3 plugin meant to enhance user experience 
 when coding python 3 by voice. 
 
 [](doc/example_5.gif)
