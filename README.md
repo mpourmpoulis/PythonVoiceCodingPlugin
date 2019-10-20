@@ -9,7 +9,7 @@ when coding python 3 by voice.
 
 ## Motivation
 
-The project was inspired by [Gustav Wengel's article]()https://medium.com/bambuu/state-of-voice-coding-2017-3d2ff41c5015 on the state of voice coding  and my personal experiences
+The project was inspired by [Gustav Wengel's article](https://medium.com/bambuu/state-of-voice-coding-2017-3d2ff41c5015) on the state of voice coding  and my personal experiences
 with  Caster. Despite the excellent work put behind this awesome dragonfly based toolkit, 
 there were some times where I felt that 
 
