@@ -1,9 +1,11 @@
 # PythonVoiceCodingPlugin
 
+[![GitHub license](https://img.shields.io/github/license/Naereen/StrapDown.js.svg)](https://github.com/mpourmpoulis/PythonVoiceCodingPlugin/blob/master/LICENSE)
+
 PythonVoiceCodingPlugin is a Sublime Text 3 plugin meant to enhance user experience 
 when coding python 3 by voice. 
 
-![](doc/example_5.gif)
+[](doc/example_5.gif)
 
 ## Motivation
 
