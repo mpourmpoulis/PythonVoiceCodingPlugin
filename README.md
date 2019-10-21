@@ -34,13 +34,36 @@ I want to be honest. This is not exactly thr best code ever written. It is far f
 
 [License](#license)
 
-## About
 
 ## Documentation
 
 Documentation is available here [Documentation](doc/README.md)
 
 ## Support for voice coding framework
+
+### Short version:
+
+For the time being the full system has been tested with Caster 0.5.11 on a Windows 10 machine. I plan better support for aenea in the near future and would love to bundle more setups on the long run:) The plugin code itself is intentionally pure python so it should probably run fine on other OS that sublime supports (tp be updated after linux test)
+
+### Long version:
+
+Ok this can get a little bit  complicated because there is a variety of operating systems, speech recognition backends, macro systems and toolkits built upon them which may or may not introduce complications. To give you an example lets see a few cases of how Caster with Dragon Naturally Speaking can be used: 
+
+- everything native in Windows 
+
+- in combination with aenea on linux host with windows guest where dragon is running and keystrokes are send to the host via rpc commands 
+
+- linux guest receiving keystrokes from pure dragonfly windows host 
+
+- oh and what about that linux guest receiving aenea rpc from windows host?:)
+
+
+
+To understand why all this may become an issue, we need to take a look at how communication between dragonfly (currently the only macro system with bundles for it) and the plugin works. 
+
+I have limited myself to pure python so odds are it should work on all sublime supported operatings systems. For the time being it has been tested on Windows 10 64 bit.
+
+For the time being I have bundles for 0.5.11 release of Caster that work as expected
 
 
 
