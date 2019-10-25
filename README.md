@@ -43,7 +43,7 @@ Documentation is available here [Documentation](doc/README.md)
 
 ### Short version:
 
-For the time being the full system has been tested with Caster 0.5.11 on a Windows 10 machine. I plan better support for aenea in the near future and would love to bundle more setups on the long run:) The plugin code itself is intentionally pure python so it should probably run fine on other OS that sublime supports (tp be updated after linux test)
+For the time being the full system has been tested with Caster 0.5.11 on a Windows 10 machine. I plan better support for aenea in the near future and would love to (if possible) provide bundles for more systems on the long run:) The plugin code itself is intentionally pure python so it should probably run fine on other OS that sublime supports (tp be updated after linux test)
 
 ### Long version:
 
@@ -59,7 +59,12 @@ Ok this can get a little bit  complicated because there is a variety of operatin
 
 
 
-To understand why all this may become an issue, we need to take a look at how communication between dragonfly (currently the only macro system with bundles for it) and the plugin works. 
+To understand why all this may become an issue, we need to take a look at how communication between dragonfly and the plugin works. 
+
+
+Probably by far the most convenient way is via sublime comand line interface. This is the default method used. The script invokes the subl cli tool with 
+
+Of course this does not work across virtual machine barriers:)
 
 I have limited myself to pure python so odds are it should work on all sublime supported operatings systems. For the time being it has been tested on Windows 10 64 bit.
 
@@ -79,4 +84,20 @@ Many thanks to the contributors and maintainers of the following pypi packages:
 
 * [astmonkey](https://github.com/mutpy/astmonkey)
 
-For specific versions check the requirements.txt
+* [segment_tree](https://github.com/evgeth/segment_tree)
+
+For specific versions be sure to check the requirements.txt
+
+## Acknowledgements
+
+### Resources
+
+The following resources proved very helpfull for the success of the project. Many thanks to anypne involved!
+
+* [Green Tree Snakes](https://greentreesnakes.readthedocs.io/en/latest/nodes.html) an awesome and invaluable for this project tutorial of the python ast
+
+* [tutorial for python tokens](https://www.asmeurer.com/brown-water-python/tokens.html)
+
+* [sublime 3 api documentation]( https://www.sublimetext.com/docs/3/api_reference.html#sublime.View )
+
+* [sublime 3 unofficial documentation]( http://docs.sublimetext.info/en/latest/index.html  )
