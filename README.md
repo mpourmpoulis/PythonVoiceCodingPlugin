@@ -16,11 +16,26 @@ In particular, navigation through the code sometimes felt a little bit too mecha
 need to be taken to get there. What if you could instead describe what you want to select? 
 
 
-I want to be honest. This is not exactly thr best code ever written. It is far from it:) But still I  think that PythonVoiceCodingPlugin is a tool that :
+I want to be honest. This is not exactly the best code ever written. It is far from it:) And it is far from the full functionality i would want it to offer. Nonetheless, I still think that PythonVoiceCodingPlugin is a tool that :
 
-* will enable you to syntactically navigate your code using higher level commands
+* will give you a first taste of AST navigation of your code using abstractions such as :
+"smart if condition" or "below argument one"
 
-* is easy to use. Commands are relatively simple and sound natural 
+* is easy to use and learn. Commands are relatively simple, for the most part maintain a relatively clear structural pattern and sound pretty natural.
+
+* takes a first , though  addmittedly small, step towards reducing your dependency on the quality of speech recognition. 
+
+* is designed on the realization that flexibility is key. No i do not want your ability to use the tool to be compleqtely To that end:
+
+- the tool will go to great lengths to try and decode what you meant from incomplete or insufficient or ambiguous descriptions and suggest meaningful , color highlighted alternatives:) 
+
+- even if you fail to get what you wanted as the main result 
+
+* is beginner friendly, something I have put a lot emphasis on. I really want a lot of functionality available to you without the need to master the tool. 
+
+
+If you find yourself using certain commands with some given parameters you can always follow my commented banana example:)
+
 
 * is flexible. Due to "overcomplicated" code resulting in ambiguites over ypur simple description, user error or simply because my rules are broken and make no sense, you didnt get the selection you wanted. Fear not! The plugin goes to great lengths to try and make sense of what you might mean with your wording, so there is good chance what you wanted will appear on the color highlighted alternatives:)
 
@@ -64,7 +79,9 @@ To understand why all this may become an issue, we need to take a look at how co
 
 Probably by far the most convenient way is via sublime comand line interface. This is the default method used. The script invokes the subl cli tool with 
 
-Of course this does not work across virtual machine barriers:)
+Of course this does not work across virtual machine barriers:) 
+
+
 
 I have limited myself to pure python so odds are it should work on all sublime supported operatings systems. For the time being it has been tested on Windows 10 64 bit.
 
