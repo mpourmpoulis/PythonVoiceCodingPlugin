@@ -13,10 +13,16 @@ It supports the following syntaxes:
 "[smart] <level> [<level_index>] <adjective> argument <argument_index>"
 ```
 
-Let´s start with the first one and clarify some terms. 
+We will go briefly over each of these four posibilities, clarifying all the parameters and give you an idea of how they work. 
 
-## "[smart] [<adjective>] argument <argument_index>"
+What you should keep in mind is that they search for results in a single line. For cases 1,3,4 that is the current line whereas for case 2 that is the line directly or indirectly specified.
 
+## Case one 
+The most simple command is 
+
+```
+"[smart] argument <argument_index>"
+```
 argument_index is an integer
 
 ```python 
@@ -26,25 +32,52 @@ specifying which argument you want to select.
 
 [](gif/arg1.gif)
 
-adjective is one or two adjectives such as first, second , last
+There are of course a couple of things to note:
+
+* your selection does not have to be inside a function call to get a result. Remember the whole line is searched!
+
+* as with most queries alternatives will (if any found) be offered!
+
+* take a bit of care when you6 have selected whole regions of text insted of a single point
+
+* regions nearer your selection in the AST will get prioritized!
+
+To illustrate all of the above :
+
+[](gif/arg2.gif)
+
+But what if you want to have more control over what you select?  In that case you might need to use an adjective as a positional descriptor as well. 
+
+The adjective parameter is (as the name suggests) one or two adjectives such as first, second , last
 
 ```python
 Choice("adjective",{ 
 
 "first" : "first", "second": "second", "third": "third",
 
- "fourth": "fourth", "fifth": "fifth", "sixth": "sixth",
+"fourth": "fourth", "fifth": "fifth", "sixth": "sixth",
  
-  "seventh": "seventh", "eighth": "eighth", "ninth":"ninth", 
+"seventh": "seventh", "eighth": "eighth", "ninth":"ninth", 
   
-"last":"last", "second last": "second last", "third last": "third last", "fourth last": "fourth last", } )
+"last":"last", "second last": "second last",
+
+"third last": "third last", "fourth last": "fourth last", 
+
+
+} )
 ```
 
-specifying from which function call we want to select an argument 
+specifying from which function call we want to select an argument:
 
 [](gif/arg3.gif)
 
-Of course code can be much more complicated so the plugin tries to interpret "second" in a variety of ways as illustrated below:
+Of course that was a trivial example and code can be much, much more complicated with lots of nested functions calls, brackets etc. The combinations of code structure, selection location and desired targets are literally dozens...
+
+Just as an example, you might want the second call from the outermost level, the second relative to the selection from the current nested level, the second leftmost lexically appearing, the second within the list or tuple, or something matching any of the above criteria but inside your highlighted selection,etc... 
+
+To deal with this issue without overloading you with too many rules, some designs decisions were made and the plugin tries to interpret your adjective description in a variety of ways:
 
 [](gif/arg4.gif)
 
+
+## Case two 
