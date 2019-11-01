@@ -75,9 +75,31 @@ Of course that was a trivial example and code can be much, much more complicated
 
 Just as an example, you might want the second call from the outermost level, the second relative to the selection from the current nested level, the second leftmost lexically appearing, the second within the list or tuple, or something matching any of the above criteria but inside your highlighted selection,etc... 
 
-To deal with this issue without overloading you with too many rules, some designs decisions were made and the plugin tries to interpret your adjective description in a variety of ways:
+To deal with this issue without overloading you with too many rules to learn :), some designs decisions were made  >and the plugin tries to interpret your adjective description in a variety of ways:
 
 [](gif/arg4.gif)
 
 
 ## Case two 
+ 
+What if you want to select something in a different line? Then you can use :
+```
+"[smart] <vertical_direction> [<ndir>] [<adjective>] argument <argument_index>"
+```  
+Vertical direction is one of the below 4 keywords:
+```
+Choice("vertical_direction",{ 
+
+"up":"up", "down":"down",
+
+"above":"above", "below":"below", 
+
+} )
+```
+and ndir is an interger specifying how many lines (relative to the current) up or down your roi is.
+
+But why both "above" and "up"? The difference lies in that above only counts "interesting lines", lines containing function calls. The following example should clarify this:
+
+[](gif/arg5.gif)
+
+Other than that like case one.
