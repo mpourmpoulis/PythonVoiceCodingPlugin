@@ -30,11 +30,11 @@ I want to be honest. This is not exactly the best code ever written. It is far f
     - the tool will go to great lengths to try and decode what you meant from incomplete or insufficient or ambiguous descriptions and suggest meaningful , color highlighted alternatives:) 
 
    - even if you fail to get what you wanted as the main result , certain operations such as paste back can work with those alternatives instead, minimizing command overhead:)
+   
+   - as a side effect there are often more than one ways to select the same region so you can use whichever you think first:)
 
 
   
-
-
 * is partly customizable. If you find yourself using certain commands with some given parameters often and want a shorthand smaller command, you can always follow my commented banana example:)
 
 
