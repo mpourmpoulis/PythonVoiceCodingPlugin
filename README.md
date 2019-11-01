@@ -21,7 +21,7 @@ I want to be honest. This is not exactly the best code ever written. It is far f
 * will give you a first taste of AST navigation of your code using abstractions such as :
 "smart if condition" or "below argument one"
 
-* is easy to use and learn. Commands are relatively simple, for the most part maintain a relatively clear structural pattern and sound pretty natural.
+* is easy to use and learn. Commands for the most part maintain a relatively clear structural pattern and sound pretty natural. 
 
 * takes a first , though  addmittedly small, step towards reducing your dependency on the quality of speech recognition. 
 
@@ -44,10 +44,22 @@ If you find yourself using certain commands with some given parameters you can a
 
 * will hopefully somewhat reduce your dependency on the quality of speech recognition and your never ending struggle with unspeakable words.  Additionally  
 
-## Contents
-[Documentation](#documentation)
+## Limitations
 
-[License](#license)
+* Currently I do not fully support python > 3.3. That's because Sublime uses python 3.3.6 and I rely on the standard library´s ast module. An alternative could have been astroid but it itself uses typed_ast, which contains C code, something which I wanted to avoid. The plugin will most likely eventually change to a client server architecture. Still you can work on code that contains async,await,f-strings 
+
+
+
+##Installation 
+
+Currently you can download the plugin directly from github and place it in sublime package folder
+
+To install dependencies, run from inside the folder:
+```bash
+python3 -m pip install --target third_party -r requirements.txt
+```
+
+Be sure to check instructions to install the [bundles as well](bundles/README.md)
 
 
 ## Documentation
@@ -83,15 +95,15 @@ Of course this does not work across virtual machine barriers:)
 
 
 
-I have limited myself to pure python so odds are it should work on all sublime supported operatings systems. For the time being it has been tested on Windows 10 64 bit.
+.
 
-For the time being I have bundles for 0.5.11 release of Caster that work as expected
+For the time being I have bundles for 0.5.11 release of Caster that work as expected on Windows 10 64bit.
 
 
 
 ## License
 
-The code is licensed under 2-clause BSD License.
+All code is licensed under 2-clause BSD License.
 
 ## Dependencies
 
@@ -109,12 +121,14 @@ For specific versions be sure to check the requirements.txt
 
 ### Resources
 
-The following resources proved very helpfull for the success of the project. Many thanks to anypne involved!
+The following resources proved very helpfull for the success of the project. Many thanks to all the authors!
 
-* [Green Tree Snakes](https://greentreesnakes.readthedocs.io/en/latest/nodes.html) an awesome and invaluable for this project tutorial of the python ast
+* [Green Tree Snakes](https://greentreesnakes.readthedocs.io/en/latest/nodes.html) an truly invaluable for this project tutorial of the python ast
 
-* [tutorial for python tokens](https://www.asmeurer.com/brown-water-python/tokens.html)
+* this [tutorial for python tokens](https://www.asmeurer.com/brown-water-python/tokens.html)
 
 * [sublime 3 api documentation]( https://www.sublimetext.com/docs/3/api_reference.html#sublime.View )
 
 * [sublime 3 unofficial documentation]( http://docs.sublimetext.info/en/latest/index.html  )
+
+* the python [grammar]()
