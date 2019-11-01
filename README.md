@@ -23,32 +23,36 @@ I want to be honest. This is not exactly the best code ever written. It is far f
 
 * is easy to use and learn. Commands for the most part maintain a relatively clear structural pattern and sound pretty natural. 
 
-* takes a first , though  addmittedly small, step towards reducing your dependency on the quality of speech recognition. 
+* takes a first , though  addmittedly small, step towards reducing your dependency on the quality of speech recognition and your struggle with unspeakable words. 
 
-* is designed on the realization that flexibility is key. No i do not want your ability to use the tool to be compleqtely To that end:
+* is designed on the realization that flexibility is key. I really want a lot of functionality available to you without the need to master the tool. To that end:
 
-- the tool will go to great lengths to try and decode what you meant from incomplete or insufficient or ambiguous descriptions and suggest meaningful , color highlighted alternatives:) 
+    - the tool will go to great lengths to try and decode what you meant from incomplete or insufficient or ambiguous descriptions and suggest meaningful , color highlighted alternatives:) 
 
-- even if you fail to get what you wanted as the main result 
-
-* is beginner friendly, something I have put a lot emphasis on. I really want a lot of functionality available to you without the need to master the tool. 
+   - even if you fail to get what you wanted as the main result , certain operations such as paste back can work with those alternatives instead, minimizing command overhead:)
 
 
-If you find yourself using certain commands with some given parameters you can always follow my commented banana example:)
+  
 
 
-* is flexible. Due to "overcomplicated" code resulting in ambiguites over ypur simple description, user error or simply because my rules are broken and make no sense, you didnt get the selection you wanted. Fear not! The plugin goes to great lengths to try and make sense of what you might mean with your wording, so there is good chance what you wanted will appear on the color highlighted alternatives:)
+* is partly customizable. If you find yourself using certain commands with some given parameters often and want a shorthand smaller command, you can always follow my commented banana example:)
 
 
-* focuses on flexibility and usability. 
 
-* will hopefully somewhat reduce your dependency on the quality of speech recognition and your never ending struggle with unspeakable words.  Additionally  
+
+ 
+
+
 
 ## Limitations
 
-* Currently I do not fully support python > 3.3. That's because Sublime uses python 3.3.6 and I rely on the standard library´s ast module. An alternative could have been astroid but it itself uses typed_ast, which contains C code, something which I wanted to avoid. The plugin will most likely eventually change to a client server architecture. Still you can work on code that contains async,await,f-strings 
+* Currently I do not fully support python > 3.3 (Still, you can work on code that contains some new features such as async and await keywords, f-strings). That's because Sublime uses python 3.3.6 and I rely on the standard library´s ast module to parse the code. An alternative could have been astroid but it itself uses typed_ast, which contains C code, something which I wanted to avoid. The plugin will most likely eventually change to a client server architecture and simply use an up to date ast module from python 3.7 or the new 3.8.
 
+[](gif/l1.gif)
 
+* Furthermore, to be usable in practice it needs to be able to handle incomplete code(code where stuff is missing and thus cannot be parsed). It does so by "repairing" various common cases. Unfortunately it cannot handle everything you throw at it and in such cases most commands cannot run. Nonetheless, it can manage code like the one below:
+
+[](gif/l2.gif)
 
 ##Installation 
 
@@ -95,8 +99,6 @@ Of course this does not work across virtual machine barriers:)
 
 
 
-.
-
 For the time being I have bundles for 0.5.11 release of Caster that work as expected on Windows 10 64bit.
 
 
@@ -131,4 +133,4 @@ The following resources proved very helpfull for the success of the project. Man
 
 * [sublime 3 unofficial documentation]( http://docs.sublimetext.info/en/latest/index.html  )
 
-* the python [grammar]()
+* the python [grammar]() specification
