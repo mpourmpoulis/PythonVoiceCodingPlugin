@@ -54,7 +54,7 @@ I want to be honest. This is not exactly the best code ever written. It is far f
 
 [](gif/l2.gif)
 
-##Installation 
+## Installation 
 
 Currently you can download the plugin directly from github and place it in sublime package folder
 
