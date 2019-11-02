@@ -2,6 +2,7 @@
 
 ## Quick Command Overview
 
+Here we will briefly go over the commands offered.
 
 ### Selection Queries
 
@@ -48,7 +49,36 @@ As you can see it comes in two formats:
 
 If no alternative is specified the main result is pasted back!
 
+Please also pay attention to the following:
+
+[](gif/d3.gif)
+
+That is you can use successive selection queries and paste back will insert in your original starting position!
+
+
+So we can select some basic stuff and we can insert it where we are writing. What elae can we do?
 
 ### Collection Queries 
 
-They collect the text of interesting regions.More on that later:)
+Imagine a case where you have a variable or parameter name or an expression with perhaps many atoms that are hard to dictate. 
+
+If you dont want to rely on autocompletion you can for instance select it and paste it back:) But what if you need to write it several times in dofferent locations? Or what if it is so far away in the code you cannot really describe it?(say an imported item whose full name you dont even remember)
+
+
+Collection Queries try to address this issue. These collect the TEXT of interesting regions and display it on the bottom panel.
+
+
+[](gif/d4.gif)
+
+### Smart Insert 
+
+These "items" can then be inserted in the current cursor position by means of the 
+
+```
+"(smart insert|insert item) <item_index>"
+```
+command. Item_index specifies which item from the collection you want
+
+[](gif/d5.gif)
+
+
