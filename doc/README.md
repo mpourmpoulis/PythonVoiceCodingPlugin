@@ -1,18 +1,5 @@
 # User Guide 
 
- 
-
- 
-
-
-### Collection Queries 
-
-They collect the text of interesting regions.More on that later:)
-
-### Insertion Queries 
-
-They insert text at some location.
-
 ## Quick Command Overview
 
 
@@ -34,13 +21,16 @@ We can select one of those alternatives with the alternative rule which comes in
 [](gif/d1.gif)
 
 alternative_index is an integer
+```
 (Tip : index --> integer)
-whereas color is an adjective:
+``` 
+whereas color is an adjective corresponding the color highlighting:
 
 ```python
-Choice("color",{ /
-"red":1, "blue":2, "green":3, "yellow":4, "orange":5, 
-} ),
+Choice("color",{
+		"red":1, "blue":2, "green":3, "yellow":4, "orange":5, 
+	} 
+)
 ```
 
 ### Paste Back 
@@ -49,4 +39,16 @@ But why would we want to select some text in the first place? Other than editing
 
 [](gif/d2.gif)
 
+As you can see it comes in two formats: 
+```
+"[smart] paste back [<paste_back_index>]"
 
+"[smart] paste <color> back"
+```
+
+If no alternative is specified the main result is pasted back!
+
+
+### Collection Queries 
+
+They collect the text of interesting regions.More on that later:)
