@@ -39,12 +39,16 @@ I want to be honest. This is not exactly the best code ever written. It is far f
 
 
 
+## Release and Version 
 
+Currently in preparation of the initial 0.0.0 release , probably between 5-10/11 :)
  
 
 
 
 ## Limitations
+
+There are of course certain limitations: 
 
 * Currently I do not fully support python > 3.3 (Still, you can work on code that contains some new features such as async and await keywords, f-strings). That's because Sublime uses python 3.3.6 and I rely on the standard library´s ast module to parse the code. An alternative could have been astroid but it itself uses typed_ast, which contains C code, something which I wanted to avoid. The plugin will most likely eventually change to a client server architecture and simply use an up to date ast module from python 3.7 or the new 3.8.
 
@@ -93,7 +97,25 @@ Ok this can get a little bit  complicated because there is a variety of operatin
 To understand why all this may become an issue, we need to take a look at how communication between dragonfly and the plugin works. 
 
 
-Probably by far the most convenient way is via sublime comand line interface. This is the default method used. The script invokes the subl cli tool with 
+Probably by far the most convenient way is via sublime comand line interface. This is the default method used. The script invokes the subl cli tool with a command like that:
+
+``` bash
+subl --command python_voice_coding_plugin 
+{ "arg" :
+
+{
+	
+	"command":"argument",
+	"format":1,
+	"adjective":"first",
+	"index":2,
+	
+}
+
+
+}
+```
+So effectively we trigger the command our plugin provides in its top file and pass information about the type of query we want and the parameters we used as a dict encoded as a json string. 
 
 Of course this does not work across virtual machine barriers:) 
 
