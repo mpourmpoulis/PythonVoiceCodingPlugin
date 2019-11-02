@@ -97,22 +97,26 @@ Ok this can get a little bit  complicated because there is a variety of operatin
 To understand why all this may become an issue, we need to take a look at how communication between dragonfly and the plugin works. 
 
 
-Probably by far the most convenient way is via sublime comand line interface. This is the default method used. The script invokes the subl cli tool with a command like that:
+Probably by far the most convenient way is via sublime comand line interface. This is the default method used. For example after a command of the form 
+
+```python
+"[smart] [<adjective>] argument <argument_index>"
+```
+like
+
+```
+"first argument 2"
+```
+
+The script invokes the subl cli tool with a command like that:
 
 ``` bash
-subl --command python_voice_coding_plugin 
-{ "arg" :
-
-{
-	
+subl --command python_voice_coding_plugin { "arg" : {
 	"command":"argument",
 	"format":1,
 	"adjective":"first",
-	"index":2,
-	
-}
-
-
+	"argument_index":2,
+	}
 }
 ```
 So effectively we trigger the command our plugin provides in its top file and pass information about the type of query we want and the parameters we used as a dict encoded as a json string. 
