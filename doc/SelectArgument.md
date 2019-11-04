@@ -30,7 +30,7 @@ IntegerRefST("argument_index", 1, 10),
 ```
 specifying which argument you want to select.
 
-[](gif/arg1.gif)
+![](gif/arg1.gif)
 
 There are of course a couple of things to note:
 
@@ -44,7 +44,9 @@ There are of course a couple of things to note:
 
 To illustrate all of the above :
 
-[](gif/arg2.gif)
+
+![](./gif/arg2.gif)
+
 
 But what if you want to have more control over what you select?  In that case you might need to use an adjective as a positional descriptor as well. 
 
@@ -69,7 +71,7 @@ Choice("adjective",{
 
 specifying from which function call we want to select an argument:
 
-[](gif/arg3.gif)
+![](gif/arg3.gif)
 
 Of course that was a trivial example and code can be much, much more complicated with lots of nested functions calls, brackets etc. The combinations of code structure, selection location and desired targets are literally dozens...
 
@@ -77,7 +79,7 @@ Just as an example, you might want the second call from the outermost level, the
 
 To deal with this issue without overloading you with too many rules to learn :), some designs decisions were made  >and the plugin tries to interpret your adjective description in a variety of ways:
 
-[](gif/arg4.gif)
+![](gif/arg4.gif)
 
 
 ## Case two 
@@ -100,6 +102,6 @@ and ndir is an interger specifying how many lines (relative to the current) up o
 
 But why both "above" and "up"? The difference lies in that above only counts "interesting lines", lines containing function calls. The following example should clarify this:
 
-[](gif/arg5.gif)
+![](gif/arg5.gif)
 
 Other than that like case one.
