@@ -44,7 +44,9 @@ There are of course a couple of things to note:
 
 To illustrate all of the above :
 
-![](/gif/arg2.gif)
+
+![](./gif/arg2.gif)
+
 
 But what if you want to have more control over what you select?  In that case you might need to use an adjective as a positional descriptor as well. 
 
