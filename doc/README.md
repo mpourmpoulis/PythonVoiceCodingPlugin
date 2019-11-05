@@ -19,7 +19,7 @@ We can select one of those alternatives with the alternative rule which comes in
 
 "smart <color> [alternative]"
 ```
-[](./gif/d1.gif)
+![](./gif/d1.gif)
 
 alternative_index is an integer
 ```
@@ -38,7 +38,7 @@ Choice("color",{
 
 But why would we want to select some text in the first place? Other than editing it, maybe to copy it and paste it somewhere? Very likely where we are currently working? Well, the paste back command allows just that! 
 
-[](./gif/d2.gif)
+![](./gif/d2.gif)
 
 As you can see it comes in two formats: 
 ```
@@ -51,7 +51,7 @@ If no alternative is specified the main result is pasted back!
 
 Please also pay attention to the following:
 
-[](./gif/d3.gif)
+![](./gif/d3.gif)
 
 That is you can use successive selection queries and paste back will insert in your original starting position!
 
@@ -68,7 +68,7 @@ If you dont want to rely on autocompletion you can for instance select it and pa
 Collection Queries try to address this issue. These collect the TEXT of interesting regions and display it on the bottom panel.
 
 
-[](./gif/d4.gif)
+![](./gif/d4.gif)
 
 ### Smart Insert 
 
@@ -79,4 +79,5 @@ These "items" can then be inserted in the current cursor position by means of th
 ```
 command. Item_index specifies which item from the collection you want
 
-[](./gif/d5.gif)
+![](./gif/d5.gif)
+
