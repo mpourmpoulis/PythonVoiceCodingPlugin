@@ -14,7 +14,7 @@ As you can see, these commands select some ROI and generate alternatives. These 
 
 We can select one of those alternatives with the alternative rule which comes in two variations:
 
-```
+```python
 "[smart] alternative <alternative_index>"
 
 "smart <color> [alternative]"
@@ -41,7 +41,7 @@ But why would we want to select some text in the first place? Other than editing
 ![](./gif/d2.gif)
 
 As you can see it comes in two formats: 
-```
+```python
 "[smart] paste back [<paste_back_index>]"
 
 "[smart] paste <color> back"
@@ -74,7 +74,7 @@ Collection Queries try to address this issue. These collect the TEXT of interest
 
 These "items" can then be inserted in the current cursor position by means of the 
 
-```
+```python
 "(smart insert|insert item) <item_index>"
 ```
 command. Item_index specifies which item from the collection you want
