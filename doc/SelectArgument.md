@@ -100,8 +100,18 @@ Choice("vertical_direction",{
 ```
 and ndir is an interger specifying how many lines (relative to the current) up or down your roi is.
 
-But why both "above" and "up"? The difference lies in that above only counts "interesting lines", lines containing function calls. The following example should clarify this:
+But why both "above" and "up"? The difference lies in that above only counts "interesting lines", that is(physical) lines containing function calls. The following example should clarify this:
 
 ![](./gif/arg5.gif)
 
-Other than that like case one.
+Please also pay attention to the fact that logical lines can extend over multiple physical lines. In such a case, as illustrated by the last example in the gif alternatives will be offered by the whole logical line!  Other than that like case one.
+
+
+
+
+
+
+
+
+
+ 
