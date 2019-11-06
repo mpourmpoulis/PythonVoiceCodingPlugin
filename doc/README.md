@@ -16,7 +16,7 @@ Another example is [Select Big ROI](SelectBigROI.md) command :
 
 For more specifics you can view the correspondong documentation but I would like to note a couple of things about two methods that both commands more or less share in order to specify which canditate you are interested in:
 
-* adjectives, to specify order
+* if you wish to specify the order of your region of interest, then you probably need an adjective :
 
 ```python
 Choice("adjective",{ 
@@ -37,7 +37,7 @@ Choice("adjective",{
 
 and 
 
-* up/down , above/below to specify relative vertical position 
+* if you want to  specify the relative vertical position with respect to your current selection, probably you need one of these keywords: 
 
 ```
 Choice("vertical_direction",{ 
@@ -48,7 +48,12 @@ Choice("vertical_direction",{
 
 } )
 ```
-Ok , what else?
+
+usually followed by an integer. Beware the difference between up and above! As a rule of thumb, above only takes "interesting" lines into consideration:)
+
+* in certain cases you can combine these two approaches:)
+
+Details vary but that is the. spirit! Ok , what else?
 
 
 ### Alternatives
@@ -123,5 +128,4 @@ These "items" can then be inserted in the current cursor position by means of th
 command. Item_index specifies which item from the collection you want
 
 ![](./gif/d5.gif)
-
 
