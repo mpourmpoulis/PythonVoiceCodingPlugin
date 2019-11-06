@@ -1,20 +1,22 @@
-# PythonVoiceCodingPlugin
+PythonVoiceCodingPlugin
 
 [![License](https://img.shields.io/badge/License-BSD%202--Clause-orange.svg)](https://opensource.org/licenses/BSD-2-Clause)
 
 PythonVoiceCodingPlugin is a Sublime Text 3 plugin meant to enhance user experience 
 when coding python 3 by voice. 
 
-[](doc/example_5.gif)
+![](doc/gif/big0.gif)
 
 ## Motivation
 
 The project was inspired by [Gustav Wengel's article](https://medium.com/bambuu/state-of-voice-coding-2017-3d2ff41c5015) on the state of voice coding  and my personal experiences
-with  [Caster](https://github.com/dictation-toolbox/Caster). Despite the excellent work put behind this trully awesome dragonfly based toolkit, I felt there were cases we could do better:)
+with  [Caster](https://github.com/dictation-toolbox/Caster). Despite the excellent work put behind this trully awesome dragonfly based toolkit, I felt there were cases we could do slightly better:)
 
 In particular, navigation through the code sometimes felt a little bit too mechanistic. Say for instance you want to go to some location or select some text. For the most part ,you are  describing what actions 
-need to be taken to get there. What if you could instead describe what you want to select? 
+need to be taken to get there. What if you could instead simply describe (syntactically)  what you want to select? 
 
+PythonVoiceCodingPlugin tries to enable you to do just that!
+As implementing such functionality requires the analysis of source code,a task far more suitable to editors.
 
 I want to be honest. This is not exactly the best code ever written. It is far from it:) And it is far from the full functionality i would want it to offer. Nonetheless, I still think that PythonVoiceCodingPlugin is a tool that :
 
@@ -29,7 +31,7 @@ I want to be honest. This is not exactly the best code ever written. It is far f
 
     - the tool will go to great lengths to try and decode what you meant from incomplete or insufficient or ambiguous descriptions and suggest meaningful , color highlighted alternatives:) 
 
-   - even if you fail to get what you wanted as the main result , certain operations such as paste back can work with those alternatives instead, minimizing command overhead:)
+   - even if you fail to get what you wanted as the main result , certain operations such as paste back can work with those alternatives instead without command overhead:)
    
    - as a side effect there are often more than one ways to select the same region so you can use whichever you think first:)
 
@@ -52,11 +54,11 @@ There are of course certain limitations:
 
 * Currently I do not fully support python > 3.3 (Still, you can work on code that contains some new features such as async and await keywords, f-strings). That's because Sublime uses python 3.3.6 and I rely on the standard library´s ast module to parse the code. An alternative could have been astroid but it itself uses typed_ast, which contains C code, something which I wanted to avoid. The plugin will most likely eventually change to a client server architecture and simply use an up to date ast module from python 3.7 or the new 3.8.
 
-[](gif/l1.gif)
+![](gif/l1.gif)
 
 * Furthermore, to be usable in practice it needs to be able to handle incomplete code(code where stuff is missing and thus cannot be parsed). It does so by "repairing" various common cases. Unfortunately it cannot handle everything you throw at it and in such cases most commands cannot run. Nonetheless, it can manage code like the one below:
 
-[](gif/l2.gif)
+![](gif/l2.gif)
 
 ## Installation 
 
@@ -72,7 +74,7 @@ Be sure to check instructions to install the [bundles as well](bundles/README.md
 
 ## Documentation
 
-Documentation is available here [Documentation](doc/README.md)
+Documentation is available [here](doc/README.md)
 
 ## Support for voice coding framework
 
@@ -131,7 +133,35 @@ For the time being I have bundles for 0.5.11 release of Caster that work as expe
 
 ## License
 
-All code is licensed under 2-clause BSD License.
+All code (grammar bundles and plugin) is licensed under 2-clause BSD License.
+
+```
+BSD 2-Clause License
+
+Copyright (c) 2019, Kitsios Panagiotis
+All rights reserved.
+
+Redistribution and use in source and binary forms, with or without
+modification, are permitted provided that the following conditions are met:
+
+1. Redistributions of source code must retain the above copyright notice, this
+   list of conditions and the following disclaimer.
+
+2. Redistributions in binary form must reproduce the above copyright notice,
+   this list of conditions and the following disclaimer in the documentation
+   and/or other materials provided with the distribution.
+
+THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS"
+AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
+IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
+DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE
+FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL
+DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR
+SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER
+CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY,
+OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
+OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+```
 
 ## Dependencies
 
