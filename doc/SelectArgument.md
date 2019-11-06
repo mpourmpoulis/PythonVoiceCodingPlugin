@@ -20,7 +20,7 @@ What you should keep in mind is that they search for results in a single line. F
 ## Case one 
 The most simple command is 
 
-```
+```python
 "[smart] argument <argument_index>"
 ```
 argument_index is an integer
@@ -85,11 +85,11 @@ To deal with this issue without overloading you with too many rules to learn :),
 ## Case two 
  
 What if you want to select something in a different line? Then you can use :
-```
+```python
 "[smart] <vertical_direction> [<ndir>] [<adjective>] argument <argument_index>"
 ```  
 Vertical direction is one of the below 4 keywords:
-```
+```python
 Choice("vertical_direction",{ 
 
 "up":"up", "down":"down",
@@ -114,4 +114,3 @@ Please also pay attention to the fact that logical lines can extend over multipl
 
 
 
- 

@@ -8,6 +8,10 @@ Here we will briefly go over the commands offered.
 
 The most simple thing you can do is to select some text. This can be done by Selection Queries/Commands. One example of such a command is [Select Argument](SelectArgument.md) command :
 
+[](./gif/arg0.gif)
+
+Another example is [Select Big ROI](SelectBigROI.md) command :
+
 ### Alternatives
 
 As you can see, these commands select some ROI and generate alternatives. These alternatives are shown to the user in an output panel on the bottom of the screen and the top ones get highlighted in the code as well. 
@@ -22,7 +26,7 @@ We can select one of those alternatives with the alternative rule which comes in
 ![](./gif/d1.gif)
 
 alternative_index is an integer
-```
+```python
 (Tip : index --> integer)
 ``` 
 whereas color is an adjective corresponding the color highlighting:
@@ -70,7 +74,7 @@ Collection Queries try to address this issue. These collect the TEXT of interest
 
 ![](./gif/d4.gif)
 
-### Smart Insert 
+### Insert Item
 
 These "items" can then be inserted in the current cursor position by means of the 
 
@@ -80,4 +84,5 @@ These "items" can then be inserted in the current cursor position by means of th
 command. Item_index specifies which item from the collection you want
 
 ![](./gif/d5.gif)
+
 
