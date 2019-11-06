@@ -8,11 +8,11 @@ Here we will briefly go over the commands offered.
 
 The most simple thing you can do is to select some text. This can be done by Selection Queries/Commands. One example of such a command is [Select Argument](SelectArgument.md) command :
 
-[](./gif/arg0.gif)
+![](./gif/arg0.gif)
 
 Another example is [Select Big ROI](SelectBigROI.md) command :
 
-[](./gif/big0.gif)
+![](./gif/big0.gif)
 
 ### Alternatives
 
