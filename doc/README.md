@@ -12,6 +12,8 @@ The most simple thing you can do is to select some text. This can be done by Sel
 
 Another example is [Select Big ROI](SelectBigROI.md) command :
 
+[](./gif/big0.gif)
+
 ### Alternatives
 
 As you can see, these commands select some ROI and generate alternatives. These alternatives are shown to the user in an output panel on the bottom of the screen and the top ones get highlighted in the code as well. 
