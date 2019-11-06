@@ -14,6 +14,43 @@ Another example is [Select Big ROI](SelectBigROI.md) command :
 
 ![](./gif/big0.gif)
 
+For more specifics you can view the correspondong documentation but I would like to note a couple of things about two methods that both commands more or less share in order to specify which canditate you are interested in:
+
+* adjectives, to specify order
+
+```python
+Choice("adjective",{ 
+
+"first" : "first", "second": "second", "third": "third",
+
+"fourth": "fourth", "fifth": "fifth", "sixth": "sixth",
+ 
+"seventh": "seventh", "eighth": "eighth", "ninth":"ninth", 
+  
+"last":"last", "second last": "second last",
+
+"third last": "third last", "fourth last": "fourth last", 
+
+
+} )
+```
+
+and 
+
+* up/down , above/below to specify relative vertical position 
+
+```
+Choice("vertical_direction",{ 
+
+"up":"up", "down":"down",
+
+"above":"above", "below":"below", 
+
+} )
+```
+Ok , what else?
+
+
 ### Alternatives
 
 As you can see, these commands select some ROI and generate alternatives. These alternatives are shown to the user in an output panel on the bottom of the screen and the top ones get highlighted in the code as well. 
