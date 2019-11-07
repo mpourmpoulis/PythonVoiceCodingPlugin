@@ -74,7 +74,8 @@ comes in useful:
 # Case two 
 
 # Case three 
-Once again you can use information about the relative vertical position of your ROI with a command like that:
+
+Another alternative you can use is to provide information about the relative vertical position of your ROI with a command like that:
 
 ```python
 "[smart] <vertical_abstract_only_direction> [<ndir>] <big_roi> [<big_roi_sub_index>]"
@@ -91,10 +92,15 @@ As an example:
 
 ![](./gif/big4.gif)
 
+Another important detail is that these types of queries are not limited to searching only the current function like the adjective ones! 
+
+![](./gif/big6.gif)
+
+
 # Case four 
 
 Ok this is a bit different:)
-This variant combines vertical ans positional order information. 
+This variant combines vertical and positional order information. 
 
 ```python
 "[smart] <vertical_abstract_only_direction> [<ndir>] <block> [<adjective>] <big_roi> [<big_roi_sub_index>]"
@@ -108,6 +114,19 @@ Choice("block",{
 ),
 ```
 
-So essentially, we can specify a function using a relative vertical desciption. The command will then work just like cases one and two but will search inside that function!
+So essentially, we can specify a function using a relative vertical desciption with the above/below keywords!
+
+```python 
+<vertical_abstract_only_direction> [<ndir>] <block>
+```
+
+
+Once we have established which function we are to search, the command will then work more or less like cases one and two
+
+```python
+[<adjective>] <big_roi> [<big_roi_sub_index>]
+```
+
+ but will search inside that function!
 
 ![](./gif/big5.gif)
