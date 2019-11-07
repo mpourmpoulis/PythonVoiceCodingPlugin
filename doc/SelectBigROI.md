@@ -70,8 +70,23 @@ comes in useful:
 
 ![](./gif/big2.gif)
 
+it is also important to note that with exception of the import statements, all other queries search only within the current function.
 
 # Case two 
+
+another alternative are commands of the types:
+
+```python 
+"[smart] <adjective> <big_roi> [<big_roi_sub_index>]"
+```
+you should probably be already familiar with adjectives, so here is an example of how you can use them:
+
+![](./gif/big3.gif)
+
+as with case one, only the current function searched.
+
+
+
 
 # Case three 
 
@@ -117,14 +132,14 @@ Choice("block",{
 So essentially, we can specify a function using a relative vertical desciption with the above/below keywords!
 
 ```python 
-<vertical_abstract_only_direction> [<ndir>] <block>
+"<vertical_abstract_only_direction> [<ndir>] <block>"
 ```
 
 
 Once we have established which function we are to search, the command will then work more or less like cases one and two
 
 ```python
-[<adjective>] <big_roi> [<big_roi_sub_index>]
+"[<adjective>] <big_roi> [<big_roi_sub_index>]"
 ```
 
  but will search inside that function!

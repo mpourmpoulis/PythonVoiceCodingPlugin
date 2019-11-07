@@ -34,6 +34,7 @@ Choice("adjective",{
 
 } )
 ```
+![](./gif/arg3.gif)
 
 and 
 
@@ -50,8 +51,10 @@ Choice("vertical_direction",{
 ```
 
 usually followed by an integer. Beware the difference between up and above! As a rule of thumb, above only takes "interesting" lines into consideration:)
+![](./gif/big4.gif)
 
 * in certain cases you can combine these two approaches:)
+![](./gif/big5.gif)
 
 Details vary but that is the. spirit! Ok , what else?
 
