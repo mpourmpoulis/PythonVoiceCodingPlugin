@@ -28,8 +28,6 @@ Choice("big_roi",{
 "assignment full" : "assignment full",
 
  "import statement":"import statement", 
-"(import|imported) (value|item|object|element)":"import value", 
-"module" : "module",
 
 "(expression statement|expression)" : "expression statement", 
 
@@ -37,4 +35,79 @@ Choice("big_roi",{
  } ),
 ```
 
-I think most of them are pretty aelf explanatory, 
+I think most of them should be pretty self explanatory.
+
+There are four syntaxes for this command:
+
+```python 
+"smart <big_roi> [<big_roi_sub_index>]"
+
+"[smart] <adjective> <big_roi> [<big_roi_sub_index>]"
+
+"[smart] <vertical_abstract_only_direction> [<ndir>] <big_roi> [<big_roi_sub_index>]"
+
+"[smart] <vertical_abstract_only_direction> [<ndir>] <block> [<adjective>] <big_roi> [<big_roi_sub_index>]"
+```
+
+# Case one 
+
+Ok lets start with the simple one, namely queries of the form: 
+
+```python 
+"smart <big_roi>"
+``` 
+
+As you might expect, the plugin will try to find matches to big roi description , prioritizing ones "nearer" in the AST with respect to the current selection.
+
+![](./gif/big1.gif)
+
+However,there are cases where you are interested in only a portion of this whole ROI. For instance there may be multiple targets in the left hand of an assignment and you want to select only one of them. Or your function may return multiple values. In those cases the 
+
+```python 
+IntegerRefST("big_roi_sub_index",0,10),
+```
+comes in useful:
+
+![](./gif/big2.gif)
+
+
+# Case two 
+
+# Case three 
+Once again you can use information about the relative vertical position of your ROI with a command like that:
+
+```python
+"[smart] <vertical_abstract_only_direction> [<ndir>] <big_roi> [<big_roi_sub_index>]"
+```
+The only difference compared to argument selection is that you can only use the more "abstract", 'above' and 'below' keywords:
+
+```python 
+Choice("vertical_abstract_only_direction",{ 
+	"above":"above",
+ 	"below":"below", 
+ } ),
+```
+As an example:
+
+![](./gif/big4.gif)
+
+# Case four 
+
+Ok this is a bit different:)
+This variant combines vertical ans positional order information. 
+
+```python
+"[smart] <vertical_abstract_only_direction> [<ndir>] <block> [<adjective>] <big_roi> [<big_roi_sub_index>]"
+```
+What on earth is that "block" thing over there? Well for the time being there is only one option available:
+
+```python 
+Choice("block",{ 
+		"(function|functions)" :"function",
+	 } 
+),
+```
+
+So essentially, we can specify a function using a relative vertical desciption. The command will then work just like cases one and two but will search inside that function!
+
+![](./gif/big5.gif)
