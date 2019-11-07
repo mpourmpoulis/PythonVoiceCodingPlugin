@@ -113,11 +113,22 @@ Imagine a case where you have a variable or parameter name or an expression with
 If you dont want to rely on autocompletion you can for instance select it and paste it back:) But what if you need to write it several times in dofferent locations? Or what if it is so far away in the code you cannot really describe it?(say an imported item whose full name you dont even remember)
 
 
-Collection Queries try to address this issue. These collect the TEXT of interesting regions and display it on the bottom panel.
+Collection Queries try to address this issue. These collect the text of interesting regions and display it on the bottom panel.
 
 
 ![](./gif/d4.gif)
 
+you can collect a variety of things:
+
+```python
+Choice("index_collectable",{
+	"(variable|variables)":"variable",
+	"( parameter | parameters)":"parameter",
+	"(module|modules)":"module",
+	"(import|imported) (value|item|object|element)":"import value",
+	"function ( name |names)":"function name",
+} 
+```
 ### Insert Item
 
 These "items" can then be inserted in the current cursor position by means of the 
