@@ -81,6 +81,7 @@ To deal with this issue without overloading you with too many rules to learn :),
 
 ![](./gif/arg4.gif)
 
+The way this works is a little bit complicated but I hope you get the main idea.
 
 ## Case two 
  
@@ -104,11 +105,32 @@ But why both "above" and "up"? The difference lies in that above only counts "in
 
 ![](./gif/arg5.gif)
 
-Please also pay attention to the fact that logical lines can extend over multiple physical lines. In such a case, as illustrated by the last example in the gif alternatives will be offered by the whole logical line!  Other than that like case one.
+Please also pay attention to the fact that logical lines can extend over multiple "physical" lines. In such a case, as illustrated by the last example in the gif, physical lines still determine the line to which above/below refer  and result and  alternatives from that physical line will be prioritized, but alternatives will also be offered from  the whole logical line!  Other than that like case one.
+
+## Case three
+
+now let's see something different:
+
+![](./gif/arg6.gif)
+
+in this example we use the command:
+
+For the time being, the only available option for the level parameter is
+
+by means of the keyword inside , we can specify that we want an argument from a function call that is nested inside another function call! The level_index parameter
+
+Specifies the index of the argument of the outer function call our desired ROI lies in. In order to specify which outer function goal we are referring to we can optionally use an adjective :
+
+![](./gif/arg7.gif)
 
 
+## Case four
 
+This, looks very similar to the previous one. However, instead of using the adjective specify the outer function call, we use it to specify which one from the nested ones we want:
 
+![](./gif/arg8.gif)
+
+As you can see, the syntax looks like:
 
 
 
