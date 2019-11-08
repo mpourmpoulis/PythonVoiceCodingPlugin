@@ -33,12 +33,12 @@ def noob_send(command,format,**kwargs):
     data = create_arguments(command,format,**kwargs)
     send_sublime("noob_voice_coding", data)
 
-def lazy_value(c,f):
-    return  R(Function(noob_send, command = c, format = f))
+def lazy_value(c,f,**kwargs):
+    return  R(Function(noob_send, command = c, format = f,**kwargs))
 
 
 class NoobRule(MergeRule):
-    pronunciation = "noob"
+    pronunciation = "python voice coding plugin"
     mapping = {
         # alternative rule
         "[smart] alternative <alternative_index>":
@@ -75,15 +75,19 @@ class NoobRule(MergeRule):
            
         # insert rule
         "(smart insert|insert item) <item_index>":
-            lazy_value("insert",1),
+            lazy_value("insert_item",1),
 
         # collect rule
-        "[smart] collect <index_collectable>":
+        "[smart] collect <collectable>":
             lazy_value("collect_indexable",1),
         "[smart] variable <collect_index>":
             lazy_value("collect_variable",2),
         "[smart] parameter <collect_index>":
             lazy_value("collect_parameter",2),
+        "[smart] module <collect_index>":
+            lazy_value("collect_module",2),
+        "[smart] imported (value|object) <collect_index>":
+            lazy_value("collect_imported_value",2),
 
 
  
@@ -128,7 +132,7 @@ class NoobRule(MergeRule):
             }
         ),
         Choice("color",{
-                "(red|gray)":1,
+                "red":1,
                 "blue":2, 
                 "green":3,
                 "yellow":4,
@@ -156,8 +160,8 @@ class NoobRule(MergeRule):
                 "(assignment left| left)" : "assignment left",
                 "assignment full" : "assignment full",
                 "import statement":"import statement",
-                "(import|imported) (value|item|object|element)":"import value",
-                "module" : "module", 
+                #"(import|imported) (value|item|object|element)":"import value",
+                #"module" : "module", 
                 "(expression statement|expression)" : "expression statement",
                 "iterator" : "iterator",
                 "iterable" : "iterable",
@@ -168,9 +172,12 @@ class NoobRule(MergeRule):
                 "(function|functions)" :"function",
             }
         ),
-        Choice("index_collectable",{
+        Choice("collectable",{
                 "(variable|variables)":"variable",
                 "( parameter | parameters)":"parameter",
+                "(module|modules)":"module",
+                "(import|imported) (value|item|object|element)":"import value",
+                "function ( name |names)":"function name",
             }
         ),
 
