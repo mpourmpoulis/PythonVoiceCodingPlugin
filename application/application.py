@@ -1,6 +1,6 @@
-from noob.queries import *
-from noob.application.build_cache import BuildCache
-from noob.interface.common.actions import *
+from PythonVoiceCodingPlugin.queries import *
+from PythonVoiceCodingPlugin.application.build_cache import BuildCache
+from PythonVoiceCodingPlugin.interface.common.actions import *
 
 
 class Application():

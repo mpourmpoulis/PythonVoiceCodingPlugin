@@ -1,7 +1,7 @@
 import ast
 from bisect import bisect_right,bisect_left
 
-from noob.library.traverse import search_upwards,search_upwards_log, find_matching,match_node, find_all_nodes
+from PythonVoiceCodingPlugin.library.traverse import search_upwards,search_upwards_log, find_matching,match_node, find_all_nodes
 
 def decode_abstract_vertical(root,atok, target,current_line, index,direction, want_node = False, selector = None):
 	print("corinth_line",current_line)

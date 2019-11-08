@@ -1,5 +1,5 @@
-from noob.queries.strategies.primitives import *
-from noob.queries.strategies.adjective_strategy import *
-from noob.queries.strategies.abstract_vertical import *
-from noob.queries.strategies.obtain import *
+from PythonVoiceCodingPlugin.queries.strategies.primitives import *
+from PythonVoiceCodingPlugin.queries.strategies.adjective_strategy import *
+from PythonVoiceCodingPlugin.queries.strategies.abstract_vertical import *
+from PythonVoiceCodingPlugin.queries.strategies.obtain import *
 

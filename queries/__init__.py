@@ -1,14 +1,14 @@
-from noob.queries.abstract import *
-from noob.queries.argument import SelectArgument
-from noob.queries.alternatives import SelectAlternative
-from noob.queries.big_roi import SelectBigRoi
-from noob.queries.paste_back import PasteBack
-from noob.queries.collect_variable import CollectVariable
-from noob.queries.collect_parameter import CollectParameter
-from noob.queries.collect_module import CollectModule
-from noob.queries.collect_function_name import CollectFunctionName
-from noob.queries.collect_imported_value import CollectImportedValue
-from noob.queries.insert_item import InsertItem
+from PythonVoiceCodingPlugin.queries.abstract import *
+from PythonVoiceCodingPlugin.queries.argument import SelectArgument
+from PythonVoiceCodingPlugin.queries.alternatives import SelectAlternative
+from PythonVoiceCodingPlugin.queries.big_roi import SelectBigRoi
+from PythonVoiceCodingPlugin.queries.paste_back import PasteBack
+from PythonVoiceCodingPlugin.queries.collect_variable import CollectVariable
+from PythonVoiceCodingPlugin.queries.collect_parameter import CollectParameter
+from PythonVoiceCodingPlugin.queries.collect_module import CollectModule
+from PythonVoiceCodingPlugin.queries.collect_function_name import CollectFunctionName
+from PythonVoiceCodingPlugin.queries.collect_imported_value import CollectImportedValue
+from PythonVoiceCodingPlugin.queries.insert_item import InsertItem
 
 
 

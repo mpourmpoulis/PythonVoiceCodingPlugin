@@ -2,7 +2,7 @@ import ast
 import bisect
  
 from segment_tree import SegmentTree
-from segment_tree.operations import min_operation
+from PythonVoiceCodingPlugin.third_party.segment_tree.operations import min_operation
 
 class LCA():
 	"""docstring for LCA"""

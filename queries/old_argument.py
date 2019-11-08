@@ -1,15 +1,15 @@
 import ast
 
-from noob.library import nearest_node_from_offset,sorted_by_source_region,get_source_region,node_from_range
-from noob.library.info import identity,get_argument_from_call 
+from PythonVoiceCodingPlugin.library import nearest_node_from_offset,sorted_by_source_region,get_source_region,node_from_range
+from PythonVoiceCodingPlugin.library.info import identity,get_argument_from_call 
 import noob.library.info as info
-from noob.library.level_info import LevelVisitor
-from noob.library.partial import partially_parse, line_partial
-from noob.library.traverse import search_upwards,search_upwards_log, find_matching,match_node, find_all_nodes
+from PythonVoiceCodingPlugin.library.level_info import LevelVisitor
+from PythonVoiceCodingPlugin.library.partial import partially_parse, line_partial
+from PythonVoiceCodingPlugin.library.traverse import search_upwards,search_upwards_log, find_matching,match_node, find_all_nodes
 
-from noob.queries.abstract import SelectionQuery
-from noob.queries.tiebreak import tiebreak_on_lca
-from noob.queries.strategies import adjective_strategy
+from PythonVoiceCodingPlugin.queries.abstract import SelectionQuery
+from PythonVoiceCodingPlugin.queries.tiebreak import tiebreak_on_lca
+from PythonVoiceCodingPlugin.queries.strategies import adjective_strategy
 
 def obtain_result(result, alternatives):
 	if result:

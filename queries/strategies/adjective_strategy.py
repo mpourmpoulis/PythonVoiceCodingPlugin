@@ -1,10 +1,10 @@
 import ast
 
-from noob.library import nearest_node_from_offset,sorted_by_source_region,get_source_region
-from noob.library.LCA import LCA
-from noob.library.level_info import LevelVisitor
-from noob.queries.utility import ResultAccumulator,reestablish_priority
-from noob.queries.strategies.primitives import root_level_order,root_lexical_order, child_level_older, root_everything
+from PythonVoiceCodingPlugin.library import nearest_node_from_offset,sorted_by_source_region,get_source_region
+from PythonVoiceCodingPlugin.library.LCA import LCA
+from PythonVoiceCodingPlugin.library.level_info import LevelVisitor
+from PythonVoiceCodingPlugin.queries.utility import ResultAccumulator,reestablish_priority
+from PythonVoiceCodingPlugin.queries.strategies.primitives import root_level_order,root_lexical_order, child_level_older, root_everything
 
 translate_adjective = {
 	"first":1,"second":2,"third":3,"fourth":4,"fifth":5,

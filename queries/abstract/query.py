@@ -1,4 +1,4 @@
-from noob.library.partial import partially_parse
+from PythonVoiceCodingPlugin.library.partial import partially_parse
 
 class Query():
 	"""docstring for Query"""

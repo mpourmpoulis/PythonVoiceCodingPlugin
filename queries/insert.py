@@ -1,4 +1,4 @@
-from noob.queries.abstract import InsertionQuery
+from PythonVoiceCodingPlugin.queries.abstract import InsertionQuery
 
 
 

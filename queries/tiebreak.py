@@ -1,7 +1,7 @@
 import ast
 
-from noob.library.LCA import LCA
-from noob.library.level_info import LevelVisitor
+from PythonVoiceCodingPlugin.library.LCA import LCA
+from PythonVoiceCodingPlugin.library.level_info import LevelVisitor
 
 
 

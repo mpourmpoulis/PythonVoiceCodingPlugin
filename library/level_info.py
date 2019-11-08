@@ -1,6 +1,6 @@
 import ast
 
-from noob.library import sorted_by_source_region
+from PythonVoiceCodingPlugin.library import sorted_by_source_region
 
 PARENT = 1
 PARENT_FIELD = 2

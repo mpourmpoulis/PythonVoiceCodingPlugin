@@ -1,5 +1,5 @@
-from noob.application.application import Application
-from noob.interface.view_info import ViewInformation
+from PythonVoiceCodingPlugin.application.application import Application
+from PythonVoiceCodingPlugin.interface.view_info import ViewInformation
 
 
 class Interface():

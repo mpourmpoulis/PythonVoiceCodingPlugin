@@ -1,10 +1,10 @@
 import ast
 import token
 
-from asttokens import asttokens
+from asttokens import PythonVoiceCodingPlugin.third_party.asttokens as asttokens
 
-from noob.library import previous_token,next_token
-from noob.library.modification import ModificationHandler
+from PythonVoiceCodingPlugin.library import previous_token,next_token
+from PythonVoiceCodingPlugin.library.modification import ModificationHandler
 
 
 

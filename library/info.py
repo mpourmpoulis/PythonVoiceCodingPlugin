@@ -1,8 +1,8 @@
 import ast
 from itertools import chain 
 
-from noob.library import build_tree,get_source_region,nearest_node_from_offset,make_flat
-from noob.library.traverse import match_node, find_all_nodes, match_parent
+from PythonVoiceCodingPlugin.library import build_tree,get_source_region,nearest_node_from_offset,make_flat
+from PythonVoiceCodingPlugin.library.traverse import match_node, find_all_nodes, match_parent
 
 
 ################################################################

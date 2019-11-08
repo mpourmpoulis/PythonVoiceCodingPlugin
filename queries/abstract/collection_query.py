@@ -1,7 +1,7 @@
 from copy import deepcopy
-from noob.library import get_source_region , nearest_node_from_offset,node_from_range
-from noob.library.modification import ModificationHandler
-from noob.queries.abstract.query import Query
+from PythonVoiceCodingPlugin.library import get_source_region , nearest_node_from_offset,node_from_range
+from PythonVoiceCodingPlugin.library.modification import ModificationHandler
+from PythonVoiceCodingPlugin.queries.abstract.query import Query
 
 
 class CollectionQuery(Query):

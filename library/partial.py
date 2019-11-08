@@ -12,13 +12,13 @@ logical line.
 import ast 
 import tokenize
 
-from asttokens import asttokens  
+from asttokens import PythonVoiceCodingPlugin.third_party.asttokens as asttokens  
 
-from noob.library import build_tree,get_source_region,nearest_node_from_offset
-from noob.library.lexical import expand_to_line_or_statement
-from noob.library.higher import filter_everything
-from noob.library.modification import ModificationHandler
-from noob.library.repair import RepairMissing
+from PythonVoiceCodingPlugin.library import build_tree,get_source_region,nearest_node_from_offset
+from PythonVoiceCodingPlugin.library.lexical import expand_to_line_or_statement
+from PythonVoiceCodingPlugin.library.higher import filter_everything
+from PythonVoiceCodingPlugin.library.modification import ModificationHandler
+from PythonVoiceCodingPlugin.library.repair import RepairMissing
 
 
 '''

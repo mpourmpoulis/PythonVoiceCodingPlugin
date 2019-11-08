@@ -1,9 +1,9 @@
 import ast 
 
 from astmonkey import transformers
-from asttokens import asttokens  
+from asttokens import PythonVoiceCodingPlugin.third_party.asttokens as asttokens  
 
-from noob.library import build_tree,get_source_region,nearest_node_from_offset,make_flat
+from PythonVoiceCodingPlugin.library import build_tree,get_source_region,nearest_node_from_offset,make_flat
 
 def match_node(node,targets = (),exclusions = ()):
     targets  = targets if targets else ast.AST 

@@ -1,7 +1,7 @@
 from copy import deepcopy
 
-from noob.library import get_source_region 
-from noob.queries.abstract.query import Query
+from PythonVoiceCodingPlugin.library import get_source_region 
+from PythonVoiceCodingPlugin.queries.abstract.query import Query
 
 class SelectionQuery(Query):
 	################################################################

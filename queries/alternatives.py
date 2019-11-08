@@ -1,4 +1,4 @@
-from noob.queries.abstract import SelectionQuery, no_build_attempt
+from PythonVoiceCodingPlugin.queries.abstract import SelectionQuery, no_build_attempt
 
 @no_build_attempt
 class SelectAlternative(SelectionQuery):

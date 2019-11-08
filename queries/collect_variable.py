@@ -1,16 +1,16 @@
 import ast
 from collections import OrderedDict
 
-from noob.library import nearest_node_from_offset,sorted_by_source_region,get_source_region,node_from_range,make_flat
-from noob.library.info import *
-from noob.library.LCA import LCA
-from noob.library.level_info import LevelVisitor
-from noob.library.partial import partially_parse, line_partial
-from noob.library.traverse import search_upwards,search_upwards_log, find_matching,match_node, find_all_nodes,search_upwards_for_parent
+from PythonVoiceCodingPlugin.library import nearest_node_from_offset,sorted_by_source_region,get_source_region,node_from_range,make_flat
+from PythonVoiceCodingPlugin.library.info import *
+from PythonVoiceCodingPlugin.library.LCA import LCA
+from PythonVoiceCodingPlugin.library.level_info import LevelVisitor
+from PythonVoiceCodingPlugin.library.partial import partially_parse, line_partial
+from PythonVoiceCodingPlugin.library.traverse import search_upwards,search_upwards_log, find_matching,match_node, find_all_nodes,search_upwards_for_parent
 
-from noob.queries.abstract import CollectionQuery
-from noob.queries.tiebreak import tiebreak_on_lca
-from noob.queries.strategies import adjective_strategy,decode_abstract_vertical,translate_adjective,obtain_result
+from PythonVoiceCodingPlugin.queries.abstract import CollectionQuery
+from PythonVoiceCodingPlugin.queries.tiebreak import tiebreak_on_lca
+from PythonVoiceCodingPlugin.queries.strategies import adjective_strategy,decode_abstract_vertical,translate_adjective,obtain_result
 
 
 
