@@ -31,7 +31,7 @@ def send_sublime(c,data):
 
 def noob_send(command,format,**kwargs):
     data = create_arguments(command,format,**kwargs)
-    send_sublime("noob_voice_coding", data)
+    send_sublime("python_voice_coding_plugin", data)
 
 def lazy_value(c,f,**kwargs):
     return  R(Function(noob_send, command = c, format = f,**kwargs))
