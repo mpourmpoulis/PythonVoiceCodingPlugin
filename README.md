@@ -47,7 +47,7 @@ I want to be honest. This is not exactly the best code ever written. It is far f
 * is partly customizable. If you find yourself using certain commands with some given parameters often and want a shorthand smaller command, you can always follow my commented banana example:)
 
 
-As I said, far from perfect but nonetheless an out-of-the-box solution which I hope to be helpful for beginners to get up to speed and a step towards the right direction. I hope you enjoy using it as much as I have enjoyed coding it:)
+As I said, far from perfect but nonetheless an out-of-the-box solution which I hope to be helpful ,especially for beginners to get up to speed , and a step towards the right direction. I hope you enjoy using it as much as I have enjoyed coding it:)
 
 ## Release and Version 
 
