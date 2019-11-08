@@ -2,6 +2,9 @@
 
 These commands are responsible for selecting "big" regions of interest. By "big" we refer to things like "if condition" or "assignment right" in contrast to say the first entry of a dictionary.
 
+![](./gif/big0.gif)
+
+
 In particular, the currently offered "big roi´s" are :
 
 ```python
@@ -83,7 +86,7 @@ you should probably be already familiar with adjectives, so here is an example o
 
 ![](./gif/big3.gif)
 
-as with case one, only the current function searched.
+as with case one, only the current function searched. ( pay attention to my last example where alternatives are only offered from the nested function definition!)
 
 
 

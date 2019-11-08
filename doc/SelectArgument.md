@@ -1,5 +1,7 @@
 # Argument Selection Command
 
+![](./gif/arg0.gif)
+
 This is a SelectionQuery that enables you to select an argument from a function call.
 It supports the following syntaxes: 
 
@@ -115,8 +117,17 @@ now let's see something different:
 
 in this example we use the command:
 
+```python
+"[smart] [<adjective>] <level> [<level_index>]  argument <argument_index>"
+```
 For the time being, the only available option for the level parameter is
 
+```python
+Choice("level",{
+		"inside":"inside",
+	}
+),
+```
 by means of the keyword inside , we can specify that we want an argument from a function call that is nested inside another function call! The level_index parameter
 
 Specifies the index of the argument of the outer function call our desired ROI lies in. In order to specify which outer function goal we are referring to we can optionally use an adjective :
@@ -132,6 +143,9 @@ This, looks very similar to the previous one. However, instead of using the adje
 
 As you can see, the syntax looks like:
 
+```python
+"[smart] <level> [<level_index>] <adjective> argument <argument_index>"
+```
 
 
 

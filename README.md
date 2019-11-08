@@ -18,7 +18,12 @@ In particular, navigation through the code sometimes felt a little bit too mecha
 need to be taken to get there. What if you could instead simply describe (syntactically)  what you want to select? 
 
 PythonVoiceCodingPlugin tries to enable you to do just that!
-As implementing such functionality requires the analysis of source code,a task far more suitable to editors.
+To provide this functionality, it ships with bundles the implement a grammar, hopefully expressive enough for describing regions of interest, while running on the voice coding macro system side  and 
+cooperate with the core plugin, running on the editor side, arguably the more suitable of the two environments
+for analyzing source code and decoding the meaning of queries within the given context. 
+
+
+
 
 I want to be honest. This is not exactly the best code ever written. It is far from it:) And it is far from the full functionality i would want it to offer. Nonetheless, I still think that PythonVoiceCodingPlugin is a tool that :
 
@@ -42,6 +47,7 @@ I want to be honest. This is not exactly the best code ever written. It is far f
 * is partly customizable. If you find yourself using certain commands with some given parameters often and want a shorthand smaller command, you can always follow my commented banana example:)
 
 
+As I said, far from perfect but nonetheless an out-of-the-box solution which I hope to be helpful for beginners to get up to speed and a step towards the right direction. I hope you enjoy using it as much as I have enjoyed coding it:)
 
 ## Release and Version 
 
@@ -52,9 +58,9 @@ Currently in preparation of the initial 0.0.0 release , probably between 5-10/11
 
 ## Limitations
 
-There are of course certain limitations: 
+There are of course certain limitations which I would like to make clear from the start: 
 
-* Currently I do not fully support python > 3.3 (Still, you can work on code that contains some new features such as async and await keywords, f-strings). That's because Sublime uses python 3.3.6 and I rely on the standard library´s ast module to parse the code. An alternative could have been astroid but it itself uses typed_ast, which contains C code, something which I wanted to avoid. The plugin will most likely eventually change to a client server architecture and simply use an up to date ast module from python 3.7 or the new 3.8.
+* Currently I do not fully support python > 3.3 (Still, you can work on code that contains some new features such as async and await keywords, f-strings). That's because Sublime uses python 3.3.6 and I rely on the standard library´s ast module to parse the code. An alternative could have been astroid but it itself uses typed_ast, which contains C code, something which I wanted to avoid. The plugin will most likely eventually change to a client server architecture and simply use an up to date ast module from python 3.7 or the new 3.8. please note that this restriction only concerns the users of new syntactical features. There is no problem , for instance, if you use a new standard library function.
 
 ![](gif/l1.gif)
 
@@ -179,7 +185,7 @@ For specific versions be sure to check the requirements.txt
 
 ## Acknowledgements
 
-### Resources
+### Useful Learning Resources
 
 The following resources proved very helpfull for the success of the project. Many thanks to all the authors!
 
@@ -192,3 +198,20 @@ The following resources proved very helpfull for the success of the project. Man
 * [sublime 3 unofficial documentation]( http://docs.sublimetext.info/en/latest/index.html  )
 
 * the python [grammar]() specification
+
+* of course [the sublime forum]()
+
+
+### Development tools
+
+Many thanks to all of the developers that have put their time and effort behind projects such as
+
+* Natspeak
+
+* Dragonfly
+
+* Caster
+
+
+needless to say, while coding PythonVoiceCodingPlugin I used PythonVoiceCodingPlugin :)
+

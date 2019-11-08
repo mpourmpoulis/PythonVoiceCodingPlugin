@@ -34,7 +34,7 @@ Choice("adjective",{
 
 } )
 ```
-![](./gif/arg3.gif)
+![](./gif/big3.gif)
 
 and 
 
@@ -51,9 +51,11 @@ Choice("vertical_direction",{
 ```
 
 usually followed by an integer. Beware the difference between up and above! As a rule of thumb, above only takes "interesting" lines into consideration:)
-![](./gif/big4.gif)
+
+![](./gif/arg5.gif)
 
 * in certain cases you can combine these two approaches:)
+
 ![](./gif/big5.gif)
 
 Details vary but that is the. spirit! Ok , what else?
@@ -128,10 +130,12 @@ Choice("index_collectable",{
 	"(variable|variables)":"variable",
 	"( parameter | parameters)":"parameter",
 	"(module|modules)":"module",
-	"(import|imported) (value|item|object|element)":"import value",
+	"imported (value|object)":"import value",
 	"function ( name |names)":"function name",
 } 
 ```
+please note that these items are collected from the whole source code.
+
 ### Insert Item
 
 These "items" can then be inserted in the current cursor position by means of the 
@@ -142,4 +146,19 @@ These "items" can then be inserted in the current cursor position by means of th
 command. Item_index specifies which item from the collection you want
 
 ![](./gif/d5.gif)
+
+### index collectible
+
+certain collectible items such as variables and parameters can be index collected by means of a query like
+
+```python
+"[smart] variable <collect_index>"
+```
+In such a case, items will only be collected from the current function  and in item will be inserted
+based on the index specified and their order of appearance
+
+![](./gif/d6.gif)
+
+
+
 
