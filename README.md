@@ -24,7 +24,7 @@ To provide this functionality, it ships with bundles the implement a grammar, ho
 cooperate with the core plugin, running on the editor side, arguably the more suitable of the two environments
 for analyzing source code and decoding the meaning of queries within the given context. 
 
-![](doc/gif/d5.gif)
+![](doc/gif/d4.gif)
 
 
 I want to be honest. This is not exactly the best code ever written. It is far from it:) And it is far from the full functionality i would want it to offer. Nonetheless, I still think that PythonVoiceCodingPlugin is a tool that :
@@ -48,6 +48,8 @@ I want to be honest. This is not exactly the best code ever written. It is far f
   
 * is partly customizable. If you find yourself using certain commands with some given parameters often and want a shorthand smaller command, you can always follow my commented banana example:)
 
+
+![](doc/gif/d5.gif)
 
 As I said, far (really far) from perfect but nonetheless an out-of-the-box solution which I hope to be helpful ,especially for beginners to get up to speed , and a step towards the right direction. I hope you enjoy using it as much as I have enjoyed coding it:)
 
