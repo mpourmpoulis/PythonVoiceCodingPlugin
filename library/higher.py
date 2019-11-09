@@ -1,7 +1,7 @@
 import ast
 import token
 
-from asttokens import PythonVoiceCodingPlugin.third_party.asttokens as asttokens
+from PythonVoiceCodingPlugin.third_party.asttokens import asttokens as asttokens
 
 from PythonVoiceCodingPlugin.library import previous_token,next_token
 from PythonVoiceCodingPlugin.library.modification import ModificationHandler

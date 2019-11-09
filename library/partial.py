@@ -12,7 +12,7 @@ logical line.
 import ast 
 import tokenize
 
-from asttokens import PythonVoiceCodingPlugin.third_party.asttokens as asttokens  
+from PythonVoiceCodingPlugin.third_party.asttokens import asttokens as asttokens  
 
 from PythonVoiceCodingPlugin.library import build_tree,get_source_region,nearest_node_from_offset
 from PythonVoiceCodingPlugin.library.lexical import expand_to_line_or_statement

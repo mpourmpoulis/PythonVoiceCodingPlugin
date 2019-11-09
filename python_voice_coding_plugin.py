@@ -1,7 +1,7 @@
 import sublime
 import sublime_plugin
 
-from noob.interface.interface import Interface
+from PythonVoiceCodingPlugin.interface.interface import Interface
 
 
 class PythonVoiceCodingPluginCommand(sublime_plugin.TextCommand):

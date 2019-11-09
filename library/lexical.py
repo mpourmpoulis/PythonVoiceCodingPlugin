@@ -2,7 +2,7 @@ import ast
 import token
 
 from astmonkey import transformers
-from asttokens import PythonVoiceCodingPlugin.third_party.asttokens as asttokens  
+from PythonVoiceCodingPlugin.third_party.asttokens import asttokens as asttokens  
 
 from PythonVoiceCodingPlugin.library import build_tree,get_source_region,nearest_node_from_offset,previous_token,next_token
 from PythonVoiceCodingPlugin.library.BracketMatcher import BracketMatcher

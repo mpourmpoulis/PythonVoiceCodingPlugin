@@ -44,7 +44,7 @@ class SelectBigRoi(SelectionQuery):
 			"pass":(ast.Pass,(),standard),
 			"break":(ast.Break,(),standard),
 			"continue":(ast.Continue,(),standard),
-			"if condition":(ast.If,(),get_pure_ifcondition),
+			"if condition":(ast.If,(),get_pure_if_condition),
 			"else if condition":(ast.If,(),get_elif_condition),
 			"while condition":(ast.While,(),get_condition),
 			"if expression":(ast.IfExp,(),standard),

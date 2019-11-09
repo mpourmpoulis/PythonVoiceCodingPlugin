@@ -1,7 +1,7 @@
 import ast 
 import bisect
  
-from segment_tree import SegmentTree
+from PythonVoiceCodingPlugin.third_party.segment_tree import SegmentTree
 from PythonVoiceCodingPlugin.third_party.segment_tree.operations import min_operation
 
 class LCA():
