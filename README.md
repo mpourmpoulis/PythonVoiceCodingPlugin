@@ -7,7 +7,7 @@
 PythonVoiceCodingPlugin is a Sublime Text 3 plugin meant to enhance user experience 
 when coding python 3 by voice. 
 
-![](doc/gif/big2.gif)
+![](doc/gif/big3.gif)
 
 ## Motivation
 
@@ -136,7 +136,9 @@ So effectively we trigger the command our plugin provides in its top file and pa
 
 Of course this does not work across virtual machine barriers:) 
 
-
+to counter this issue the simplest idea, which involves only keystrokes, is to open with some key command sublime console and using a text command to invoke the PythonVoiceCodingPlugin command from the command line. But 
+This is often way to slow if there are a lot of parameters to pass and messes up with user-interface.
+so this is not implemented, even though  it does not need custom rpc.
 
 For the time being I have bundles for 0.5.11 release of Caster that work as expected on Windows 10 64bit.
 
@@ -206,6 +208,7 @@ The following resources proved very helpfull for the success of the project. Man
 
 
 ### Development tools
+
 
 Many thanks to all of the developers that have put their time and effort behind projects such as
 
