@@ -72,7 +72,7 @@ There are of course certain limitations which I would like to make clear from th
 
 Currently you can download the plugin directly from github and place it in sublime package folder
 
-To install dependencies, run from inside the folder:
+To install dependencies,using your installation of python (this worked for me with 3.7.4) run from inside the folder:
 ```bash
 python3 -m pip install --target third_party -r requirements.txt
 ```
@@ -122,11 +122,11 @@ The script invokes the subl cli tool with a command like that:
 
 ``` bash
 subl --command python_voice_coding_plugin { "arg" : {
-	"command":"argument",
-	"format":1,
-	"adjective":"first",
-	"argument_index":2,
-	}
+  "command":"argument",
+  "format":1,
+  "adjective":"first",
+  "argument_index":2,
+  }
 }
 ```
 So effectively we trigger the command our plugin provides in its top file and pass information about the type of query we want and the parameters we used as a dict encoded as a json string. 
@@ -193,13 +193,13 @@ The following resources proved very helpfull for the success of the project. Man
 
 * this [tutorial for python tokens](https://www.asmeurer.com/brown-water-python/tokens.html)
 
-* [sublime 3 api documentation]( https://www.sublimetext.com/docs/3/api_reference.html#sublime.View )
+* sublime 3 [api documentation]( https://www.sublimetext.com/docs/3/api_reference.html#sublime.View )
 
-* [sublime 3 unofficial documentation]( http://docs.sublimetext.info/en/latest/index.html  )
+* sublime 3 [unofficial documentation]( http://docs.sublimetext.info/en/latest/index.html  )
 
-* the python [grammar]() specification
+* the python 3.7 [grammar](https://docs.python.org/3.7/reference/grammar.html) specification
 
-* of course [the sublime forum]()
+* of course [the sublime forum](https://forum.sublimetext.com/)
 
 
 ### Development tools

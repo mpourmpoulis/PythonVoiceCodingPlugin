@@ -2,7 +2,32 @@
 
 ## Quick Command Overview
 
-Here we will briefly go over the commands offered.
+Here we will briefly go over the commands offered. 
+
+Before we get started, a small general remark: virtually every command starts with the keyword smart! 
+This was chosen in order to minimize chances of collision with other commands on your system. 
+
+```python
+"smart <big_roi> [<big_roi_sub_index>]"
+
+"smart <color> [alternative]"
+```
+
+however, because for a variety of commands, ommitting the keyword smart makes them more convenient and easier to speak
+you may find the smart keyword in brackets
+
+```python
+"[smart] alternative <alternative_index>"
+
+"[smart] paste back [<paste_back_index>]"
+
+"[smart] paste <color> back"
+```
+
+if there are conflicts with other commands, trying to remove those brackets. furthermore, I I think it is best not to put brackets in cases where I haven't.  
+
+After the small remark let's get started!
+
 
 ### Selection Queries
 
@@ -63,7 +88,7 @@ Details vary but that is the. spirit! Ok , what else?
 
 ### Alternatives
 
-As you can see, these commands select some ROI and generate alternatives. These alternatives are shown to the user in an output panel on the bottom of the screen and the top ones get highlighted in the code as well. 
+As you can see, these commands select some ROI (region of interest) and generate alternatives. These alternatives are shown to the user in an output panel on the bottom of the screen and the top ones get highlighted in the code as well. 
 
 We can select one of those alternatives with the alternative rule which comes in two variations:
 
