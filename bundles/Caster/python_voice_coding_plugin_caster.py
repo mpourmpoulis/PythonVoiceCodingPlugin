@@ -91,7 +91,10 @@ class NoobRule(MergeRule):
 
 
  
-
+        # banana example
+        # "banana [<adjective>] <big_roi> [<big_roi_sub_index>]":
+            # lazy_value("big_roi",4,vertical_abstract_only_direction = "above",
+                # ndir = 1,block = "function"),
  
     }
     extras = [  
@@ -150,6 +153,7 @@ class NoobRule(MergeRule):
                 "if expression condition" : "if expression condition",
                 "if expression body" : "if expression body",
                 "if expression":"if expression",
+                "comprehension condition" : "comprehension condition",
                 "return value" : "return value",
                 "pass":"pass",
                 "break" : "break",
