@@ -1,7 +1,7 @@
 import ast 
 from itertools import chain
 
-from astmonkey import transformers
+from PythonVoiceCodingPlugin.third_party.astmonkey import transformers
 from PythonVoiceCodingPlugin.third_party.asttokens import asttokens as asttokens  
 
 def make_flat(x):

@@ -1,6 +1,6 @@
 import ast 
 
-from astmonkey import transformers
+from PythonVoiceCodingPlugin.third_party.astmonkey import transformers
 from PythonVoiceCodingPlugin.third_party.asttokens import asttokens as asttokens  
 
 from PythonVoiceCodingPlugin.library import build_tree,get_source_region,nearest_node_from_offset,make_flat
