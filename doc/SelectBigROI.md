@@ -2,7 +2,7 @@
 
 These commands are responsible for selecting "big" regions of interest. By "big" we refer to things like "if condition" or "assignment right" in contrast to say the first entry of a dictionary.
 
-![](./gif/big0.gif)
+![](./gif/big2.gif)
 
 
 In particular, the currently offered "big roi´s" are :

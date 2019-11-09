@@ -48,13 +48,9 @@ class LCA():
 
 	def get_field_with_respect_to(self,node,parent_node):
 		index = bisect.bisect_left(self.field_history[parent_node],(self.visits[node][0],))
-		# print(" initial index ease",index)
 		index = index if index < len(self.field_history[parent_node])  and \
 				self.field_history[parent_node][index][0] == self.visits[node][0] else index-1 
-		# print("LCA",self.field_history[parent_node],parent_node, index,self.visits[node][0],
-		# 	self.field_history[parent_node][index][0] == self.visits[node][0],"\n")
 		y = self.field_history[parent_node][index]
-		# print("LCA returning ",y[1],y[2],"\n")
 		return (y[1],y[2])
 
 	def visit_time(self, node):

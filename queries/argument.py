@@ -2,7 +2,7 @@ import ast
 
 from PythonVoiceCodingPlugin.library import nearest_node_from_offset,sorted_by_source_region,get_source_region,node_from_range,make_flat
 from PythonVoiceCodingPlugin.library.info import identity,get_argument_from_call, make_information ,correspond_to_index_in_call
-import noob.library.info as info
+import PythonVoiceCodingPlugin.library.info as info
 from PythonVoiceCodingPlugin.library.LCA import LCA
 from PythonVoiceCodingPlugin.library.level_info import LevelVisitor
 from PythonVoiceCodingPlugin.library.partial import partially_parse, line_partial
@@ -94,7 +94,6 @@ class SelectArgument(SelectionQuery):
 			if alternatives:	 
 				helpful.extend(alternatives)
 			temporary = make_flat([tiebreaker(inverse_transformation(x))  for x in helpful])
-			print("temporality after inverse transformation ", temporary)
 			result, alternatives = obtain_result(None,temporary)
 		
 		################################################################
@@ -104,12 +103,9 @@ class SelectArgument(SelectionQuery):
 			temporary = [result] + alternatives
 			temporary = [(i,x)  for i,x in enumerate(temporary)]
 			temporary = sorted(temporary, key=lambda x: (atok._line_numbers.offset_to_line(get_source_region(atok,x[1])[0])[0] != line,x[0]))
-			print( "btemporary",temporary )
-			for t in  temporary:
-				print(ast.dump(t[1]),atok._line_numbers.offset_to_line(get_source_region(atok,t[1])[0]) == line)
 			temporary = [x[1]  for x in temporary]
 			result,alternatives = obtain_result(None,temporary)
-			print(line)
+			
 
 
 
@@ -217,25 +213,19 @@ class SelectArgument(SelectionQuery):
 		def transformation(node):
 			calling_parent = search_upwards_for_parent(node,ast.Call)
 			calling_parent  = calling_parent.parent if calling_parent else None
-			# print("\n\n")
 
 			if  not calling_parent:
 				return None
 			field,field_index = lca.get_field_with_respect_to(node,calling_parent)
-			# print("inside transformation ",ast.dump(node),field,field_index,"\n",ast.dump(calling_parent))
-			# if field=="args" and field_index == query_tomldescription["level_index"]-1:
 			if correspond_to_index_in_call(calling_parent,query_description["level_index"]-1,field,field_index):
 				if calling_parent not in temporary:
 					temporary[calling_parent] = []
 				temporary[calling_parent].append(node)
-				# print("these did not failline",node)
 				return calling_parent
 			else:
-				# print("these_failed",node)
 				return None
 
 		def inverse_transformation(node):
-			print( temporary, node)
 			if node in temporary:
 				return temporary[node]
 			else:
@@ -308,82 +298,4 @@ class SelectArgument(SelectionQuery):
 	
 
 
-		
-'''
-	def case_one(self,v,q, extra = {}):
-		################################################################	
-		#		<adjective> argument <argument_index> 
-		###############################################################		
-		selection = v["selection"]
-		build = self.general_build if self.general_build else line_partial(selection[0])
-		if not build  or not build[0] :
-			return None,None
-		root,atok,m,r  = build 
-		selection = m.forward(selection)
-
-		# after build we set up some variables
-		result = None
-		alternatives = None
-		additional_parameters = {}
-
-		origin = nearest_node_from_offset(root,atok, selection[0])
-		calling_node = search_upwards(origin,ast.Call)
-		statement_node, callers = search_upwards_log(origin,ast.stmt,log_targets = ast.Call)
-		information = lambda x: info.get_argument_from_call(x,q["argument_index"]-1)
-		information_nodes = sorted_by_source_region(atok, find_matching(statement_node, info.identity(information)))
-		every_caller = find_all_nodes(statement_node,(ast.Call))
-		additional=find_all_nodes(statement_node,(ast.Tuple,ast.List,ast.ListComp))
-		if additional:
-			additional_parameters["additional_level_nodes"] = additional
-			additional_parameters["try_alternative"] = True
-
-		
-
-		
-		################################################################
-		# if no adjective is given
-		################################################################
-		if q["adjective"] == "None":
-			if calling_node:
-				result = information(calling_node)
-			information_nodes = [information(x)  for x in tiebreak_on_lca(statement_node,origin, information_nodes) if x != calling_node]
-			result,alternatives = obtain_result(result,information_nodes)
-
-		################################################################
-		# adjective is even
-		################################################################
-		if q["adjective"] != "None":
-			if selection[0]!=selection[1]:
-				small_root = node_from_range(root,atok,selection)
-				additional_parameters["small_root"]=small_root
-				print("dumping the small root\n",ast.dump(small_root))
-			# additional_parameters["special"] = [calling_node] if calling_node else []
-			if calling_node:
-				# print(ast.dump(calling_node))
-				additional_parameters["penalized"] = [calling_node] if calling_node else []
-				additional_parameters["special"] = [calling_node]
-			result, alternatives = adjective_strategy(
-				atok=atok,
-				root = root,
-				adjective_word = q["adjective"],
-				level_nodes = every_caller,
-				information_nodes = information_nodes,
-				**additional_parameters
-			)
-			result = information(result) if result else m.forward(v["selection"])
-			alternatives  =[ information(x)  for x in alternatives] if alternatives else []
-
-
-
-		# translate those nodes back to offsets and forward them through the modification under
-		print("\n\nnow finally printing result and alternatives\n\n")
-		print( result )
-		print(ast.dump( result ) if isinstance( result, ast.AST ) else " not known node")
-		print( alternatives )
-		result = m.backward(get_source_region(atok, result))
-		alternatives = [m.backward(get_source_region(atok,x)) for x in alternatives]
-		return result,alternatives
-
-
-'''		
 

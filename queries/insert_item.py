@@ -1,7 +1,7 @@
-from PythonVoiceCodingPlugin.queries.abstract import InsertionQuery
+from PythonVoiceCodingPlugin.queries.abstract import InsertionQuery,no_build_attempt
 
 
-
+@no_build_attempt
 class InsertItem(InsertionQuery):
 	select_insertion = True
 

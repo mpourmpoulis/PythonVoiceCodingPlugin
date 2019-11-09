@@ -3,7 +3,7 @@ import bisect
 import token
 
 from PythonVoiceCodingPlugin.third_party.astmonkey import transformers
-from PythonVoiceCodingPlugin.third_party.asttokens import asttokens as asttokens  
+from PythonVoiceCodingPlugin.third_party.asttokens import asttokens  
 
 from PythonVoiceCodingPlugin.library import build_tree,get_source_region,nearest_node_from_offset,previous_token,next_token
 
@@ -52,8 +52,6 @@ class BracketMatcher():
 					self.level_index[index] = []  
 				self.level[index].append((c,candidate))
 				self.level_index[index].append(c.start)
-			# print(candidate,stack,"sicklep")
-		# print(" leaving mods all brackets")
 
 
 			

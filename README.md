@@ -7,12 +7,12 @@
 PythonVoiceCodingPlugin is a Sublime Text 3 plugin meant to enhance user experience 
 when coding python 3 by voice. 
 
-![](doc/gif/big0.gif)
+![](doc/gif/big2.gif)
 
 ## Motivation
 
 The project was inspired by [Gustav Wengel's article](https://medium.com/bambuu/state-of-voice-coding-2017-3d2ff41c5015) on the state of voice coding  and my personal experiences
-with  [Caster](https://github.com/dictation-toolbox/Caster). Despite the excellent work put behind this trully awesome dragonfly based toolkit, I felt there were cases we could do slightly better:)
+with  [Caster](https://github.com/dictation-toolbox/Caster). Despite the excellent work put behind this trully awesome [dragonfly](https://github.com/t4ngo/dragonfly) based toolkit, I felt there were cases we could do slightly better:)
 
 In particular, navigation through the code sometimes felt a little bit too mechanistic. Say for instance you want to go to some location or select some text. For the most part ,you are  describing what actions 
 need to be taken to get there. What if you could instead simply describe (syntactically)  what you want to select? 
@@ -47,11 +47,14 @@ I want to be honest. This is not exactly the best code ever written. It is far f
 * is partly customizable. If you find yourself using certain commands with some given parameters often and want a shorthand smaller command, you can always follow my commented banana example:)
 
 
-As I said, far from perfect but nonetheless an out-of-the-box solution which I hope to be helpful ,especially for beginners to get up to speed , and a step towards the right direction. I hope you enjoy using it as much as I have enjoyed coding it:)
+As I said, far (really far) from perfect but nonetheless an out-of-the-box solution which I hope to be helpful ,especially for beginners to get up to speed , and a step towards the right direction. I hope you enjoy using it as much as I have enjoyed coding it:)
+
+Needless to say, while coding PythonVoiceCodingPlugin , PythonVoiceCodingPlugin was used :)
 
 ## Release and Version 
 
-Currently in preparation of the initial 0.0.0 release , probably between 5-10/11 :)
+The code is available on [github](https://github.com/mpourmpoulis/PythonVoiceCodingPlugin)
+along with its initial release (0.0.0)!
  
 
 
@@ -213,5 +216,5 @@ Many thanks to all of the developers that have put their time and effort behind 
 * Caster
 
 
-needless to say, while coding PythonVoiceCodingPlugin I used PythonVoiceCodingPlugin :)
+
 

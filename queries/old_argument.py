@@ -2,7 +2,7 @@ import ast
 
 from PythonVoiceCodingPlugin.library import nearest_node_from_offset,sorted_by_source_region,get_source_region,node_from_range
 from PythonVoiceCodingPlugin.library.info import identity,get_argument_from_call 
-import noob.library.info as info
+import PythonVoiceCodingPlugin.library.info as info
 from PythonVoiceCodingPlugin.library.level_info import LevelVisitor
 from PythonVoiceCodingPlugin.library.partial import partially_parse, line_partial
 from PythonVoiceCodingPlugin.library.traverse import search_upwards,search_upwards_log, find_matching,match_node, find_all_nodes

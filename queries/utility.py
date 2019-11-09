@@ -50,8 +50,6 @@ class ResultAccumulator():
 		sorted_keys = sorted(self.accumulator.keys())
 		for x in sorted_keys:
 			for node in self.accumulator[x]:
-				# print(" baggie note")
-				# print( node )
 				if node  not in visited:
 					visited.add(node)
 					finalists.append(node)

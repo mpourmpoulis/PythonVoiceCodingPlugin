@@ -1,7 +1,7 @@
 import ast
 import token
 
-from PythonVoiceCodingPlugin.third_party.asttokens import asttokens as asttokens
+from PythonVoiceCodingPlugin.third_party.asttokens import asttokens
 
 from PythonVoiceCodingPlugin.library import previous_token,next_token
 from PythonVoiceCodingPlugin.library.modification import ModificationHandler
@@ -12,41 +12,36 @@ from PythonVoiceCodingPlugin.library.modification import ModificationHandler
 
 def filter_asynchronous(atok,m = None, timestamp  = 0):
 	m = m if m else ModificationHandler(atok.text)
-	candidates = [x  for x in atok.tokens  if x.type== 52 and x.string=="async"]
+	candidates = [x  for x in atok.tokens  if x.string=="async"]
 	for c in candidates:
-		y = next_token(c)
+		y = next_token(atok,c)
 		# async_stmt: 'async' (funcdef | with_stmt | for_stmt)
-		if y and y.type==52 and y.string in ["def","for","with"]:
+		if y  and y.string in ["def","for","with"]:
 			m.modify_from(timestamp,(c.startpos,y.startpos),"","async_"+y.string)
 	return m
 
 
 def filter_await(atok,m = None, timestamp  = 0):
 	m = m if m else ModificationHandler(atok.text)
-	candidates = [x  for x in atok.tokens  if x.type== 52 and x.string=="await"]
+	candidates = [x  for x in atok.tokens  if  x.string=="await"]
 	for c in candidates:
 		m.modify_from(timestamp,(c.startpos,c.endpos),"yield from","await")
 	return m
 
 def filter_fstrings(atok,m = None, timestamp = 0):
 	m = m if m else ModificationHandler(atok.text)
-	candidates = [x  for x in atok.tokens  if x.type== 52 and x.string=="f"]
+	candidates = [x  for x in atok.tokens  if x.string=="f"]
 	for c in candidates:
-		y = next_token(c)
+		y = next_token(atok,c)
 		if y and y.type==token.STRING:
-			m.modify_from(timestamp,(c.startpos,c.endpos),"","fstring")
+			m.modify_from(timestamp,(c.startpos,y.endpos),y.string,"fstring")
 	return m
 
 def filter_everything(atok, m = None, timestamp = 0):
-	print(m)
 	m = m if m else ModificationHandler(atok.text)
-	print(" inside everything after initialization",m)
 	m = filter_asynchronous(atok,m, timestamp)
-	print("1",m)
 	m = filter_fstrings(atok,m,  timestamp)
-	print("2",m)
 	m = filter_await(atok,m, timestamp)
-	print(m)
 	return m
 
 

@@ -1,11 +1,12 @@
 import token
 import tokenize
 
-from PythonVoiceCodingPlugin.third_party.asttokens import asttokens as asttokens  
+from PythonVoiceCodingPlugin.third_party.asttokens import asttokens  
 
 from PythonVoiceCodingPlugin.library import previous_token,next_token
+from PythonVoiceCodingPlugin.library.BracketMatcher import BracketMatcher
 from PythonVoiceCodingPlugin.library.modification import ModificationHandler
-
+from PythonVoiceCodingPlugin.library.lexical import LineInfo,expand_to_line_or_statement
 
 
 def get_dummy(atok):
@@ -48,10 +49,12 @@ UNARY = {
 	"assert","del","elif","for","global","if","import","nonlocal","raise",
 	"while","with","yield","else",
 	'+', '-', '~', '@', 'not', ('not','in') , 
+	"is",
 }
 
+
 STARTING_UNARY = {
-	'+', '-', '~', '@', 'not', ('not','in') , "*", "**", ("else",":")
+	'+', '-', '~', '@', 'not', ('not','in') , "*", "**", ("else",":"),"is",("yield","from"),
 }
 
 BOTH_SIDES  = {
@@ -136,7 +139,59 @@ def after_unary(t):
 		(t[0].string,t[1].string) in STARTING_UNARY
 	)
 
-def process_token(atok,t ):
+def after_comma(t):
+	return t[1] is None  or t[1].string ==","
+def before_comma(t):
+	return t[ -1] is None  or t[-1].string in ["(","[","{"]
+	
+def after_bracket(t):
+	return t[1] is None  or t[1].string in ["for","if","while","with"]
+
+
+def before_dot(t):
+	# return t[ - 1] is None  or not t[-1].string in ["from",".","import"]
+	return False
+
+def after_dot(t):
+	# return t[1] is None  or not (
+		# t[1].string in ["."] and 
+		# t[-1] is not None and
+		# t[-1].string in ["from",".","import"]
+	# )
+	return False
+
+def handle_empty_compound(atok ,t,l,b,dummy):
+	n = neighbors(atok, t)
+	left,right = expand_to_line_or_statement(atok,t, l, b)
+	if token.DEDENT==left.type:
+		left = next_token(atok,left)
+	# print("empty compound ",left,right)
+	if t.string=="elif":
+		left = next_token(atok,left)
+	if left is t  and right.string == ":" :
+		rh = next_token(atok,right)
+		# print("rh is",[rh])
+		while rh and (rh.line.isspace() or rh.line == right.line):
+			# print("rh is",[rh])
+			rh = next_token(atok, rh)
+		temporary = left.line
+		ls = temporary[:len(temporary) - len(temporary.lstrip())]
+		temporary = rh.line if rh else ""
+		rs = temporary[:len(temporary) - len(temporary.lstrip())]
+		# (print("\nstarting new variation\n",[t],"\n",ls,rs,"these are the indentations",len(ls),len(rs),[left,rh]))
+		if len(ls)>=len(rs):
+			return True , right.endpos," pass ", False
+		else:
+			return (False,)
+	elif t.string=="if" and right is t:
+		return True , right.endpos, " " + dummy + " else " + dummy,True
+	else:
+
+		return (False,)
+
+
+# empty []
+def process_token(atok,t,l,b ):
 	n = neighbors(atok, t)
 	s = t.string
 	p = t.type
@@ -144,6 +199,21 @@ def process_token(atok,t ):
 		before = before_star(n)
 		before_space = False
 		after = after_star(n)
+		after_space = False
+	elif s in [","]:
+		before = before_comma(n)
+		before_space = False
+		after = after_comma(n)
+		after_space = False
+	elif s in ["(","[","{"]:
+		before = False
+		before_space = False
+		after = after_bracket(n)
+		after_space = False
+	elif s in ["."]:
+		before = before_dot(n)
+		before_space = False
+		after = after_dot(n)
 		after_space = False
 	elif s in BOTH_SIDES:
 		before = before_both_sides(n)
@@ -162,7 +232,8 @@ def process_token(atok,t ):
 		after_space = False
 	return ((before,before_space),(after,after_space))
 
-	
+
+
 
 #######################################################################################
 #######################################################################################
@@ -182,7 +253,7 @@ class RepairMissing():
 		value = self.d if not space else self.d + " "
 		if not index in self.before  and not index-1 in self.after:
 			self.before.add(index)
-			print("inserting before",[token])
+			# print("inserting before",[token])
 			self.m.modify_from(self.start_time,(token.startpos,token.startpos),value) 
 
 	def insert_after(self, token, space):
@@ -190,16 +261,28 @@ class RepairMissing():
 		value = self.d if not space else " " + self.d
 		if not index+1 in self.before  and not index in self.after:
 			self.after.add(index)
-			print("inserting off their",[token])
+			# print("inserting off their",[token])
 			self.m.modify_from(self.start_time,(token.endpos,token.endpos),value)
 
 	def work(self):
+		l = LineInfo(self.atok)
+		b = BracketMatcher(self.atok)
+		k = 0
 		for t in self.atok.tokens:
-			x,y = process_token(self.atok,t)
+			if t.string in ["if","for","while","with","def","elif"]:
+				if t.string == "elif":
+					k = k + 1
+				z = handle_empty_compound(self.atok,t,l,b ,self.d)
+				if z[0]:
+					self.m.modify_from(self.start_time,(z[1],z[1]),z[2])
+					if z[3]:
+						continue
+			x,y = process_token(self.atok,t,l,b)
 			if x[0]:
 				self.insert_before(t,x[1])
 			if y[0]:
 				self.insert_after(t,y[1])
+		print("\nk",k)
 
 	
 
@@ -237,7 +320,7 @@ def repair_operator(atok,m,d= None,timestamp = 0):
 
 
 
-print(("not","in") in STARTING_UNARY)
+# print(("not","in") in STARTING_UNARY)
 
 
 

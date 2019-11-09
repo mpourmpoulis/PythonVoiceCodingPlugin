@@ -60,6 +60,7 @@ class Application():
 				self.state["alternatives"] = alternatives
 				interface.push_action(DisplayRegionsAction("alternatives",alternatives,"Alternatives:\n"))
 				interface.push_action(HighlightCleverAction(alternatives,"alternatives",result))
+				
 		elif isinstance(s,InsertionQuery):
 			output = s.writing_locations_text
 			selections = s.optional_selection
@@ -81,6 +82,7 @@ class Application():
 			if items:
 				interface.push_action(DisplayNiceAction(items,True))  
 				self.state["collection"] = items
+				self.history.append(("collect"))
 			if selections:
 				interface.push_action(SelectionAction(selections))
 

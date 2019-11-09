@@ -50,6 +50,7 @@ class SelectBigRoi(SelectionQuery):
 			"if expression":(ast.IfExp,(),standard),
 			"if expression condition":(ast.IfExp,(),get_condition),
 			"if expression body":(ast.IfExp,(),get_body),
+			"comprehension condition":(ast.comprehension,(),get_comprehension_condition),
 			"assertion message":(ast.Assert,(), get_message),
 			"assertion condition":(ast.Assert,(), get_condition),
 			"assignment left":((ast.Assign,ast.AugAssign),(),get_left),
@@ -80,6 +81,9 @@ class SelectBigRoi(SelectionQuery):
 					elif match_node(data,(ast.Dict)):
 						if index<len(data.keys):
 							return [data.keys[index], data.values[index]]
+					elif match_node(data,(ast.BoolOp)) :
+						if index<len(data.values):
+							return data.values[index]
 					else:
 						return None
 				return (temporary[0],temporary[1], lambda x: modified_information(x,temporary[2],index-1))
@@ -119,7 +123,6 @@ class SelectBigRoi(SelectionQuery):
 				information_nodes = find_matching(definition_node,temporary_information),
 				**additional_parameters
 		)
-		print(result,alternatives)
 		result = information(result) if result else None
 		alternatives  =[ information(x)  for x in alternatives] if alternatives else []
 		return  self._backward_result(result, alternatives,build)
@@ -137,7 +140,6 @@ class SelectBigRoi(SelectionQuery):
 		direction = query_description["vertical_abstract_only_direction"]
 		ndir = query_description["ndir"]
 		row, column = view_information["rowcol"](m.backward(selection)[0])
-		print("is going to be a really good",selection,row)
 		result = decode_abstract_vertical(root,atok,targets,row+1, ndir,direction,True,temporary_information)
 		alternatives = []
 
@@ -167,7 +169,6 @@ class SelectBigRoi(SelectionQuery):
 		bonus = 1 if definition_node.first_token.startpos > selection[1] else 0
 
 		t = decode_abstract_vertical(root,atok,targets,row, ndir + bonus,direction,True,temporary_information)
-		print(ast.dump(definition_node))
 		if query_description["adjective"]=="None":
 			candidates = tiebreak_on_lca(root,definition_node,find_all_nodes(t, targets, exclusions))
 			candidates = [information(x)  for x in candidates if information(x)]

@@ -97,7 +97,7 @@ class LevelVisitor():
 			]  
 			for x in result
 		]
-		print("\nresume\n",result,"\n\n")
+		# print("\nresume\n",result,"\n\n")
 		# optionally pick specific element from each list
 		if self.atok:
 			result = [sorted_by_source_region(self.atok,x)  for x in result]

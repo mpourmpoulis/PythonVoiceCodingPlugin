@@ -2,7 +2,7 @@ import ast
 import token
 
 from PythonVoiceCodingPlugin.third_party.astmonkey import transformers
-from PythonVoiceCodingPlugin.third_party.asttokens import asttokens as asttokens  
+from PythonVoiceCodingPlugin.third_party.asttokens import asttokens  
 
 from PythonVoiceCodingPlugin.library import build_tree,get_source_region,nearest_node_from_offset,previous_token,next_token
 from PythonVoiceCodingPlugin.library.BracketMatcher import BracketMatcher
@@ -105,41 +105,24 @@ class LineInfo():
 		return self.last[x], self.continuation[x-1]
 	def get_last_up(self,t):
 		x = min(t.start[0],t.end[0]-1)
-		print(x)
-		print(self.last[x]) 
 		return self.last[x]
 			
 
 def expand_to_line_or_statement(atok, origin,l = None,b=None):
-	# print( list(filter(lambda x:x.type == 5,atok.tokens )))
-	# print(" explant line")
 	l = LineInfo(atok) if not l else l
-	# print(" off their lining")
 	b = BracketMatcher(atok) if not b else b
 	origin = previous_token(atok,origin) if origin.string == ";" else origin
-	# print("out of her+e rocket matching ")
 	left, right = b.find_enclosing(origin)
 	# print("found stuff",left,right) 
 	left = left if left else origin
 	right = right if right else origin 
-	# move_left =True
-	# move_right = True
 	left,move_left=l.get_first(left)
 	right,move_right=l.get_last(right)
-	####
 	move_left=True
 	move_right = True
 	i=0
 	while move_left:
-		# print("entering left loop we ", left )
-		# left = l.get_last_up(left)
-		# left,move_left  = l.get_first(left)print()
-		# new_left,_ = b.find_enclosing(left)
-		# print("matched Tolkien ",left,new_left)
-		# left = new_left if new_left else left
-		# left,move_left  = l.get_first(left)
-		# print(left,new_left,move_left)
-		# print("entering left loop we ", left )
+
 		new_left = left
 		while new_left:
 			left,move_left  = l.get_first(new_left)
@@ -159,14 +142,6 @@ def expand_to_line_or_statement(atok, origin,l = None,b=None):
 			i=i+1
 			if i>5:return None,None
 		right = l.get_first_down(right) if move_right else right
-
-	# while move_right:
-		# right = l.get_first_down(right)
-		# _,new_right = b.find_enclosing(right)
-		# right = new_right if new_right else right
-		# right,move_right  = l.get_last(right)
-		# print(move_right)
-	# print("none")
 	return left, right
 
 

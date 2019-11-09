@@ -12,7 +12,7 @@ logical line.
 import ast 
 import tokenize
 
-from PythonVoiceCodingPlugin.third_party.asttokens import asttokens as asttokens  
+from PythonVoiceCodingPlugin.third_party.asttokens import asttokens  
 
 from PythonVoiceCodingPlugin.library import build_tree,get_source_region,nearest_node_from_offset
 from PythonVoiceCodingPlugin.library.lexical import expand_to_line_or_statement
@@ -52,8 +52,9 @@ def partially_parse(code, m = None, atok = None):
 		try:
 			root,atok = build_tree(m.current_code) 
 			return root,atok,m,r
-		except:
-			print(" go to the field",m.current_code)
+		except Exception as e:
+			print(" go to the field\n",m.current_code)
+			print(" error was\n",e)
 			return None,None,None,None
 
 ###############################

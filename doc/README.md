@@ -4,8 +4,12 @@
 
 Here we will briefly go over the commands offered. 
 
-Before we get started, a small general remark: virtually every command starts with the keyword smart! 
-This was chosen in order to minimize chances of collision with other commands on your system. 
+Before we get started, a small general remark: 
+```
+tip: if you do not know what to say, say smart :P
+```
+
+because virtually every command starts with the keyword smart! 
 
 ```python
 "smart <big_roi> [<big_roi_sub_index>]"
@@ -13,7 +17,7 @@ This was chosen in order to minimize chances of collision with other commands on
 "smart <color> [alternative]"
 ```
 
-however, because for a variety of commands, ommitting the keyword smart makes them more convenient and easier to speak
+This was chosen in order to minimize chances of collision with other commands on your system. However, because for a variety of commands, ommitting the keyword smart makes them more convenient and easier to speak
 you may find the smart keyword in brackets
 
 ```python
@@ -24,7 +28,7 @@ you may find the smart keyword in brackets
 "[smart] paste <color> back"
 ```
 
-if there are conflicts with other commands, trying to remove those brackets. furthermore, I I think it is best not to put brackets in cases where I haven't.  
+if there are conflicts with other commands, try to remove those brackets (making smart not optional). Furthermore, I I think it is best not to put brackets in cases where I haven't.  
 
 After the small remark let's get started!
 
@@ -78,6 +82,8 @@ Choice("vertical_direction",{
 usually followed by an integer. Beware the difference between up and above! As a rule of thumb, above only takes "interesting" lines into consideration:)
 
 ![](./gif/arg5.gif)
+
+
 
 * in certain cases you can combine these two approaches:)
 

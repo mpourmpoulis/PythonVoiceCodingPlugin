@@ -117,6 +117,11 @@ def get_elif_condition(root):
 		else None		
 	)
 
+def get_comprehension_condition(root):
+	return (
+		root.ifs  if match_node(root,(ast.comprehension)) else None		
+	)
+
 def get_return_value(root):
 	return (
 		root.value if match_node(root,(ast.Return, ast.Yield,ast.YieldFrom )) else None
