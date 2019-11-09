@@ -24,7 +24,7 @@ To provide this functionality, it ships with bundles the implement a grammar, ho
 cooperate with the core plugin, running on the editor side, arguably the more suitable of the two environments
 for analyzing source code and decoding the meaning of queries within the given context. 
 
-![](./gif/d5.gif)
+![](doc/gif/d5.gif)
 
 
 I want to be honest. This is not exactly the best code ever written. It is far from it:) And it is far from the full functionality i would want it to offer. Nonetheless, I still think that PythonVoiceCodingPlugin is a tool that :
