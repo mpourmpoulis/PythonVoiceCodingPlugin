@@ -7,7 +7,7 @@
 PythonVoiceCodingPlugin is a Sublime Text 3 plugin meant to enhance user experience 
 when coding python 3 by voice. 
 
-![](doc/gif/big3.gif)
+![](doc/gif/arg5.gif)
 
 ## Motivation
 
@@ -17,12 +17,14 @@ with  [Caster](https://github.com/dictation-toolbox/Caster). Despite the excelle
 In particular, navigation through the code sometimes felt a little bit too mechanistic. Say for instance you want to go to some location or select some text. For the most part ,you are  describing what actions 
 need to be taken to get there. What if you could instead simply describe (syntactically)  what you want to select? 
 
+![](doc/gif/big3.gif)
+
 PythonVoiceCodingPlugin tries to enable you to do just that!
 To provide this functionality, it ships with bundles the implement a grammar, hopefully expressive enough for describing regions of interest, while running on the voice coding macro system side  and 
 cooperate with the core plugin, running on the editor side, arguably the more suitable of the two environments
 for analyzing source code and decoding the meaning of queries within the given context. 
 
-
+![](./gif/d5.gif)
 
 
 I want to be honest. This is not exactly the best code ever written. It is far from it:) And it is far from the full functionality i would want it to offer. Nonetheless, I still think that PythonVoiceCodingPlugin is a tool that :
