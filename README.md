@@ -216,7 +216,7 @@ The following resources proved very helpfull for the success of the project. Man
 
 Many thanks to all of the developers that have put their time and effort behind projects such as
 
-* Natspeak
+* Natlink
 
 * Dragonfly
 
