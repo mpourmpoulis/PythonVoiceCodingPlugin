@@ -269,7 +269,7 @@ class RepairMissing():
 		b = BracketMatcher(self.atok)
 		k = 0
 		for t in self.atok.tokens:
-			if t.string in ["if","for","while","with","def","elif"]:
+			if t.string in ["if","for","while","with","def","elif","else"]:
 				if t.string == "elif":
 					k = k + 1
 				z = handle_empty_compound(self.atok,t,l,b ,self.d)
