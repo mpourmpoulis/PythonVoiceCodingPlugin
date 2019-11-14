@@ -176,6 +176,6 @@ Finally, we clarify one more thing! What about relative vertical offsets when us
 ![](./gif/big9.gif)  
 
 
-please note however that there are limitations  and sub indexes are more for solution to make the simplest case faster
+please note however that there are limitations  and sub indexes are more of a solution to make the simplest case faster
 rather than a systematic way of handling complex code!
 
