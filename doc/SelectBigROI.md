@@ -144,7 +144,7 @@ Once we have established which function we are to search, the command will then 
 # SubIndexes
 
 So far we have seen cases where we can select an entire region of interest.
-However,there are cases where you are interested in only a portion of this whole ROI. For instance there may be multiple targets in the left hand of an assignment and you want to select only one of them. Or your function may return multiple values. In those cases the 
+However,there are cases where you are interested in only a portion of this whole ROI. For instance there may be multiple targets in the left hand of an assignment and you want to select only one of them. Or your function may return multiple values. or your right hand side contains a dictionary and you want a specific key-value pair. In those cases the 
 
 ```python 
 IntegerRefST("big_roi_sub_index",0,10),
@@ -176,5 +176,6 @@ Finally, we clarify one more thing! What about relative vertical offsets when us
 ![](./gif/big9.gif)  
 
 
-
+please note however that there are limitations  and sub indexes are more for solution to make the simplest case faster
+rather than a systematic way of handling complex code!
 

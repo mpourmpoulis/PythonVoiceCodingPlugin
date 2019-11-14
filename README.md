@@ -62,7 +62,7 @@ Needless to say, while coding PythonVoiceCodingPlugin , PythonVoiceCodingPlugin 
 The code is available on [github](https://github.com/mpourmpoulis/PythonVoiceCodingPlugin)
 along with its initial release (0.0.0)!
 
-Update:  
+Update:  release 0.0.1 is out! please note but there aren't any changes in the bundles from the previous release!
 
 
 

@@ -25,7 +25,15 @@ def filter_await(atok,m = None, timestamp  = 0):
 	m = m if m else ModificationHandler(atok.text)
 	candidates = [x  for x in atok.tokens  if  x.string=="await"]
 	for c in candidates:
-		m.modify_from(timestamp,(c.startpos,c.endpos),"yield from","await")
+		y = previous_token(atok,c)
+		z = next_token(atok,c)
+		if  y   and not y.string.isspace():
+			m.modify_from(timestamp,(c.startpos,c.endpos),"","await")
+		else:
+			if z:
+				m.modify_from(timestamp,(c.startpos,z.startpos),"yield from ","await")
+			else:
+				m.modify_from(timestamp,(c.startpos,c.endpos),"","await")
 	return m
 
 def filter_fstrings(atok,m = None, timestamp = 0):
