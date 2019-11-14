@@ -84,9 +84,30 @@ class SelectBigRoi(SelectionQuery):
 					elif match_node(data,(ast.BoolOp)) :
 						if index<len(data.values):
 							return data.values[index]
+					elif match_node(data,(ast.Compare)) :
+						temporary = [data.left] + data.comparators
+						if index<len(temporary):
+							return temporary[index]
+
+					elif match_node(data,(ast.Subscript)):
+						data = data.slice
+						if match_node(data,(ast.Index)):
+							temporary = [data.value] 
+							if match_node(data.value,(ast.List,ast.Tuple,ast.Set)):
+								temporary  =  data.value.elts
+						elif match_node(data,(ast.Slice)):
+							temporary = [data.lower,data.upper, data.step]
+						elif match_node(data,(ast.ExtSlice)):
+							temporary = data.dims
+						temporary = [x  for x in temporary if x]
+						if index<len(temporary):
+							return temporary[index]
+
 					else:
 						return None
-				return (temporary[0],temporary[1], lambda x: modified_information(x,temporary[2],index-1))
+				y  = lambda x: temporary[2](x)
+				y.secondary  = lambda x: modified_information(x,temporary[2],index-1)
+				return (temporary[0],temporary[1],y)
 
 
 	def case_one(self,view_information,query_description, extra = {}):
@@ -95,6 +116,7 @@ class SelectBigRoi(SelectionQuery):
 		###############################################################	
 		build, selection, origin, definition_node = self.preliminary(view_information, query_description,extra)
 		targets, exclusions, information  =  self.decode(query_description)
+		information = getattr(information,"secondary",information)
 		candidates = tiebreak_on_lca(definition_node,origin,find_all_nodes(definition_node, targets, exclusions))
 		candidates = [information(x)  for x in candidates if information(x)]
 		result, alternatives = obtain_result(None, candidates)
@@ -123,6 +145,7 @@ class SelectBigRoi(SelectionQuery):
 				information_nodes = find_matching(definition_node,temporary_information),
 				**additional_parameters
 		)
+		information = getattr(information,"secondary",information)
 		result = information(result) if result else None
 		alternatives  =[ information(x)  for x in alternatives] if alternatives else []
 		return  self._backward_result(result, alternatives,build)
@@ -149,6 +172,7 @@ class SelectBigRoi(SelectionQuery):
 				alternatives  = tiebreak_on_lca(new_definition_node,result,find_all_nodes(new_definition_node,targets , exclusions))
 
 		result, alternatives = obtain_result(result, alternatives)
+		information = getattr(information,"secondary",information)
 		result = information(result) if result else None
 		alternatives  = [information(x)  for x in alternatives] if alternatives else []
 		return  self._backward_result(result, alternatives,build)
@@ -170,6 +194,7 @@ class SelectBigRoi(SelectionQuery):
 
 		t = decode_abstract_vertical(root,atok,targets,row, ndir + bonus,direction,True,temporary_information)
 		if query_description["adjective"]=="None":
+			information = getattr(information,"secondary",information)
 			candidates = tiebreak_on_lca(root,definition_node,find_all_nodes(t, targets, exclusions))
 			candidates = [information(x)  for x in candidates if information(x)]
 			result, alternatives = obtain_result(None, candidates)
@@ -184,6 +209,7 @@ class SelectBigRoi(SelectionQuery):
 				information_nodes = find_matching(t,lambda x: information(x) if match_node(x,targets,exclusions) else None),
 				**additional_parameters
 			)
+			information = getattr(information,"secondary",information)
 			result = information(result) if result else None
 			alternatives  =[ information(x)  for x in alternatives] if alternatives else []
 			return  self._backward_result(result, alternatives,build)

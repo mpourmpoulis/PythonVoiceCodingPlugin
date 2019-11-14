@@ -2,7 +2,9 @@
 
 [![License](https://img.shields.io/badge/License-BSD%202--Clause-orange.svg)](https://opensource.org/licenses/BSD-2-Clause)
 
-![]( https://img.shields.io/static/v1?label=Caster&message=0.5.11&color=blue )
+![]( https://img.shields.io/static/v1?label=Caster&message=0.5.11&color=blue)
+
+![]( https://img.shields.io/static/v1?label=Version&message=0.0.1&color=green)
 
 PythonVoiceCodingPlugin is a Sublime Text 3 plugin meant to enhance user experience 
 when coding python 3 by voice. 
@@ -20,7 +22,7 @@ need to be taken to get there. What if you could instead simply describe (syntac
 ![](doc/gif/big3.gif)
 
 PythonVoiceCodingPlugin tries to enable you to do just that!
-To provide this functionality, it ships with bundles the implement a grammar, hopefully expressive enough for describing regions of interest, while running on the voice coding macro system side  and 
+To provide this functionality, it ships with bundles the implement a grammar, hopefully expressive enough for describing regions of interest, while running on the voice coding macro system side. These bundles
 cooperate with the core plugin, running on the editor side, arguably the more suitable of the two environments
 for analyzing source code and decoding the meaning of queries within the given context. 
 
@@ -59,7 +61,8 @@ Needless to say, while coding PythonVoiceCodingPlugin , PythonVoiceCodingPlugin 
 
 The code is available on [github](https://github.com/mpourmpoulis/PythonVoiceCodingPlugin)
 along with its initial release (0.0.0)!
- 
+
+Update:  
 
 
 
@@ -140,9 +143,11 @@ So effectively we trigger the command our plugin provides in its top file and pa
 
 Of course this does not work across virtual machine barriers:) 
 
-to counter this issue the simplest idea, which involves only keystrokes, is to open with some key command sublime console and using a text command to invoke the PythonVoiceCodingPlugin command from the command line. But 
-This is often way to slow if there are a lot of parameters to pass and messes up with user-interface.
-so this is not implemented, even though  it does not need custom rpc.
+To counter this issue the simplest idea, which involves only keystrokes, is to open with some key command sublime console and using a text command to invoke the PythonVoiceCodingPlugin command from the command line. But 
+from my experience this is often way to slow if there are a lot of parameters to pass and messes up with user-interface, as it opens up the console.
+
+So this is not implemented, even though  it does not need custom rpc.
+
 
 For the time being I have bundles for 0.5.11 release of Caster that work as expected on Windows 10 64bit.
 

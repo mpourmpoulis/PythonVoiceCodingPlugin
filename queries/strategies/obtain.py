@@ -1,10 +1,10 @@
 def obtain_result(result, alternatives):
 	if result:
-		return result, alternatives if alternatives is not None else []
+		return result, [x  for x in  alternatives if x is not result] if alternatives is not None else []
 	else:
 		if alternatives is None or len( alternatives )==0:
 			return None,None
 		else:
-			return  alternatives[0], alternatives[1:]
+			return  alternatives[0], [x  for x in alternatives[1:] if x is not alternatives[0]]
 
 # bug if result is in alternatives

@@ -149,15 +149,20 @@ def after_bracket(t):
 
 
 def before_dot(t):
-	# return t[ - 1] is None  or not t[-1].string in ["from",".","import"]
+	return t[ - 1] is None  or not (
+		t[-1].string in ["from",".","import"] or 
+		finish_atom(t[-1])
+	)
 	return False
 
 def after_dot(t):
-	# return t[1] is None  or not (
-		# t[1].string in ["."] and 
-		# t[-1] is not None and
-		# t[-1].string in ["from",".","import"]
-	# )
+	return t[1] is None  or not (
+		start_atom(t[1]) or (
+			t[1].string in ["."] and 
+			t[-1] is not None and
+			t[-1].string in ["from",".","import"]
+		)
+	)
 	return False
 
 def handle_empty_compound(atok ,t,l,b,dummy):
@@ -165,28 +170,29 @@ def handle_empty_compound(atok ,t,l,b,dummy):
 	left,right = expand_to_line_or_statement(atok,t, l, b)
 	if token.DEDENT==left.type:
 		left = next_token(atok,left)
-	# print("empty compound ",left,right)
-	if t.string=="elif":
+	print("empty compound ",[left,right])
+	if t.string=="elif"  and left.string!="elif":
 		left = next_token(atok,left)
 	if left is t  and right.string == ":" :
 		rh = next_token(atok,right)
 		# print("rh is",[rh])
-		while rh and (rh.line.isspace() or rh.line == right.line):
+		while rh and (rh.line.isspace() or rh.start[0]==right.start[0]):
 			# print("rh is",[rh])
 			rh = next_token(atok, rh)
 		temporary = left.line
 		ls = temporary[:len(temporary) - len(temporary.lstrip())]
 		temporary = rh.line if rh else ""
 		rs = temporary[:len(temporary) - len(temporary.lstrip())]
-		# (print("\nstarting new variation\n",[t],"\n",ls,rs,"these are the indentations",len(ls),len(rs),[left,rh]))
+		(print("\nstarting new variation\n",[t],"\n",ls,rs,"these are the indentations",len(ls),len(rs),[left,rh]))
 		if len(ls)>=len(rs):
 			return True , right.endpos," pass ", False
 		else:
 			return (False,)
-	elif t.string=="if" and right is t:
-		return True , right.endpos, " " + dummy + " else " + dummy,True
-	else:
 
+	# these needs to be updated
+	elif t.string=="if"  and   right is t:
+			return True , right.endpos, " " + dummy + " else " + dummy,True
+	else:
 		return (False,)
 
 
