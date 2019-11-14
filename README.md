@@ -201,7 +201,7 @@ For specific versions be sure to check the requirements.txt
 
 ### Useful Learning Resources
 
-The following resources proved very helpfull for the success of the project. Many thanks to all the authors!
+The following resources proved to be very helpfull for the completion of the project. Many thanks to all the authors!
 
 * [Green Tree Snakes](https://greentreesnakes.readthedocs.io/en/latest/nodes.html) an truly invaluable for this project tutorial of the python ast
 
@@ -214,6 +214,7 @@ The following resources proved very helpfull for the success of the project. Man
 * the python 3.7 [grammar](https://docs.python.org/3.7/reference/grammar.html) specification
 
 * of course [the sublime forum](https://forum.sublimetext.com/)
+
 
 
 ### Development tools
