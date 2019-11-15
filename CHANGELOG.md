@@ -1,5 +1,16 @@
 # Changelog
 
+## [0.0.2] - 2019-11-15
+
+Caster 0.6.11 support husband nodded thanks to @LexiconCode
+
+### Added
+
+In the grammar section there are now two scripts:
+
+- python_voice_coding_plugin_caster_v0-6-11
+- python_voice_coding_plugin_caster_v0-5-11
+
 ## [0.0.1] - 2019-11-14
 
 I think these are the most important changes , I hope I didn't forget  any!

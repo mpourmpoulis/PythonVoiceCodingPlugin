@@ -2,9 +2,9 @@
 
 [![License](https://img.shields.io/badge/License-BSD%202--Clause-orange.svg)](https://opensource.org/licenses/BSD-2-Clause)
 
-![]( https://img.shields.io/static/v1?label=Caster&message=0.5.11|0.6.11(experimental)&color=blue)
+![]( https://img.shields.io/static/v1?label=Caster&message=0.5.11|0.6.11&color=blue)
 
-![]( https://img.shields.io/static/v1?label=Version&message=0.0.1&color=green)
+![]( https://img.shields.io/static/v1?label=Version&message=0.0.2&color=green)
 
 PythonVoiceCodingPlugin is a Sublime Text 3 plugin meant to enhance user experience 
 when coding python 3 by voice. 
@@ -62,8 +62,7 @@ Needless to say, while coding PythonVoiceCodingPlugin , PythonVoiceCodingPlugin 
 The code is available on [github](https://github.com/mpourmpoulis/PythonVoiceCodingPlugin)
 along with its initial release (0.0.0)!
 
-Update:  release 0.0.1 is out! please note but there aren't any changes in the bundles from the previous release!
-
+Update:  release 0.0.2 is out and with many thanks to @LexiconCode  there are now bundles for Caster 0.6.11! 
 
 
 ## Limitations
@@ -100,7 +99,7 @@ Documentation is available [here](doc/README.md)
 
 For the time being the full system has been tested with Caster 0.5.11 on a Windows 10 machine. I plan better support for aenea in the near future and would love to (if possible) provide bundles for more systems on the long run:) The plugin code itself is intentionally pure python so it should probably run fine on other OS that sublime supports (tp be updated after linux test)
 
-Update: with many thanks to @LexiconCode there is an experimental bundle for Caster 0.6.11!
+Update: with many thanks to @LexiconCode from 0.0.2 there is a bundle for Caster 0.6.11!
 
 ### Long version:
 
