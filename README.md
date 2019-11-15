@@ -2,7 +2,7 @@
 
 [![License](https://img.shields.io/badge/License-BSD%202--Clause-orange.svg)](https://opensource.org/licenses/BSD-2-Clause)
 
-![]( https://img.shields.io/static/v1?label=Caster&message=0.5.11&color=blue)
+![]( https://img.shields.io/static/v1?label=Caster&message=0.5.11|0.6.11(experimental)&color=blue)
 
 ![]( https://img.shields.io/static/v1?label=Version&message=0.0.1&color=green)
 
@@ -99,6 +99,8 @@ Documentation is available [here](doc/README.md)
 ### Short version:
 
 For the time being the full system has been tested with Caster 0.5.11 on a Windows 10 machine. I plan better support for aenea in the near future and would love to (if possible) provide bundles for more systems on the long run:) The plugin code itself is intentionally pure python so it should probably run fine on other OS that sublime supports (tp be updated after linux test)
+
+Update: with many thanks to @LexiconCode there is an experimental bundle for Caster 0.6.11!
 
 ### Long version:
 
