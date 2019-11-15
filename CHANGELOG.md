@@ -2,7 +2,7 @@
 
 ## [0.0.2] - 2019-11-15
 
-Caster 0.6.11 support husband nodded thanks to @LexiconCode
+Caster 0.6.11 support many thanks to @LexiconCode
 
 ### Added
 
