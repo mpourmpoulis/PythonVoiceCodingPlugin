@@ -157,7 +157,7 @@ Collection Queries try to address this issue. These collect the text of interest
 you can collect a variety of things:
 
 ```python
-Choice("index_collectable",{
+Choice("collectable",{
 	"(variable|variables)":"variable",
 	"( parameter | parameters)":"parameter",
 	"(module|modules)":"module",

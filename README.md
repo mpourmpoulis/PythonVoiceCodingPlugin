@@ -4,7 +4,7 @@
 
 ![]( https://img.shields.io/static/v1?label=Caster&message=0.5.11|0.6.11&color=blue)
 
-![]( https://img.shields.io/static/v1?label=Version&message=0.0.2&color=green)
+![]( https://img.shields.io/static/v1?label=Version&message=0.0.3&color=green)
 
 PythonVoiceCodingPlugin is a Sublime Text 3 plugin meant to enhance user experience 
 when coding python 3 by voice. 
@@ -63,7 +63,7 @@ The code is available on [github](https://github.com/mpourmpoulis/PythonVoiceCod
 along with its initial release (0.0.0)!
 
 Update:  release 0.0.2 is out and with many thanks to @LexiconCode  there are now bundles for Caster 0.6.11! 
-
+Update:  Due an important error I missed, you might be faced with a situation where the pluggin cannot load and thus no commands are executed. in such a case please upgrade to release 0.0.3 which fixes it. I am sorry for any disconvenience caused!
 
 ## Limitations
 
