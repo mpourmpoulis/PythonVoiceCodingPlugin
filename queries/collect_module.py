@@ -20,6 +20,10 @@ class CollectModule(CollectionQuery):
 		root,atok,m,r = build 
 		definition_nodes = find_all_nodes(root,(ast.Import,ast.ImportFrom))
 		name_nodes = make_flat([get_module_names(x)  for x in definition_nodes])
+		for name in name_nodes:
+			smaller = name.split(".")
+			if len( smaller)>1:
+				name_nodes.append(".".join(smaller[:-1]))
 		names = list(OrderedDict([(x,0)  for x in name_nodes]).keys())
 		result = names[query_description["collect_index"] - 1] if query_description["format"]==2 else None
 		return result, names

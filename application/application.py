@@ -7,7 +7,8 @@ class Application():
 	"""docstring for Application"""
 	active_applications = {}
 	build_cache  = BuildCache()
-
+	global_state = {}
+	
 	def __init__(self,vid):
 		self.history = []
 		self.state = {}
@@ -27,7 +28,7 @@ class Application():
 
 
 	def respond_to_query(self,interface,query_description):
-		extra = {"state":self.state,"history":self.history}
+		extra = {"state":self.state,"global_state":Application.global_state,"history":self.history}
 		view_information  = interface.get_view_information()
 		ui_information = interface.get_ui_information()
 
@@ -82,6 +83,7 @@ class Application():
 			if items:
 				interface.push_action(DisplayNiceAction(items,True))  
 				self.state["collection"] = items
+				self.global_state["collection"] = items
 				self.history.append(("collect"))
 			if selections:
 				interface.push_action(SelectionAction(selections))

@@ -1,5 +1,33 @@
 # Changelog
 
+## [Unreleased]
+
+### Fixed
+* fixed the empty brackets bug in the repair module
+
+### Changed
+
+* a global state was added the application module, enabling insertion from the results of collection queries from other files
+
+* collecting modules now also collects subparts of the import paths. For example if you importfrom x.y.z, all three [x.y.z,x.y,x] paths are collected!
+
+* In the actions module, the SelectionAction now also shows the main result if it is not visible! works both for selection queries and paste back operations! 
+
+
+## [0.0.3] - 2019-11-18
+
+important patch
+
+### Fixed
+
+* The third  party folder was not in the Python path, so imports from the dependencies asking for other dependencies failed!
+
+### Added
+
+once again, thanks to thanks to @LexiconCode there are bundles for the upcoming 1.0.0 release of Caster
+
+- python_voice_coding_plugin_caster_v1-0-0
+
 ## [0.0.2] - 2019-11-15
 
 Caster 0.6.11 support many thanks to @LexiconCode

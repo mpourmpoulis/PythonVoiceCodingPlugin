@@ -145,7 +145,10 @@ def before_comma(t):
 	return t[ -1] is None  or t[-1].string in ["(","[","{"]
 	
 def after_bracket(t):
-	return t[1] is None  or t[1].string in ["for","if","while","with"]
+	return t[1] is None   or t[1].string in ["for","if","while","with"] or (
+			t[0].string in ["{","[",]  and t[-1] is not None and 
+			finish_atom(t[-1])  and t[1].string in ["]","}"]
+		)
 
 
 def before_dot(t):
@@ -269,6 +272,13 @@ class RepairMissing():
 			self.after.add(index)
 			# print("inserting off their",[token])
 			self.m.modify_from(self.start_time,(token.endpos,token.endpos),value)
+
+	def correct_start_of_line(self,atok,token,before_information,after_information):
+		if before_information[0] and previous_token(atok,token).type==token.INDENT:
+			p = previous_token(atok, token)
+			n = next_token(atok,token)
+			
+
 
 	def work(self):
 		l = LineInfo(self.atok)

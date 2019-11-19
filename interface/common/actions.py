@@ -19,6 +19,9 @@ class SelectionAction(InterfaceAction):
 				region = [region]
 			for r in region:
 				view.sel().add(sublime.Region(r[0],r[1]))
+			view.show(sublime.Region(region[0][0],region[0][1]))
+
+
 
 class InsertAction(InterfaceAction):
 	"""docstring for InsertAction"""
