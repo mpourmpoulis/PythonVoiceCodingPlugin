@@ -70,41 +70,8 @@ class SelectBigRoi(SelectionQuery):
 				index = query_description["big_roi_sub_index"]
 				def modified_information(x, information,index):
 					data  = information(x)
-					if isinstance(data,list):
-						if len(data)!=1:
-							return data[index]
-						else:
-							data = data[0]
-					if match_node(data,(ast.List,ast.Tuple,ast.Set)):
-						if index<len(data.elts):
-							return data.elts[index]
-					elif match_node(data,(ast.Dict)):
-						if index<len(data.keys):
-							return [data.keys[index], data.values[index]]
-					elif match_node(data,(ast.BoolOp)) :
-						if index<len(data.values):
-							return data.values[index]
-					elif match_node(data,(ast.Compare)) :
-						temporary = [data.left] + data.comparators
-						if index<len(temporary):
-							return temporary[index]
+					return get_sub_index(data,index)
 
-					elif match_node(data,(ast.Subscript)):
-						data = data.slice
-						if match_node(data,(ast.Index)):
-							temporary = [data.value] 
-							if match_node(data.value,(ast.List,ast.Tuple,ast.Set)):
-								temporary  =  data.value.elts
-						elif match_node(data,(ast.Slice)):
-							temporary = [data.lower,data.upper, data.step]
-						elif match_node(data,(ast.ExtSlice)):
-							temporary = data.dims
-						temporary = [x  for x in temporary if x]
-						if index<len(temporary):
-							return temporary[index]
-
-					else:
-						return None
 				y  = lambda x: temporary[2](x)
 				y.secondary  = lambda x: modified_information(x,temporary[2],index-1)
 				return (temporary[0],temporary[1],y)

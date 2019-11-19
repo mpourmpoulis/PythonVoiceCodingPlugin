@@ -17,16 +17,19 @@ it is split into four sections
 	these enable us to "get" information from nodes on a higher level ,
 	while trying to minimize exposure to the underlying syntax tree implementation.
 3) checkers check if a node satisfies a property(say if its context is store)
-4) validators confirm if other data satisfy some property with respect to a given node
+4) validators confirm if other root satisfy some property with respect to a given node
 
 
 '''
 ################################################################
 
+
+################################################################################################
 ################################################################################################
 #
 # first some funtcors 
 #
+################################################################################################
 ################################################################################################
 
 def make_information(c,*arg):
@@ -40,13 +43,13 @@ def identity(information, parameter = None):
 	return lambda x: x if information(x) else None
 
 
-
+################################################################################################
 ################################################################################################
 #
 # some basic checkers 
 #
 ################################################################################################
-
+################################################################################################
 
 def is_store(root):
 	return match_node(root,ast.Store)  or (match_node(root,ast.Name) and match_node(root.ctx,ast.Store))
@@ -58,13 +61,13 @@ def name(root):
 
 
 
-
+################################################################################################
 ################################################################################################
 #
 # information extraction function
 #
 ################################################################################################
-
+################################################################################################
 
 def get_name(root):
 	return (root if match_node(root,(ast.Name)) else 
@@ -244,6 +247,45 @@ def get_argument_from_definition(root,raw = True,index = None):
 	if raw:
 		temporary = [(y.arg if isinstance(y,ast.AST) else y) for y in temporary]
 	return temporary[index] if (index is not None) and len(temporary)>index else temporary
+
+
+
+def get_sub_index(root,index):
+	candidates = []
+	if isinstance(root,list):
+		if len(root)!=1:
+			candidates =  root
+		else:
+			root = root[0]
+
+	if match_node(root,(ast.List,ast.Tuple,ast.Set)):
+		candidates =  root.elts
+	elif match_node(root,(ast.Dict)):
+		candidates = list(zip(root.keys,root.values))
+	elif match_node(root,(ast.BoolOp)) :
+		candidates =  root.values
+	elif match_node(root,(ast.Compare)) :
+		candidates = [root.left] + root.comparators
+	elif match_node(root,(ast.Index)):
+		candidates = [root.value] 
+		if match_node(root.value,(ast.List,ast.Tuple,ast.Set)):
+			candidates =  root.value.elts
+	elif match_node(root,(ast.Slice)):
+		candidates = [root.lower,root.upper, root.step]
+	elif match_node(root,(ast.ExtSlice)):
+		candidates = root.dims
+	
+	# in the following cases we Certs deeper in the tree
+	if match_node(root,(ast.Subscript)):
+		return get_sub_index(root.slice,index)
+	if match_node(root,(ast.Expr)):
+		return get_sub_index(root.value,index)
+
+	if index<len(candidates):
+		print(" in here \n")
+		return candidates[index]
+	else:
+		return None
 
 
 

@@ -13,6 +13,7 @@
 
 * In the actions module, the SelectionAction now also shows the main result if it is not visible! works both for selection queries and paste back operations! 
 
+* sub indexing moved from big_roi to info  module!
 
 ## [0.0.3] - 2019-11-18
 
