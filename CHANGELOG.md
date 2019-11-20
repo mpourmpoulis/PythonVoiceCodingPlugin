@@ -5,6 +5,8 @@
 ### Fixed
 * fixed the empty brackets bug in the repair module
 
+* fixed  one error in vertical direction + big_roi queries, which appeared when a region of interest spanned across multiple physical lines and was the selection origin of a query searching for a region of interest of the same kind.
+
 ### Changed
 
 * a global state was added the application module, enabling insertion from the results of collection queries from other files
