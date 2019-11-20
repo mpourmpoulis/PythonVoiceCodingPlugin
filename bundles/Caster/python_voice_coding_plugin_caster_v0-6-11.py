@@ -17,6 +17,14 @@ import json
 
 def create_arguments(command,format,**kwargs):
     p = {x:kwargs[x] for x in kwargs.keys() if x not in ['_node','_rule','_grammar']}
+    # this looks a little bit ugly and  it is only temporary as in this way both grammars
+    # can work with the same plug-in
+    p["level_index"] = p["inside_index"] if p["inside_index"] else ""
+    x = p["vertical_direction"] if "vertical_direction" in p else ""
+    p["vertical_abstract_only_direction"]  = "above" if x == "up" else "below"
+    p["vertical_direction"]  = "above" if x == "up" else "below"
+    p["adjective"] = p["nth"] if "nth" in p else ""
+    p["ndir"] = p["nsteps"] if "nsteps" in p else ""
     p["format"] = format  
     p["command"] = command
     return {"arg":p}
@@ -37,6 +45,8 @@ def lazy_value(c,f,**kwargs):
     return  R(Function(noob_send, command = c, format = f,**kwargs))
 
 
+
+
 class SublimeRulePlugin(MergeRule):
     pronunciation = "python voice coding plugin"
     mapping = {
@@ -53,23 +63,23 @@ class SublimeRulePlugin(MergeRule):
             lazy_value("paste_back",2),
 
         # argument rule
-        "[smart] [<adjective>] argument <argument_index>":
+        "[smart] [<nth>] argument <argument_index>":
             lazy_value("argument",1),
-        "[smart] <vertical_direction> [<ndir>] [<adjective>] argument <argument_index>":
+        "[smart] <vertical_direction> [<nsteps>] [<nth>] argument <argument_index>":
             lazy_value("argument",2),
-        "[smart] [<adjective>] <level> [<level_index>]  argument <argument_index>": 
-            lazy_value("argument",3),
-        "[smart] <level> [<level_index>] <adjective> argument <argument_index>": 
-            lazy_value("argument",4),
+        "[smart] [<nth>] inside [<inside_index>]  argument <argument_index>": 
+            lazy_value("argument",3,level = "inside"),
+        "[smart] inside [<inside_index>] <nth> argument <argument_index>": 
+            lazy_value("argument",4,level = "inside"),
 
         # big roi rule
         "smart <big_roi> [<big_roi_sub_index>]":
             lazy_value("big_roi",1),
-        "[smart] <adjective> <big_roi> [<big_roi_sub_index>]":
+        "[smart] <nth> <big_roi> [<big_roi_sub_index>]":
             lazy_value("big_roi",2),
-        "[smart] <vertical_abstract_only_direction> [<ndir>] <big_roi> [<big_roi_sub_index>]":
+        "[smart] <vertical_direction> [<nsteps>] <big_roi> [<big_roi_sub_index>]":
             lazy_value("big_roi",3),
-        "[smart] <vertical_abstract_only_direction> [<ndir>] <block> [<adjective>] <big_roi> [<big_roi_sub_index>]":
+        "[smart] <vertical_direction> [<nsteps>] (function|functions) [<nth>] <big_roi> [<big_roi_sub_index>]":
             lazy_value("big_roi",4),
 
            
@@ -92,21 +102,21 @@ class SublimeRulePlugin(MergeRule):
 
  
         # banana example
-        # "banana [<adjective>] <big_roi> [<big_roi_sub_index>]":
-            # lazy_value("big_roi",4,vertical_abstract_only_direction = "above",
-                # ndir = 1,block = "function"),
+        # "banana [<nth>] <big_roi> [<big_roi_sub_index>]":
+            # lazy_value("big_roi",4,vertical_direction = "above",
+                # nsteps = 1,block = "function"),
  
     }
     extras = [  
         IntegerRefST("argument_index", 1, 10),  
         IntegerRefST("alternative_index", 1, 10), 
-        IntegerRefST("ndir",1,20),
-        IntegerRefST("level_index",1,10),                                                                                                                                                       
+        IntegerRefST("nsteps",1,20),
+        IntegerRefST("inside_index",1,10),                                                                                                                                                       
         IntegerRefST("big_roi_sub_index",0,10), 
         IntegerRefST("paste_back_index",0,10),
         IntegerRefST("collect_index",1,30),
         IntegerRefST("item_index",1,30) ,                                                                                                                                                     
-        Choice("adjective",{
+        Choice("nth",{
                 "first" : "first",
                 "second": "second",
                 "third": "third",
@@ -123,15 +133,8 @@ class SublimeRulePlugin(MergeRule):
             }
         ) , 
         Choice("vertical_direction",{
-                "up":"up",
-                "down":"down",
-                "above":"above",
-                "below":"below",
-            }
-        ),
-        Choice("vertical_abstract_only_direction",{
-                "above":"above",
-                "below":"below",
+                "(sauce|up)":"up",
+                "(dunce|down)":"down",
             }
         ),
         Choice("color",{
@@ -140,10 +143,6 @@ class SublimeRulePlugin(MergeRule):
                 "green":3,
                 "yellow":4,
                 "orange":5,
-            }
-        ),
-        Choice("level",{
-                "inside":"inside",
             }
         ),
         Choice("big_roi",{
@@ -164,16 +163,10 @@ class SublimeRulePlugin(MergeRule):
                 "(assignment left| left)" : "assignment left",
                 "assignment full" : "assignment full",
                 "import statement":"import statement",
-                #"(import|imported) (value|item|object|element)":"import value",
-                #"module" : "module", 
                 "(expression statement|expression)" : "expression statement",
                 "iterator" : "iterator",
                 "iterable" : "iterable",
 
-            }
-        ),
-        Choice("block",{
-                "(function|functions)" :"function",
             }
         ),
         Choice("collectable",{
@@ -188,9 +181,9 @@ class SublimeRulePlugin(MergeRule):
    
     ]
     defaults = {
-        "adjective":"None",
-        "ndir":1,
-        "level_index":1,
+        "nth":"None",
+        "nsteps":1,
+        "inside_index":1,
         "big_roi_sub_index":0,
         "paste_back_index":0,
 
