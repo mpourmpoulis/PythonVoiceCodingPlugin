@@ -280,9 +280,12 @@ def get_sub_index(root,index):
 		return get_sub_index(root.slice,index)
 	if match_node(root,(ast.Expr)):
 		return get_sub_index(root.value,index)
+	if match_node(root,(ast.UnaryOp)):
+		return get_sub_index(root.operand,index)
+	if match_node(root,(ast.UnaryOp)):
+		return get_sub_index(root.operand,index)
 
 	if index<len(candidates):
-		print(" in here \n")
 		return candidates[index]
 	else:
 		return None

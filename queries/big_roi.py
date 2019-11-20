@@ -130,8 +130,9 @@ class SelectBigRoi(SelectionQuery):
 		direction = query_description["vertical_abstract_only_direction"]
 		ndir = query_description["ndir"]
 		row, column = view_information["rowcol"](m.backward(selection)[0])
-		result = decode_abstract_vertical(root,atok,targets,row+1, ndir,direction,True,temporary_information)
-		alternatives = []
+		result,alternatives = decode_abstract_vertical(root,atok,targets,row+1, ndir,direction,True,
+					temporary_information,want_alternatives = True)
+		
 
 		if result:
 			new_definition_node = search_upwards(result,ast.FunctionDef)

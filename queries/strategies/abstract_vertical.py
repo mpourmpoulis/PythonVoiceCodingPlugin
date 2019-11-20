@@ -2,13 +2,13 @@ import ast
 from bisect import bisect_right,bisect_left
 
 from PythonVoiceCodingPlugin.library.traverse import search_upwards,search_upwards_log, find_matching,match_node, find_all_nodes
+from PythonVoiceCodingPlugin.queries.strategies.obtain import obtain_result
 
-def decode_abstract_vertical(root,atok, target,current_line, index,direction, want_node = False, selector = None):
-	print("corinth_line",current_line)
+def decode_abstract_vertical(root,atok, target,current_line, index,direction,
+	 want_node = False, selector = None, want_alternatives = False):
 	nodes = find_matching(root, selector)  if  selector else  find_all_nodes(root,target)
 	line_information = set()
 	for n in nodes:	
-		print(n,"n")
 		line_information.add(n.first_token.start[0])
 	line_information = sorted(list(line_information))
 	print(" inside to go to abstract vertical",line_information)
@@ -24,6 +24,9 @@ def decode_abstract_vertical(root,atok, target,current_line, index,direction, wa
 	else:
 		return None
 	if want_node:
+		if want_alternatives:
+			candidates = [x  for x in nodes if x.first_token.start[0] == line_information[i]]
+			return obtain_result(None,candidates) 
 		for n in nodes:
 			if n.first_token.start[0] == line_information[i]:
 				return n

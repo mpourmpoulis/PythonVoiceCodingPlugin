@@ -15,6 +15,8 @@
 
 * sub indexing moved from big_roi to info  module!
 
+* the abstract_vertical and big_roi modules have been modified so as to offer alternatives when there are multiple logical lines in the same physical line. 
+
 ## [0.0.3] - 2019-11-18
 
 important patch
