@@ -13,12 +13,17 @@ def root_level_order(accumulator,root,level,index,only_information,priority,pena
 	if not only_information or True:
 		accumulator.push(second_option,priority if not first_option else priority + penalty)
 	
-def root_lexical_order(accumulator,root,level_nodes,information_nodes,index,only_information,priority,penalty,lca = None):
+def root_lexical_order(accumulator,root,level_nodes,information_nodes,index,
+		only_information,priority,penalty,lca = None,constrained_space = None):
 	# print(" I entered a roach lexical order")
 	if  lca:
 		level_nodes = [x  for x in level_nodes if lca.is_child(x,root)]
 		information_nodes = [x  for x in information_nodes if lca.is_child(x,root)]
 	# print("inside Drew's lexical order",level_nodes,information_nodes)
+	if constrained_space:
+		level_nodes = [x  for x in level_nodes if constrained_space[0]<x.first_token.startpos<constrained_space[1]]
+		information_nodes = [x  for x in information_nodes 
+			if constrained_space[0]<x.first_token.startpos<constrained_space[1]]
 	first_option = _get(level_nodes,index,None)
 	second_option  = _get(information_nodes,index,None)
 	if first_option in information_nodes and not information_nodes:	

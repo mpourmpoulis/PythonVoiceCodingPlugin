@@ -19,7 +19,7 @@ def adjective_strategy(
 	small_special = [],	special = [],	level_nodes = [],
 	information_nodes = [],	adjective_word = None,
 	priority = {},	penalized = [], penalty = 2, only_information = False,
-	try_alternative = False, additional_level_nodes = [],
+	try_alternative = False, additional_level_nodes = [], constrained_space = None,
 	**kwargs):
 
 	# we cannot operate without those parameters
@@ -67,7 +67,8 @@ def adjective_strategy(
 			only_information=only_information,
 			priority = priority["small_root_lexical_order"],
 			penalty = 2,
-			lca = lca
+			lca = lca,
+			constrained_space = constrained_space
 		)
 	print("small_root",small_root)
 	
@@ -87,7 +88,8 @@ def adjective_strategy(
 		only_information=only_information,
 		priority = priority["root_lexical_order"],
 		penalty = 2,
-		lca = None
+		lca = None,
+		constrained_space = constrained_space
 	)
 	print("\nDEBUGGING after wroteup 20\n", accumulator.history)
 	################################################################

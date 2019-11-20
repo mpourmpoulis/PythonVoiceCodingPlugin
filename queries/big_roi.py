@@ -134,7 +134,10 @@ class SelectBigRoi(SelectionQuery):
 		# bug fixing
 		test_result = decode_abstract_vertical(root,atok,targets,row+1, 1,direction,True,
 					temporary_information,want_alternatives = False)
-		if test_result in search_upwards_log(origin,ast.stmt):
+		print(test_result,ast.dump(test_result))
+		print(search_upwards_log(origin,ast.stmt))
+		l = search_upwards_log(origin,ast.stmt)
+		if test_result in [l[0]] + l[1]:
 			ndir  = ndir + 1
 
 
