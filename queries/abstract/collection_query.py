@@ -10,6 +10,7 @@ class CollectionQuery(Query):
 	multiple_in = False
 	indexable = False
 	select_insertion = True
+	label = "Collection"
 
 	def handle_single(self,view_information,query_description,extra = {}):
 		pass

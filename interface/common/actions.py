@@ -156,7 +156,7 @@ class DisplayAction(InterfaceAction):
 		window.run_command("show_panel",{"panel":"output.noob_voice_coding_plugin_panel"})
 
 
-def shape_output_beautiful(variables):
+def shape_output_beautiful(variables,label):
 	current = 0
 	text = []
 	maximum_length = max([len(variable + " " + str(index + 1) + " ") 
@@ -165,7 +165,10 @@ def shape_output_beautiful(variables):
 	available = 147//variables_per_line
 	for index,variable in enumerate(variables):
 		if index%variables_per_line == 0:
-			text.append("\n")
+			if index!=0 :
+				text.append("\n")
+			else:
+				text.append(label + ":\n")
 		string_index = str( index  + 1)
 		value = variable.ljust(available,'.')[:-1*(len(string_index)+1)]+string_index+ " "
 		text.append(value)
@@ -174,16 +177,17 @@ def shape_output_beautiful(variables):
 
 class DisplayNiceAction(InterfaceAction):
 	"""docstring for DisplayNiceAction"""
-	def __init__(self, items,preserve_order):
+	def __init__(self, label,items,preserve_order):
+		self.label = label
 		self.items = items
 		self.preserve_order = preserve_order
 
 	def execute(self,view,window,**kwargs):
-		panel = window.create_output_panel("noob_voice_coding_plugin_panel")
+		panel = window.create_output_panel("python_voice_coding_plugin_panel")
 		panel.set_syntax_file("Packages/Python/Python.tmLanguage")
-		panel.run_command("append",{"characters":shape_output_beautiful(self.items)})
+		panel.run_command("append",{"characters":shape_output_beautiful(self.items,self.label)})
 		window.run_command("hide_panel",{"panel":"console"}) 
-		window.run_command("show_panel",{"panel":"output.noob_voice_coding_plugin_panel"})
+		window.run_command("show_panel",{"panel":"output.python_voice_coding_plugin_panel"})
 
 		
 			
@@ -195,13 +199,13 @@ class DisplayRegionsAction(InterfaceAction):
 	def execute(self,view,window,sublime,**kwargs):
 		regions  = self.data["regions"] 
 		regions = [sublime.Region(x[0],x[1])  for x in regions if x]
-		panel = window.create_output_panel("noob_voice_coding_plugin_panel")
+		panel = window.create_output_panel("python_voice_coding_plugin_panel")
 		panel.set_syntax_file("Packages/Python/Python.tmLanguage")
 		panel.run_command("append",{"characters":self.data["text"]})
 		for i,r in enumerate(regions):
 			panel.run_command("append",{  "characters": str(i+1)+" : "+ view.substr(r)+"\n" })
 		window.run_command("hide_panel",{"panel":"console"}) 
-		window.run_command("show_panel",{"panel":"output.noob_voice_coding_plugin_panel"})
+		window.run_command("show_panel",{"panel":"output.python_voice_coding_plugin_panel"})
 	
 		
 

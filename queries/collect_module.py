@@ -13,6 +13,7 @@ from PythonVoiceCodingPlugin.queries.abstract import CollectionQuery
 
 class CollectModule(CollectionQuery):
 	indexable = True
+	label = "Modules"
 	def handle_single(self,view_information,query_description,extra = {}):
 		build, selection, origin = self._preliminary(view_information,query_description,extra)
 		if not  build: 

@@ -23,7 +23,7 @@ def root_lexical_order(accumulator,root,level_nodes,information_nodes,index,
 	if constrained_space:
 		level_nodes = [x  for x in level_nodes if constrained_space[0]<x.first_token.startpos<constrained_space[1]]
 		information_nodes = [x  for x in information_nodes 
-			if constrained_space[0]<x.first_token.startpos<constrained_space[1]]
+									if constrained_space[0]<=x.first_token.startpos<constrained_space[1]]
 	first_option = _get(level_nodes,index,None)
 	second_option  = _get(information_nodes,index,None)
 	if first_option in information_nodes and not information_nodes:	

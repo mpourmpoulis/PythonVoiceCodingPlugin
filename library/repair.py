@@ -150,7 +150,24 @@ def after_bracket(t):
 			finish_atom(t[-1])  and t[1].string in ["]","}"]
 		)
 
+def before_bracket(t):
+	return t[-1] is None   or t[-1].string in [":"]
 
+
+# not sure but seems to work
+def after_double_dot(t):
+	return t[1] is None   or not( 
+		start_atom(t[1]) or 
+		t[1].string.isspace() or
+		t[1].string=="]"
+		)
+
+def before_double_dot(t):
+	return t[ -1] is None   or not( 
+		start_atom(t[1]) or 
+		t[-1].string.isspace() or
+		t[-1].string=="["
+		)
 def before_dot(t):
 	return t[ - 1] is None  or not (
 		t[-1].string in ["from",".","import"] or 
@@ -199,7 +216,7 @@ def handle_empty_compound(atok ,t,l,b,dummy):
 		return (False,)
 
 
-# empty []
+
 def process_token(atok,t,l,b ):
 	n = neighbors(atok, t)
 	s = t.string
@@ -215,9 +232,14 @@ def process_token(atok,t,l,b ):
 		after = after_comma(n)
 		after_space = False
 	elif s in ["(","[","{"]:
-		before = False
+		before =False
 		before_space = False
 		after = after_bracket(n)
+		after_space = False
+	elif s in [":"]:
+		before = False
+		before_space = False
+		after = after_double_dot(n)
 		after_space = False
 	elif s in ["."]:
 		before = before_dot(n)

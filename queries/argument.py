@@ -28,11 +28,15 @@ class SelectArgument(SelectionQuery):
 
 
 	def process_line(self,q, root ,atok, origin  = None, select_node = None,tiebreaker = lambda x: x, 
-					line = None, transformation = None,inverse_transformation = None
+					line = None, transformation = None,inverse_transformation = None, priority = {}, 
+					constrained_space = (),
 		):
 		result = None
 		alternatives = None
-		additional_parameters = {"priority":{}}
+		additional_parameters = {"priority":priority}
+		if constrained_space:
+			additional_parameters["constrained_space"] = constrained_space
+
 
 		information = make_information(get_argument_from_call,q["argument_index"]-1)
 		information_nodes = sorted_by_source_region(atok, find_matching(root, information))
@@ -177,6 +181,7 @@ class SelectArgument(SelectionQuery):
 
 		origin = nearest_node_from_offset(root,atok, selection[0]) if selection[0]==selection[1] else node_from_range(root,atok, selection)
 		statement_node = search_upwards(origin,ast.stmt)
+		priority = {"root_lexical_order":1} if statement_node.first_token.start[0] != origin.first_token.start[0] else {}
 		result, alternatives = self.process_line(
 			q = query_description,
 			root = statement_node,
@@ -184,7 +189,9 @@ class SelectArgument(SelectionQuery):
 			origin = None,
 			select_node = None,
 			tiebreaker = lambda x: tiebreak_on_lca(statement_node,origin,x),
-			line = nr+1
+			line = nr+1,
+			priority = priority,
+			constrained_space = (view_information["text_point"](nr,0),view_information["text_point"](nr + 1,0))
 		)
 		return self._backward_result(result, alternatives,build)
 

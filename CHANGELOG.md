@@ -5,9 +5,13 @@
 ### Fixed
 * fixed the empty brackets bug in the repair module
 
-* fixed  one error in vertical direction + big_roi queries, which appeared when a region of interest spanned across multiple physical lines and was the selection origin of a query searching for a region of interest of the same kind.
+* fixed  one error in vertical direction + big_roi queries, which appeared when a region of interest spanned across multiple physical lines and was the selection origin of a query searching for a region of interest of the same kind and was causing an off by one error when going upwards.
+
+* bugs with ":" addressed, needs more testing
 
 ### Changed
+
+* collection queries no labels not to now have labels(names) and they display them
 
 * a global state was added the application module, enabling insertion from the results of collection queries from other files
 
@@ -18,6 +22,9 @@
 * sub indexing moved from big_roi to info  module!
 
 * the abstract_vertical and big_roi modules have been modified so as to offer alternatives when there are multiple logical lines in the same physical line. 
+
+* argument,adjective_strategy,primitives have been mortified in order to standardize the behavior of the grammar when the target logical line response over multiple physical ones.
+
 
 ## [0.0.3] - 2019-11-18
 

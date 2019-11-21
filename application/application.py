@@ -81,7 +81,8 @@ class Application():
 				for location in writing_positions:
 					interface.push_action(ReplaceAction(location,result))
 			if items:
-				interface.push_action(DisplayNiceAction(items,True))  
+				print(s.label,"labeling\n")
+				interface.push_action(DisplayNiceAction(s.label,items,True))  
 				self.state["collection"] = items
 				self.global_state["collection"] = items
 				self.history.append(("collect"))
