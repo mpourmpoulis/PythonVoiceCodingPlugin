@@ -300,12 +300,24 @@ class RepairMissing():
 			p = previous_token(atok, token)
 			n = next_token(atok,token)
 			
+	def handle_error(self,atok, token):
+		if token in self.already_checked:
+			return True
+		final_error = token
+		return False
+		while final_error.type==token.ERRORTOKEN:
+			self.already_checked.add(final_error)
+			final_error = next_token(atok,final_error)
+		final_error = previous_token(atok, token)
+
+
 
 
 	def work(self):
 		l = LineInfo(self.atok)
 		b = BracketMatcher(self.atok)
 		k = 0
+		self.already_checked = set()
 		for t in self.atok.tokens:
 			if t.string in ["if","for","while","with","def","elif","else"]:
 				if t.string == "elif":
@@ -315,6 +327,9 @@ class RepairMissing():
 					self.m.modify_from(self.start_time,(z[1],z[1]),z[2])
 					if z[3]:
 						continue
+			if t.type==token.ERRORTOKEN :
+				if self.handle_error(self.atok, t):
+					continue
 			x,y = process_token(self.atok,t,l,b)
 			if x[0]:
 				self.insert_before(t,x[1])

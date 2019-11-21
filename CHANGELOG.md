@@ -9,6 +9,10 @@
 
 * Fixed error in big_roi module , where when trying to select something in global scope with vertical direction big_roi_queries ,not checking for Nonetype object caused error
 
+* Fixed error in the preliminary function of the big regions of interest, where if the cursor was at the last empty line of the function, selections would be given from the next function!
+
+* Fixed old name of my output panel:)
+
 ### Changed
 
 * collection queries no labels not to now have labels(names) and they display them
