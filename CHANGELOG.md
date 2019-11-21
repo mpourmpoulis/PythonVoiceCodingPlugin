@@ -3,11 +3,11 @@
 ## [Unreleased]
 
 ### Fixed
-* fixed the empty brackets bug in the repair module
+* fixed the empty brackets bug in the repair modulebugs with ":" addressed, needs more testing
 
 * fixed  one error in vertical direction + big_roi queries, which appeared when a region of interest spanned across multiple physical lines and was the selection origin of a query searching for a region of interest of the same kind and was causing an off by one error when going upwards.
 
-* bugs with ":" addressed, needs more testing
+* Fixed error in big_roi module , where when trying to select something in global scope with vertical direction big_roi_queries ,not checking for Nonetype object caused error
 
 ### Changed
 

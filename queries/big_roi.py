@@ -143,11 +143,11 @@ class SelectBigRoi(SelectionQuery):
 
 		result,alternatives = decode_abstract_vertical(root,atok,targets,row+1, ndir,direction,True,
 					temporary_information,want_alternatives = True)
-		
+		print("\n\n promoter is old\n",result,alternatives,"\n")
 
 		if result:
 			new_definition_node = search_upwards(result,ast.FunctionDef)
-			if definition_node is not new_definition_node:
+			if definition_node is not new_definition_node  and new_definition_node is not None:
 				alternatives  = tiebreak_on_lca(new_definition_node,result,find_all_nodes(new_definition_node,targets , exclusions))
 
 		result, alternatives = obtain_result(result, alternatives)
