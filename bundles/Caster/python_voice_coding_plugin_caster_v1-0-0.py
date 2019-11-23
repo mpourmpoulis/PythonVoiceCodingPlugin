@@ -14,6 +14,17 @@ import os
 import subprocess
 import json
 
+if settings.SETTINGS["miscellaneous"]["use_aenea"]:
+    try:
+        import aenea
+        from jsonrpclib import ProtocolError
+        using_rpc = True
+    except:
+        using_rpc = False
+else:
+    using_rpc = False 
+
+
 def create_arguments(command,format,**kwargs):
     p = {x:kwargs[x] for x in kwargs.keys() if x not in ['_node','_rule','_grammar']}
     p["format"] = format  
@@ -30,7 +41,10 @@ def send_sublime(c,data):
 
 def noob_send(command,format,**kwargs):
     data = create_arguments(command,format,**kwargs)
-    send_sublime("python_voice_coding_plugin", data)
+    if not using_rpc:
+        send_sublime("python_voice_coding_plugin", data)
+    else:
+        aenea.communications.server.python_voice_coding_plugin_aenea_send_sublime(c="python_voice_coding_plugin",data=data)
 
 def lazy_value(c,f,**kwargs):
     return  R(Function(noob_send, command = c, format = f,**kwargs))
