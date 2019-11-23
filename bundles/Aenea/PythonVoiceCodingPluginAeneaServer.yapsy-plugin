@@ -1,0 +1,9 @@
+[Core]
+Name = PythonVoiceCodingPluginAeneaServer plugin
+Module = PythonVoiceCodingPluginAeneaServer
+
+
+[Documentation]
+Author = Kitsios Panagiotis
+Version = 0.0
+Description = PythonVoiceCodingPluginAeneaServer Custom RPC Plug-in .

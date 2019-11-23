@@ -14,7 +14,6 @@ sys.path.remove(os.path.join(os.path.dirname(__file__), 'third_party'))
 
 class PythonVoiceCodingPluginCommand(sublime_plugin.TextCommand):
 	def run(self, edit,arg):
-		print("Iran")
 		self.action_one(edit,arg)
 
 	def action_one(self, edit,arg):
