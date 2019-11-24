@@ -305,11 +305,27 @@ class RepairMissing():
 			return True
 		final_error = token
 		return False
-		while final_error.type==token.ERRORTOKEN:
+		# this is wrong
+		while final_error.type==tokenize.ERRORTOKEN:
 			self.already_checked.add(final_error)
 			final_error = next_token(atok,final_error)
 		final_error = previous_token(atok, token)
 
+	def handled_consecutive_names(self,atok,token):
+		if token in self.already_checked:
+			return True
+		if token.type != tokenize.NAME or token.string in KEYWORDS:
+			return False
+		final_token = next_token(atok,token)
+		while final_token.type in [tokenize.NAME,tokenize.ERRORTOKEN] and  final_token.string not in KEYWORDS:
+			final_token = next_token(atok,final_token)
+		final_token = previous_token(atok,final_token)
+		if final_token != token:
+			for t in atok.token_range(token, final_token):
+				self.already_checked.add(t)
+			self.m.modify_from(self.start_time,(token.startpos,final_token.endpos),self.d)
+			return True
+		return False
 
 
 
@@ -327,8 +343,8 @@ class RepairMissing():
 					self.m.modify_from(self.start_time,(z[1],z[1]),z[2])
 					if z[3]:
 						continue
-			if t.type==token.ERRORTOKEN :
-				if self.handle_error(self.atok, t):
+			if t.type==tokenize.NAME:
+				if self.handled_consecutive_names(self.atok, t):
 					continue
 			x,y = process_token(self.atok,t,l,b)
 			if x[0]:

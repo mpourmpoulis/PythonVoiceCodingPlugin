@@ -249,6 +249,36 @@ def get_argument_from_definition(root,raw = True,index = None):
 	return temporary[index] if (index is not None) and len(temporary)>index else temporary
 
 
+################################################################
+# 	 sub indexing functions
+################################################################
+def is_of_higher_priority(parent_node,child_node):
+	operator_priority = [
+		ast.BitOr,ast.BitXor, ast.BitAnd,
+		(ast.LShift,ast.RShift),(ast.Add,ast.Sub),
+		(ast.Mult, ast.Div, ast.FloorDiv, ast.Mod)   ,
+		ast.Pow, 
+	]
+	for operator in operator_priority:
+		p = match_node(parent_node, operator)
+		c = match_node(child_node, operator)
+		if c and not p:
+			return True
+	return False
+
+def get_subparts_of_binary_operation(root):
+	print("\n left binary operation",[root.left.first_token])
+	left = (
+		[root.left] 
+		if not match_node(root.left,ast.BinOp) or root.left.first_token.string=="(" or is_of_higher_priority(root.left,root)  
+		else get_subparts_of_binary_operation(root.left)
+	)
+	right = (
+		[root.right] 
+		if not match_node(root.right,ast.BinOp) or root.right.first_token.string=="(" or is_of_higher_priority(root.right,root)  
+		else get_subparts_of_binary_operation(root.right)
+	)
+	return left + right
 
 def get_sub_index(root,index):
 	candidates = []
@@ -264,6 +294,8 @@ def get_sub_index(root,index):
 		candidates = list(zip(root.keys,root.values))
 	elif match_node(root,(ast.BoolOp)) :
 		candidates =  root.values
+	elif match_node(root,(ast.BinOp)) :
+		candidates = get_subparts_of_binary_operation(root)
 	elif match_node(root,(ast.Compare)) :
 		candidates = [root.left] + root.comparators
 	elif match_node(root,(ast.Index)):

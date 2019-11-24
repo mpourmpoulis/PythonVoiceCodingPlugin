@@ -2,8 +2,14 @@
 
 ## [Unreleased]
 
+### Added
+
+* aenea support has been added by means of the server plug-ins,  available	in the bundles aenea folder.
+
 ### Fixed
 * fixed the empty brackets bug in the repair modulebugs with ":" addressed, needs more testing
+
+* also in the repair module, we can now handle consecutive phase separated name tokens( and some mixing with error tokens) like the ones that can occur after a misrecognition, for instance "x = gibberish words " is now parsable!
 
 * fixed  one error in vertical direction + big_roi queries, which appeared when a region of interest spanned across multiple physical lines and was the selection origin of a query searching for a region of interest of the same kind and was causing an off by one error when going upwards.
 
@@ -14,6 +20,8 @@
 * Fixed old name of my output panel:)
 
 ### Changed
+
+* The customer bundles have been modified to be usable with aenea !
 
 * collection queries no labels not to now have labels(names) and they display them
 
@@ -27,7 +35,7 @@
 
 * the abstract_vertical and big_roi modules have been modified so as to offer alternatives when there are multiple logical lines in the same physical line. 
 
-* argument,adjective_strategy,primitives have been mortified in order to standardize the behavior of the grammar when the target logical line response over multiple physical ones.
+* argument,adjective_strategy,primitives have been mortified in order to standardize the behavior of the grammar when the target logical line response over multiple physical ones. 
 
 
 ## [0.0.3] - 2019-11-18
