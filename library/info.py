@@ -1,9 +1,10 @@
 import ast
 from itertools import chain 
+import re
 
-from PythonVoiceCodingPlugin.library import build_tree,get_source_region,nearest_node_from_offset,make_flat
+from PythonVoiceCodingPlugin.library import build_tree,get_source_region,nearest_node_from_offset,make_flat,previous_token,next_token
 from PythonVoiceCodingPlugin.library.traverse import match_node, find_all_nodes, match_parent,search_upwards_log
-
+from PythonVoiceCodingPlugin.third_party.asttokens import asttokens  
 
 ################################################################
 '''
@@ -259,26 +260,59 @@ def is_of_higher_priority(parent_node,child_node):
 		(ast.Mult, ast.Div, ast.FloorDiv, ast.Mod)   ,
 		ast.Pow, 
 	]
+	print(ast.dump(parent_node),parent_node.op)
 	for operator in operator_priority:
-		p = match_node(parent_node, operator)
-		c = match_node(child_node, operator)
-		if c and not p:
+		p = match_node(parent_node.op, operator)
+		c = match_node(child_node.op, operator)
+		print("\ntesting operator ",operator,p,c,"\n")
+		if p and not c:
 			return True
 	return False
 
+
 def get_subparts_of_binary_operation(root):
-	print("\n left binary operation",[root.left.first_token])
 	left = (
 		[root.left] 
-		if not match_node(root.left,ast.BinOp) or root.left.first_token.string=="(" or is_of_higher_priority(root.left,root)  
+		if not match_node(root.left,ast.BinOp)  or is_of_higher_priority(root,root.left)  
 		else get_subparts_of_binary_operation(root.left)
 	)
-	right = (
-		[root.right] 
-		if not match_node(root.right,ast.BinOp) or root.right.first_token.string=="(" or is_of_higher_priority(root.right,root)  
-		else get_subparts_of_binary_operation(root.right)
-	)
+	right = [root.right]
 	return left + right
+
+
+def split_string(s):
+	s = s.strip()
+	first_attempt = [x  for x in re.split("[., ]",s) if not x.isspace()]
+	if len(first_attempt) > 1:
+		return first_attempt
+	second_attempt = [x  for x in re.split("[_]",s) if not x.isspace()]
+	if len(second_attempt) > 1:
+		return second_attempt
+
+	
+
+def get_subparts_of_string(root):
+	output = []
+	start_position = root.first_token.startpos + 1
+	original  = root.s
+	splitted = split_string(root.s)
+	index = 0
+	for s in splitted:
+		index = original.find(s,index)
+		fake_token = asttokens.Token(0,s,0,0,0,
+			root.first_token.index,start_position + index,start_position + index + len(s))
+		fake_node = ast.Str(s = s)
+		fake_node.parent = root.parent
+		fake_node.parent_field = root.parent_field
+		fake_node.parent_field_index = root.parent_field_index
+		fake_node.first_token = fake_token
+		fake_node.last_token = fake_token
+		fake_node.fake = True
+		output.append(fake_node)
+		index += len(s)
+	return output
+
+
 
 def get_sub_index(root,index):
 	candidates = []
@@ -306,6 +340,8 @@ def get_sub_index(root,index):
 		candidates = [root.lower,root.upper, root.step]
 	elif match_node(root,(ast.ExtSlice)):
 		candidates = root.dims
+	elif match_node(root,(ast.Str)):
+		candidates = get_subparts_of_string(root)
 	
 	# in the following cases we Certs deeper in the tree
 	if match_node(root,(ast.Subscript)):

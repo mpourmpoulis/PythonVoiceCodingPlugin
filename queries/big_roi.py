@@ -29,9 +29,9 @@ class SelectBigRoi(SelectionQuery):
 		root,atok,m,r  = build 
 		selection = m.forward(selection)
 		origin = nearest_node_from_offset(root,atok, selection[0]) if selection[0]==selection[1] else node_from_range(root,atok, selection)
-		definition_node = search_upwards(origin,ast.FunctionDef) # need to change that in the future 
+		definition_node = search_upwards(origin,ast.FunctionDef) # ,aybe need to change that in the future 
 		# in order to find the outermost function.
-		if definition_node  and definition_node.first_token.startpos> selection[1]:
+		if definition_node  and definition_node.first_token.startpos > selection[1]:
 			token = atok.get_token_from_offset(selection[0])
 			while token.string.isspace():
 				token = atok.prev_token( token )
