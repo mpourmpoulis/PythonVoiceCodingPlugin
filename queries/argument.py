@@ -161,7 +161,7 @@ class SelectArgument(SelectionQuery):
 		ndir = query_description["ndir"]
 
 		if vertical_direction in ["up","down"]:
-			row, column = view_information["rowcol"](selection[0])
+			row, column = view_information["rowcol"](m.backward(selection)[0])
 			nr = max(0,row + ndir if vertical_direction=="down" else row - ndir)
 			t = view_information["text_point"](nr,0)
 			selection = (t,t)
@@ -172,8 +172,9 @@ class SelectArgument(SelectionQuery):
 		root,atok,m,r  = build 
 		selection = m.forward(selection)
 
+		# this is the wrong but for some reason it is working:)
 		if vertical_direction in ["above","below"]:
-			row, column = view_information["rowcol"](selection[0])
+			row, column = view_information["rowcol"](m.backward(selection)[0]) 
 			nr = decode_abstract_vertical(root,atok,ast.Call,row+1, ndir,vertical_direction)-1
 			t = view_information["text_point"](nr,0)
 			selection = (t,t)

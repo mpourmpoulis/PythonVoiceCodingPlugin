@@ -163,11 +163,12 @@ def after_double_dot(t):
 		)
 
 def before_double_dot(t):
-	return t[ -1] is None   or not( 
-		start_atom(t[1]) or 
+	return t[-1] is None   or not( 
+		finish_atom(t[-1]) or 
 		t[-1].string.isspace() or
 		t[-1].string=="["
 		)
+
 def before_dot(t):
 	return t[ - 1] is None  or not (
 		t[-1].string in ["from",".","import"] or 
@@ -190,20 +191,16 @@ def handle_empty_compound(atok ,t,l,b,dummy):
 	left,right = expand_to_line_or_statement(atok,t, l, b)
 	if token.DEDENT==left.type:
 		left = next_token(atok,left)
-	print("empty compound ",[left,right])
 	if t.string=="elif"  and left.string!="elif":
 		left = next_token(atok,left)
 	if left is t  and right.string == ":" :
 		rh = next_token(atok,right)
-		# print("rh is",[rh])
 		while rh and (rh.line.isspace() or rh.start[0]==right.start[0]):
-			# print("rh is",[rh])
 			rh = next_token(atok, rh)
 		temporary = left.line
 		ls = temporary[:len(temporary) - len(temporary.lstrip())]
 		temporary = rh.line if rh else ""
 		rs = temporary[:len(temporary) - len(temporary.lstrip())]
-		(print("\nstarting new variation\n",[t],"\n",ls,rs,"these are the indentations",len(ls),len(rs),[left,rh]))
 		if len(ls)>=len(rs):
 			return True , right.endpos," pass ", False
 		else:
@@ -237,7 +234,7 @@ def process_token(atok,t,l,b ):
 		after = after_bracket(n)
 		after_space = False
 	elif s in [":"]:
-		before = False
+		before = before_double_dot(n)
 		before_space = False
 		after = after_double_dot(n)
 		after_space = False
