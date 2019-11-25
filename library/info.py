@@ -1,6 +1,7 @@
 import ast
-from itertools import chain 
 import re
+from itertools import chain 
+from urllib.parse import urlparse
 
 from PythonVoiceCodingPlugin.library import build_tree,get_source_region,nearest_node_from_offset,make_flat,previous_token,next_token
 from PythonVoiceCodingPlugin.library.traverse import match_node, find_all_nodes, match_parent,search_upwards_log
@@ -282,9 +283,12 @@ def get_subparts_of_binary_operation(root):
 	return left + right
 
 
-def split_string(s):
+def split_string(s,even_letters = True):
 	s = s.strip()
-	first_attempt = [x  for x in re.split("[., ]",s) if not x.isspace()]
+	y = urlparse(s)
+	if  not (y.scheme=="" and y.netloc==""):
+		return make_flat( [split_string(x,False)  for x in y ])
+	first_attempt = [x  for x in re.split("[., :/]",s) if not x.isspace()]
 	if len(first_attempt) > 1:
 		return first_attempt
 	second_attempt = [x  for x in re.split("[_]",s) if not x.isspace()]
@@ -294,7 +298,7 @@ def split_string(s):
 	if len(third_attempt) > 1:
 		return third_attempt
 
-	return list(s)
+	return list(s) if even_letters else [s]
 
 	
 
