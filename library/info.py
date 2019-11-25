@@ -290,6 +290,11 @@ def split_string(s):
 	second_attempt = [x  for x in re.split("[_]",s) if not x.isspace()]
 	if len(second_attempt) > 1:
 		return second_attempt
+	third_attempt = re.sub('([A-Z][a-z]+)', r' \1', re.sub('([A-Z]+)', r' \1', s)).split()
+	if len(third_attempt) > 1:
+		return third_attempt
+
+	return list(s)
 
 	
 

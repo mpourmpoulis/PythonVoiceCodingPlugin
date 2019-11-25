@@ -39,7 +39,9 @@
 
 * sub indexing moved from big_roi to info  module! 
 
-* furthermore , you can now sub index strings, arithmetical operations and more!
+
+
+* furthermore , you can now sub index strings, arithmetical operations and more! Regarding strings, you can now get words of the sentenceseparated by space or by   full stop, but you can also  pick up parts of the snake or camel case words as well as individual letters!
 
 * the abstract_vertical and big_roi modules have been modified so as to offer alternatives when there are multiple logical lines in the same physical line. 
 
