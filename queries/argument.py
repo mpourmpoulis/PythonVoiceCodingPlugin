@@ -29,7 +29,7 @@ class SelectArgument(SelectionQuery):
 
 	def process_line(self,q, root ,atok, origin  = None, select_node = None,tiebreaker = lambda x: x, 
 					line = None, transformation = None,inverse_transformation = None, priority = {}, 
-					constrained_space = (),
+					constrained_space = (), second_tiebreaker = None
 		):
 		result = None
 		alternatives = None
@@ -110,6 +110,9 @@ class SelectArgument(SelectionQuery):
 			temporary = [x[1]  for x in temporary]
 			result,alternatives = obtain_result(None,temporary)
 			
+		if second_tiebreaker:
+			alternatives = second_tiebreaker(origin,result,alternatives)
+		
 
 
 

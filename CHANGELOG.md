@@ -19,6 +19,8 @@
 
 * Fixed old name of my output panel:)
 
+* Fixed a bug in the argument module where not forwarding selections cause errors went down in lines for the above below keywords.
+
 ### Changed
 
 * The customer bundles have been modified to be usable with aenea !

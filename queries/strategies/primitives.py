@@ -5,7 +5,6 @@ def _get(l,n,d):
 def root_level_order(accumulator,root,level,index,only_information,priority,penalty):
 	first_option   = level(root,1, index,False)
 	second_option  = level(root,1, index,True)
-	print(first_option,second_option,"from root level order ")
 	if first_option in level.special and only_information==False: 	
 		accumulator.push(first_option,priority)
 	else:

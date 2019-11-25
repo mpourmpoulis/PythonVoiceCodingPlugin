@@ -166,7 +166,8 @@ def before_double_dot(t):
 	return t[-1] is None   or not( 
 		finish_atom(t[-1]) or 
 		t[-1].string.isspace() or
-		t[-1].string=="["
+		t[-1].string=="[" or 
+		t[-1].string  in KEYWORDS
 		)
 
 def before_dot(t):
@@ -185,7 +186,14 @@ def after_dot(t):
 		)
 	)
 	return False
-
+'''
+def after_else(t):
+	if 60<t[0].start[0]<80:
+		print(t,"\n",start_atom(t[1]),t[1].string in [":"],start_atom(t[1]) or t[1].string in [":"])
+	return t[1] is None or not(
+		start_atom(t[1]) or t[1].string in [":"]
+	)
+'''
 def handle_empty_compound(atok ,t,l,b,dummy):
 	n = neighbors(atok, t)
 	left,right = expand_to_line_or_statement(atok,t, l, b)

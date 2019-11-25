@@ -50,7 +50,6 @@ def adjective_strategy(
 	small_special = sorted_by_source_region(atok, small_special)
 	level_nodes = sorted_by_source_region(atok, level_nodes)
 	information_nodes = sorted_by_source_region(atok,information_nodes)
-	print("information_note",information_nodes,"level_nones",level_nodes)
     ################################################################
 	# small root level and lexical order strategy
 	################################################################
@@ -70,19 +69,19 @@ def adjective_strategy(
 			lca = lca,
 			constrained_space = constrained_space
 		)
-	print("small_root",small_root)
+	# print("small_root",small_root)
 	
     ################################################################
 	# root level and lexical order strategy
 	################################################################
-	print("\nDEBUGGING after wrote stuf 0f\n", accumulator.history)
+	# print("\nDEBUGGING after wrote stuf 0f\n", accumulator.history)
 	root_level_order(accumulator,root,
 		level,index,
 		only_information = only_information,
 		priority = priority["root_level"],
 		penalty = 2
 	)
-	print("\nDEBUGGING after wrote stuff 1\n", accumulator.history)
+	# print("\nDEBUGGING after wrote stuff 1\n", accumulator.history)
 	root_lexical_order(accumulator,root,
 		level_nodes,information_nodes,index,
 		only_information=only_information,
@@ -91,7 +90,7 @@ def adjective_strategy(
 		lca = None,
 		constrained_space = constrained_space
 	)
-	print("\nDEBUGGING after wroteup 20\n", accumulator.history)
+	# print("\nDEBUGGING after wroteup 20\n", accumulator.history)
 	################################################################
 	#  strategies for spacial and very special
 	################################################################

@@ -11,16 +11,13 @@ def decode_abstract_vertical(root,atok, target,current_line, index,direction,
 	for n in nodes:	
 		line_information.add(n.first_token.start[0])
 	line_information = sorted(list(line_information))
-	print(" inside to go to abstract vertical",line_information)
 	ll=len(line_information)
 	if direction=="below":	
 		i = bisect_right(line_information,current_line)
 		i = min(ll-1,i+index-1)
-		print(i)
 	elif direction=="above":
 		i = bisect_left(line_information,current_line)
 		i  = max(0,i-index)
-		print(i)
 	else:
 		return None
 	if want_node:
