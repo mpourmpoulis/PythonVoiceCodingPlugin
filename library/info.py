@@ -253,6 +253,8 @@ def get_argument_from_definition(root,raw = True,index = None):
 ################################################################
 # 	 sub indexing functions
 ################################################################
+
+# https://docs.python.org/3/reference/expressions.html#operator-precedence
 def is_of_higher_priority(parent_node,child_node):
 	operator_priority = [
 		ast.BitOr,ast.BitXor, ast.BitAnd,
