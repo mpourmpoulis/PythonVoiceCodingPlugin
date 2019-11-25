@@ -26,6 +26,24 @@ def tiebreak_on_lca(root,origin,candidates):
 
 
 
+def tiebreak_on_visual(original_line,result,alternatives):
+	if result:
+		if original_line:
+			k = lambda x: (
+				abs(x.first_token.start[0] - result.first_token.start[0]) + 
+				( 
+					10 if (					 
+					x.first_token.start[0]<=original_line<=result.first_token.start[0] or
+					x.first_token.start[0]>=original_line>=result.first_token.start[0]
+					) else 0
+				)
+			)
+		else:
+			k = lambda x: abs(x.first_token.start[0] - result.first_token.start[0])
+		if alternatives:
+			return sorted(alternatives, key = k)
+	return alternatives
+
 
 
 

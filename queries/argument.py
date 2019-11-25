@@ -9,7 +9,7 @@ from PythonVoiceCodingPlugin.library.partial import partially_parse, line_partia
 from PythonVoiceCodingPlugin.library.traverse import search_upwards,search_upwards_log, find_matching,match_node, find_all_nodes,search_upwards_for_parent
 
 from PythonVoiceCodingPlugin.queries.abstract import SelectionQuery
-from PythonVoiceCodingPlugin.queries.tiebreak import tiebreak_on_lca
+from PythonVoiceCodingPlugin.queries.tiebreak import tiebreak_on_lca,tiebreak_on_visual
 from PythonVoiceCodingPlugin.queries.strategies import adjective_strategy,decode_abstract_vertical,translate_adjective,obtain_result
 
 # 
@@ -111,7 +111,7 @@ class SelectArgument(SelectionQuery):
 			result,alternatives = obtain_result(None,temporary)
 			
 		if second_tiebreaker:
-			alternatives = second_tiebreaker(origin,result,alternatives)
+			alternatives = second_tiebreaker(result,alternatives)
 		
 
 
@@ -195,7 +195,8 @@ class SelectArgument(SelectionQuery):
 			tiebreaker = lambda x: tiebreak_on_lca(statement_node,origin,x),
 			line = nr+1,
 			priority = priority,
-			constrained_space = (view_information["text_point"](nr,0),view_information["text_point"](nr + 1,0))
+			constrained_space = (view_information["text_point"](nr,0),view_information["text_point"](nr + 1,0)),
+			second_tiebreaker = lambda x,y : tiebreak_on_visual(row + 1,x,y)
 		)
 		return self._backward_result(result, alternatives,build)
 
