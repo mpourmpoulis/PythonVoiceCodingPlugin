@@ -6,8 +6,10 @@
 
 * aenea support has been added by means of the server plug-ins,  available	in the bundles aenea folder.
 
+* in the tiebreak module function tiebreak_on_visual has been added, to enable more coherent tie-breaking
+
 ### Fixed
-* fixed the empty brackets bug in the repair modulebugs with ":" addressed, needs more testing
+* fixed the empty brackets bug in the repair modulebugs with ":" addressed, needs more testing and a subsequent bug
 
 * also in the repair module, we can now handle consecutive phase separated name tokens( and some mixing with error tokens) like the ones that can occur after a misrecognition, for instance "x = gibberish words " is now parsable!
 
@@ -21,6 +23,8 @@
 
 * Fixed a bug in the argument module where not forwarding selections cause errors went down in lines for the above below keywords.
 
+* fixed a bug in the above/below argument command, which occasionally caused of by one  errors. 
+
 ### Changed
 
 * The customer bundles have been modified to be usable with aenea !
@@ -33,12 +37,13 @@
 
 * In the actions module, the SelectionAction now also shows the main result if it is not visible! works both for selection queries and paste back operations! 
 
-* sub indexing moved from big_roi to info  module!
+* sub indexing moved from big_roi to info  module! 
+
+* furthermore , you can now sub index strings, arithmetical operations and more!
 
 * the abstract_vertical and big_roi modules have been modified so as to offer alternatives when there are multiple logical lines in the same physical line. 
 
-* argument,adjective_strategy,primitives have been mortified in order to standardize the behavior of the grammar when the target logical line response over multiple physical ones. 
-
+* argument,adjective_strategy,primitives have been mortified in order to standardize the behavior of the grammar when the target logical line response over multiple physical ones. furthermore, the issue with alternatives common from wrong direction and not close to the main result has been resolved
 
 ## [0.0.3] - 2019-11-18
 
