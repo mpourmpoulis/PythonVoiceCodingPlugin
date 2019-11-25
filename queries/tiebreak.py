@@ -21,7 +21,7 @@ def tiebreak_on_lca(root,origin,candidates):
 	    TYPE: Description
 	"""
 	lca  = LCA(root)
-	k = lambda x: (-1 * lca(x, origin,True),lca.get_depth(x))
+	k = lambda x: (-1 * lca(x, origin,True),lca.get_depth(x),abs(x.first_token.start[0] - origin.first_token.start[0]))
 	return sorted(candidates, key = k)
 
 

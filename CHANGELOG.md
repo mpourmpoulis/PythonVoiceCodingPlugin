@@ -4,32 +4,33 @@
 
 ### Added
 
-* aenea support has been added by means of the server plug-ins,  available	in the bundles aenea folder.
+* aenea support has been added by means of the server plug-ins,  available	in the bundles aenea folder. this includes both the PythonVoiceCodingPluginAeneaServer.py  and the corresponding yapsy-plugin file. 
 
 * in the tiebreak module function tiebreak_on_visual has been added, to enable more coherent tie-breaking
 
 ### Fixed
+
 * fixed the empty brackets bug in the repair modulebugs with ":" addressed, needs more testing and a subsequent bug
 
-* also in the repair module, we can now handle consecutive phase separated name tokens( and some mixing with error tokens) like the ones that can occur after a misrecognition, for instance "x = gibberish words " is now parsable!
+* also in the repair module, we can now handle  consecutive space separated name tokens( and some mixing with error tokens) like the ones that can occur after a misrecognition, for instance "x = gibberish words " is now parsable!
 
 * fixed  one error in vertical direction + big_roi queries, which appeared when a region of interest spanned across multiple physical lines and was the selection origin of a query searching for a region of interest of the same kind and was causing an off by one error when going upwards.
 
-* Fixed error in big_roi module , where when trying to select something in global scope with vertical direction big_roi_queries ,not checking for Nonetype object caused error
+* Fixed error in big_roi module , where when trying to select something in global scope with vertical direction big_roi_queries ,not checking definition_node for Nonetype object caused error
 
 * Fixed error in the preliminary function of the big regions of interest, where if the cursor was at the last empty line of the function, selections would be given from the next function!
 
 * Fixed old name of my output panel:)
 
-* Fixed a bug in the argument module where not forwarding selections cause errors went down in lines for the above below keywords.
+* Fixed a bug in the argument module where not forwarding/backwarding selections could cause errors  for the above below keywords.
 
 * fixed a bug in the above/below argument command, which occasionally caused of by one  errors. 
 
 ### Changed
 
-* The customer bundles have been modified to be usable with aenea !
+* The Caster bundles have been modified to be usable with aenea! both the 0.5 and 0.6 versions have been tested, with PythonVoiceCodingPlugin running on Ubuntu 16.04.
 
-* collection queries no labels not to now have labels(names) and they display them
+* collection queries  now have labels(names) and they display them on the output panel.
 
 * a global state was added the application module, enabling insertion from the results of collection queries from other files
 
@@ -45,7 +46,11 @@
 
 * the abstract_vertical and big_roi modules have been modified so as to offer alternatives when there are multiple logical lines in the same physical line. 
 
-* argument,adjective_strategy,primitives have been mortified in order to standardize the behavior of the grammar when the target logical line response over multiple physical ones. furthermore, the issue with alternatives common from wrong direction and not close to the main result has been resolved
+* argument,adjective_strategy,primitives have been mortified in order to standardize the behavior of the grammar when the target logical line response over multiple physical ones. 
+
+* furthermore, the issue with alternatives common from wrong direction and not close to the main result has been resolved when used with  above/ below keyword by means of tiebreak_on_visual function!
+
+* additionally, even in case of ties when tie-breaking on the lowest common ancestor, the visual proximity is now taken into account!
 
 ## [0.0.3] - 2019-11-18
 
