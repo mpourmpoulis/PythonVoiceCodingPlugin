@@ -39,7 +39,15 @@ class Application():
 
 		# get the corresponding query and execute it
 		s = get_query(query_description)(code,latest_build)
-		s(view_information,query_description,extra)
+		try:
+			s(view_information,query_description,extra)
+		except:
+			pass
+
+		# check if there are exceptions
+		if s.exceptions_raised:
+			interface.push_action(PopUpErrorAction(str(s.exceptions_raised)))
+		print(s.exceptions_raised)
 
 		# register build for later use
 		b = s.get_the_latest_build()

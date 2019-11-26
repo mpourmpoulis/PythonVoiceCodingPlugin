@@ -8,6 +8,8 @@
 
 * in the tiebreak module function tiebreak_on_visual has been added, to enable more coherent tie-breaking
 
+* PopUpErrorAction has been added in order to inform the user in  cases where to cannot parse the source code.
+
 ### Fixed
 
 * fixed the empty brackets bug in the repair modulebugs with ":" addressed, needs more testing and a subsequent bug
@@ -51,6 +53,10 @@
 * furthermore, the issue with alternatives common from wrong direction and not close to the main result has been resolved when used with  above/ below keyword by means of tiebreak_on_visual function!
 
 * additionally, even in case of ties when tie-breaking on the lowest common ancestor, the visual proximity is now taken into account!
+
+* in the partial module, the function partially_parse has been modified in order to accept one more optional Boolean parameter which when True causes the function to raise the initial syntax error it captured instead of returning None objects. By default the parameter is set to False.
+
+* In the same spirit, the query module has been modified and has a new attribute in order to store the above exception. The application module checks if this attribute HUD stored exception and displays an error through the PopUpErrorAction!
 
 ## [0.0.3] - 2019-11-18
 

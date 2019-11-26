@@ -30,7 +30,7 @@ either fulltext or only single logical lines
 ################################################################################################
 ################################################################################################
 
-def partially_parse(code, m = None, atok = None):
+def partially_parse(code, m = None, atok = None,rethrow_exception = False):
 	m = m if m is not None else ModificationHandler(code)
 	#print(code)
 	timestamp = m.get_timestamp()
@@ -38,9 +38,9 @@ def partially_parse(code, m = None, atok = None):
 		root,atok = build_tree(code) 
 		r = RepairMissing(atok,m,timestamp)
 		return root,atok,m,r
-	except: 
+	except Exception as e_first: 
 		atok =  atok  if atok  else asttokens.ASTTokens(parse=False, source_text= code)
-		print(m)
+		# print(m)
 		m = filter_everything(atok,m, timestamp)
 		m.update()
 		#print("after filtering",m.history)
@@ -54,16 +54,16 @@ def partially_parse(code, m = None, atok = None):
 			return root,atok,m,r
 		except Exception as e:
 			print(" go to the field\n",m.current_code)
-			print(" error was\n",e)
+			print(" error was\n",str(e),"\n",e)
+			if rethrow_exception :
+				raise e_first
 			return None,None,None,None
 
 ###############################
 
 
 def line_partial(code,offset):	
-	print("inside bar shall align")
 	atok = asttokens.ASTTokens(parse=False, source_text=code)
-	print([x  for x in atok.tokens  if x.type== tokenize.NL])
 	origin = atok.get_token_from_offset(offset)
 	left, right = expand_to_line_or_statement(atok,origin)
 	print( left, right )

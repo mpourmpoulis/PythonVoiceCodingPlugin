@@ -1,3 +1,5 @@
+import html
+
 class InterfaceAction():
 	"""docstring for InterfaceAction"""
 	def __init__(self):
@@ -207,6 +209,20 @@ class DisplayRegionsAction(InterfaceAction):
 		window.run_command("hide_panel",{"panel":"console"}) 
 		window.run_command("show_panel",{"panel":"output.python_voice_coding_plugin_panel"})
 	
+class PopUpErrorAction(InterfaceAction):
+	"""docstring for DisplayErrorAction"""
+	def __init__(self, text):
+		self.text = text
+	def execute(self,view, sublime,**kwargs):
+		final_text = "<p></p><h>Something is off!</h>" + "<p>" + html.escape(self.text) + "</p>"
+		print(" inside final text processing ",final_text)
+		def on_hide():
+			view.show_popup(final_text,max_width=1024, max_height=10000, flags= sublime.COOPERATE_WITH_AUTO_COMPLETE)
+		view.show_popup(final_text,max_width=1024, max_height=10000, 
+			flags= sublime.COOPERATE_WITH_AUTO_COMPLETE,on_hide = on_hide)
+		print(view.is_popup_visible())
+
+#  style=\"background-color:#000080\"
 		
 
 

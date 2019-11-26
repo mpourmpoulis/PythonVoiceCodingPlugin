@@ -25,7 +25,7 @@ class SelectBigRoi(SelectionQuery):
 		selection = self._get_selection(view_information,extra)
 		build = self.general_build 
 		if not build  or not build[0] :
-			return None,None
+			return None,None,None,None
 		root,atok,m,r  = build 
 		selection = m.forward(selection)
 		origin = nearest_node_from_offset(root,atok, selection[0]) if selection[0]==selection[1] else node_from_range(root,atok, selection)

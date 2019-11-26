@@ -5,7 +5,9 @@ class Query():
 	def __init__(self, code,latest_build = None):
 		self.code = code
 		self.general_build = latest_build
+		self.exceptions_raised = None
 		self.attempt_build()
+		
 
 
 	def __call__(self,view_information,query_description,extra = {}):
@@ -16,7 +18,10 @@ class Query():
 
 	def attempt_build(self):
 		if self.general_build is None:
-			self.general_build = partially_parse(self.code)
+			try:
+				self.general_build = partially_parse(self.code,rethrow_exception = True)
+			except Exception as e:
+				self.exceptions_raised = e
 
 	def _get_selection(self,view_information,extra = {}):
 		return extra["selection"] if "selection" in extra else view_information["selection"]

@@ -107,7 +107,10 @@ But why both "above" and "up"? The difference lies in that above only counts "in
 
 ![](./gif/arg5.gif)
 
-Please also pay attention to the fact that logical lines can extend over multiple "physical" lines. In such a case, as illustrated by the last example in the gif, physical lines still determine the line to which above/below refer  and result and  alternatives from that physical line will be prioritized, but alternatives will also be offered from  the whole logical line!  Other than that like case one.
+Though if we want to be more precise, we count lines that contain the beginning of function calls! this is important because logical lines can extend over multiple "physical" lines. The last example in the gif contains such an example, physical lines still determine the line to which above/below refer  and result and  alternatives from that physical line will be prioritized, but alternatives will also be offered from  the whole logical line! 
+
+
+
 
 ## Case three
 
