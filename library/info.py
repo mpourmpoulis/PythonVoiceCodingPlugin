@@ -163,7 +163,7 @@ def get_iterator(root):
 # need to revisit this
 def get_body(root):
 	return (
-		root.body if match_node(root,(ast.Lambda,ast.If,ast.While,ast.With,ast.For,   )) else None
+		root.body if match_node(root,(ast.Lambda,ast.If,ast.While,ast.With,ast.For, ast.IfExp)) else None
 	)
 
 

@@ -24,7 +24,7 @@ class SelectBigRoi(SelectionQuery):
 	def preliminary(self,view_information,query_description, extra = {}):
 		selection = self._get_selection(view_information,extra)
 		build = self.general_build 
-		if not build  or not build[0] :
+		if not build  or not build[0]:
 			return None,None,None,None
 		root,atok,m,r  = build 
 		selection = m.forward(selection)
@@ -116,7 +116,7 @@ class SelectBigRoi(SelectionQuery):
 				atok=atok,
 				root = definition_node,
 				adjective_word = query_description["adjective"],
-				level_nodes = find_all_nodes(definition_node,(ast.If,ast.While,ast.For,ast.Try,ast.With,ast.FunctionDef)),
+				level_nodes = find_all_nodes(definition_node, (ast.If,ast.While,ast.For,ast.Try,ast.With,ast.FunctionDef)),
 				information_nodes = find_matching(definition_node,temporary_information),
 				**additional_parameters
 		)

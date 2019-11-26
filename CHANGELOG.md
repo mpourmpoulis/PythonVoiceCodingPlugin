@@ -28,6 +28,8 @@
 
 * fixed a bug in the above/below argument command, which occasionally caused of by one  errors. 
 
+* in the info module, fixed a bug in the get_body function where ast.IfExp was missing for some reason. 
+
 ### Changed
 
 * The Caster bundles have been modified to be usable with aenea! both the 0.5 and 0.6 versions have been tested, with PythonVoiceCodingPlugin running on Ubuntu 16.04.
