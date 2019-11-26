@@ -287,7 +287,7 @@ def split_string(s,even_letters = True):
 	s = s.strip()
 	y = urlparse(s)
 	if  not (y.scheme=="" and y.netloc==""):
-		return make_flat( [split_string(x,False)  for x in y ])
+		return [z  for z in make_flat( [split_string(x,False)  for x in y ]) if z]
 	first_attempt = [x  for x in re.split("[., :/]",s) if not x.isspace()]
 	if len(first_attempt) > 1:
 		return first_attempt
@@ -323,7 +323,7 @@ def get_subparts_of_string(root):
 		index += len(s)
 	return output
 
-
+	
 
 def get_sub_index(root,index):
 	candidates = []
@@ -361,8 +361,10 @@ def get_sub_index(root,index):
 		return get_sub_index(root.value,index)
 	if match_node(root,(ast.UnaryOp)):
 		return get_sub_index(root.operand,index)
-	if match_node(root,(ast.UnaryOp)):
-		return get_sub_index(root.operand,index)
+	if match_node(root,(ast.Lambda)):
+		return get_sub_index(root.body,index)
+	if match_node(root,(ast.Call)):
+		return get_sub_index(root.func,index)
 
 	if index<len(candidates):
 		return candidates[index]

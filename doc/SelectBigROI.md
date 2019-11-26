@@ -171,6 +171,12 @@ furthermore, big_roi_sub_index can make our lives easier even in cases like the 
 
 where we want to play with the indexes of a subscript!
 
+### new with 0.0.4
+
+Sub indexing functionality has been expanded to include picking up parts of strings :
+
+![](./gif/big10.gif)  
+
 Finally, we clarify one more thing! What about relative vertical offsets when using above? We know that these abstract vertical keywords only count interesting lines, but what do we count as interesting here? To stay compatible with all of the above, we count all lines containing our desired big region of interest regardless of whether we can extract or not from them information with the sub index! As an example:
 
 ![](./gif/big9.gif)  
