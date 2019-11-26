@@ -104,7 +104,7 @@ As an example:
 
 Another important detail is that these types of queries are not limited to searching only the current function like the adjective ones! 
 
-![](./gif/big6.gif)
+![](./gif/big11.gif)
 
 
 # Case four 
