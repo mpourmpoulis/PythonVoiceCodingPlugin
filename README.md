@@ -4,9 +4,11 @@
 
 ![]( https://img.shields.io/static/v1?label=Caster&message=0.5.11|0.6.11&color=blue)
 
+![]( https://img.shields.io/static/v1?label=Aenea&message=supported&color=red)
 
+![]( https://img.shields.io/static/v1?label=Platform&message=Windows|Linux&color=yellow)
 
-![]( https://img.shields.io/static/v1?label=Version&message=0.0.3&color=green)
+![]( https://img.shields.io/static/v1?label=Version&message=0.0.4&color=green)
 
 PythonVoiceCodingPlugin is a Sublime Text 3 plugin meant to enhance user experience 
 when coding python 3 by voice. 
@@ -66,6 +68,7 @@ along with its initial release (0.0.0)!
 
 Update:  release 0.0.2 is out and with many thanks to @LexiconCode  there are now bundles for Caster 0.6.11! 
 Update:  Due an important error I missed, you might be faced with a situation where the pluggin cannot load and thus no commands are executed. in such a case please upgrade to release 0.0.3 which fixes it. I am sorry for any disconvenience caused!
+Update: release 0.0.4 is out shipping with aenea support.
 
 ## Limitations
 
@@ -102,6 +105,9 @@ Documentation is available [here](doc/README.md)
 For the time being the full system has been tested with Caster 0.5.11 on a Windows 10 machine. I plan better support for aenea in the near future and would love to (if possible) provide bundles for more systems on the long run:) The plugin code itself is intentionally pure python so it should probably run fine on other OS that sublime supports (tp be updated after linux test)
 
 Update: with many thanks to @LexiconCode from 0.0.2 there is a bundle for Caster 0.6.11!
+
+##### Update 0.0.4
+release 0.0.4 now supports aenea! the system has been tested with bundles for Caster 0.5.11  and 0.6.11 with the plug-in running on Ubuntu 16.04!
 
 ### Long version:
 
