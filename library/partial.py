@@ -56,7 +56,7 @@ def partially_parse(code, m = None, atok = None,rethrow_exception = False):
 			print(" go to the field\n",m.current_code)
 			print(" error was\n",str(e),"\n",e)
 			if rethrow_exception :
-				raise e_first
+				raise e
 			return None,None,None,None
 
 ###############################
@@ -66,7 +66,6 @@ def line_partial(code,offset):
 	atok = asttokens.ASTTokens(parse=False, source_text=code)
 	origin = atok.get_token_from_offset(offset)
 	left, right = expand_to_line_or_statement(atok,origin)
-	print( left, right )
 	m = ModificationHandler(code)
 	m.modify_from(0,(0, left.startpos),"")
 	if right.string == ":":
@@ -74,7 +73,6 @@ def line_partial(code,offset):
 	else:
 			m.modify_from(0,(right.endpos,len(code)+1),"")
 	m.update()
-	print("history  is",m.history)
 	return partially_parse(m.current_code,m)
 
 ################################################################################################

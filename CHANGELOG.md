@@ -10,6 +10,8 @@
 
 * PopUpErrorAction has been added in order to inform the user in  cases where to cannot parse the source code.
 
+* Sublime settings file has been added, from which you can turn on or off, showing the main result when it is not visible as well as the pop-ups with error information.
+
 ### Fixed
 
 * fixed the empty brackets bug in the repair modulebugs with ":" addressed, needs more testing and a subsequent bug
@@ -28,7 +30,11 @@
 
 * fixed a bug in the above/below argument command, which occasionally caused of by one  errors. 
 
-* in the info module, fixed a bug in the get_body function where ast.IfExp was missing for some reason. 
+* in the info module, fixed a bug in the get_body function where ast.IfExp was missing for some reason
+
+* Yet another forwarding bug in the argument module:(
+
+*  fix a bug in the big region of interest  module which caused off by one error in the above below command, when the original selection was in an empty line.
 
 ### Changed
 
@@ -59,6 +65,8 @@
 * in the partial module, the function partially_parse has been modified in order to accept one more optional Boolean parameter which when True causes the function to raise the initial syntax error it captured instead of returning None objects. By default the parameter is set to False.
 
 * In the same spirit, the query module has been modified and has a new attribute in order to store the above exception. The application module checks if this attribute HUD stored exception and displays an error through the PopUpErrorAction!
+
+* The interface module has been modified to accept settings in its constructor.
 
 ## [0.0.3] - 2019-11-18
 

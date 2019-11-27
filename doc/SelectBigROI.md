@@ -177,6 +177,14 @@ Sub indexing functionality has been expanded to include picking up parts of stri
 
 ![](./gif/big10.gif)  
 
+We can pick up parts from the URL, individual words or letters, or part of a camel or snake case. this feature is still immatur  and needs more work, but I am planning to improve and also expand it with the ability to select a whole range.
+
+Also something that was kind of missing,you can now select a subset of an arithmetic expression :
+
+![](./gif/big12.gif)  
+
+Once again you need to pay attention to operator precedence and as you can see there are some edge cases that need to be fixed.
+
 Finally, we clarify one more thing! What about relative vertical offsets when using above? We know that these abstract vertical keywords only count interesting lines, but what do we count as interesting here? To stay compatible with all of the above, we count all lines containing our desired big region of interest regardless of whether we can extract or not from them information with the sub index! As an example:
 
 ![](./gif/big9.gif)  

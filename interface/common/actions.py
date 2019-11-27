@@ -13,7 +13,7 @@ class SelectionAction(InterfaceAction):
 	def __init__(self, region):
 		self.data={"region":region}
 
-	def execute(self,view,sublime,**kwargs):
+	def execute(self,view,settings,sublime,**kwargs):
 		region =  self.data["region"]
 		if region:
 			view.sel().clear()
@@ -21,7 +21,9 @@ class SelectionAction(InterfaceAction):
 				region = [region]
 			for r in region:
 				view.sel().add(sublime.Region(r[0],r[1]))
-			view.show(sublime.Region(region[0][0],region[0][1]))
+			if settings.get("show_visible",False):
+				view.show(sublime.Region(region[0][0],region[0][1]))
+			
 
 
 
@@ -213,11 +215,13 @@ class PopUpErrorAction(InterfaceAction):
 	"""docstring for DisplayErrorAction"""
 	def __init__(self, text):
 		self.text = text
-	def execute(self,view, sublime,**kwargs):
+	def execute(self,view,settings, sublime,**kwargs):
+		if not settings.get("show_error",False):
+			return 
 		final_text = "<p></p><h>Something is off!</h>" + "<p>" + html.escape(self.text) + "</p>"
 		print(" inside final text processing ",final_text)
 		def on_hide():
-			view.show_popup(final_text,max_width=1024, max_height=10000, flags= sublime.COOPERATE_WITH_AUTO_COMPLETE)
+			view.show_popup(final_text,max_width=1024, max_height=10000, flags= sublime.HIDE_ON_MOUSE_MOVE_AWAY)
 		view.show_popup(final_text,max_width=1024, max_height=10000, 
 			flags= sublime.COOPERATE_WITH_AUTO_COMPLETE,on_hide = on_hide)
 		print(view.is_popup_visible())

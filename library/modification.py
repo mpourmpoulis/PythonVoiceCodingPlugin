@@ -146,8 +146,6 @@ class ModificationHandler():
 		return len(self.history)
 
 	def forward(self,value,start_time = 0,end_time = 0):
-		print(" value is", value,"over")
-		print(value)
 		if value is None: 
 			return None
 		end_time = end_time if end_time!=0 else len(self.history)	

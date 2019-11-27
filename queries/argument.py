@@ -73,6 +73,7 @@ class SelectArgument(SelectionQuery):
 			result,alternatives = obtain_result(result,information_nodes)
 
 
+
 		################################################################
 		# adjective is given
 		################################################################
@@ -185,19 +186,32 @@ class SelectArgument(SelectionQuery):
 
 		origin = nearest_node_from_offset(root,atok, selection[0]) if selection[0]==selection[1] else node_from_range(root,atok, selection)
 		statement_node = search_upwards(origin,ast.stmt)
-		priority = {"root_lexical_order":1} if statement_node.first_token.start[0] != origin.first_token.start[0] else {}
+
+
+		# 
+		alternative_logical_lines = find_all_nodes(statement_node.parent,selector = lambda x:match_node(x,ast.stmt) and x.first_token.start[0]==origin.first_token.start[0]
+			,visit_all_levels=False)
+		sharing_physical = alternative_logical_lines not in [[] ,[statement_node]]
+
+		priority = {"root_lexical_order":1} if ( statement_node.first_token.start[0] != origin.first_token.start[0]
+									or sharing_physical) else {}
 		result, alternatives = self.process_line(
 			q = query_description,
-			root = statement_node,
+			root = statement_node if not sharing_physical else statement_node.parent,
 			atok = atok,
 			origin = None,
 			select_node = None,
-			tiebreaker = lambda x: tiebreak_on_lca(statement_node,origin,x),
+			tiebreaker = lambda x: tiebreak_on_lca(statement_node if not sharing_physical else statement_node.parent,origin,x),
 			line = nr+1,
 			priority = priority,
-			constrained_space = (view_information["text_point"](nr,0),view_information["text_point"](nr + 1,0)),
+			constrained_space = m.forward((view_information["text_point"](nr ,0),view_information["text_point"](nr + 1,0))),
 			second_tiebreaker = lambda x,y : tiebreak_on_visual(row + 1,x,y)
 		)
+		if sharing_physical:
+			if alternatives:
+				alternatives = [x  for x in alternatives if  x.first_token.start[0]==origin.first_token.start[0]]
+			if result and result.first_token.start[0]!=origin.first_token.start[0]:
+				result, alternatives = obtain_result(result, alternatives)
 		return self._backward_result(result, alternatives,build)
 
 		

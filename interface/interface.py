@@ -4,12 +4,13 @@ from PythonVoiceCodingPlugin.interface.view_info import ViewInformation
 
 class Interface():
 	"""docstring for Interface"""
-	def __init__(self,view,window,edit,sublime):
+	def __init__(self,view,window,edit,sublime,settings):
 		self.view = view
 		self.window = window
 		self.edit = edit
 		self.sublime = sublime
 		self.actions = []
+		self.settings = settings
 
 	def get_view_information(self):
 		return ViewInformation(self.view,self.sublime)
@@ -24,7 +25,7 @@ class Interface():
 		application = Application.get_application(self.view.id())
 		application.respond_to_query(self,query_description)
 		parameters = {
-			"view":self.view,"window":self.window,"edit":self.edit,"sublime":self.sublime
+			"view":self.view,"window":self.window,"edit":self.edit,"sublime":self.sublime,"settings":self.settings,
 		}
 		for action in self.actions:
 			action.execute(**parameters)

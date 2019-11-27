@@ -103,11 +103,28 @@ Choice("vertical_direction",{
 ```
 and ndir is an interger specifying how many lines (relative to the current) up or down your roi is.
 
+
 But why both "above" and "up"? The difference lies in that above only counts "interesting lines", that is(physical) lines containing function calls. The following example should clarify this:
 
 ![](./gif/arg5.gif)
 
-Though if we want to be more precise, we count lines that contain the beginning of function calls! this is important because logical lines can extend over multiple "physical" lines. The last example in the gif contains such an example, physical lines still determine the line to which above/below refer  and result and  alternatives from that physical line will be prioritized, but alternatives will also be offered from  the whole logical line! 
+Though if we want to be more precise, we count lines that contain the beginning of function calls! this is important because logical lines can extend over multiple "physical" lines. The last example in the gif contains such an example,but to give you a better idea:
+
+![](./gif/arg9.gif)
+
+ so you can see that
+	* physical lines still determine the line to which above/below refer  
+	* result and  alternatives from that physical line are  being prioritized, but 
+	* The whole logical line is scanned for alternatives ! 
+
+In a more complex scenario, if there are multiple functional calls in the physical line and you up for using an ordinal adjective, in order to to preserve sanity, the main result will be decided by taking into consideration the order of lexical appearance:
+
+![](./gif/arg10.gif)
+
+
+Finally, even though the argument query was originally designed to operate on a single logical line, make things more consistent, an exception was made for the case when the physical line that you are targeting contains more than one logical lines. In such a case, all the logical lines are processed in the monitor similar to the previous case, with important distinction that both the result and the alternatives must come from this physical line, where as in the previous case either one of them can come from other physical lines, if no suitable candidate is found.
+
+![](./gif/arg11.gif)
 
 
 
