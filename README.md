@@ -97,7 +97,7 @@ and on Ubuntu it is :
 ~/.config/sublime-text-3/Packages/
 ```
 
-To install dependencies,using your installation of python (this worked for me with 3.7.4) run from inside the folder:
+To install dependencies,using your installation of python (this worked for me with 3.7.4 and 3.5.2) run from inside the folder:
 ```bash
 python3 -m pip install --target third_party -r requirements.txt
 ```
