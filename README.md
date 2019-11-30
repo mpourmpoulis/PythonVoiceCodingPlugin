@@ -94,7 +94,7 @@ C:\Users\Admin\AppData\Roaming\Sublime Text 3\Packages
 
 and on Ubuntu it is :
 ```
-
+~/.config/sublime-text-3/Packages/
 ```
 
 To install dependencies,using your installation of python (this worked for me with 3.7.4) run from inside the folder:
