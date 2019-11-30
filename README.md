@@ -2,13 +2,15 @@
 
 [![License](https://img.shields.io/badge/License-BSD%202--Clause-orange.svg)](https://opensource.org/licenses/BSD-2-Clause)
 
+![]( https://img.shields.io/static/v1?label=Version&message=0.0.4&color=green)
+
 ![]( https://img.shields.io/static/v1?label=Caster&message=0.5.11|0.6.11&color=blue)
 
 ![]( https://img.shields.io/static/v1?label=Aenea&message=supported&color=red)
 
 ![]( https://img.shields.io/static/v1?label=Platform&message=Windows|Linux&color=yellow)
 
-![]( https://img.shields.io/static/v1?label=Version&message=0.0.4&color=green)
+
 
 PythonVoiceCodingPlugin is a Sublime Text 3 plugin meant to enhance user experience 
 when coding python 3 by voice. 
