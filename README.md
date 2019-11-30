@@ -86,6 +86,17 @@ There are of course certain limitations which I would like to make clear from th
 
 Currently you can download the plugin directly from github and place it in sublime package folder
 
+for windows users this should be:
+
+```
+C:\Users\Admin\AppData\Roaming\Sublime Text 3\Packages
+```
+
+and on Ubuntu it is :
+```
+
+```
+
 To install dependencies,using your installation of python (this worked for me with 3.7.4) run from inside the folder:
 ```bash
 python3 -m pip install --target third_party -r requirements.txt
