@@ -120,7 +120,7 @@ For the time being the full system has been tested with Caster 0.5.11 on a Windo
 Update: with many thanks to @LexiconCode from 0.0.2 there is a bundle for Caster 0.6.11!
 
 ##### Update 0.0.4
-release 0.0.4 now supports aenea! the system has been tested with bundles for Caster 0.5.11  and 0.6.11 with the plug-in running on Ubuntu 16.04!
+release 0.0.4 now [supports aenea](https://github.com/mpourmpoulis/PythonVoiceCodingPlugin/blob/master/bundles/Aenea/README.md)! the system has been tested with bundles for Caster 0.5.11  and 0.6.11 with the plug-in running on Ubuntu 16.04!
 
 ### Long version:
 
