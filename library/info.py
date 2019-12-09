@@ -237,6 +237,10 @@ def get_argument_from_call(root, index):
 	# print(" I would regret face", temporary)
 	return temporary[index] if temporary and len(temporary)>index else None
 
+def get_caller(root):
+	return root.func if match_node(root,(ast.Call)) else None
+
+
 ################################################################
 # 	 arguments from   function definitions
 ################################################################

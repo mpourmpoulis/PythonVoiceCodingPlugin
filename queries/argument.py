@@ -1,7 +1,7 @@
 import ast
 
 from PythonVoiceCodingPlugin.library import nearest_node_from_offset,sorted_by_source_region,get_source_region,node_from_range,make_flat
-from PythonVoiceCodingPlugin.library.info import identity,get_argument_from_call, make_information ,correspond_to_index_in_call
+from PythonVoiceCodingPlugin.library.info import identity,get_argument_from_call, make_information ,correspond_to_index_in_call,get_caller
 import PythonVoiceCodingPlugin.library.info as info
 from PythonVoiceCodingPlugin.library.LCA import LCA
 from PythonVoiceCodingPlugin.library.level_info import LevelVisitor
@@ -38,7 +38,7 @@ class SelectArgument(SelectionQuery):
 			additional_parameters["constrained_space"] = constrained_space
 
 
-		information = make_information(get_argument_from_call,q["argument_index"]-1)
+		information = make_information(get_argument_from_call,q["argument_index"]-1) if "argument_index" in q else get_caller
 		information_nodes = sorted_by_source_region(atok, find_matching(root, information))
 
 		if origin:
