@@ -7,4 +7,3 @@ def obtain_result(result, alternatives):
 		else:
 			return  alternatives[0], [x  for x in alternatives[1:] if x is not alternatives[0]]
 
-# bug if result is in alternatives
