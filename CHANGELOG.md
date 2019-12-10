@@ -12,6 +12,7 @@
 
 * the application module has been adopted, sought after selection queries we do not only store that arraigns corresponding to the main result in the alternative but we also keep the corresponding text.
 
+*  the  paste back query now reads the corresponding text directly from the state instead of getting their location and obtaining from the code as it did in the past
 
 ## [0.0.4] - 2019-11-27
 
