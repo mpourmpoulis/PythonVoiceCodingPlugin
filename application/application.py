@@ -62,11 +62,14 @@ class Application():
 			if result:
 				self.state["result"] = result
 				self.state["alternatives"] = []
+				self.state["alternatives_text"] = []
+				self.state["result_text"] = code[result[0]:result[1]]
 				interface.push_action(SelectionAction(result))
 				self.history.append(("selection",view_information["change_count"],view_information["selection"],result))
 			interface.push_action(ClearHighlightAction("alternatives"))
 			if alternatives:
 				self.state["alternatives"] = alternatives
+				self.state["alternatives_text"] = [code[x[0]:x[1]] for x in alternatives]
 				interface.push_action(DisplayRegionsAction("alternatives",alternatives,"Alternatives:\n"))
 				interface.push_action(HighlightCleverAction(alternatives,"alternatives",result))
 				

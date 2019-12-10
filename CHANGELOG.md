@@ -10,6 +10,7 @@
 
 ### Changed
 
+* the application module has been adopted, sought after selection queries we do not only store that arraigns corresponding to the main result in the alternative but we also keep the corresponding text.
 
 
 ## [0.0.4] - 2019-11-27
