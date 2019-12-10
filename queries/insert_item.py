@@ -21,7 +21,7 @@ class InsertItem(InsertionQuery):
 				index =  query_description.get("item_index"+i)
 				if index:
 					item.append(collection[index-1])
-			item = ",".join(item)
+			item = ",".join(item) 
 		selection = self._get_selection(view_information,extra)
 		selection = selection if isinstance(selection,list) else [selection]
 		return [(x,item)  for x in selection]

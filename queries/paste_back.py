@@ -27,7 +27,8 @@ class PasteBack(InsertionQuery):
 		alternatives = state["alternatives"]
 		location = alternatives[i-1] if i != 0 else result
 		location = location if isinstance(location,list) else [location]
-		return [(x,code[l[0]:l[1]])  for x,l in zip(selection, location)]
+		surrounding = query_description.get("surrounding_punctuation",("",""))
+		return [(x,surrounding[0]+code[l[0]:l[1]]+surrounding[1])  for x,l in zip(selection, location)]
 
 
 
