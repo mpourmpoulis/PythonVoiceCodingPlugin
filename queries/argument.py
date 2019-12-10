@@ -257,7 +257,9 @@ class SelectArgument(SelectionQuery):
 			else:
 				return None
 
-			
+		# these will be written but I just want to check that it works
+
+
 		result, alternatives = self.process_line(
 			q = query_description,
 			root = statement_node,
@@ -266,7 +268,7 @@ class SelectArgument(SelectionQuery):
 			select_node = origin if selection[0]!=selection[1] else None,
 			tiebreaker = lambda x: tiebreak_on_lca(statement_node,origin,x),
 			transformation = transformation,
-			inverse_transformation = inverse_transformation
+			inverse_transformation = inverse_transformation,
 
 		)
 		return self._backward_result(result, alternatives,build)
@@ -304,9 +306,28 @@ class SelectArgument(SelectionQuery):
 				return None
 
 		def inverse_transformation(node):
-			return [node]														
+			return [node]	
 
-			
+
+
+		priority = {}
+		print(query_description["level"],"the information in the query description")
+		if query_description["level"]=="outer":
+
+			_,calling_parents = search_upwards_log(origin,targets=ast.stmt,log_targets=(ast.Call))
+			print("inside here",calling_parents)
+			index = query_description["level_index"]
+			print(len(calling_parents)," that is the length ")
+			if index<len(calling_parents):
+				priority["child_level"] = 1
+				print("I am inside here")
+				origin = calling_parents[index]
+				print(ast.dump(origin))
+			transformation = None
+			inverse_transformation=None	
+
+
+
 		result, alternatives = self.process_line(
 			q = query_description,
 			root = statement_node,
@@ -315,9 +336,10 @@ class SelectArgument(SelectionQuery):
 			select_node = origin if selection[0]!=selection[1] else None,
 			tiebreaker = lambda x: tiebreak_on_lca(statement_node,origin,x),
 			transformation = transformation,
-			inverse_transformation = inverse_transformation
+			inverse_transformation = inverse_transformation,
+			priority = priority
 
-		)
+		)	
 		return self._backward_result(result, alternatives,build)
 
 
