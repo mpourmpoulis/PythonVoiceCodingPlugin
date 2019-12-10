@@ -1,5 +1,16 @@
 # Changelog
 
+## [Unreleased]
+
+### Added
+
+* upgrades in the  paste back query where it can now support surrounded punctuation.
+
+### Fixed
+
+### Changed
+
+
 
 ## [0.0.4] - 2019-11-27
 
