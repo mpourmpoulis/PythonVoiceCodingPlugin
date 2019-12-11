@@ -9,6 +9,7 @@ from PythonVoiceCodingPlugin.queries.collect_module import CollectModule
 from PythonVoiceCodingPlugin.queries.collect_function_name import CollectFunctionName
 from PythonVoiceCodingPlugin.queries.collect_imported_value import CollectImportedValue
 from PythonVoiceCodingPlugin.queries.insert_item import InsertItem
+from PythonVoiceCodingPlugin.queries.delete_alternatives import DeleteAlternatives
 
 
 
@@ -35,6 +36,7 @@ def get_query(query_description):
 		"collect_imported_value": CollectImportedValue,
 		"collect_function_name": CollectFunctionName,
 		"insert_item": InsertItem,
+		"delete_alternatives":DeleteAlternatives,
 	}
 	return h[index]
 	

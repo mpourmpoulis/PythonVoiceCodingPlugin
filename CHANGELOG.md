@@ -6,7 +6,11 @@
 
 * upgrades in the  paste back query where it can now support surrounded punctuation.
 
+* the module delete alternatives has been added.
+
 ### Fixed
+
+* fixed an important bug in the insertion query module. the writing positions were sorted, but on an ascending order which simply broke everything when there are multiple of them. Fix this to sort them in descending order, so the changes that are executed first do not affect the others.
 
 ### Changed
 
