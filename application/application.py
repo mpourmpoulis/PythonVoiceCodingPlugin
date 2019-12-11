@@ -47,7 +47,6 @@ class Application():
 		# check if there are exceptions
 		if s.exceptions_raised:
 			interface.push_action(PopUpErrorAction(str(s.exceptions_raised)))
-		print(s.exceptions_raised)
 
 		# register build for later use
 		b = s.get_the_latest_build()
@@ -61,7 +60,7 @@ class Application():
 			# self.state["alternatives"] = []
 			if result:
 				self.state["result"] = result
-				self.state["alternatives"] = []
+				self.state["alternatives"] = 
 				self.state["alternatives_text"] = []
 				self.state["result_text"] = code[result[0]:result[1]]
 				interface.push_action(SelectionAction(result))
