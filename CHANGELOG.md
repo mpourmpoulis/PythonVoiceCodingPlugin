@@ -7,6 +7,7 @@
 * upgrades in the  paste back query where it can now support surrounded punctuation.
 
 * the module delete alternatives has been added.
+* View information now also exposes they get regions sublime API
 
 ### Fixed
 
