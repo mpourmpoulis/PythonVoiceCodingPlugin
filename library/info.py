@@ -297,6 +297,7 @@ def split_string(s,even_letters = True):
 		return first_attempt
 	second_attempt = [x  for x in re.split("[_]",s) if not x.isspace()]
 	if len(second_attempt) > 1:
+		print(" from second attempt")
 		return second_attempt
 	# https://stackoverflow.com/questions/29916065/how-to-do-camelcase-split-in-python answer from Jossef Harush 
 	third_attempt = re.sub('([A-Z][a-z]+)', r' \1', re.sub('([A-Z]+)', r' \1', s)).split()
@@ -307,17 +308,21 @@ def split_string(s,even_letters = True):
 
 	
 
-def get_subparts_of_string(root):
+def get_subparts_of_string(root,name_mode = False):
 	output = []
-	start_position = root.first_token.startpos + 1
-	original  = root.s
-	splitted = split_string(root.s)
+	start_position = root.first_token.startpos + ( 1 if not name_mode else 0) 
+	original  = root.s if not name_mode else root.id
+	try :
+		splitted = split_string(root.s if not name_mode else root.id,even_letters = False if name_mode else True) 
+	except :
+		print(" exceptions were thrown")
 	index = 0
+	print("splitted ",splitted)
 	for s in splitted:
 		index = original.find(s,index)
 		fake_token = asttokens.Token(0,s,0,0,0,
 			root.first_token.index,start_position + index,start_position + index + len(s))
-		fake_node = ast.Str(s = s)
+		fake_node = ast.Str(s = s) if not name_mode else ast.Name(id = s,ctx = root.ctx) 
 		fake_node.parent = root.parent
 		fake_node.parent_field = root.parent_field
 		fake_node.parent_field_index = root.parent_field_index
@@ -326,9 +331,10 @@ def get_subparts_of_string(root):
 		fake_node.fake = True
 		output.append(fake_node)
 		index += len(s)
-	return output
+	return output if name_mode or len(output)>1 else []
 
-	
+
+
 
 def get_sub_index(root,index):
 	candidates = []
@@ -358,6 +364,10 @@ def get_sub_index(root,index):
 		candidates = root.dims
 	elif match_node(root,(ast.Str)):
 		candidates = get_subparts_of_string(root)
+	elif match_node(root,(ast.Name)):
+		print("whatever ")
+		candidates = get_subparts_of_string(root,name_mode = True)
+		print("candidates",candidates)
 	
 	# in the following cases we Certs deeper in the tree
 	if match_node(root,(ast.Subscript)):
