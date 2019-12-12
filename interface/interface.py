@@ -29,6 +29,8 @@ class Interface():
 		}
 		for action in self.actions:
 			action.execute(**parameters)
+	def clear_actions(self):
+		self.actions = []
 
 
 		
