@@ -10,6 +10,7 @@ from PythonVoiceCodingPlugin.queries.collect_function_name import CollectFunctio
 from PythonVoiceCodingPlugin.queries.collect_imported_value import CollectImportedValue
 from PythonVoiceCodingPlugin.queries.insert_item import InsertItem
 from PythonVoiceCodingPlugin.queries.delete_alternatives import DeleteAlternatives
+from PythonVoiceCodingPlugin.queries.swap_back import SwapBack
 
 
 
@@ -37,6 +38,7 @@ def get_query(query_description):
 		"collect_function_name": CollectFunctionName,
 		"insert_item": InsertItem,
 		"delete_alternatives":DeleteAlternatives,
+		"swap_back": SwapBack,
 	}
 	return h[index]
 	
@@ -56,6 +58,7 @@ def get_secondary_query(query_description):
 				"format":1,
 				"color":0,
 			}
+			
 
 		}
 		return h[query_description["operation"]]
