@@ -1,3 +1,5 @@
+from copy import deepcopy
+
 from PythonVoiceCodingPlugin.queries import *
 from PythonVoiceCodingPlugin.application.build_cache import BuildCache
 from PythonVoiceCodingPlugin.interface.common.actions import *
@@ -23,11 +25,24 @@ class Application():
 		Application.create_application_for_view(vid)
 		return Application.active_applications[vid]
 
+	def update_state(self,view_information,code):
+		'''		
+		normally I would like these to be implemented by means of modification handlers
+		And an event listener transmitting every chains in the code. However it seems
+		but the provided event listener does not provide me with the location that was changed.
+		So in order to keep track over the location of important regions when the code changes,
+		The current solution is to outsource everything to the sublime add_regions/get_regions 
+		functionality
+		'''
+		self.state["result"] = view_information["get_regions"]("result")
+		self.state["alternatives"] = view_information["get_regions"]("alternatives")
+		self.state["origin"] = view_information["get_regions"]("origin")
+		self.state["origin_stack"] = view_information["get_regions"]("origin_stack")
 
 	
 
 
-	def respond_to_query(self,interface,query_description):
+	def respond_to_query(self,interface,query_description,secondary=False):
 		extra = {"state":self.state,"global_state":Application.global_state,"history":self.history}
 		view_information  = interface.get_view_information()
 		ui_information = interface.get_ui_information()
@@ -39,6 +54,9 @@ class Application():
 
 		# get the corresponding query and execute it
 		s = get_query(query_description)(code,latest_build)
+		secondary_query_description = get_secondary_query(query_description)
+		if secondary_query_description:
+			backup=[deepcopy(self.state),deepcopy(self.global_state)]
 		try:
 			s(view_information,query_description,extra)
 		except:
@@ -46,7 +64,9 @@ class Application():
 
 		# check if there are exceptions
 		if s.exceptions_raised:
+			interface.clear_actions()
 			interface.push_action(PopUpErrorAction(str(s.exceptions_raised)))
+			return False
 
 		# register build for later use
 		b = s.get_the_latest_build()
@@ -60,7 +80,7 @@ class Application():
 			# self.state["alternatives"] = []
 			if result:
 				self.state["result"] = result
-				self.state["alternatives"] = 
+				self.state["alternatives"] = []
 				self.state["alternatives_text"] = []
 				self.state["result_text"] = code[result[0]:result[1]]
 				interface.push_action(SelectionAction(result))
@@ -99,7 +119,13 @@ class Application():
 			if selections:
 				interface.push_action(SelectionAction(selections))
 
-
+		if secondary_query_description:
+			interface.push_action(ClearHighlightAction("alternatives"))
+			secondary_success = self.respond_to_query(interface,secondary_query_description,secondary=True)
+			if not secondary_success:
+				self.state,self.global_state = backup
+				return False
+		return True
 
 
 
