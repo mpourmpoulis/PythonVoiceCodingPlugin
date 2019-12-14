@@ -1,4 +1,5 @@
 import ast
+import inspect
 import re
 from itertools import chain 
 from urllib.parse import urlparse
@@ -34,10 +35,13 @@ it is split into four sections
 ################################################################################################
 ################################################################################################
 
-def make_information(c,*arg):
-	if arg:
-		return lambda x: c(x,*arg)
-	return lambda x: c(x)
+def make_information(c,*arg,**kwargs):
+	signature = inspect.signature(c)
+	if not any(x.kind==x.VAR_KEYWORD  for x in signature.parameters.values()):
+		temporary = {x.name  for x in signature.parameters.values()}
+		kwargs = {k:v for k,v in kwargs.items() if k in temporary}
+	return lambda x: c(x,*arg,**kwargs)
+
 
 def identity(information, parameter = None):
 	if parameter:
