@@ -45,8 +45,9 @@ class SelectBigRoi(SelectionQuery):
 		)
 		return build, selection, origin, definition_node
 
-	def decode(self,query_description):
-		standard = lambda x:x
+	def decode(self,query_description,build):
+		def standard(x):
+			return x
 		possibilities = {
 			"return value": ((ast.Return,ast.Yield,ast.YieldFrom),(),get_return_value),
 			"pass":(ast.Pass,(),standard),
@@ -71,13 +72,14 @@ class SelectBigRoi(SelectionQuery):
 			"import statement":((ast.Import,ast.ImportFrom),(),standard),
 		}
 		temporary  = possibilities[query_description["big_roi"]]
+		basic_information = make_information(temporary[2],atok = build[1])
 		if "big_roi_sub_index" in query_description:
 			if query_description["big_roi_sub_index"] == 0:
-				return  possibilities[query_description["big_roi"]]
+				return  possibilities[query_description["big_roi"]][:2] + (basic_information,)
 			else:
 				index = query_description["big_roi_sub_index"]
 				def modified_information(x, information,index):
-					data  = information(x)
+					data  = basic_information(x)
 					return get_sub_index(data,index)
 
 				y  = lambda x: temporary[2](x)
@@ -90,7 +92,7 @@ class SelectBigRoi(SelectionQuery):
 		#		<big_roi>
 		###############################################################	
 		build, selection, origin, definition_node = self.preliminary(view_information, query_description,extra)
-		targets, exclusions, information  =  self.decode(query_description)
+		targets, exclusions, information  =  self.decode(query_description,build)
 		information = getattr(information,"secondary",information)
 		candidates = tiebreak_on_lca(definition_node,origin,find_all_nodes(definition_node, targets, exclusions))
 		candidates = [information(x)  for x in candidates if information(x)]
@@ -103,7 +105,7 @@ class SelectBigRoi(SelectionQuery):
 		#		<adjective> <big_roi>
 		###############################################################	
 		build, selection, origin, definition_node = self.preliminary(view_information, query_description,extra)
-		targets, exclusions, information  =  self.decode(query_description)
+		targets, exclusions, information  =  self.decode(query_description,build)
 		temporary_information = lambda x: information(x) if match_node(x,targets,exclusions) else None
 		additional_parameters = {}
 		root,atok,m,r  = build 
@@ -131,7 +133,7 @@ class SelectBigRoi(SelectionQuery):
 		# <vertical_abstract_only_direction> [<ndir>] <big_roi> [<big_roi_sub_index>]
 		###############################################################	
 		build, selection, origin, definition_node = self.preliminary(view_information, query_description,extra)
-		targets, exclusions, information  =  self.decode(query_description)
+		targets, exclusions, information  =  self.decode(query_description,build)
 		temporary_information = lambda x: information(x) if match_node(x,targets,exclusions) else None
 		root,atok,m,r  = build
 
@@ -168,7 +170,7 @@ class SelectBigRoi(SelectionQuery):
 		# [smart] <vertical_abstract_only_direction> [<ndir>] <block> [<adjective>] <big_roi> [<big_roi_sub_index>]
 		###############################################################	
 		build, selection, origin, definition_node = self.preliminary(view_information, query_description,extra)
-		targets, exclusions, information  =  self.decode(query_description)
+		targets, exclusions, information  =  self.decode(query_description,build)
 		temporary_information = lambda x: match_node(x,ast.FunctionDef) 
 		root,atok,m,r  = build
 		
