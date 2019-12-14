@@ -49,6 +49,20 @@ def identity(information, parameter = None):
 	return lambda x: x if information(x) else None
 
 
+def create_fake(root,text,start_position,node_type, **kwargs):
+ 
+	fake_token = asttokens.Token(0,text,0,0,0,
+		root.first_token.index,start_position,start_position + len(text))
+	fake_node = node_type(**kwargs) 
+	fake_node.parent = root.parent
+	fake_node.parent_field = root.parent_field
+	fake_node.parent_field_index = root.parent_field_index
+	fake_node.first_token = fake_token
+	fake_node.last_token = fake_token
+	fake_node.fake = True
+	return fake_node
+
+
 ################################################################################################
 ################################################################################################
 #
@@ -258,6 +272,12 @@ def get_argument_from_definition(root,raw = True,index = None):
 		temporary = [(y.arg if isinstance(y,ast.AST) else y) for y in temporary]
 	return temporary[index] if (index is not None) and len(temporary)>index else temporary
 
+def get_definition_name(root,atok):
+	pass
+	
+
+
+
 
 ################################################################
 # 	 sub indexing functions
@@ -324,15 +344,10 @@ def get_subparts_of_string(root,name_mode = False):
 	print("splitted ",splitted)
 	for s in splitted:
 		index = original.find(s,index)
-		fake_token = asttokens.Token(0,s,0,0,0,
-			root.first_token.index,start_position + index,start_position + index + len(s))
-		fake_node = ast.Str(s = s) if not name_mode else ast.Name(id = s,ctx = root.ctx) 
-		fake_node.parent = root.parent
-		fake_node.parent_field = root.parent_field
-		fake_node.parent_field_index = root.parent_field_index
-		fake_node.first_token = fake_token
-		fake_node.last_token = fake_token
-		fake_node.fake = True
+		if name_mode:
+			fake_node = create_fake(root,s,start_position + index,ast.Name,id = s,ctx = root.ctx)
+		else:
+			fake_node = create_fake(root,s,start_position + index,ast.Str,s = s)
 		output.append(fake_node)
 		index += len(s)
 	return output if name_mode or len(output)>1 else []
