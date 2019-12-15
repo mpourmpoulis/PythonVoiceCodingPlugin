@@ -285,6 +285,17 @@ def get_definition_name(root,atok):
 		return None
 
 	
+def get_class_name(root,atok):
+	print( "inside here to lower" )
+	if not match_node(root,ast.ClassDef):
+		return None
+	print( "inside here to lowerfor the second time")
+	d = atok.find_token(root.first_token,tokenize.NAME,"class") 
+	x = next_token(atok,d)	
+	if x:
+		return create_fake(root,x.string,x.startpos,ast.Name,id = x.string,ctx = ast.Store())
+	else:
+		return None
 
 
 
