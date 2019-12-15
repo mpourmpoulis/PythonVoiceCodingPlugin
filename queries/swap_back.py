@@ -22,7 +22,6 @@ class SwapBack(InsertionQuery):
 			selection = history[index][2]
 			selection = selection if isinstance(selection,list) else [selection]
 		if query_description["format"]==2:
-			print(" inside here")
 			location_text = [candidates[query_description["color"+i]]  
 							for i in ["","2","3","4"] if "color"+i in query_description]
 		output = []  
