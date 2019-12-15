@@ -223,7 +223,7 @@ class PopUpErrorAction(InterfaceAction):
 		def on_hide():
 			view.show_popup(final_text,max_width=1024, max_height=10000, flags= sublime.HIDE_ON_MOUSE_MOVE_AWAY)
 		view.show_popup(final_text,max_width=1024, max_height=10000, 
-			flags= sublime.COOPERATE_WITH_AUTO_COMPLETE,on_hide = on_hide)
+			flags= sublime.HIDE_ON_MOUSE_MOVE_AWAY,on_hide = on_hide)
 		print(view.is_popup_visible())
 
 #  style=\"background-color:#000080\"
