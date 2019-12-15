@@ -71,6 +71,8 @@ class SelectBigRoi(SelectionQuery):
 			"definition name":((ast.FunctionDef),(),get_definition_name),
 			"class name":((ast.ClassDef),(),get_class_name),
 			"import statement":((ast.Import,ast.ImportFrom),(),standard),
+			"lambda":((ast.Lambda),(),standard),
+            "lambda body":((ast.Lambda),(),get_body),
 		}
 		temporary  = possibilities[query_description["big_roi"]]
 		basic_information = make_information(temporary[2],atok = build[1])

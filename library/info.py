@@ -267,7 +267,7 @@ def get_caller(root):
 def get_argument_from_definition(root,raw = True,index = None):
 	if not match_node(root,ast.FunctionDef):
 		return None
-	x= root.args
+	x = root.args
 	temporary = x.args  + [x.vararg] + x.kwonlyargs + [x.kwarg]
 	temporary = [y  for y in temporary if y]
 	if raw:
