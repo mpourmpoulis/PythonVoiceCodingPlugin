@@ -286,10 +286,8 @@ def get_definition_name(root,atok):
 
 	
 def get_class_name(root,atok):
-	print( "inside here to lower" )
 	if not match_node(root,ast.ClassDef):
 		return None
-	print( "inside here to lowerfor the second time")
 	d = atok.find_token(root.first_token,tokenize.NAME,"class") 
 	x = next_token(atok,d)	
 	if x:
@@ -373,7 +371,20 @@ def get_subparts_of_string(root,name_mode = False):
 		index += len(s)
 	return output if name_mode or len(output)>1 else []
 
-
+def get_subparts_of_attribute(root):
+	print("entering ")
+	print("wrote a",ast.dump(root))
+	if not match_node(root,ast.Attribute):
+		return None
+	l = root.last_token
+	print("this is not nice ")
+	fake_node = create_fake(root,l.string,l.startpos,ast.Name,id = l.string,ctx = root.ctx)
+	if  match_node(root.value,ast.Attribute):
+		print( "inside here" )
+		return get_subparts_of_attribute(root.value) + [fake_node]
+	else:
+		return [root.value,fake_node]
+	
 
 
 def get_sub_index(root,index):
@@ -405,9 +416,9 @@ def get_sub_index(root,index):
 	elif match_node(root,(ast.Str)):
 		candidates = get_subparts_of_string(root)
 	elif match_node(root,(ast.Name)):
-		print("whatever ")
 		candidates = get_subparts_of_string(root,name_mode = True)
-		print("candidates",candidates)
+	elif match_node(root,ast.Attribute):
+		candidates = get_subparts_of_attribute(root)
 	
 	# in the following cases we Certs deeper in the tree
 	if match_node(root,(ast.Subscript)):
@@ -420,7 +431,7 @@ def get_sub_index(root,index):
 		return get_sub_index(root.body,index)
 	if match_node(root,(ast.Call)):
 		return get_sub_index(root.func,index)
-
+	
 	if index<len(candidates):
 		return candidates[index]
 	else:
