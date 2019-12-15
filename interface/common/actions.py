@@ -21,7 +21,7 @@ class SelectionAction(InterfaceAction):
 				region = [region]
 			for r in region:
 				view.sel().add(sublime.Region(r[0],r[1]))
-			if settings.get("show_visible",False):
+			if settings.get("show_invisible",False):
 				view.show(sublime.Region(region[0][0],region[0][1]))
 			
 
