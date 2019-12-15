@@ -1,7 +1,7 @@
 import ast
 
 from PythonVoiceCodingPlugin.library import nearest_node_from_offset,sorted_by_source_region,get_source_region,node_from_range,make_flat
-from PythonVoiceCodingPlugin.library.info import identity,get_argument_from_call, make_information ,correspond_to_index_in_call,get_caller
+from PythonVoiceCodingPlugin.library.info import identity,get_argument_from_call, make_information ,correspond_to_index_in_call,get_caller,get_sub_index
 import PythonVoiceCodingPlugin.library.info as info
 from PythonVoiceCodingPlugin.library.LCA import LCA
 from PythonVoiceCodingPlugin.library.level_info import LevelVisitor
@@ -25,7 +25,16 @@ class SelectArgument(SelectionQuery):
 	"""docstring for SelectArgument"""
 	# def __init__(self):
 		# super(SelectArgument, self).__init__()
-
+	def get_information(self,query_description):
+		if "argument_index" in query_description:
+			return make_information(get_argument_from_call,query_description["argument_index"]-1)
+		else:
+			if "sub_index" not in query_description:
+				return get_caller
+			else:
+				i = query_description["sub_index"] - 1
+				return lambda x:get_sub_index(get_caller(x),i)
+				
 
 	def process_line(self,q, root ,atok, origin  = None, select_node = None,tiebreaker = lambda x: x, 
 					line = None, transformation = None,inverse_transformation = None, priority = {}, 
@@ -38,7 +47,7 @@ class SelectArgument(SelectionQuery):
 			additional_parameters["constrained_space"] = constrained_space
 
 
-		information = make_information(get_argument_from_call,q["argument_index"]-1) if "argument_index" in q else get_caller
+		information = self.get_information(q)
 		information_nodes = sorted_by_source_region(atok, find_matching(root, information))
 
 		if origin:
