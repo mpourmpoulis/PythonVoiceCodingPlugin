@@ -1,6 +1,8 @@
 import ast
 import inspect
 import re
+import tokenize
+
 from itertools import chain 
 from urllib.parse import urlparse
 
@@ -273,7 +275,15 @@ def get_argument_from_definition(root,raw = True,index = None):
 	return temporary[index] if (index is not None) and len(temporary)>index else temporary
 
 def get_definition_name(root,atok):
-	pass
+	if not match_node(root,ast.FunctionDef):
+		return None
+	d = atok.find_token(root.first_token,tokenize.NAME,"def") 
+	x = next_token(atok,d)	
+	if x:
+		return create_fake(root,x.string,x.startpos,ast.Name,id = x.string,ctx = ast.Store())
+	else:
+		return None
+
 	
 
 

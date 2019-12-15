@@ -68,7 +68,7 @@ class SelectBigRoi(SelectionQuery):
 			"expression statement":(ast.Expr,(),standard),
 			"iterable":((ast.For,ast.comprehension),(),get_iterable),
 			"iterator":((ast.For,ast.comprehension),(),get_iterator),
-			
+			"definition name":((ast.FunctionDef),(),get_definition_name),
 			"import statement":((ast.Import,ast.ImportFrom),(),standard),
 		}
 		temporary  = possibilities[query_description["big_roi"]]
