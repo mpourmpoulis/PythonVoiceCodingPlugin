@@ -138,7 +138,7 @@ def get_pure_if_condition(root):
 def get_elif_condition(root):
 	return (
 		root.test 
-		if match_node(root,(ast.If))  and match_parent(root,(ast.If)) and root.first_token.string=="elif"
+		if match_node(root,(ast.If))  and root.first_token.string=="elif"
 		else None		
 	)
 

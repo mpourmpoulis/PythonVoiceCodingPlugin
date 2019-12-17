@@ -267,6 +267,21 @@ class SelectArgument(SelectionQuery):
 				return None
 
 		# these will be written but I just want to check that it works
+		priority = {}
+		print(query_description["level"],"the information in the query description")
+		if query_description["level"]=="outer":
+
+			_,calling_parents = search_upwards_log(origin,targets=ast.stmt,log_targets=(ast.Call))
+			print("inside here",calling_parents)
+			index = query_description["level_index"]
+			print(len(calling_parents)," that is the length ")
+			if index<len(calling_parents):
+				priority["child_level"] = 1
+				print("I am inside here")
+				origin = calling_parents[index]
+				print(ast.dump(origin))
+			transformation = None
+			inverse_transformation=None	
 
 
 		result, alternatives = self.process_line(
@@ -284,7 +299,7 @@ class SelectArgument(SelectionQuery):
 
 	def case_four(self,view_information,query_description, extra = {}):
 		################################################################	
-		#		<adjective> inside <level_index> argument <argument_index> 
+		#		<level> [<level_index>] <adjective> (argument <argument_index>|caller [<sub_index>])
 		###############################################################	
 		selection = self._get_selection(view_information,extra)
 		build = self.general_build if self.general_build else line_partial(selection[0])
