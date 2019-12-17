@@ -45,10 +45,12 @@ def make_information(c,*arg,**kwargs):
 	return lambda x: c(x,*arg,**kwargs)
 
 
-def identity(information, parameter = None):
-	if parameter:
-		return lambda x: x if information(x,parameter) else None
-	return lambda x: x if information(x) else None
+def identity(information, *arg,**kwargs):
+	signature = inspect.signature(information)
+	if not any(x.kind==x.VAR_KEYWORD  for x in signature.parameters.values()):
+		temporary = {x.name  for x in signature.parameters.values()}
+		kwargs = {k:v for k,v in kwargs.items() if k in temporary}
+	return lambda x: x if information(x,*arg,**kwargs) else None
 
 
 def create_fake(root,text,start_position,node_type, **kwargs):
