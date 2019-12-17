@@ -131,14 +131,14 @@ def get_condition(root):
 def get_pure_if_condition(root):
 	return (
 		root.test 
-		if match_node(root,(ast.If))  and not (match_parent(root,(ast.If)) and root.parent_field == "orelse")
+		if match_node(root,(ast.If))  and root.first_token.string=="if"
 		else None		
 	)
 
 def get_elif_condition(root):
 	return (
 		root.test 
-		if match_node(root,(ast.If))  and match_parent(root,(ast.If)) and root.parent_field == "orelse"
+		if match_node(root,(ast.If))  and match_parent(root,(ast.If)) and root.first_token.string=="elif"
 		else None		
 	)
 
