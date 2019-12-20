@@ -85,6 +85,9 @@ def name(root):
 
 
 
+
+
+
 ################################################################################################
 ################################################################################################
 #
@@ -120,7 +123,7 @@ def get_right(root):
 	return getattr( root ,h[type( root)]) if type( root) in h else None
 
 def get_body(root):
-	return root.attribute if match_node(root,(ast.IfExp, ast.If ,ast.For,ast.While, ast.Try)) else None
+	return root.body if match_node(root,(ast.IfExp, ast.If ,ast.For,ast.While, ast.Try)) else None
 	
 
 
@@ -286,6 +289,15 @@ def get_definition_name(root,atok):
 	else:
 		return None
 
+def get_definition_parameter_name(root,atok):
+	print(ast.dump(root),dir(root))
+	if not match_node(root,ast.arg):
+		return None 	
+	x = root.first_token
+	print([x])
+	return create_fake(root,x.string,x.startpos,ast.Name,id = x.string,ctx = ast.Store())
+
+
 	
 def get_class_name(root,atok):
 	if not match_node(root,ast.ClassDef):
@@ -332,7 +344,7 @@ def get_subparts_of_binary_operation(root):
 	return left + right
 
 
-def split_string(s,even_letters = True):
+def split_string(s :str ,even_letters = True):
 	s = s.strip()
 	y = urlparse(s)
 	if  not (y.scheme=="" and y.netloc==""):
@@ -364,6 +376,8 @@ def get_subparts_of_string(root,name_mode = False):
 	index = 0
 	print("splitted ",splitted)
 	for s in splitted:
+		if not s:
+			continue
 		index = original.find(s,index)
 		if name_mode:
 			fake_node = create_fake(root,s,start_position + index,ast.Name,id = s,ctx = root.ctx)
@@ -374,15 +388,11 @@ def get_subparts_of_string(root,name_mode = False):
 	return output if name_mode or len(output)>1 else []
 
 def get_subparts_of_attribute(root):
-	print("entering ")
-	print("wrote a",ast.dump(root))
 	if not match_node(root,ast.Attribute):
 		return None
 	l = root.last_token
-	print("this is not nice ")
 	fake_node = create_fake(root,l.string,l.startpos,ast.Name,id = l.string,ctx = root.ctx)
 	if  match_node(root.value,ast.Attribute):
-		print( "inside here" )
 		return get_subparts_of_attribute(root.value) + [fake_node]
 	else:
 		return [root.value,fake_node]
