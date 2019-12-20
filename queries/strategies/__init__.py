@@ -5,3 +5,4 @@ from PythonVoiceCodingPlugin.queries.strategies.obtain import *
 from PythonVoiceCodingPlugin.queries.strategies.state_extraction import *
 from PythonVoiceCodingPlugin.queries.strategies.item_selection import *
 
+
