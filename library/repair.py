@@ -340,7 +340,7 @@ class RepairMissing():
 		k = 0
 		self.already_checked = set()
 		for t in self.atok.tokens:
-			if t.string in ["if","for","while","with","def","elif","else","try","except"]:
+			if t.string in ["if","for","while","with","def","elif","else","try","except","finally"]:
 				if t.string == "elif":
 					k = k + 1
 				z = handle_empty_compound(self.atok,t,l,b ,self.d)
