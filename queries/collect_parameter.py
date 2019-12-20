@@ -19,7 +19,7 @@ class CollectParameter(CollectionQuery):
 		if not  build: 
 			return None,None
 		root,atok,m,r = build 
-		definition_nodes = [search_upwards(origin,ast.FunctionDef)] if query_description["format"]==2 else find_all_nodes(root,ast.FunctionDef)
+		definition_nodes = [search_upwards(origin,ast.FunctionDef)] if query_description["format"]>=2 else find_all_nodes(root,ast.FunctionDef)
 		name_nodes = make_flat([get_argument_from_definition(x)  for x in definition_nodes])
 		names = list(OrderedDict([(x,0)  for x in name_nodes]).keys())
 		if query_description["format"]==1:
