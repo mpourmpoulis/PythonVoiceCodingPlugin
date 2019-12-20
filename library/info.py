@@ -417,10 +417,8 @@ def get_sub_index(root,index):
 		candidates = get_subparts_of_binary_operation(root)
 	elif match_node(root,(ast.Compare)) :
 		candidates = [root.left] + root.comparators
-	elif match_node(root,(ast.Index)):
-		candidates = [root.value] 
-		if match_node(root.value,(ast.List,ast.Tuple,ast.Set)):
-			candidates =  root.value.elts
+	elif match_node(root,(ast.Subscript)):
+		candidates = [root.value,root.slice]
 	elif match_node(root,(ast.Slice)):
 		candidates = [root.lower,root.upper, root.step]
 	elif match_node(root,(ast.ExtSlice)):
@@ -433,8 +431,8 @@ def get_sub_index(root,index):
 		candidates = get_subparts_of_attribute(root)
 	
 	# in the following cases we Certs deeper in the tree
-	if match_node(root,(ast.Subscript)):
-		return get_sub_index(root.slice,index)
+	if match_node(root,(ast.Index)):
+		return get_sub_index(root.value,index)
 	if match_node(root,(ast.Expr)):
 		return get_sub_index(root.value,index)
 	if match_node(root,(ast.UnaryOp)):
