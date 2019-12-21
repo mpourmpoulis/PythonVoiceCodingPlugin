@@ -84,7 +84,8 @@ def single(root):
 def name(root):
 	return match_node(root,ast.Name)
 
-
+def is_decorator(root):
+	return root.parent_field=="decorator_list"
 
 
 
