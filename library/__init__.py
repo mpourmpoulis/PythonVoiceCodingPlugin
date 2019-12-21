@@ -17,8 +17,8 @@ def get_source_region(atok, element):
     if element is None:
     	return None
     if isinstance(element,ast.AST):
-        return atok.get_text_range(element)         
-    else:
+    	return atok.get_text_range(element)         
+    else:   
         regions = [atok.get_text_range(node)  for node in element]
         start = min( regions,key = lambda s: s[0])[0]
         end = max( regions,key = lambda s: s[1])[1] 
@@ -47,8 +47,11 @@ def node_from_range(root,atok, r ):
 	inside = lambda x,y: (y[0]<=x[0]<y[1] and y[0]<x[1]<=y[1])
 	candidates =([(node,atok.get_text_range(node)) for node in ast.walk( root ) if not isinstance(node,ast.Module) 
     	and  inside(r,atok.get_text_range(node))])
+	print("inside note from range \n")
 	for x in candidates:
 		print(x,atok.get_text_range(x))
+	print("outside note from range \n",min( candidates , key= lambda y :(y[1][1]-y[1][0]) )[0])
+
 	return min( candidates , key= lambda y :(y[1][1]-y[1][0]) )[0]
 	
 
