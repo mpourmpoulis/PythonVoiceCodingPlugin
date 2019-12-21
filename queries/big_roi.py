@@ -40,7 +40,8 @@ class SelectBigRoi(SelectionQuery):
 			definition_node = search_upwards(origin,ast.FunctionDef)
 		definition_node  = ( 
 			definition_node 
-			if definition_node  and query_description["big_roi"] not in ["import statement","class name"]
+			if definition_node  and query_description["big_roi"] not in ["import statement","class name",
+							"base class","decorator"]
 			else root
 		)
 		return build, selection, origin, definition_node
@@ -73,7 +74,14 @@ class SelectBigRoi(SelectionQuery):
 			"import statement":((ast.Import,ast.ImportFrom),(),standard),
 			"lambda":((ast.Lambda),(),standard),
             "lambda body":((ast.Lambda),(),get_body),
+            "if body":((ast.If, ast.For,ast.comprehension),(),get_body),
+            "definition parameter": ((ast.arg),(),get_definition_parameter_name),
+            "decorator":((ast.AST),(),identity(is_decorator)),
+            "base class":((ast.AST),(),identity(is_base)),
+
+
 		}
+
 		temporary  = possibilities[query_description["big_roi"]]
 		basic_information = make_information(temporary[2],atok = build[1])
 		if "big_roi_sub_index" in query_description:
@@ -121,7 +129,7 @@ class SelectBigRoi(SelectionQuery):
 				atok=atok,
 				root = definition_node,
 				adjective_word = query_description["adjective"],
-				level_nodes = find_all_nodes(definition_node, (ast.If,ast.While,ast.For,ast.Try,ast.With,ast.FunctionDef)),
+				level_nodes = find_all_nodes(definition_node, (ast.If,ast.While,ast.For,ast.Try,ast.With,ast.FunctionDef,ast.ClassDef)),
 				information_nodes = find_matching(definition_node,temporary_information),
 				**additional_parameters
 		)
