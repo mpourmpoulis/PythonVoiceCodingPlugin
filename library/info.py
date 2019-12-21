@@ -445,6 +445,12 @@ def get_sub_index(root,index):
 		candidates = get_subparts_of_attribute(root)
 	elif match_node(root,ast.IfExp):
 		candidates = [root.body,root.test,root.orelse]
+	elif match_node(root,ast.withitem):
+		candidates = [root.context_expr,root.optional_vars]
+	elif match_node(root,(ast.ListComp,ast.SetComp,ast.GeneratorExp)):
+		candidates = [root.elt] + root.generators
+	elif match_node(root,ast.DictComp):
+		candidates = [[root.key,root.value]] + root.generators
 	
 	# in the following cases we Certs deeper in the tree
 	if match_node(root,(ast.Index)):
