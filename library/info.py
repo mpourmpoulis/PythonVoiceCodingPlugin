@@ -443,6 +443,8 @@ def get_sub_index(root,index):
 		candidates = get_subparts_of_string(root,name_mode = True)
 	elif match_node(root,ast.Attribute):
 		candidates = get_subparts_of_attribute(root)
+	elif match_node(root,ast.IfExp):
+		candidates = [root.body,root.test,root.orelse]
 	
 	# in the following cases we Certs deeper in the tree
 	if match_node(root,(ast.Index)):
