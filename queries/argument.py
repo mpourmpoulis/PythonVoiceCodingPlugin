@@ -252,7 +252,7 @@ class SelectArgument(SelectionQuery):
 			if  not calling_parent:
 				return None
 			field,field_index = lca.get_field_with_respect_to(node,calling_parent)
-			if correspond_to_index_in_call(calling_parent,query_description["level_index"]-1,field,field_index):
+			if query_description["level_index"]== 0 or correspond_to_index_in_call(calling_parent,query_description["level_index"]-1,field,field_index):
 				if calling_parent not in temporary:
 					temporary[calling_parent] = []
 				temporary[calling_parent].append(node)
@@ -322,7 +322,7 @@ class SelectArgument(SelectionQuery):
 			calling_parent, field,field_index = level[node] 
 			if  not calling_parent or calling_parent is level.root:
 				return None
-			if correspond_to_index_in_call(calling_parent,query_description["level_index"]-1,field,field_index):
+			if query_description["level_index"]== 0 or correspond_to_index_in_call(calling_parent,query_description["level_index"]-1,field,field_index):
 				adj = translate_adjective[query_description["adjective"]]-1
 				n = level(node, 3,adj)
 				return node if n is node else None
