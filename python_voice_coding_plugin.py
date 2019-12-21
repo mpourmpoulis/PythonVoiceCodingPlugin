@@ -35,6 +35,7 @@ class PythonVoiceCodingPluginCommand(sublime_plugin.TextCommand,sublime_plugin.V
 			settings = settings
 		)
 		interface.respond_to_query(arg)
+		interface.respond_to_event({"event":"update_change_count","change_count":self.view.change_count()})
 		print(" the counties ",self.view.change_count())
 
 	def on_modified(self):

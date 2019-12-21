@@ -33,7 +33,7 @@ class Interface():
 	def respond_to_event(self,event_description):
 		self.actions = []
 		application = Application.get_application(self.view.id())
-		application.respond_to_query(self,query_description)
+		application.respond_to_event(self,event_description)
 		parameters = {
 			"view":self.view,"window":self.window,"edit":self.edit,"sublime":self.sublime,"settings":self.settings,
 		}

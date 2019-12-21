@@ -61,7 +61,9 @@ class Application():
 			s(view_information,query_description,extra)
 		except Exception as e:
 			print("\n\n finally\n\n")
-			print(e)
+			if not s.exceptions_raised  :
+				print(e)
+				raise e
 			print("\n\n finally\n\n")
 			interface.clear_actions()
 			interface.push_action(PopUpErrorAction(str(e)))
@@ -152,8 +154,11 @@ class Application():
 
 
 
-	def respond_to_event(interface,event_description):
-		pass
+	def respond_to_event(self,interface,event_description):
+		event = event_description["event"]
+		if event=="update_change_count":
+			self.state["change_count"] = event_description["change_count"]
+
 
 
 		
