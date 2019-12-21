@@ -88,7 +88,15 @@ def is_decorator(root):
 	return getattr(root,"parent_field","")=="decorator_list"
 
 def is_base(root):
-	return getattr(root,"parent_field","") == "bases"  and  match_parent(root,ast.keyword)  and match_parent(root.parent,ast.ClassDef)
+	return (
+		(
+			getattr(root,"parent_field","") == "bases" and match_parent(root,ast.ClassDef)
+		)
+		or 
+		(
+		    match_parent(root,ast.keyword)  and match_parent(root.parent,ast.ClassDef)
+		)
+	)
 
 
 
