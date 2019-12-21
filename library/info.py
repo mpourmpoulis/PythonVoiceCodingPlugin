@@ -85,7 +85,10 @@ def name(root):
 	return match_node(root,ast.Name)
 
 def is_decorator(root):
-	return root.parent_field=="decorator_list"
+	return getattr(root,"parent_field","")=="decorator_list"
+
+def is_base(root):
+	return getattr(root,"parent_field","") == "bases"  and  match_parent(root,ast.keyword)  and match_parent(root.parent,ast.ClassDef)
 
 
 

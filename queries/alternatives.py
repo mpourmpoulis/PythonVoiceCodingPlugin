@@ -4,6 +4,7 @@ from PythonVoiceCodingPlugin.queries.strategies import decode_item_selection,res
 @no_build_attempt
 class SelectAlternative(SelectionQuery):
 	"""docstring for SelectAlternative"""
+	
 	def handle_single(self,view_information,query_description,extra = {}):
 		state = extra["state"]
 		candidates = result_alternatives_sequence(state,location=True)
