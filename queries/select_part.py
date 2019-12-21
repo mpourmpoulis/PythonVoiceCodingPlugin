@@ -2,14 +2,12 @@ import ast
 
 from PythonVoiceCodingPlugin.library import nearest_node_from_offset,sorted_by_source_region,get_source_region,node_from_range,make_flat
 from PythonVoiceCodingPlugin.library.info import *
-from PythonVoiceCodingPlugin.library.LCA import LCA
-from PythonVoiceCodingPlugin.library.level_info import LevelVisitor
 from PythonVoiceCodingPlugin.library.partial import partially_parse, line_partial
 from PythonVoiceCodingPlugin.library.traverse import search_upwards,search_upwards_log, find_matching,match_node, find_all_nodes,search_upwards_for_parent
 
 from PythonVoiceCodingPlugin.queries.abstract import SelectionQuery
 from PythonVoiceCodingPlugin.queries.tiebreak import tiebreak_on_lca
-from PythonVoiceCodingPlugin.queries.strategies import adjective_strategy,decode_abstract_vertical,translate_adjective,obtain_result
+from PythonVoiceCodingPlugin.queries.strategies import translate_adjective,obtain_result
 
 
 
@@ -37,8 +35,14 @@ class SelectPart(SelectionQuery):
 			second_origin = get_sub_index(origin,translate_adjective[query_description["nth"]]-1)
 
 		print(" just before the end",second_origin)
-		result = get_sub_index(second_origin,query_description["sub_index"]-1)
-		alternatives = []
+		if query_description["format"]!=3:
+			result = get_sub_index(second_origin,query_description["sub_index"]-1)
+			alternatives = []
+		else:
+			intermediate = get_sub_index(second_origin,None)
+			candidates = [get_sub_index(x,query_description["sub_index"]-1) for x in intermediate]
+			candidates = [x  for x in candidates if x]
+			result,alternatives = obtain_result(None, candidates)
 		return self._backward_result(result, alternatives,build)
 
 
