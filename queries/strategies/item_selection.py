@@ -1,10 +1,11 @@
-def translate_indices(query_description,name):
+def translate_indices(query_description,name,decrement):
 	y = [name + x  for x in ["","2","3","4"]]
-	return [query_description[x]-1  for x in y if x in query_description]
+	value = 1 if decrement else 0
+	return [query_description[x]-value  for x in y if x in query_description]
 
 
-def decode_item_selection(items,query_description,mode,name):
-	indices = translate_indices(query_description,name)
+def decode_item_selection(items,query_description,mode,name,decrement=True):
+	indices = translate_indices(query_description,name,decrement)
 	print(indices)
 	if mode == "individual":
 		print([items[x]  for x in indices])
