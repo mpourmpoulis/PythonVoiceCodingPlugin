@@ -20,12 +20,13 @@ def plugin_loaded():
 
 	
 
-class PythonVoiceCodingPluginCommand(sublime_plugin.TextCommand):
+class PythonVoiceCodingPluginCommand(sublime_plugin.TextCommand,sublime_plugin.ViewEventListener):
 	def run(self, edit,arg):
 		self.action_one(edit,arg)
 
 	def action_one(self, edit,arg):
 		global settings
+		print(" the counties ",self.view.change_count())
 		interface = Interface(
 			sublime = sublime,
 			view = self.view,
@@ -34,8 +35,10 @@ class PythonVoiceCodingPluginCommand(sublime_plugin.TextCommand):
 			settings = settings
 		)
 		interface.respond_to_query(arg)
+		print(" the counties ",self.view.change_count())
 
-
+	def on_modified(self):
+		print(" from the event lease and their side of the plug-in",self.view.change_count())
 
 
 
