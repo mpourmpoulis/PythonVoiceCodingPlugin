@@ -1,4 +1,5 @@
 from PythonVoiceCodingPlugin.queries.abstract import SelectionQuery, no_build_attempt
+from PythonVoiceCodingPlugin.queries.strategies import decode_item_selection
 
 @no_build_attempt
 class SelectAlternative(SelectionQuery):
@@ -7,15 +8,14 @@ class SelectAlternative(SelectionQuery):
 		state = extra["state"]
 		alternatives = state["alternatives"]
 		if "alternative_index" in query_description:
-			index = query_description["alternative_index"]
+			name="alternative_index"
 		elif "color" in query_description:
-			index = query_description["color"]
+			name = "color"
 		else:
 			return None,None
-		index=index-1
-		if len(alternatives)>index:
-			return alternatives[index],[]
-		else:
-			return None,None
+		result = decode_item_selection(alternatives,query_description,"individual",name)
+		if len(result)==1:
+			result = result[0]
+		return result, []
 
 
