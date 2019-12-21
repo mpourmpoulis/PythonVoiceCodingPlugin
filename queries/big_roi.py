@@ -84,18 +84,17 @@ class SelectBigRoi(SelectionQuery):
 
 		temporary  = possibilities[query_description["big_roi"]]
 		basic_information = make_information(temporary[2],atok = build[1])
-		if "big_roi_sub_index" in query_description:
-			if query_description["big_roi_sub_index"] == 0:
-				return  possibilities[query_description["big_roi"]][:2] + (basic_information,)
-			else:
-				index = query_description["big_roi_sub_index"]
-				def modified_information(x, information,index):
-					data  = basic_information(x)
-					return get_sub_index(data,index)
+		if "sub_index" in query_description:
+			index = query_description["sub_index"]
+			def modified_information(x, information,index):
+				data  = basic_information(x)
+				return get_sub_index(data,index)
 
-				y  = lambda x: temporary[2](x)
-				y.secondary  = lambda x: modified_information(x,temporary[2],index-1)
-				return (temporary[0],temporary[1],y)
+			y  = lambda x: temporary[2](x)
+			y.secondary  = lambda x: modified_information(x,temporary[2],index-1)
+			return (temporary[0],temporary[1],y)
+		else:
+			return  possibilities[query_description["big_roi"]][:2] + (basic_information,)
 
 
 	def case_one(self,view_information,query_description, extra = {}):
