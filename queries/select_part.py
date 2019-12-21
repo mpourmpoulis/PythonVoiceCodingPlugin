@@ -17,6 +17,7 @@ from PythonVoiceCodingPlugin.queries.strategies import adjective_strategy,decode
 class SelectPart(SelectionQuery):
 	multiple_in = True
 	
+	
 
 	def handle_single(self,view_information,query_description,extra = {}):
 		print(" inside here selection where he parked ")
