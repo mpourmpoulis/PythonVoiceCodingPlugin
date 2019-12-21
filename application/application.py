@@ -59,8 +59,14 @@ class Application():
 			backup=[deepcopy(self.state),deepcopy(self.global_state)]
 		try:
 			s(view_information,query_description,extra)
-		except:
-			pass
+		except Exception as e:
+			print("\n\n finally\n\n")
+			print(e)
+			print("\n\n finally\n\n")
+			interface.clear_actions()
+			interface.push_action(PopUpErrorAction(str(e)))
+			return False
+			
 
 		# check if there are exceptions
 		if s.exceptions_raised:
@@ -82,13 +88,19 @@ class Application():
 				self.state["result"] = result
 				self.state["alternatives"] = []
 				self.state["alternatives_text"] = []
-				self.state["result_text"] = code[result[0]:result[1]]
+				if not isinstance(result,list):
+					self.state["result_text"] = code[result[0]:result[1]]	
+				else:
+					self.state["result_text"] = [code[x[0]:x[1]] for x in result if x]
 				interface.push_action(SelectionAction(result))
 				self.history.append(("selection",view_information["change_count"],view_information["selection"],result))
 			interface.push_action(ClearHighlightAction("alternatives"))
 			if alternatives:
 				self.state["alternatives"] = alternatives
-				self.state["alternatives_text"] = [code[x[0]:x[1]] for x in alternatives]
+				if not isinstance(alternatives[0],list):
+					self.state["alternatives_text"] = [code[x[0]:x[1]] for x in alternatives]
+				else:
+					self.state["alternatives_text"] = [[code[x[0]:x[1]] for x in y] for y in alternatives if y]
 				interface.push_action(DisplayRegionsAction("alternatives",alternatives,"Alternatives:\n"))
 				interface.push_action(HighlightCleverAction(alternatives,"alternatives",result))
 				
