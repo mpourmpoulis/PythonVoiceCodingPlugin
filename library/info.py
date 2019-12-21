@@ -37,12 +37,12 @@ it is split into four sections
 ################################################################################################
 ################################################################################################
 
-def make_information(c,*arg,**kwargs):
-	signature = inspect.signature(c)
+def make_information(information,*arg,**kwargs):
+	signature = inspect.signature(information)
 	if not any(x.kind==x.VAR_KEYWORD  for x in signature.parameters.values()):
 		temporary = {x.name  for x in signature.parameters.values()}
 		kwargs = {k:v for k,v in kwargs.items() if k in temporary}
-	return lambda x: c(x,*arg,**kwargs)
+	return lambda root: information(root,*arg,**kwargs)
 
 
 def identity(information, *arg,**kwargs):
@@ -50,7 +50,8 @@ def identity(information, *arg,**kwargs):
 	if not any(x.kind==x.VAR_KEYWORD  for x in signature.parameters.values()):
 		temporary = {x.name  for x in signature.parameters.values()}
 		kwargs = {k:v for k,v in kwargs.items() if k in temporary}
-	return lambda x: x if information(x,*arg,**kwargs) else None
+	return lambda root: root if information(root,*arg,**kwargs) else None
+
 
 
 def create_fake(root,text,start_position,node_type, **kwargs):
@@ -272,6 +273,7 @@ def get_caller(root):
 def get_argument_from_definition(root,raw = True,index = None):
 	if not match_node(root,ast.FunctionDef):
 		return None
+		
 	x = root.args
 	temporary = x.args  + [x.vararg] + x.kwonlyargs + [x.kwarg]
 	temporary = [y  for y in temporary if y]
