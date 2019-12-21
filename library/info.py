@@ -456,7 +456,9 @@ def get_sub_index(root,index):
 	if match_node(root,(ast.Call)):
 		return get_sub_index(root.func,index)
 	
-	if index<len(candidates):
+	if index is None:
+		return candidates
+	elif index<len(candidates):
 		return candidates[index]
 	else:
 		return None
