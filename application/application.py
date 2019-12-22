@@ -2,6 +2,7 @@ from copy import deepcopy
 
 from PythonVoiceCodingPlugin.queries import *
 from PythonVoiceCodingPlugin.application.build_cache import BuildCache
+from PythonVoiceCodingPlugin.application.state_update import retrieve_state
 from PythonVoiceCodingPlugin.interface.common.actions import *
 
 
@@ -13,7 +14,7 @@ class Application():
 	
 	def __init__(self,vid):
 		self.history = []
-		self.state = {}
+		self.state = {"result": None,"origin": None,"alternatives": [],"change_count":-1}
 		self.ui_controller = None
 		self.vid = vid
 
@@ -24,20 +25,6 @@ class Application():
 	def get_application(vid):
 		Application.create_application_for_view(vid)
 		return Application.active_applications[vid]
-
-	def update_state(self,view_information,code):
-		'''		
-		normally I would like these to be implemented by means of modification handlers
-		And an event listener transmitting every chains in the code. However it seems
-		but the provided event listener does not provide me with the location that was changed.
-		So in order to keep track over the location of important regions when the code changes,
-		The current solution is to outsource everything to the sublime add_regions/get_regions 
-		functionality
-		'''
-		self.state["result"] = view_information["get_regions"]("result")
-		self.state["alternatives"] = view_information["get_regions"]("alternatives")
-		self.state["origin"] = view_information["get_regions"]("origin")
-		self.state["origin_stack"] = view_information["get_regions"]("origin_stack")
 
 	
 
@@ -51,19 +38,21 @@ class Application():
 		code = view_information["code"]
 		change_count = view_information["change_count"]
 		latest_build = Application.build_cache.get_build(self.vid,change_count)
+		retrieve_state(self.state,view_information,code)
 
 		# get the corresponding query and execute it
 		s = get_query(query_description)(code,latest_build)
 		secondary_query_description = get_secondary_query(query_description)
 		if secondary_query_description:
 			backup=[deepcopy(self.state),deepcopy(self.global_state)]
+
 		try:
 			s(view_information,query_description,extra)
 		except Exception as e:
 			print("\n\n finally\n\n")
 			if not s.exceptions_raised  :
 				print(e)
-				raise e
+				
 			print("\n\n finally\n\n")
 			interface.clear_actions()
 			interface.push_action(PopUpErrorAction(str(e)))
@@ -140,17 +129,6 @@ class Application():
 				self.state,self.global_state = backup
 				return False
 		return True
-
-
-
-
-
-
-
-
-
-
-
 
 
 
