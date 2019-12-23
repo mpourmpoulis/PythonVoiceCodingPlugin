@@ -270,7 +270,8 @@ class SelectArgument(SelectionQuery):
 		priority = {}
 		print(query_description["level"],"the information in the query description")
 		if query_description["level"]=="outer":
-
+			if query_description["level_index"]==0:
+				query_description["level_index"] = 1
 			_,calling_parents = search_upwards_log(origin,targets=ast.stmt,log_targets=(ast.Call))
 			print("inside here",calling_parents)
 			index = query_description["level_index"]
@@ -337,7 +338,8 @@ class SelectArgument(SelectionQuery):
 		priority = {}
 		print(query_description["level"],"the information in the query description")
 		if query_description["level"]=="outer":
-
+			if query_description["level_index"]==0:
+				query_description["level_index"] = 1
 			_,calling_parents = search_upwards_log(origin,targets=ast.stmt,log_targets=(ast.Call))
 			print("inside here",calling_parents)
 			index = query_description["level_index"]
