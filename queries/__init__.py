@@ -59,6 +59,10 @@ def get_secondary_query(query_description):
 				"command":"delete_alternatives",
 				"format":1,
 				"color":0,
+			},
+			"swap":{
+				"command":"swap_back",
+				"format":1,
 			}
 			
 

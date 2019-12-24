@@ -35,11 +35,16 @@ class SelectionQuery(Query):
 	def get_the_latest_build(self):
 		return self.general_build
 
-	def _backward_result(self,result,alternatives,build):
+	def _backward_result(self,result,alternatives,build,individually = False):
+		print("result",result)
+		print("alternatives",alternatives)
 		if build  and  build[0]:
 			m = build[2]
-			atok = build[1] 
-			result = m.backward(get_source_region(atok, result)) if result else None
+			atok = build[1]
+			if individually:
+				result = [m.backward(get_source_region(atok, x)) if x else None for x in result] 
+			else:
+				result = m.backward(get_source_region(atok, result)) if result else None
 			#self._get_selection(view_information,extra)
 			alternatives = [m.backward(get_source_region(atok,x)) for x in alternatives]
 			return result, alternatives

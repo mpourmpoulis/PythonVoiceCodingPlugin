@@ -1,5 +1,7 @@
 import html
 
+from PythonVoiceCodingPlugin.interface.common.utility import make_region,make_sequence,all_or_nothing
+
 class InterfaceAction():
 	"""docstring for InterfaceAction"""
 	def __init__(self):
@@ -54,6 +56,7 @@ class ClearHighlightAction(InterfaceAction):
 	def execute(self,view,**kwargs):
 		index = 0
 		while True:
+			print(self.data["name"],index," attempted deletion ")
 			index+=1
 			r = view.get_regions(self.data["name"]+str(index)) 
 			if r:
@@ -92,8 +95,8 @@ class HighlightManyAction(InterfaceAction):
 
 class HighlightCleverAction(InterfaceAction):
 	"""docstring for HighlightAction(InterfaceAction"""
-	def __init__(self, region,name, result):  
-		self.data = {"region":region, "name":name , "result":result}
+	def __init__(self, region,name, avoid = [],colorize = False):  
+		self.data = {"region":region, "name":name , "avoid":avoid,"colorize":colorize}
 
 	def execute(self,view,sublime,**kwargs):
 		# these are the standard color maps for highlighting using the region-ish api
@@ -115,33 +118,35 @@ class HighlightCleverAction(InterfaceAction):
 		color_order = ["red","blue","green","yellow","orange"]
 
 		# transform the region variable into at list of sublime regions
+		single_mode = False
 		region =  self.data["region"]
 		if not isinstance(region ,list):
-			region = [region]
-		region  = [ sublime.Region(x[0],x[1])  for x in region if x]
+			region = [[region]] if region else [[]]
+		elif isinstance(region,list):
+			assert all_or_nothing(region,isinstance,list)," singular regions and sequences of regions are mixed"
+			if all(not isinstance(x,list) for x in region):
+				region = [[x]  for x in region]
+				single_mode = True
+		region = make_region(region)
 
 		# transform the result into a sublime region
-		result = self.data["result"]
-		result = sublime.Region(result[0],result[1])
-
-		for i,(r,c) in enumerate(zip(region,color_order)):
+		avoid = self.data["avoid"]
+		avoid = make_region(avoid)
+		avoid_sequence = make_sequence(avoid)
+		overlapping = make_sequence(region) + make_sequence(avoid)
+		for i,(br,c) in enumerate(zip(region,color_order)):
 			use_reinforced = False
-			# we use reinforced color if the region is contained within another 
-			for x,y in zip(region,color_order):
-				if x.contains(r) and x is not r:
-					use_reinforced = True
+			for r in br:
+				use_reinforced = any(
+					(x.contains(r) and x is not r) or (r.contains(x) and x in avoid_sequence)  
+					for x in overlapping
+				) or r.b-r.a==1 or use_reinforced
+			if self.data["colorize"] and i<5:
+				view.add_regions(self.data["name"]+str(i+1), br,
+					  reinforced_color[c] if use_reinforced  and  single_mode else standard_color[c],"circle")
+			else:
+				view.add_regions(self.data["name"]+str(i+1),br)
 
-			# to avoid foreground background problems if the region contains the selection it will not be reinforced
-			if r.contains(result):
-				use_reinforced = False
-			# however if the region is contained within the selection it must be reinforced
-			elif result.contains(r):
-				use_reinforced = True
-			if r.b-r.a==1:
-				use_reinforced = True
-			# we add the region alongside with an index
-			view.add_regions(self.data["name"]+str(i+1), [r], reinforced_color[c] if use_reinforced else standard_color[c],
-				"circle")
 
 
 

@@ -10,17 +10,24 @@ class SwapBack(InsertionQuery):
 
 	def handle_single(self,view_information,query_description,extra = {}):
 		state = extra["state"]
-		history  =  extra["history"]
-		index = len(history)
-		while history[index-1][0]=="selection"  and index>=1 and history[index-1][1]  == view_information["change_count"]:
-			index -=1
-		if index==len(history) or history[index][1] != view_information["change_count"]:
-			return []
-		
+		# history  =  extra["history"]
+		# index = len(history)
+		# while history[index-1][0]=="selection"  and index>=1 and history[index-1][1]  == view_information["change_count"]:
+			# index -=1
+		# if index==len(history) or history[index][1] != view_information["change_count"]:
+			# return []
 		candidates = result_alternatives_sequence(state,location = True,text = True)
 		if query_description["format"]==1:
-			selection = history[index][2]
-			selection = selection if isinstance(selection,list) else [selection]
+			# selection = history[index][2]
+			# selection = state["origin"]
+			# selection = selection if isinstance(selection,list) else [selection]
+			for location,t in candidates:
+				if not overlap_regions(location,state["origin"]):
+					decision = (location,t)
+					break
+			else:
+				raise Exception("Swamp cannot swap regions of overlap!!!")
+			location_text = [(state["origin"],state["origin_text"]),decision]
 		if query_description["format"]==2:
 			location_text = [candidates[query_description["color"+i]]  
 							for i in ["","2","3","4"] if "color"+i in query_description]

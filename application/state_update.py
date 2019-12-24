@@ -59,7 +59,7 @@ def get_location_text(location,code):
 	return code[location[0]:location[1]]
 
 def convert_single_to_multiple(state):
-	for k in ["result","origin","alternatives"]:
+	for k in ["result","origin","initial_origin","alternatives"]:
 		data = state[k]
 		if data is None:
 			data = []
@@ -73,17 +73,20 @@ def convert_single_to_multiple(state):
 		state[k] = data
 
 def convert_multiple_to_single(state):
-	for k in ["result","origin","alternatives"]:
+	print(" inside multiple single ",state)
+	for k in ["result","origin","initial_origin","alternatives"]:
 		data = state[k]
 		if k not in ["alternatives"]:
 			if data == []:
 				data = None
 			elif isinstance(data,list) and len(data)==1 and isinstance(data[0],list) and len(data[0])==1:
+				print(" inside this case",k,data)
 				data = data[0][0]
+				print(" outside this case",k,data)
 			else:
 				raise Exception("when converting from multiple mode In single_mode "+k+" cannot be a nested list!")
 		else:
-			if isinstance(data,list) and all(isinstance(x,list)  and len(x)==1 for x in data):
+			if isinstance(data,list) and len(data)==1:
 				data = make_flat(data)
 			else:
 				raise Exception(" when converting into single mode, each of the items in the alternatives must have length of one")
@@ -93,59 +96,78 @@ def convert_multiple_to_single(state):
 def clear_state(state):
 	state["result"] = None
 	state["origin"] = None
+	state["initial_origin"] = None
 	state["alternatives"] = []
 	state["change_count"] = -1
 
 def retrieve_primitive(state,sublime_data):
 	output = deepcopy(state)
 	output["alternatives"] = invert_guided(sublime_data["alternatives"],state["alternatives"])
-	for k in ["result","origin"]:
+	for k in ["result","origin","initial_origin"]:
 		if not match_length(state[k],sublime_data[k]):
 			raise Exception("state "+k+" does not match the sublime data")
 		else:
 			output[k] = sublime_data[k]
-	return output
+	for k in ["result","origin","initial_origin","alternatives"]:
+		state[k] = output[k]
+	return state
 
-
-def retrieve_state(state,view_information,code):
-	if state["change_count"]>=view_information["change_count"]:
-		return 
-	if state["change_count"]==-1:
-		state["change_count"]=view_information["change_count"]
-		return 
-	# retrieve data from their region tracker
-
-	try :
-		convert_single_to_multiple(state)
-		sublime_data = {x:get_regions_while_you_still_can(view_information,x) for x in ["result","origin","alternatives"]}
-		state = retrieve_primitive(state,sublime_data)
-		convert_multiple_to_single(state)
-	except:
-		clear_state(state)
-		raise
-	
-
-	for k in ["result","origin","alternatives"]:
+def retrieve_text(state,code):
+	for k in ["result","origin","initial_origin","alternatives"]:
 		state[k+"_text"] = get_location_text(state[k],code)
 
 
-
-	
-
-	
-
-
-
-	def update_state(state,view_information,code):
-		'''		
+def retrieve_state(state,view_information,code):
+	'''		
 		normally I would like these to be implemented by means of modification handlers
 		And an event listener transmitting every chains in the code. However it seems
 		but the provided event listener does not provide me with the location that was changed.
 		So in order to keep track over the location of important regions when the code changes,
 		The current solution is to outsource everything to the sublime add_regions/get_regions 
 		functionality
-		'''
-		state["result"] = view_information["get_regions"]("result")
-		state["alternatives"] = view_information["get_regions"]("alternatives")
-		state["origin"] = view_information["get_regions"]("origin")
-		state["initial_origin"] = view_information["get_regions"]("initial_origin")
+	'''
+
+	if state["change_count"]>=view_information["change_count"]:
+		return False
+	if state["change_count"]==-1:
+		state["change_count"]=view_information["change_count"]
+		return False
+
+	try :
+		convert_single_to_multiple(state)
+		sublime_data = {x:get_regions_while_you_still_can(view_information,x) 
+			for x in ["result","origin","alternatives","initial_origin"]}
+		print("\nsublime date at ease ",sublime_data,"\n")
+
+		state = retrieve_primitive(state,sublime_data)
+		convert_multiple_to_single(state)
+		print(" after conversion ",state,"\n")
+	except:
+		clear_state(state)
+		raise
+	retrieve_text(state,code)
+	return True
+	
+
+
+
+	
+
+def update_changes(state,locations_text):
+	def forward(x,m):
+		if x is None:
+			return x
+		if isinstance(x,list):
+			return [forward(y,m)  for y in x]
+		return m.forward(x)
+
+	m = ModificationHandler()
+	for location,t in locations_text:
+		m.modify_from(0, location, t)
+
+	for k in ["result","origin","initial_origin","alternatives"]:
+		state[k] = forward(state[k],m)
+	
+
+
+
