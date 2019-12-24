@@ -83,7 +83,7 @@ class SelectBigRoi(SelectionQuery):
 		}
 
 		temporary  = possibilities[query_description["big_roi"]]
-		basic_information = make_information(temporary[2],atok = build[1])
+		basic_information = make_information(temporary[2],atok = build[1] if build else None)
 		if "sub_index" in query_description:
 			index = query_description["sub_index"]
 			def modified_information(x, information,index):
