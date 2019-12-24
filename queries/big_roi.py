@@ -71,7 +71,7 @@ class SelectBigRoi(SelectionQuery):
 			"iterator":((ast.For,ast.comprehension),(),get_iterator),
 			"definition name":((ast.FunctionDef),(),get_definition_name),
 			"class name":((ast.ClassDef),(),get_class_name),
-			"import statement":((ast.Import,ast.ImportFrom),(),standard),
+			"import statement":((ast.Import,ast.ImportFrom),(),get_fixed_import),
 			"lambda":((ast.Lambda),(),standard),
             "lambda body":((ast.Lambda),(),get_body),
             "if body":((ast.If, ast.For,ast.comprehension),(),get_body),

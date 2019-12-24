@@ -23,7 +23,7 @@ it is split into four sections
 	while trying to minimize exposure to the underlying syntax tree implementation.
 3) checkers check if a node satisfies a property(say if its context is store)
 4) validators confirm if other root satisfy some property with respect to a given node
-
+5) fixers (introduced in 0.1.0) responsible for fixing the first token/last token attributes of nodes
 
 '''
 ################################################################
@@ -323,6 +323,16 @@ def get_class_name(root,atok):
 	else:
 		return None
 
+################################################################
+# 	 import staff
+################################################################
+
+def get_fixed_import(root,atok):
+	if not match_node(root,(ast.Import,ast.ImportFrom)):
+		return None
+	fix_import(root,atok)
+	return root
+
 
 
 
@@ -452,6 +462,8 @@ def get_sub_index(root,index):
 	elif match_node(root,ast.DictComp):
 		candidates = [[root.key,root.value]] + root.generators
 	
+
+	
 	# in the following cases we Certs deeper in the tree
 	if match_node(root,(ast.Index)):
 		return get_sub_index(root.value,index)
@@ -463,7 +475,15 @@ def get_sub_index(root,index):
 		return get_sub_index(root.body,index)
 	if match_node(root,(ast.Call)):
 		return get_sub_index(root.func,index)
-	
+	if match_node(root,(ast.Import,ast.ImportFrom)):
+		candidates = root.names
+		if len(candidates)==1:
+			temporary = get_sub_index(candidates[0],index)
+			if temporary:
+				return temporary
+
+
+
 	if index is None:
 		return candidates
 	elif index<len(candidates):
@@ -535,4 +555,62 @@ def correspond_to_index_in_call(root, index,field,field_index):
 	return (field, field_index)==(x.parent_field,x.parent_field_index) if x else False
 
 
+#################################################################################
+#
+# fixers
+#
+#################################################################################
 
+################################################################
+# first some general-purpose functions regarding fixing
+################################################################
+
+def mark_fixed(root):
+	root._has_been_fixed = True
+
+def needs_fix(root):
+	pass
+
+def already_fixed(root):
+	return hasattr(root,"_has_been_fixed")
+
+################################################################
+# some fixers concerning imports
+################################################################
+
+
+def fix_import(root,atok):
+	if already_fixed(root):
+		print("I escaped important fix ")
+		return True
+	print("\n\n enduring fixing board statement\n")
+	token = root.first_token
+	if match_node(root,ast.ImportFrom) and root.module  is not None:
+		for s in split_string(root.module):
+			token = atok.find_token(token,tokenize.NAME,s) 
+			print("matching name ",root.module," into ",token.string,"\n")
+	for name in root.names:
+		token = next_token(atok,token)
+		token = atok.find_token(token,tokenize.NAME,name.name)
+		print("matching name ",name.name," into ",token.string,"\n")
+		name.first_token = token
+		if name.asname:
+			token = next_token(atok,token)
+			token = atok.find_token(token,tokenize.NAME,name.asname)
+		name.last_token = token
+		mark_fixed(name)
+	mark_fixed(root)
+	return True
+
+def fix_alias(root,atok):
+	if already_fixed(root):
+		return True
+	if fix_import(root.parent,atok):
+		mark_fixed(name)
+	return True
+
+def dummy():
+	pass
+
+
+########################################
