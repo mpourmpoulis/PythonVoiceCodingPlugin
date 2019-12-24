@@ -34,7 +34,10 @@ class Application():
 
 
 	def respond_to_query(self,interface,query_description,secondary=False):
-		extra = {"state":self.state,"global_state":Application.global_state,"history":self.history}
+		extra = {
+			"state":self.state,"global_state":Application.global_state,
+			"history":self.history,"secondary":secondary,
+		}
 		view_information  = interface.get_view_information()
 		ui_information = interface.get_ui_information()
 

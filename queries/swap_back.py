@@ -7,6 +7,7 @@ def overlap_regions(x,y):
 @no_build_attempt
 class SwapBack(InsertionQuery):
 	select_insertion = True
+	multiple_in = True
 
 	def handle_single(self,view_information,query_description,extra = {}):
 		state = extra["state"]
@@ -18,15 +19,15 @@ class SwapBack(InsertionQuery):
 			# return []
 		candidates = result_alternatives_sequence(state,location = True,text = True)
 		if query_description["format"]==1:
-			# selection = history[index][2]
-			# selection = state["origin"]
-			# selection = selection if isinstance(selection,list) else [selection]
-			for location,t in candidates:
-				if not overlap_regions(location,state["origin"]):
-					decision = (location,t)
-					break
+			if extra["secondary"]:
+				for location,t in candidates:
+					if not overlap_regions(location,state["origin"]):
+						decision = (location,t)
+						break
+				else:
+					raise Exception("Swamp cannot swap regions of overlap!!!")
 			else:
-				raise Exception("Swamp cannot swap regions of overlap!!!")
+				decision = candidates[query_description["color"]]
 			location_text = [(state["origin"],state["origin_text"]),decision]
 		if query_description["format"]==2:
 			location_text = [candidates[query_description["color"+i]]  
