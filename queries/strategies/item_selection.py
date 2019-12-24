@@ -11,10 +11,12 @@ def decode_item_selection(items,query_description,mode,name,decrement=True):
 		print([items[x]  for x in indices])
 		return [items[x]  for x in indices]
 	elif mode == "range":
-		if len(indices)!= 1:
+		if len(indices) == 2:
 			return items[indices[0]:indices[1] + 1]
-		else:
+		elif len(indices) == 1:
 			return items[indices[0]:]
+		else: 
+			return items
 
 
 
