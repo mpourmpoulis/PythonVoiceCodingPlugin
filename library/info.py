@@ -55,7 +55,7 @@ def identity(information, *arg,**kwargs):
 
 
 def create_fake(root,text,start_position,node_type,real_tokens = None, **kwargs):
-	if real_tokens  and not isinstance(real_tokens):
+	if real_tokens  and not isinstance(real_tokens,list):
 		real_tokens = [real_tokens]
 	fake_token = asttokens.Token(0,text,0,0,0,
 		root.first_token.index,start_position,start_position + len(text))
@@ -429,7 +429,7 @@ def get_subparts_of_alias(root):
 	names = get_fix_data(root)["name"]
 	print("names",names)
 	left_side =[create_fake(root,"",0,ast.Name,real_tokens=x,id=x.string,ctx=ast.Load())  for x in names]
-	if roots.asname: 
+	if root.asname: 
 		x = root.last_token
 		right_side = create_fake(root,"",0,ast.Name,real_tokens=x,id=x.string,ctx=ast.Load())
 		return [[left_side],right_side]
@@ -476,6 +476,8 @@ def get_sub_index(root,index):
 		candidates = [root.elt] + root.generators
 	elif match_node(root,ast.DictComp):
 		candidates = [[root.key,root.value]] + root.generators
+	elif match_node(root,ast.alias):
+		candidates = get_subparts_of_alias(root)
 	
 
 	
