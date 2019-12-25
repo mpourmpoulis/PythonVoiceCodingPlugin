@@ -87,11 +87,11 @@ class SelectBigRoi(SelectionQuery):
 		if "sub_index" in query_description:
 			index = query_description["sub_index"]
 			def modified_information(x, information,index):
-				data  = basic_information(x)
+				data  = information(x)
 				return get_sub_index(data,index)
 
-			y  = lambda x: temporary[2](x)
-			y.secondary  = lambda x: modified_information(x,temporary[2],index-1)
+			y  = lambda x: basic_information(x)
+			y.secondary  = lambda x: modified_information(x,basic_information,index-1)
 			return (temporary[0],temporary[1],y)
 		else:
 			return  possibilities[query_description["big_roi"]][:2] + (basic_information,)
