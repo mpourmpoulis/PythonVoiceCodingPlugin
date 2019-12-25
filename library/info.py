@@ -54,16 +54,17 @@ def identity(information, *arg,**kwargs):
 
 
 
-def create_fake(root,text,start_position,node_type, **kwargs):
- 
+def create_fake(root,text,start_position,node_type,real_tokens = None, **kwargs):
+	if real_tokens  and not isinstance(real_tokens):
+		real_tokens = [real_tokens]
 	fake_token = asttokens.Token(0,text,0,0,0,
 		root.first_token.index,start_position,start_position + len(text))
 	fake_node = node_type(**kwargs) 
 	fake_node.parent = root.parent
 	fake_node.parent_field = root.parent_field
 	fake_node.parent_field_index = root.parent_field_index
-	fake_node.first_token = fake_token
-	fake_node.last_token = fake_token
+	fake_node.first_token = fake_token if not real_tokens else real_tokens[0]
+	fake_node.last_token = fake_token if not real_tokens else real_tokens[-1] 
 	fake_node.fake = True
 	return fake_node
 
@@ -368,7 +369,7 @@ def get_subparts_of_binary_operation(root):
 	return left + right
 
 
-def split_string(s :str ,even_letters = True):
+def split_string(s :str ,even_letters = True,only_first = False):
 	s = s.strip()
 	y = urlparse(s)
 	if  not (y.scheme=="" and y.netloc==""):
@@ -376,6 +377,8 @@ def split_string(s :str ,even_letters = True):
 	first_attempt = [x  for x in re.split("[., :/]",s) if not x.isspace()]
 	if len(first_attempt) > 1:
 		return first_attempt
+	if only_first:	
+		return [s]
 	second_attempt = [x  for x in re.split("[_]",s) if not x.isspace()]
 	if len(second_attempt) > 1:
 		print(" from second attempt")
@@ -420,6 +423,18 @@ def get_subparts_of_attribute(root):
 		return get_subparts_of_attribute(root.value) + [fake_node]
 	else:
 		return [root.value,fake_node]
+
+def get_subparts_of_alias(root):
+	assert already_fixed(root)," I received an node that needs fixing "
+	names = get_fix_data(root)["name"]
+	print("names",names)
+	left_side =[create_fake(root,"",0,ast.Name,real_tokens=x,id=x.string,ctx=ast.Load())  for x in names]
+	if roots.asname: 
+		x = root.last_token
+		right_side = create_fake(root,"",0,ast.Name,real_tokens=x,id=x.string,ctx=ast.Load())
+		return [[left_side],right_side]
+	else:
+		return left_side
 	
 
 
@@ -479,6 +494,7 @@ def get_sub_index(root,index):
 		candidates = root.names
 		if len(candidates)==1:
 			temporary = get_sub_index(candidates[0],index)
+			print(temporary)
 			if temporary:
 				return temporary
 
@@ -574,6 +590,12 @@ def needs_fix(root):
 def already_fixed(root):
 	return hasattr(root,"_has_been_fixed")
 
+def store_fix_data(root,data):
+	root._fix_metadata = data
+
+def get_fix_data(root):
+	return getattr(root,"_fix_metadata",{})
+
 ################################################################
 # some fixers concerning imports
 ################################################################
@@ -581,25 +603,39 @@ def already_fixed(root):
 
 def fix_import(root,atok):
 	if already_fixed(root):
-		print("I escaped important fix ")
 		return True
+	data = {}
 	print("\n\n enduring fixing board statement\n")
 	token = root.first_token
-	if match_node(root,ast.ImportFrom) and root.module  is not None:
-		for s in split_string(root.module):
-			token = atok.find_token(token,tokenize.NAME,s) 
-			print("matching name ",root.module," into ",token.string,"\n")
+	data["module"] = []
+	if match_node(root,ast.ImportFrom):
+		if root.module  is not None:
+			for s in split_string(root.module,only_first = True):
+				token = atok.find_token(token,tokenize.NAME,s)
+				data["module"].append(token)
 	for name in root.names:
-		token = next_token(atok,token)
-		token = atok.find_token(token,tokenize.NAME,name.name)
-		print("matching name ",name.name," into ",token.string,"\n")
-		name.first_token = token
-		if name.asname:
-			token = next_token(atok,token)
-			token = atok.find_token(token,tokenize.NAME,name.asname)
-		name.last_token = token
-		mark_fixed(name)
+		if name.name=="*":
+			i = atok.find_token(root.first_token,tokenize.NAME,"import")
+			name.first_token = next_token(atok,i)
+			name.last_token = next_token(atok,i)
+		else:
+			stack = []
+			local_data = {}
+			for s in split_string(name.name,only_first = True):
+				token = next_token(atok,token)
+				token = atok.find_token(token,tokenize.NAME,s)
+				stack.append(token)
+			local_data["elements"] = stack
+			name.first_token = token			
+			print("matching name ",name.name," into ",token.string,"\n")
+			if name.asname:
+				token = next_token(atok,token)
+				token = atok.find_token(token,tokenize.NAME,name.asname)
+			name.last_token = token
+			mark_fixed(name)
+			store_fix_data(name,{"name":stack})
 	mark_fixed(root)
+	store_fix_data(root,data)
 	return True
 
 def fix_alias(root,atok):
