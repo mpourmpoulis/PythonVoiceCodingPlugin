@@ -34,7 +34,13 @@ class SelectArgument(SelectionQuery):
 			else:
 				i = query_description["sub_index"] - 1
 				return lambda x:get_sub_index(get_caller(x),i)
-				
+	
+	def get_statement(self,origin):
+		candidate_statement = search_upwards(origin,ast.stmt)
+		big = (ast.If,ast.While,ast.For,ast.FunctionDef,ast.With,ast.ClassDef,ast.Try)
+		if match_node(candidate_statement,big):
+			candidate_statement = search_upwards_for_parent(origin,ast.stmt)
+		return candidate_statement
 
 	def process_line(self,q, root ,atok, origin  = None, select_node = None,tiebreaker = lambda x: x, 
 					line = None, transformation = None,inverse_transformation = None, priority = {}, 
@@ -153,7 +159,7 @@ class SelectArgument(SelectionQuery):
 		root,atok,m,r  = build
 		selection = m.forward(selection)
 		origin = nearest_node_from_offset(root,atok, selection[0]) if selection[0]==selection[1] else node_from_range(root,atok, selection)
-		statement_node = search_upwards(origin,ast.stmt)
+		statement_node = self.get_statement(origin)
 		result, alternatives = self.process_line(
 			q = query_description,
 			root = statement_node,
@@ -194,7 +200,7 @@ class SelectArgument(SelectionQuery):
 			selection = m.forward(selection)		
 
 		origin = nearest_node_from_offset(root,atok, selection[0]) if selection[0]==selection[1] else node_from_range(root,atok, selection)
-		statement_node = search_upwards(origin,ast.stmt)
+		statement_node = self.get_statement(origin)
 
 
 		# 
@@ -236,7 +242,7 @@ class SelectArgument(SelectionQuery):
 		root,atok,m,r  = build 
 		selection = m.forward(selection)
 		origin = nearest_node_from_offset(root,atok, selection[0]) if selection[0]==selection[1] else node_from_range(root,atok, selection)
-		statement_node = search_upwards(origin,ast.stmt)
+		statement_node = self.get_statement(origin)
 
 		###############################################################
 		# transformations
@@ -309,7 +315,7 @@ class SelectArgument(SelectionQuery):
 		root,atok,m,r  = build 
 		selection = m.forward(selection)
 		origin = nearest_node_from_offset(root,atok, selection[0]) if selection[0]==selection[1] else node_from_range(root,atok, selection)
-		statement_node = search_upwards(origin,ast.stmt)
+		statement_node = self.get_statement(origin)
 
 		###############################################################
 		# transformationszooming
