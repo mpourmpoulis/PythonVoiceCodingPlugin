@@ -35,9 +35,15 @@ class SelectPart(SelectionQuery):
 			second_origin = get_sub_index(origin,translate_adjective[query_description["nth"]]-1)
 
 		print(" just before the end",second_origin)
-		if query_description["format"]!=3:
+		if query_description["format"]==1:
 			result = get_sub_index(second_origin,query_description["sub_index"]-1)
 			alternatives = []
+		elif query_description["format"]==2:
+			result = [
+				get_sub_index(second_origin,query_description["sub_index"]-1),
+				get_sub_index(second_origin,query_description.get("sub_index2",0)-1)
+			]
+			alternatives=[]
 		else:
 			intermediate = get_sub_index(second_origin,None)
 			candidates = [get_sub_index(x,query_description["sub_index"]-1) for x in intermediate]
