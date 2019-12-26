@@ -335,7 +335,14 @@ def get_fixed_import(root,atok):
 	return root
 
 
+def get_module(root,atok):
+	if not match_node(root,(ast.Import,ast.ImportFrom)):
+		return None
+	if not already_fixed(root,atok):
+		fix_import(root,atok)
 
+	return root
+	
 
 ################################################################
 # 	 sub indexing functions
