@@ -57,8 +57,9 @@ def identity(information, *arg,**kwargs):
 def create_fake(root,text,start_position,node_type,real_tokens = None, **kwargs):
 	if real_tokens  and not isinstance(real_tokens,list):
 		real_tokens = [real_tokens]
-	fake_token = asttokens.Token(0,text,0,0,0,
-		root.first_token.index,start_position,start_position + len(text))
+	if not real_tokens:
+		fake_token = asttokens.Token(0,text,0,0,0,
+			root.first_token.index,start_position,start_position + len(text))
 	fake_node = node_type(**kwargs) 
 	fake_node.parent = root.parent
 	fake_node.parent_field = root.parent_field
@@ -338,10 +339,21 @@ def get_fixed_import(root,atok):
 def get_module(root,atok):
 	if not match_node(root,(ast.Import,ast.ImportFrom)):
 		return None
-	if not already_fixed(root,atok):
+	if not already_fixed(root):
 		fix_import(root,atok)
+	data = get_fix_data(root)
+	m = data["module"]
+	print("inside get a module date days ",m,"\n")
+	output = None
+	for t in m:
 
-	return root
+		if not output:
+			output  = create_fake(root,"",None,ast.Name,real_tokens=[t,t],id=t.string,ctx=ast.Load())
+		else:
+			output  = create_fake(root,"",None,ast.Attribute,real_tokens=[m[0],t],value=output,attr=t.string,ctx=ast.Load())
+
+	print("exiting get a module function ",output,"\n")
+	return output
 	
 
 ################################################################
