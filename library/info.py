@@ -146,7 +146,7 @@ def get_body(root):
 ###############################
 def get_condition(root):
 	return (
-		root.test if match_node(root,(ast.If,ast.IfExp,ast.While)) else None
+		root.test if match_node(root,(ast.If,ast.IfExp,ast.While,ast.Assert)) else None
 	)
 
 def get_pure_if_condition(root):
