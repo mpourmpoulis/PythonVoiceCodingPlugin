@@ -69,7 +69,8 @@ def create_fake(root,text,start_position,node_type,real_tokens = None, **kwargs)
 	fake_node.fake = True
 	return fake_node
 
-
+def empty_fake(root,star_position):
+	return create_fake(root,"",star_position,ast.Name,id = "",ctx = ast.Load())
 ################################################################################################
 ################################################################################################
 #
@@ -169,7 +170,7 @@ def get_comprehension_condition(root):
 
 def get_return_value(root):
 	return (
-		root.value if match_node(root,(ast.Return, ast.Yield,ast.YieldFrom )) else None
+		(root.value if root.value else empty_fake(root,root.last_token.endpos+1)) if match_node(root,(ast.Return, ast.Yield,ast.YieldFrom )) else None
 	)
 
 # need to revisit
