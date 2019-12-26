@@ -306,7 +306,6 @@ def get_definition_name(root,atok):
 		return None
 
 def get_definition_parameter_name(root,atok):
-	print(ast.dump(root),dir(root))
 	if not match_node(root,ast.arg):
 		return None 	
 	x = root.first_token
@@ -324,6 +323,19 @@ def get_class_name(root,atok):
 		return create_fake(root,x.string,x.startpos,ast.Name,id = x.string,ctx = ast.Store())
 	else:
 		return None
+
+
+def get_arg(root, atok):
+	print("inside get argument ",ast.dump(root) if isinstance(root,ast.AST) else "")
+	if not match_node(root,ast.arg):
+		if match_node(root,ast.FunctionDef):
+			fix_definition(root,atok)
+		return None
+	if match_parent(root,ast.FunctionDef):
+		fix_definition(root.parent,atok)
+	elif match_parent(root.parent,ast.FunctionDef):
+		fix_definition(root.parent.parent,atok)
+	return root
 
 ################################################################
 # 	 import staff
@@ -665,6 +677,84 @@ def fix_alias(root,atok):
 	if fix_import(root.parent,atok):
 		mark_fixed(name)
 	return True
+
+
+def fix_argument(root,atok,token):
+	print("enduring fix argument ",root,root.parent_field,atok,[token])
+	if already_fixed(root):
+		return token
+	mark_fixed(root)
+	root.first_token = token
+	if root.annotation:
+		root.last_token = root.annotation.last_token
+		return root.annotation.last_token
+	else:
+		root.last_token = token
+		return token
+
+
+def fix_definition(root,atok):
+	print("enduring fix definition ",root,atok)
+	if already_fixed(root):
+		return True
+
+	# there is a discrepancy between the 3.3 and 3.4 versions of the abstract syntax tree
+	# in 3.3 the variable arguments and the variable keyboard arguments are stored in a little bit differently
+	x = root.args
+	if x.vararg and not already_fixed(x.vararg):
+		print(" I am in the process of fixing the viable arguments ",x.vararg,x.varargannotation)
+		x.vararg = ast.arg(arg=x.vararg,annotation=x.varargannotation)
+		x.vararg.parent = x
+		x.vararg.parent_field = "vararg" 
+		x.vararg.parent_field_index = None
+		mark_fixed(x.vararg) 
+	if x.kwarg and not already_fixed(x.kwarg):
+		print(" I am in the process of fixing the keyword viable arguments ",x.kwarg,x.kwargannotation)
+		x.kwarg = ast.arg(arg=x.kwarg,annotation=x.kwargannotation) 
+		x.kwarg.parent = x
+		x.kwarg.parent_field = "kwarg"
+		x.kwarg.parent_field_index = None
+		mark_fixed(x.kwarg)
+	
+	# I think the following might be done easier with more iter tools library
+	token = root.first_token
+	token = atok.find_token(token,tokenize.NAME,"def")
+	token = next_token(atok,token )
+	print("token ",[token])
+	for i,j in zip(x.args,[None]*(len(x.args)-len(x.defaults))+x.defaults):
+		token = next_token(atok,token)
+		token = atok.find_token(token,tokenize.NAME,i.arg)
+		fix_argument(i,atok,token)
+		if j:
+			token = j.last_token
+		print("token ",[token])
+	if x.vararg:
+		i=x.vararg
+		print("viable argument problem ")
+		token = next_token(atok,token)
+		token = atok.find_token(token,tokenize.NAME,i.arg)
+		fix_argument(i,atok,token)
+
+	for i,j in zip(x.kwonlyargs,x.kw_defaults):
+		print("you word only problem")
+		token = next_token(atok,token)
+		token = atok.find_token(token,tokenize.NAME,i.arg)
+		fix_argument(i,atok,token)
+		if j:
+			token = j.last_token
+	if x.kwarg:
+		i=x.kwarg
+		print("keyword viable arguments problem",[token],"\n\n")
+		token = next_token(atok,token)
+		print("before searching for the argument that Tolkien was \n",[token],"\n")
+		token = atok.find_token(token,tokenize.NAME,i.arg)
+		print("After that Tolkien was \n",[token],"\n")
+		fix_argument(i,atok,token)
+
+
+	mark_fixed(root)
+	return True
+
 
 def dummy():
 	pass
