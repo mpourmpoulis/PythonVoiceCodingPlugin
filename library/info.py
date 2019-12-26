@@ -220,7 +220,7 @@ def get_item_as(root):
 		
 	)
 def get_message(root):
-	root.msg if match_node(root,(ast.Assert)) else None
+	return root.msg if match_node(root,(ast.Assert)) else None
 	
 
 
