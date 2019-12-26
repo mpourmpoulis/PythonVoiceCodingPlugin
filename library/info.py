@@ -200,6 +200,10 @@ def get_iterator(root):
 		root.target if match_node(root,(ast.For,ast.comprehension)) else None
 	)
 
+def get_with_items(root):
+	return (
+		root.items if match_node(root,ast.With) else None
+	)
 
 # need to revisit this
 def get_body(root):
@@ -510,8 +514,10 @@ def get_sub_index(root,index):
 		candidates = [[root.key,root.value]] + root.generators
 	elif match_node(root,ast.alias):
 		candidates = get_subparts_of_alias(root)
-	
-
+	elif match_node(root,ast.withitem):
+		candidates = [root.context_expr,root.optional_vars] if root.optional_vars else [root.context_expr]
+	elif match_node(root,ast.With):
+		candidates = root.items
 	
 	# in the following cases we Certs deeper in the tree
 	if match_node(root,(ast.Index)):

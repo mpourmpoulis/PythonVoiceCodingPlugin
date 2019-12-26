@@ -57,6 +57,7 @@ class SelectBigRoi(SelectionQuery):
 			"if condition":(ast.If,(),get_pure_if_condition),
 			"else if condition":(ast.If,(),get_elif_condition),
 			"while condition":(ast.While,(),get_condition),
+			"with clause":(ast.With,(),get_with_items),
 			"if expression":(ast.IfExp,(),standard),
 			"if expression condition":(ast.IfExp,(),get_condition),
 			"if expression body":(ast.IfExp,(),get_body),
