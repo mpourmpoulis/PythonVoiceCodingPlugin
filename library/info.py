@@ -223,9 +223,31 @@ def get_item_as(root):
 		[x.optional_vars  for x in root.items] if match_node(root,(ast.With)) else None
 		
 	)
+
 def get_message(root):
 	return root.msg if match_node(root,(ast.Assert)) else None
-	
+
+def get_exception(root,atok):
+	if not match_node(root,ast.ExceptHandler):
+		return None
+	fix_exception_handler(root,atok)
+	return root.type if match_node(root,ast.ExceptHandler) else None
+
+def get_exception_name(root,atok):
+	if not match_node(root,ast.ExceptHandler):
+		return None
+	fix_exception_handler(root,atok)
+	data = get_fix_data(root) 
+	return data.get("node")
+
+def get_exception_handler(root,atok):
+	if not match_node(root,ast.ExceptHandler):
+		return None
+	fix_exception_handler(root,atok)
+	output = [x  for x in [root.type,get_fix_data(root).get("node")] if x]
+	print("Output\n\n",output,"\n")
+	# print(ast.dump()) 	
+	return output if output else empty_fake(root,root.first_token.endpos)
 
 
 ################################################################
@@ -518,6 +540,12 @@ def get_sub_index(root,index):
 		candidates = [root.context_expr,root.optional_vars] if root.optional_vars else [root.context_expr]
 	elif match_node(root,ast.With):
 		candidates = root.items
+	elif match_node(root,(ast.ExceptHandler)):
+		if root.name is not None and get_fix_data(root).get("node"):
+			candidates = [root.type,get_fix_data(root).get("node")]
+		else:
+			candidates = [root.type]
+
 	
 	# in the following cases we Certs deeper in the tree
 	if match_node(root,(ast.Index)):
@@ -530,6 +558,9 @@ def get_sub_index(root,index):
 		return get_sub_index(root.body,index)
 	if match_node(root,(ast.Call)):
 		return get_sub_index(root.func,index)
+	if match_node(root,(ast.ExceptHandler)):
+		if root.name is None:
+			return get_sub_index(root.type,index)
 	if match_node(root,(ast.Import,ast.ImportFrom)):
 		candidates = root.names
 		if len(candidates)==1:
@@ -761,6 +792,30 @@ def fix_definition(root,atok):
 
 	mark_fixed(root)
 	return True
+
+def fix_exception_handler(root,atok):
+	if already_fixed(root):
+		return  True
+	if not root.type or not root.name:
+		mark_fixed(root)
+		return True
+	token = root.type.last_token
+	print(" inside fixing before finding the token",[token,root.type.first_token])
+	token = atok.find_token(next_token(atok,token),tokenize.NAME, root.name)
+	f = root.type.first_token
+	f = atok.find_token(previous_token(atok,f),tokenize.NAME, "except",reverse = True)
+
+	
+	store_fix_data(root,{"node":create_fake(root,"",None,ast.Name, token,id = token.string,ctx = ast.Load())})
+
+	root.first_token=root.type.first_token
+	root.last_token = token
+	mark_fixed(root)
+	return True
+
+
+
+
 
 
 def dummy():
