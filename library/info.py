@@ -697,7 +697,7 @@ def fix_import(root,atok):
 				token = atok.find_token(token,tokenize.NAME,s)
 				stack.append(token)
 			local_data["elements"] = stack
-			name.first_token = token			
+			name.first_token = stack[0]			
 			print("matching name ",name.name," into ",token.string,"\n")
 			if name.asname:
 				token = next_token(atok,token)
