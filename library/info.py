@@ -485,12 +485,12 @@ def get_subparts_of_attribute(root):
 def get_subparts_of_alias(root):
 	assert already_fixed(root)," I received an node that needs fixing "
 	names = get_fix_data(root)["name"]
-	print("names",names)
+	print("names",names,"\n")
 	left_side =[create_fake(root,"",0,ast.Name,real_tokens=x,id=x.string,ctx=ast.Load())  for x in names]
 	if root.asname: 
 		x = root.last_token
 		right_side = create_fake(root,"",0,ast.Name,real_tokens=x,id=x.string,ctx=ast.Load())
-		return [[left_side],right_side]
+		return [left_side,right_side]
 	else:
 		return left_side
 	
