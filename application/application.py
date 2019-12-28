@@ -22,6 +22,7 @@ class Application():
 			"change_count":-1,
 			"mode":"single",
 			"initial_mode":"single",
+			"initial_count":-1, 
 		}
 		self.ui_controller = None
 		self.vid = vid
@@ -100,11 +101,15 @@ class Application():
 			result = s.result 
 			alternatives  = s.alternatives
 			selection = view_information["selection"]
+
 			mode = isinstance(result,list) or isinstance(selection,list)
 			update_origin(self.state,"origin",selection,mode)
 			update_origin(self.state,"initial_origin",selection,mode)
 			self.state["mode"] = "multiple" if mode else "single"
-			self.state["initial_mode"] = "multiple" if mode else "single"
+			if self.state["initial_count"]<view_information["change_count"]:
+				self.state["initial_mode"] = "multiple" if mode else "single"
+				self.state["initial_count"] = view_information["change_count"]
+
 			names = ["result","origin", "alternatives","initial_origin"]
 			for name in names:
 				interface.push_action(ClearHighlightAction(name))

@@ -117,6 +117,7 @@ def clear_state(state):
 	state["change_count"] = -1
 	state["mode"] = "single"
 	state["initial_mode"] = "single"
+	state["initial_count"] = -1
 
 def retrieve_primitive(state,sublime_data):
 	output = deepcopy(state)
