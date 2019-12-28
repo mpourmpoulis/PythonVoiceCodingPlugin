@@ -19,7 +19,7 @@ class PasteBack(InsertionQuery):
 		candidates_location = result_alternatives_sequence(state,location = True)
 		if query_description["format"]==1:
 			# selection = history[index][2]
-			selection = state["origin"]
+			selection = state["initial_origin"]
 			selection = selection if isinstance(selection,list) else [selection]
 		if query_description["format"]==2:
 			selection = {candidates_location[query_description["color"+i]]  
