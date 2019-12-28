@@ -66,6 +66,8 @@ class SelectionQuery(Query):
 					temporary_extra = deepcopy(extra)
 					temporary_extra["selection"] = s
 					r,a = self.handle_single(view_information,query_description,temporary_extra)
+					if not isinstance(r,list):
+						r =[r]
 					self.result.append(r)
 					self.alternatives.append(a)
 			else:

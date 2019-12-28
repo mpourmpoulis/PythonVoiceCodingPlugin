@@ -2,7 +2,7 @@ from copy import deepcopy
 
 from PythonVoiceCodingPlugin.queries import *
 from PythonVoiceCodingPlugin.application.build_cache import BuildCache
-from PythonVoiceCodingPlugin.application.state_update import clear_state,retrieve_state,retrieve_text,get_location_text,update_changes
+from PythonVoiceCodingPlugin.application.state_update import clear_state,retrieve_state,retrieve_text,get_location_text,update_changes,update_origin
 from PythonVoiceCodingPlugin.interface.common.actions import *
 
 
@@ -21,6 +21,7 @@ class Application():
 			"alternatives": [],
 			"change_count":-1,
 			"mode":"single",
+			"initial_mode":"single",
 		}
 		self.ui_controller = None
 		self.vid = vid
@@ -98,8 +99,12 @@ class Application():
 		if isinstance(s,SelectionQuery):
 			result = s.result 
 			alternatives  = s.alternatives
-			self.state["origin"] = view_information["selection"]
-			self.state["initial_origin"] = view_information["selection"]
+			selection = view_information["selection"]
+			mode = isinstance(result,list) or isinstance(selection,list)
+			update_origin(self.state,"origin",selection,mode)
+			update_origin(self.state,"initial_origin",selection,mode)
+			self.state["mode"] = "multiple" if mode else "single"
+			self.state["initial_mode"] = "multiple" if mode else "single"
 			names = ["result","origin", "alternatives","initial_origin"]
 			for name in names:
 				interface.push_action(ClearHighlightAction(name))
