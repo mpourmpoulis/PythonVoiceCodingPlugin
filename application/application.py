@@ -14,7 +14,14 @@ class Application():
 	
 	def __init__(self,vid):
 		self.history = []
-		self.state = {"result": None,"origin": None,"initial_origin":None,"alternatives": [],"change_count":-1}
+		self.state = {
+			"result": None,
+			"origin": None,
+			"initial_origin":None,
+			"alternatives": [],
+			"change_count":-1,
+			"mode":"single",
+		}
 		self.ui_controller = None
 		self.vid = vid
 
@@ -103,6 +110,11 @@ class Application():
 				self.update_text(code)
 				interface.push_action(SelectionAction(result))
 				self.history.append(("selection",view_information["change_count"],view_information["selection"],result))
+				if not isinstance(result,list):
+					self.state["mode"] = "single"
+				else:
+					self.state["mode"] = "multiple"
+
 
 			
 			# if alternatives:

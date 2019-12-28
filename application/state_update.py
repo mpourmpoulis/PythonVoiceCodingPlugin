@@ -99,6 +99,7 @@ def clear_state(state):
 	state["initial_origin"] = None
 	state["alternatives"] = []
 	state["change_count"] = -1
+	state["mode"] = "single"
 
 def retrieve_primitive(state,sublime_data):
 	output = deepcopy(state)
@@ -134,13 +135,15 @@ def retrieve_state(state,view_information,code):
 		return False
 
 	try :
-		convert_single_to_multiple(state)
+		if state["mode"]=="single":
+			convert_single_to_multiple(state)
 		sublime_data = {x:get_regions_while_you_still_can(view_information,x) 
 			for x in ["result","origin","alternatives","initial_origin"]}
 		print("\nsublime date at ease ",sublime_data,"\n")
 
 		state = retrieve_primitive(state,sublime_data)
-		convert_multiple_to_single(state)
+		if state["mode"]=="single":
+			convert_multiple_to_single(state)
 		print(" after conversion ",state,"\n")
 	except:
 		clear_state(state)
