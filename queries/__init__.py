@@ -53,7 +53,6 @@ def get_secondary_query(query_description):
 			"paste":{
 				"command":"paste_back",
 				"format":1,
-
 			},
 			"delete":{
 				"command":"delete_alternatives",
@@ -63,9 +62,12 @@ def get_secondary_query(query_description):
 			"swap":{
 				"command":"swap_back",
 				"format":1,
-			}
-			
-
+			},
+			"edit":{
+				"command":"alternative",
+				"format":2,
+				"color":0,
+			},
 		}
 		return h[query_description["operation"]]
 
