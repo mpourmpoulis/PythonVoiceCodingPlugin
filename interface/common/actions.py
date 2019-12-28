@@ -22,9 +22,17 @@ class SelectionAction(InterfaceAction):
 			if not isinstance(region,list):
 				region = [region]
 			for r in region:
-				view.sel().add(sublime.Region(r[0],r[1]))
+				if isinstance(r,list):
+					for x in r:
+						view.sel().add(sublime.Region(x[0],x[1]))
+				else:
+					view.sel().add(sublime.Region(r[0],r[1]))
 			if settings.get("show_invisible",False):
-				view.show(sublime.Region(region[0][0],region[0][1]))
+				try : 
+					view.show(sublime.Region(region[0][0],region[0][1]))
+				except :
+					view.show(sublime.Region(region[0][0][0],region[0][0][1]))
+				
 			
 
 
