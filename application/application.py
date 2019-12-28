@@ -114,16 +114,17 @@ class Application():
 			for name in names:
 				interface.push_action(ClearHighlightAction(name))
 			if result:
-				self.state["result"] = result
-				self.state["alternatives"] = alternatives
-				# self.state["alternatives_text"] = get_location_text(alternatives,code)
-				self.update_text(code)
 				interface.push_action(SelectionAction(result))
 				self.history.append(("selection",view_information["change_count"],view_information["selection"],result))
-				if not isinstance(result,list):
-					self.state["mode"] = "single"
-				else:
-					self.state["mode"] = "multiple"
+				if not secondary:
+					self.state["result"] = result
+					self.state["alternatives"] = alternatives
+					# self.state["alternatives_text"] = get_location_text(alternatives,code)
+					self.update_text(code)
+					if not isinstance(result,list):
+						self.state["mode"] = "single"
+					else:
+						self.state["mode"] = "multiple"
 
 
 			
