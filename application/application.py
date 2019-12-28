@@ -104,11 +104,11 @@ class Application():
 
 			mode = isinstance(result,list) or isinstance(selection,list)
 			update_origin(self.state,"origin",selection,mode)
-			update_origin(self.state,"initial_origin",selection,mode)
 			self.state["mode"] = "multiple" if mode else "single"
-			if self.state["initial_count"]<view_information["change_count"]:
+			if self.state["initial_count"]<view_information["change_count"]  and not secondary:
 				self.state["initial_mode"] = "multiple" if mode else "single"
 				self.state["initial_count"] = view_information["change_count"]
+				update_origin(self.state,"initial_origin",selection,mode)
 
 			names = ["result","origin", "alternatives","initial_origin"]
 			for name in names:
