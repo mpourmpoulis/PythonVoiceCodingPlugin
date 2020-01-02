@@ -10,7 +10,7 @@ class PasteBack(InsertionQuery):
 
 	def handle_single(self,view_information,query_description,extra = {}):
 		state = extra["state"]
-		print(" inside query",state,"\n")
+		print("\ninside query ",state,"\n\n")
 		history  =  extra["history"]
 		candidates = result_alternatives_sequence(state,text = True,mode = state["mode"])
 		candidates_location = result_alternatives_sequence(state,location = True,mode = state["mode"])
@@ -30,17 +30,22 @@ class PasteBack(InsertionQuery):
 					raise Exception("can't paste multiple values the same origin!")
 
 				elif state["initial_mode"]=="multiple":
-					if len(state["initial_origin"]) != len(state["origin"]):
-						raise Exception("mismatch of things to paste and locations to place")
 					try : 
 						print("candidates\n",candidates)
 						output = [x[query_description.get("color",0)] for x in candidates]						
 					except IndexError as  e: 
-
-						raise
 						raise Exception("tried to obtain an alternative color that is not common!")
+					if len(state["initial_origin"]) != len(state["origin"]):
+						print("before doing anything Palenque's ",output)
+						if len(output)==1  and isinstance(output[0],list):
+							output = make_flat(output)
+							if len(state["origin"])==1  and len(output)==len(state["initial_origin"]):
+								return [(x,surrounding[0]+y+surrounding[1])  for y,x in  zip(output,selection)]
+						print("their respective lengths are",len(output),len(state["initial_origin"]),output, "\n")
+						raise Exception("mismatch of things to paste and locations to place")
+
 					if any(isinstance(x,list) for x in output):
-						raise Exception(" one of the results spanned over multiple selections, this is not supported!")
+						raise Exception("one of the results spanned over multiple selections, this is not supported!")
 					return [(x,surrounding[0]+y+surrounding[1])  for y,x in  zip(output,selection)]
 
 		if query_description["format"]==2:
