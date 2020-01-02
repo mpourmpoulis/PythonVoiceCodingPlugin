@@ -45,12 +45,18 @@ class SelectPart(SelectionQuery):
 				get_sub_index(second_origin,query_description.get("sub_index2",0)-1)
 			]
 			alternatives=[]
-		else:
+		elif query_description["format"]==3:
 			intermediate = get_sub_index(second_origin,None)
 			candidates = [get_sub_index(x,query_description["sub_index"]-1) for x in intermediate]
 			candidates = [x  for x in candidates if x]
 			result,alternatives = obtain_result(None, candidates)
-		return self._backward_result(result, alternatives,build)
+		elif query_description["format"]==4:
+			intermediate = get_sub_index(second_origin,None)
+			candidates = [get_sub_index(x,query_description["sub_index"]-1) for x in intermediate]
+			candidates = [x  for x in candidates if x]
+			result = candidates if candidates else None
+			alternatives=[]
+		return self._backward_result(result, alternatives,build,individually=query_description["format"]==4)
 
 
 	
