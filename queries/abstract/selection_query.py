@@ -77,6 +77,9 @@ class SelectionQuery(Query):
 			if hasattr(self.handle_single,"_original"):
 				return None,None
 			self.result ,self.alternatives = self.handle_single(view_information,query_description, extra)
+			if isinstance(self.result,list):
+				self.result = [self.result]
+				self.alternatives = [self.alternatives]
 		return self.result,self.alternatives
 
 
