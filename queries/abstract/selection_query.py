@@ -36,8 +36,6 @@ class SelectionQuery(Query):
 		return self.general_build
 
 	def _backward_result(self,result,alternatives,build,individually = False):
-		print("result",result)
-		print("alternatives",alternatives)
 		if build  and  build[0]:
 			m = build[2]
 			atok = build[1]
@@ -46,7 +44,10 @@ class SelectionQuery(Query):
 			else:
 				result = m.backward(get_source_region(atok, result)) if result else None
 			#self._get_selection(view_information,extra)
-			alternatives = [m.backward(get_source_region(atok,x)) for x in alternatives]
+			if alternatives:
+				alternatives = [m.backward(get_source_region(atok,x)) for x in alternatives]
+			else:
+				alternatives = []
 			return result, alternatives
 		else:
 			return None,None
