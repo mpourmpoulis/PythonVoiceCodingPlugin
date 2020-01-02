@@ -2,7 +2,7 @@ from copy import deepcopy
 
 from PythonVoiceCodingPlugin.queries import *
 from PythonVoiceCodingPlugin.application.build_cache import BuildCache
-from PythonVoiceCodingPlugin.application.state_update import clear_state,retrieve_state,retrieve_text,get_location_text,update_changes,update_origin
+from PythonVoiceCodingPlugin.application.state_update import clear_state,retrieve_state,retrieve_text,get_location_text,update_changes,update_origin,horizontal_to_vertical
 from PythonVoiceCodingPlugin.interface.common.actions import *
 
 
@@ -162,7 +162,10 @@ class Application():
 			if selections:
 				interface.push_action(SelectionAction(selections))
 
-		interface.push_action(HighlightCleverAction(self.state["alternatives"],"alternatives",self.state["result"],colorize = True))
+		alternatives_output_format = self.state["alternatives"]
+		if self.state["mode"]=="multiple":
+			alternatives_output_format = horizontal_to_vertical(self.state["alternatives"])
+		interface.push_action(HighlightCleverAction(alternatives_output_format,"alternatives",self.state["result"],colorize = True))
 		for name in ["result","origin", "initial_origin"]:
 			interface.push_action(HighlightCleverAction(self.state[name],name))				
 

@@ -51,6 +51,18 @@ def invert_guided(data,guide):
 	return output
 
 
+def horizontal_to_vertical(data):
+	if not data:
+		return []
+	l =  max([len(x)  for x in data]) 
+	print(" just before horizontal to vertical \n")
+	print([[y[x]  for y in data if x<len(y)]  for x in range(0,l)])
+	print(" about was the conversion")
+	return [[y[x]  for y in data if x<len(y)]  for x in range(0,l)]
+
+
+
+
 def get_location_text(location,code):
 	if location is None:
 		return None
@@ -157,7 +169,7 @@ def retrieve_state(state,view_information,code):
 		convert_single_to_multiple(state,state["mode"],state["initial_mode"])
 		sublime_data = {x:get_regions_while_you_still_can(view_information,x) 
 			for x in ["result","origin","alternatives","initial_origin"]}
-		print("\nsublime date at ease ",sublime_data,"\n")
+		# print("\nsublime date at ease ",sublime_data,"\n")
 
 		state = retrieve_primitive(state,sublime_data)
 		convert_multiple_to_single(state,state["mode"],state["initial_mode"])
