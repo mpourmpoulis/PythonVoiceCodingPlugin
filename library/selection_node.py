@@ -1,3 +1,5 @@
+import ast
+
 from PythonVoiceCodingPlugin.third_party.asttokens import asttokens
 
 def nearest_node_from_offset(root,atok,offset):
