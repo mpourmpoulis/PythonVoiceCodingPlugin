@@ -139,7 +139,7 @@ class HighlightCleverAction(InterfaceAction):
 
 		# transform the result into a sublime region
 		avoid = self.data["avoid"]
-		avoid = make_region(avoid)
+		avoid = make_region(avoid) if avoid else []
 		avoid_sequence = make_sequence(avoid)
 		overlapping = make_sequence(region) + make_sequence(avoid)
 		for i,(br,c) in enumerate(zip(region,color_order)):
