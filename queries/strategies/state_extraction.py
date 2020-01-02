@@ -11,3 +11,5 @@ def result_alternatives_sequence(state,location=False,text = False):
 		return candidates_location
 	if text:
 		return candidates_text
+
+	
