@@ -14,7 +14,7 @@ from PythonVoiceCodingPlugin.queries.strategies import adjective_strategy,decode
 
 class SelectBigRoi(SelectionQuery):
 	"""docstring for BigRoi"""
-	
+	multiple_in = True
 	def handle_single(self,view_information,query_description,extra = {}):
 		f = query_description["format"]
 		possibilities = {
