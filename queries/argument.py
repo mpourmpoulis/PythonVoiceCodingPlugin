@@ -22,9 +22,8 @@ from PythonVoiceCodingPlugin.queries.strategies import adjective_strategy,decode
 
 
 class SelectArgument(SelectionQuery):
-	"""docstring for SelectArgument"""
-	# def __init__(self):
-		# super(SelectArgument, self).__init__()
+	multiple_in = True
+
 	def get_information(self,query_description):
 		if "argument_index" in query_description:
 			return make_information(get_argument_from_call,query_description["argument_index"]-1)
