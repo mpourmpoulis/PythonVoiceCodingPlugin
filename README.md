@@ -105,6 +105,7 @@ python3 -m pip install --target third_party -r requirements.txt
 
 Be sure to check instructions to install the [bundles as well](bundles/README.md)
 
+For any further installation questions, feel free to ask [here](https://github.com/mpourmpoulis/PythonVoiceCodingPlugin/issues/5)
 
 ## Documentation
 
