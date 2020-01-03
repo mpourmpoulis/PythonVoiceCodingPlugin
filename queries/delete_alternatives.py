@@ -1,3 +1,4 @@
+from PythonVoiceCodingPlugin.library import make_flat
 from PythonVoiceCodingPlugin.queries.abstract import InsertionQuery,no_build_attempt
 from PythonVoiceCodingPlugin.queries.strategies import result_alternatives_sequence 
 
@@ -44,6 +45,7 @@ class DeleteAlternatives(InsertionQuery):
 				selection = selection if isinstance(selection,list) else [selection]	
 			elif state["mode"]=="multiple":
 				try :
+					print("candidates",	candidates,"\n")
 					selection = [x[query_description["color"+i]] for x in candidates for i in ["","2","3","4"] if "color"+i in query_description]						
 				except IndexError as  e:						
 						raise Exception("tried to obtain an alternative color that is not common!")
