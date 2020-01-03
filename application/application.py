@@ -2,7 +2,7 @@ from copy import deepcopy
 
 from PythonVoiceCodingPlugin.queries import *
 from PythonVoiceCodingPlugin.application.build_cache import BuildCache
-from PythonVoiceCodingPlugin.application.state_update import clear_state,retrieve_state,retrieve_text,get_location_text,update_changes
+from PythonVoiceCodingPlugin.application.state_update import clear_state,retrieve_state,retrieve_text,get_location_text,update_changes,update_origin,horizontal_to_vertical
 from PythonVoiceCodingPlugin.interface.common.actions import *
 
 
@@ -21,6 +21,8 @@ class Application():
 			"alternatives": [],
 			"change_count":-1,
 			"mode":"single",
+			"initial_mode":"single",
+			"initial_count":-1, 
 		}
 		self.ui_controller = None
 		self.vid = vid
@@ -98,22 +100,31 @@ class Application():
 		if isinstance(s,SelectionQuery):
 			result = s.result 
 			alternatives  = s.alternatives
-			self.state["origin"] = view_information["selection"]
-			self.state["initial_origin"] = view_information["selection"]
+			selection = view_information["selection"]
+
+			mode = isinstance(result,list) or isinstance(selection,list)
+			update_origin(self.state,"origin",selection,mode)
+			self.state["mode"] = "multiple" if mode else "single"
+			if self.state["initial_count"]<view_information["change_count"]  and not secondary:
+				self.state["initial_mode"] = "multiple" if mode else "single"
+				self.state["initial_count"] = view_information["change_count"]
+				update_origin(self.state,"initial_origin",selection,mode)
+
 			names = ["result","origin", "alternatives","initial_origin"]
 			for name in names:
 				interface.push_action(ClearHighlightAction(name))
 			if result:
-				self.state["result"] = result
-				self.state["alternatives"] = alternatives
-				# self.state["alternatives_text"] = get_location_text(alternatives,code)
-				self.update_text(code)
 				interface.push_action(SelectionAction(result))
 				self.history.append(("selection",view_information["change_count"],view_information["selection"],result))
-				if not isinstance(result,list):
-					self.state["mode"] = "single"
-				else:
-					self.state["mode"] = "multiple"
+				if not secondary:
+					self.state["result"] = result
+					self.state["alternatives"] = alternatives
+					# self.state["alternatives_text"] = get_location_text(alternatives,code)
+					self.update_text(code)
+					if not isinstance(result,list):
+						self.state["mode"] = "single"
+					else:
+						self.state["mode"] = "multiple"
 
 
 			
@@ -151,7 +162,10 @@ class Application():
 			if selections:
 				interface.push_action(SelectionAction(selections))
 
-		interface.push_action(HighlightCleverAction(self.state["alternatives"],"alternatives",self.state["result"],colorize = True))
+		alternatives_output_format = self.state["alternatives"]
+		if self.state["mode"]=="multiple":
+			alternatives_output_format = horizontal_to_vertical(self.state["alternatives"])
+		interface.push_action(HighlightCleverAction(alternatives_output_format,"alternatives",self.state["result"],colorize = True))
 		for name in ["result","origin", "initial_origin"]:
 			interface.push_action(HighlightCleverAction(self.state[name],name))				
 

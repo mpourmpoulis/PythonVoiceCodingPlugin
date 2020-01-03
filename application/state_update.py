@@ -51,6 +51,18 @@ def invert_guided(data,guide):
 	return output
 
 
+def horizontal_to_vertical(data):
+	if not data:
+		return []
+	l =  max([len(x)  for x in data]) 
+	print(" just before horizontal to vertical \n")
+	print([[y[x]  for y in data if x<len(y)]  for x in range(0,l)])
+	print(" about was the conversion")
+	return [[y[x]  for y in data if x<len(y)]  for x in range(0,l)]
+
+
+
+
 def get_location_text(location,code):
 	if location is None:
 		return None
@@ -58,8 +70,14 @@ def get_location_text(location,code):
 		return [get_location_text(x,code)  for x in location]
 	return code[location[0]:location[1]]
 
-def convert_single_to_multiple(state):
-	for k in ["result","origin","initial_origin","alternatives"]:
+def convert_single_to_multiple(state,mode,initial_mode,lenient = False):
+	names = []
+	if mode == "single":
+		names = names + ["result","origin","alternatives"]
+	if initial_mode == "single":
+		names = names + ["initial_origin"]
+
+	for k in names:
 		data = state[k]
 		if data is None:
 			data = []
@@ -67,14 +85,21 @@ def convert_single_to_multiple(state):
 			data = [[data]]
 		else:
 			if any(isinstance(x,list) for x in data):
-				raise Exception("In single_mode "+k+" cannot be a nested list!")
+				if lenient:
+					pass
+				else:
+					raise Exception("In single_mode "+k+" cannot be a nested list!")
 			else:
 				data = [data]
 		state[k] = data
 
-def convert_multiple_to_single(state):
-	print(" inside multiple single ",state)
-	for k in ["result","origin","initial_origin","alternatives"]:
+def convert_multiple_to_single(state,mode,initial_mode,lenient = False):
+	names = []
+	if mode == "single":
+		names = names + ["result","origin","alternatives"]
+	if initial_mode == "single":
+		names = names + ["initial_origin"]
+	for k in names:
 		data = state[k]
 		if k not in ["alternatives"]:
 			if data == []:
@@ -84,7 +109,10 @@ def convert_multiple_to_single(state):
 				data = data[0][0]
 				print(" outside this case",k,data)
 			else:
-				raise Exception("when converting from multiple mode In single_mode "+k+" cannot be a nested list!")
+				if lenient:
+					pass
+				else:
+					raise Exception("when converting from multiple mode In single_mode "+k+" cannot be a nested list!")
 		else:
 			if isinstance(data,list) and len(data)==1:
 				data = make_flat(data)
@@ -100,6 +128,8 @@ def clear_state(state):
 	state["alternatives"] = []
 	state["change_count"] = -1
 	state["mode"] = "single"
+	state["initial_mode"] = "single"
+	state["initial_count"] = -1
 
 def retrieve_primitive(state,sublime_data):
 	output = deepcopy(state)
@@ -127,7 +157,7 @@ def retrieve_state(state,view_information,code):
 		The current solution is to outsource everything to the sublime add_regions/get_regions 
 		functionality
 	'''
-
+	print("\n\n retrieving mode\n",state["mode"],state["initial_mode"],"\n\n")		
 	if state["change_count"]>=view_information["change_count"]:
 		return False
 	if state["change_count"]==-1:
@@ -135,15 +165,14 @@ def retrieve_state(state,view_information,code):
 		return False
 
 	try :
-		if state["mode"]=="single":
-			convert_single_to_multiple(state)
+
+		convert_single_to_multiple(state,state["mode"],state["initial_mode"])
 		sublime_data = {x:get_regions_while_you_still_can(view_information,x) 
 			for x in ["result","origin","alternatives","initial_origin"]}
-		print("\nsublime date at ease ",sublime_data,"\n")
+		# print("\nsublime date at ease ",sublime_data,"\n")
 
 		state = retrieve_primitive(state,sublime_data)
-		if state["mode"]=="single":
-			convert_multiple_to_single(state)
+		convert_multiple_to_single(state,state["mode"],state["initial_mode"])
 		print(" after conversion ",state,"\n")
 	except:
 		clear_state(state)
@@ -171,6 +200,14 @@ def update_changes(state,locations_text):
 	for k in ["result","origin","initial_origin","alternatives"]:
 		state[k] = forward(state[k],m)
 	
+
+def update_origin(state,name,selection,force_multiple):
+	assert name in state,"I cannot set something that is not in the state"+name
+	if isinstance(selection,list):
+		selection = [[x]  for x in selection]
+	elif force_multiple:
+		selection = [[selection]]
+	state[name] = selection
 
 
 

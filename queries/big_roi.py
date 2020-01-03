@@ -1,6 +1,7 @@
 import ast
 
 from PythonVoiceCodingPlugin.library import nearest_node_from_offset,sorted_by_source_region,get_source_region,node_from_range,make_flat
+from PythonVoiceCodingPlugin.library.selection_node import nearest_node_from_offset,node_from_range
 from PythonVoiceCodingPlugin.library.info import *
 from PythonVoiceCodingPlugin.library.LCA import LCA
 from PythonVoiceCodingPlugin.library.level_info import LevelVisitor
@@ -13,7 +14,7 @@ from PythonVoiceCodingPlugin.queries.strategies import adjective_strategy,decode
 
 class SelectBigRoi(SelectionQuery):
 	"""docstring for BigRoi"""
-	
+	multiple_in = True
 	def handle_single(self,view_information,query_description,extra = {}):
 		f = query_description["format"]
 		possibilities = {

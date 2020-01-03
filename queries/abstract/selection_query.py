@@ -36,8 +36,6 @@ class SelectionQuery(Query):
 		return self.general_build
 
 	def _backward_result(self,result,alternatives,build,individually = False):
-		print("result",result)
-		print("alternatives",alternatives)
 		if build  and  build[0]:
 			m = build[2]
 			atok = build[1]
@@ -46,7 +44,10 @@ class SelectionQuery(Query):
 			else:
 				result = m.backward(get_source_region(atok, result)) if result else None
 			#self._get_selection(view_information,extra)
-			alternatives = [m.backward(get_source_region(atok,x)) for x in alternatives]
+			if alternatives:
+				alternatives = [m.backward(get_source_region(atok,x)) for x in alternatives]
+			else:
+				alternatives = []
 			return result, alternatives
 		else:
 			return None,None
@@ -66,6 +67,8 @@ class SelectionQuery(Query):
 					temporary_extra = deepcopy(extra)
 					temporary_extra["selection"] = s
 					r,a = self.handle_single(view_information,query_description,temporary_extra)
+					if not isinstance(r,list):
+						r =[r]
 					self.result.append(r)
 					self.alternatives.append(a)
 			else:
@@ -74,6 +77,9 @@ class SelectionQuery(Query):
 			if hasattr(self.handle_single,"_original"):
 				return None,None
 			self.result ,self.alternatives = self.handle_single(view_information,query_description, extra)
+			if isinstance(self.result,list):
+				self.result = [self.result]
+				self.alternatives = [self.alternatives]
 		return self.result,self.alternatives
 
 

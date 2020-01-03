@@ -22,9 +22,17 @@ class SelectionAction(InterfaceAction):
 			if not isinstance(region,list):
 				region = [region]
 			for r in region:
-				view.sel().add(sublime.Region(r[0],r[1]))
+				if isinstance(r,list):
+					for x in r:
+						view.sel().add(sublime.Region(x[0],x[1]))
+				else:
+					view.sel().add(sublime.Region(r[0],r[1]))
 			if settings.get("show_invisible",False):
-				view.show(sublime.Region(region[0][0],region[0][1]))
+				try : 
+					view.show(sublime.Region(region[0][0],region[0][1]))
+				except :
+					view.show(sublime.Region(region[0][0][0],region[0][0][1]))
+				
 			
 
 
@@ -131,7 +139,7 @@ class HighlightCleverAction(InterfaceAction):
 
 		# transform the result into a sublime region
 		avoid = self.data["avoid"]
-		avoid = make_region(avoid)
+		avoid = make_region(avoid) if avoid else []
 		avoid_sequence = make_sequence(avoid)
 		overlapping = make_sequence(region) + make_sequence(avoid)
 		for i,(br,c) in enumerate(zip(region,color_order)):

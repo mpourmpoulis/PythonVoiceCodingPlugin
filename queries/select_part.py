@@ -1,6 +1,7 @@
 import ast
 
 from PythonVoiceCodingPlugin.library import nearest_node_from_offset,sorted_by_source_region,get_source_region,node_from_range,make_flat
+from PythonVoiceCodingPlugin.library.selection_node import nearest_node_from_offset,node_from_range
 from PythonVoiceCodingPlugin.library.info import *
 from PythonVoiceCodingPlugin.library.partial import partially_parse, line_partial
 from PythonVoiceCodingPlugin.library.traverse import search_upwards,search_upwards_log, find_matching,match_node, find_all_nodes,search_upwards_for_parent
@@ -44,12 +45,19 @@ class SelectPart(SelectionQuery):
 				get_sub_index(second_origin,query_description.get("sub_index2",0)-1)
 			]
 			alternatives=[]
-		else:
+		elif query_description["format"]==3 or query_description["format"]==4:
 			intermediate = get_sub_index(second_origin,None)
+			if "nth2"  in query_description:
+				intermediate = [get_sub_index(x,translate_adjective[query_description["nth2"]]-1) for x in intermediate]
+				intermediate = [x  for x in intermediate if x]
 			candidates = [get_sub_index(x,query_description["sub_index"]-1) for x in intermediate]
 			candidates = [x  for x in candidates if x]
-			result,alternatives = obtain_result(None, candidates)
-		return self._backward_result(result, alternatives,build)
+			if query_description["format"]==3:
+				result,alternatives = obtain_result(None, candidates)
+			elif query_description["format"]==4:
+				result = candidates if candidates else None
+				alternatives=[]
+		return self._backward_result(result, alternatives,build,individually=query_description["format"]==4)
 
 
 	
