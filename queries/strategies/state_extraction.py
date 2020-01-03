@@ -1,4 +1,5 @@
-def result_alternatives_sequence(state,location=False,text = False,mode="single",level = False):
+def result_alternatives_sequence(state,location=False,text = False,level = False):
+	mode = state["mode"]
 	result_text = state["result_text"]
 	alternatives_text = state["alternatives_text"]
 	if mode=="single":

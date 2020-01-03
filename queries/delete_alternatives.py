@@ -37,7 +37,7 @@ class DeleteAlternatives(InsertionQuery):
 
 	def handle_single(self,view_information,query_description,extra = {}):
 		state = extra["state"]
-		candidates = result_alternatives_sequence(state,location = True,mode = state["mode"])
+		candidates = result_alternatives_sequence(state,location = True)
 		if query_description["format"]==1:
 			if state["mode"]=="single":
 				selection = [candidates[query_description["color"+i]]  

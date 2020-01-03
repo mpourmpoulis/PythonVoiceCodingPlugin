@@ -12,8 +12,8 @@ class PasteBack(InsertionQuery):
 		state = extra["state"]
 		print("\ninside query ",state,"\n\n")
 		history  =  extra["history"]
-		candidates = result_alternatives_sequence(state,text = True,mode = state["mode"])
-		candidates_location = result_alternatives_sequence(state,location = True,mode = state["mode"])
+		candidates = result_alternatives_sequence(state,text = True)
+		candidates_location = result_alternatives_sequence(state,location = True)
 		surrounding = query_description.get("surrounding_punctuation",("",""))
 		if query_description["format"]==1:
 			selection = state["initial_origin"]
