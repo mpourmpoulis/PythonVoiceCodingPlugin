@@ -49,6 +49,8 @@ class PasteBack(InsertionQuery):
 					return [(x,surrounding[0]+y+surrounding[1])  for y,x in  zip(output,selection)]
 
 		if query_description["format"]==2:
+			if state["mode"]=="multiple":
+				raise Exception("pasting between alternatives is possible only in single mode")
 			selection = {candidates_location[query_description["color"+i]]  
 							for i in ["2","3","4"] if "color"+i in query_description}
 		output = candidates[query_description.get("color",0)]
