@@ -1,6 +1,6 @@
 import ast
 
-from PythonVoiceCodingPlugin.library import nearest_node_from_offset,sorted_by_source_region,get_source_region
+from PythonVoiceCodingPlugin.library import sorted_by_source_region,get_source_region
 from PythonVoiceCodingPlugin.library.LCA import LCA
 from PythonVoiceCodingPlugin.library.level_info import LevelVisitor
 from PythonVoiceCodingPlugin.queries.utility import ResultAccumulator,reestablish_priority

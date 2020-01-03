@@ -14,7 +14,7 @@ import tokenize
 
 from PythonVoiceCodingPlugin.third_party.asttokens import asttokens  
 
-from PythonVoiceCodingPlugin.library import build_tree,get_source_region,nearest_node_from_offset
+from PythonVoiceCodingPlugin.library import build_tree,get_source_region
 from PythonVoiceCodingPlugin.library.lexical import expand_to_line_or_statement
 from PythonVoiceCodingPlugin.library.higher import filter_everything
 from PythonVoiceCodingPlugin.library.modification import ModificationHandler

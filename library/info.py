@@ -6,7 +6,7 @@ import tokenize
 from itertools import chain 
 from urllib.parse import urlparse
 
-from PythonVoiceCodingPlugin.library import build_tree,get_source_region,nearest_node_from_offset,make_flat,previous_token,next_token
+from PythonVoiceCodingPlugin.library import build_tree,get_source_region,make_flat,previous_token,next_token
 from PythonVoiceCodingPlugin.library.traverse import match_node, find_all_nodes, match_parent,search_upwards_log
 from PythonVoiceCodingPlugin.third_party.asttokens import asttokens  
 

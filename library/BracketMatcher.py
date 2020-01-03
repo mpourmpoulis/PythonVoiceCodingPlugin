@@ -5,7 +5,7 @@ import token
 from PythonVoiceCodingPlugin.third_party.astmonkey import transformers
 from PythonVoiceCodingPlugin.third_party.asttokens import asttokens  
 
-from PythonVoiceCodingPlugin.library import build_tree,get_source_region,nearest_node_from_offset,previous_token,next_token
+from PythonVoiceCodingPlugin.library import build_tree,get_source_region,previous_token,next_token
 
 class BracketMatcher():
 	"""docstring for BracketMatcher"""

@@ -3,7 +3,7 @@ import ast
 from PythonVoiceCodingPlugin.third_party.astmonkey import transformers
 from PythonVoiceCodingPlugin.third_party.asttokens import asttokens  
 
-from PythonVoiceCodingPlugin.library import build_tree,get_source_region,nearest_node_from_offset,make_flat
+from PythonVoiceCodingPlugin.library import build_tree,get_source_region,make_flat
 
 def match_node(node,targets = (),exclusions = ()):
     targets  = targets if targets else ast.AST 
