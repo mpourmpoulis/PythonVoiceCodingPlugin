@@ -18,6 +18,8 @@ def result_alternatives_sequence(state,location=False,text = False,mode="single"
 	elif mode=="multiple":
 		if not alternatives: alternatives = [[] for x in result]
 		assert len(alternatives)==len(result), "lengths are presold and alternatives must match"
+		if result and len(result)==1 and len(result[0])!=1:
+			result = [result]
 		candidates_location = [x+y for x,y in zip(result,alternatives)]
 	if location and text:
 		return list(zip(candidates_location,candidates_text))
