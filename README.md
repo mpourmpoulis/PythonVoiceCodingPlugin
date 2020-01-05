@@ -20,7 +20,8 @@ when coding python 3 by voice.
 # IMPORTANT NOTE: 
 Package Control installation is currently not working! please take a look at https://github.com/mpourmpoulis/PythonVoiceCodingPlugin/issues/7 and use installation via git. This will be solved ASAP.
 
-Update: you cannot also install via package control, see installation instructions [below](#Installation)
+## Update
+you can now also install via package control, see installation instructions [below](#Installation)
 
 ## Motivation
 
