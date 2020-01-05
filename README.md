@@ -17,6 +17,8 @@ when coding python 3 by voice.
 
 ![](doc/gif/arg5.gif)
 
+IMPORTANT NOTE: Package Control installation is currently not working! please take a look at #7 and use installation via git. This will be solved ASAP.
+
 ## Motivation
 
 The project was inspired by [Gustav Wengel's article](https://medium.com/bambuu/state-of-voice-coding-2017-3d2ff41c5015) on the state of voice coding  and my personal experiences
