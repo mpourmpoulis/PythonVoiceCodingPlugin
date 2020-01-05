@@ -17,7 +17,8 @@ when coding python 3 by voice.
 
 ![](doc/gif/arg5.gif)
 
-IMPORTANT NOTE: Package Control installation is currently not working! please take a look at #7 and use installation via git. This will be solved ASAP.
+# IMPORTANT NOTE: 
+Package Control installation is currently not working! please take a look at #7 and use installation via git. This will be solved ASAP.
 
 ## Motivation
 
