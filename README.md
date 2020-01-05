@@ -20,6 +20,8 @@ when coding python 3 by voice.
 # IMPORTANT NOTE: 
 Package Control installation is currently not working! please take a look at https://github.com/mpourmpoulis/PythonVoiceCodingPlugin/issues/7 and use installation via git. This will be solved ASAP.
 
+Update: you cannot also install via package control, see installation instructions [below](#Installation)
+
 ## Motivation
 
 The project was inspired by [Gustav Wengel's article](https://medium.com/bambuu/state-of-voice-coding-2017-3d2ff41c5015) on the state of voice coding  and my personal experiences
@@ -101,12 +103,50 @@ and on Ubuntu it is :
 ~/.config/sublime-text-3/Packages/
 ```
 
-To install dependencies,using your installation of python (this worked for me with 3.7.4 and 3.5.2) run from inside the folder:
+To install dependencies,using your installation of python (this worked for me with 3.7.4 and 3.5.2) run from inside the plug-in folder (PythonVoiceCodingPlugin):
 ```bash
 python3 -m pip install --target third_party -r requirements.txt
 ```
 
 Be sure to check instructions to install the [bundles as well](bundles/README.md)
+
+
+### Package Control
+
+For the time being, as 0.0.4 is not compatible with package control, please install using the following instructions:
+
+- open Command Palette
+
+- execute 
+
+```
+Package Control:Add Repository
+```
+
+- Paste
+
+```
+https://github.com/mpourmpoulis/PythonVoiceCodingPlugin
+```
+
+- Then execute:
+
+```
+Package Control:Install Package
+```
+
+- enter
+
+```
+PythonVoiceCodingPlugin
+```
+
+you should see a fake version like v2020.01.05.( and so on ) instead of v0.0.4, which is from  master insured work out-of-the-box.
+
+Install it, and then be sure to install the bundles as well.
+
+For the time being be warned, that the plug-in has not been tested with portable versions of sublime!
+
 
 For any further installation questions, feel free to ask [here](https://github.com/mpourmpoulis/PythonVoiceCodingPlugin/issues/5)
 
