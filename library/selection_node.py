@@ -18,7 +18,7 @@ def nearest_node_from_offset(root,atok,offset):
     	and  inside(s,atok.get_text_range(node))])
     return min( candidates , key= lambda y :(y[1][1]-y[1][0]) )[0]
 
-def node_from_range(root,atok, r ):
+def node_from_range_old(root,atok, r ):
 	inside = lambda x,y: (y[0]<=x[0]<y[1] and y[0]<x[1]<=y[1])
 	candidates =([(node,atok.get_text_range(node)) for node in ast.walk( root ) if not isinstance(node,ast.Module) 
     	and  inside(r,atok.get_text_range(node))])
@@ -28,3 +28,25 @@ def node_from_range(root,atok, r ):
 	print("outside note from range \n",min( candidates , key= lambda y :(y[1][1]-y[1][0]) )[0])
 
 	return min( candidates , key= lambda y :(y[1][1]-y[1][0]) )[0]
+
+
+def node_from_range_new(root,atok,r):
+    print(" inside the new note from range\n")
+    inside = lambda x,y: (y[0]<=x[0]<y[1] and y[0]<x[1]<=y[1])
+    for child in ast.iter_child_nodes(root):
+        if inside(r,atok.get_text_range(child)):
+            return node_from_range_new(child,atok,r)
+    return root
+
+
+def node_from_range(root,atok, r ):
+    # return node_from_range_old(root,atok,r)
+    return node_from_range_new(root,atok,r)
+
+
+
+
+
+
+
+
