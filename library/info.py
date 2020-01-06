@@ -17,13 +17,15 @@ This module contains functions that enable us to extract information from nodes.
 it is split into four sections
 
 1) some generic functors:
-	These enable usto build new information functions while hiding the whole lambda syntax 
-2) getters:
+	These enable usto build new information functions while hiding the whole lambda syntax
+2) fake creators(introduced in 0.1.0) enable us to play around with fake nodes!
+3) checkers check if a node satisfies a property(say if its context is store) 
+4) getters:
 	these enable us to "get" information from nodes on a higher level ,
 	while trying to minimize exposure to the underlying syntax tree implementation.
-3) checkers check if a node satisfies a property(say if its context is store)
-4) validators confirm if other root satisfy some property with respect to a given node
-5) fixers (introduced in 0.1.0) responsible for fixing the first token/last token attributes of nodes
+
+5) validators confirm if other root satisfy some property with respect to a given node
+6) fixers (introduced in 0.1.0) responsible for fixing the first token/last token attributes of nodes
 
 '''
 ################################################################
@@ -53,6 +55,15 @@ def identity(information, *arg,**kwargs):
 	return lambda root: root if information(root,*arg,**kwargs) else None
 
 
+################################################################################################
+################################################################################################
+#
+# some tools to create fake nodes 
+#
+################################################################################################
+################################################################################################
+
+
 
 def create_fake(root,text,start_position,node_type,real_tokens = None, **kwargs):
 	if real_tokens  and not isinstance(real_tokens,list):
@@ -71,6 +82,19 @@ def create_fake(root,text,start_position,node_type,real_tokens = None, **kwargs)
 
 def empty_fake(root,star_position):
 	return create_fake(root,"",star_position,ast.Name,id = "",ctx = ast.Load())
+
+def set_fake(root,name,fake_node):
+	fake_name = name + "_fake"
+	setattr(root,fake_name,fake_node)
+	fields = list(root._fields)
+	index = fields.index(name)
+	fields.insert(index,fake_name)
+	fields = tuple(root._fields)
+	
+def get_fake(root,name):
+	return getattr(root,name + "_fake")
+
+
 ################################################################################################
 ################################################################################################
 #
