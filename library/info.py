@@ -176,6 +176,9 @@ def get_condition(root):
 		root.test if match_node(root,(ast.If,ast.IfExp,ast.While,ast.Assert)) else None
 	)
 
+def get_else(root):
+	return root.orelse if match_node(root,(ast.If,ast.IfExp)) else None
+
 def get_pure_if_condition(root):
 	return (
 		root.test 
@@ -194,6 +197,13 @@ def get_comprehension_condition(root):
 	return (
 		root.ifs  if match_node(root,(ast.comprehension)) else None		
 	)
+
+def get_comprehension_value(root):
+	return (
+		root.elt  if match_node(root,(ast.ListComp,ast.SetComp,ast.GeneratorExp)) else 
+		[root.key,root.value] if match_node(root,ast.DictComp) else None
+	)
+
 
 def get_return_value(root):
 	return (
@@ -404,6 +414,12 @@ def get_fixed_import(root,atok):
 	fix_import(root,atok)
 	return root
 
+def get_fixed_import_value(root,atok):
+	if not match_node(root,(ast.Import,ast.ImportFrom)):
+		return None
+	fix_import(root,atok)
+	return root.names
+	
 
 def get_module(root,atok):
 	if not match_node(root,(ast.Import,ast.ImportFrom)):
