@@ -264,6 +264,13 @@ def get_item_as(root):
 def get_message(root):
 	return root.msg if match_node(root,(ast.Assert)) else None
 
+def get_raise_exception(root):
+	return root.exc if match_node(root,(ast.Raise)) else None
+
+def get_raise_cause(root):
+	return root.cause if match_node(root,(ast.Raise)) else None
+
+
 def get_exception(root,atok):
 	if not match_node(root,ast.ExceptHandler):
 		return None

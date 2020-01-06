@@ -70,6 +70,8 @@ class SelectBigRoi(SelectionQuery):
 			"comprehension value" : ((ast.ListComp,ast.SetComp,ast.DictComp,ast.GeneratorExp),(),get_comprehension_value),
 			"assertion message":(ast.Assert,(), get_message),
 			"assertion condition":(ast.Assert,(), get_condition),
+			"exception raised":(ast.Raise,(),get_raise_exception),
+			"raised cause":(ast.Raise,(),get_raise_cause),
 			"assignment left":((ast.Assign,ast.AugAssign),(),get_left),
 			"assignment right":((ast.Assign,ast.AugAssign),(),get_right),
 			"assignment full":((ast.Assign,ast.AugAssign),(),standard),
