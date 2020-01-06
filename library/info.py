@@ -92,7 +92,9 @@ def set_fake(root,name,fake_node):
 	fields = list(root._fields)
 	index = fields.index(name)
 	fields.insert(index,fake_name)
-	fields = tuple(root._fields)
+	root._fields = tuple(fields)
+
+
 	
 def get_fake(root,name):
 	return getattr(root,name + "_fake")
@@ -711,11 +713,25 @@ def correspond_to_index_in_call(root, index,field,field_index):
 def mark_fixed(root):
 	root._has_been_fixed = True
 
+def mark_under_fixing(root):
+	root._is_under_fixing = True
+
 def needs_fix(root):
 	pass
 
 def already_fixed(root):
 	return hasattr(root,"_has_been_fixed")
+
+def under_fixing(root):
+	return hasattr(root,"_is_under_fixing")
+
+def fix_pipeline(root,atok):
+	mark_under_fixing(root)
+	if generic_fix(root,atok):
+		mark_fixed(root)
+		return True
+	else:
+		return False
 
 def store_fix_data(root,data):
 	root._fix_metadata = data
@@ -759,8 +775,8 @@ def fix_import(root,atok):
 				token = next_token(atok,token)
 				token = atok.find_token(token,tokenize.NAME,name.asname)
 			name.last_token = token
-			mark_fixed(name)
 			store_fix_data(name,{"name":stack})
+			fix_pipeline(name,atok)
 	mark_fixed(root)
 	store_fix_data(root,data)
 	return True
@@ -768,9 +784,19 @@ def fix_import(root,atok):
 def fix_alias(root,atok):
 	if already_fixed(root):
 		return True
-	if fix_import(root.parent,atok):
+	if under_fixing(root) or  fix_import(root.parent,atok):
+		names = get_fix_data(root)["name"]
+		name_nodes = [
+			create_fake(root,ast.Name,real_tokens=x,
+				parent = root,parent_field="name",parent_field_index = i,
+				id=x.string,ctx=ast.Load())  
+			for i,x in enumerate(names)]
+		set_fake(root,"name",name_nodes)
 		mark_fixed(name)
-	return True
+		print("field",root._fields)
+		return True
+	else:
+		return False
 
 
 def fix_argument(root,atok,token):
@@ -872,8 +898,18 @@ def fix_exception_handler(root,atok):
 
 
 def generic_fix(root,atok):
-	if match_node(root,(ast.Import,ast.ImportFrom)):
-		fix_import(root,atok)
+	temporary = {
+		(ast.Import,ast.ImportFrom):fix_import,
+		ast.alias: fix_alias,
+	}
+	try:
+		fixer = next(v for k,v in temporary.items() if match_node(root,k))
+		fixer(root,atok)
+		return True
+	except:
+		return False
+
+
 
 
 def dummy():

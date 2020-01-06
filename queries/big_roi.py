@@ -3,7 +3,7 @@ import ast
 from PythonVoiceCodingPlugin.library import sorted_by_source_region,get_source_region,make_flat
 from PythonVoiceCodingPlugin.library.selection_node import nearest_node_from_offset,node_from_range
 from PythonVoiceCodingPlugin.library.info import *
-from PythonVoiceCodingPlugin.library.LCA import LCA
+from PythonVoiceCodingPlugin.library.LCA import LCA 
 from PythonVoiceCodingPlugin.library.level_info import LevelVisitor
 from PythonVoiceCodingPlugin.library.partial import partially_parse, line_partial
 from PythonVoiceCodingPlugin.library.traverse import search_upwards,search_upwards_log, find_matching,match_node, find_all_nodes,search_upwards_for_parent
