@@ -25,7 +25,8 @@ it is split into four sections
 	while trying to minimize exposure to the underlying syntax tree implementation.
 
 5) validators confirm if other root satisfy some property with respect to a given node
-6) fixers (introduced in 0.1.0) responsible for fixing the first token/last token attributes of nodes
+6) fixers (introduced in 0.1.0) responsible for fixing the first token/last token attributes of nodes and also 
+adding some nodes here and there
 
 '''
 ################################################################
@@ -533,7 +534,10 @@ def get_subparts_of_attribute(root):
 	if not match_node(root,ast.Attribute):
 		return None
 	l = root.last_token
-	fake_node = create_fake(root,ast.Name,text = l.string,start_position = l.startpos,
+	if already_fixed(root):
+		fake_node = get_fake(root,"attr") 
+	else:
+		fake_node = create_fake(root,ast.Name,text = l.string,start_position = l.startpos,
 		id = l.string,ctx = root.ctx)
 	if  match_node(root.value,ast.Attribute):
 		return get_subparts_of_attribute(root.value) + [fake_node]
@@ -895,13 +899,22 @@ def fix_exception_handler(root,atok):
 	mark_fixed(root)
 	return True
 
-
+def fix_attribute(root,atok):
+	l = root.last_token
+	fake_node = create_fake(root,ast.Name,real_tokens = l,
+		parent = root,parent_field = "attr",
+		id = l.string,ctx = root.ctx)
+	set_fake(root,"attr",fake_node)
+	if match_node(root.value,ast.Attribute):
+		fix_attribute(root,atok)
+	mark_fixed(root)
 
 def generic_fix(root,atok):
 	temporary = {
 		(ast.Import,ast.ImportFrom):fix_import,
 		ast.alias: fix_alias,
-		ast.ExceptHandler: fix_exception_handler 
+		ast.ExceptHandler: fix_exception_handler,
+		ast.Attribute:fix_attribute, 
 	}
 	try:
 		fixer = next(v for k,v in temporary.items() if match_node(root,k))
