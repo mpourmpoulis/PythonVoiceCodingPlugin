@@ -525,7 +525,7 @@ def get_subparts_of_alias(root):
 		right_side = create_fake(root,ast.Name,real_tokens=x,id=x.string,ctx=ast.Load())
 		return [left_side,right_side]
 	else:
-		return left_side
+		return get_sub_index(left_side,None)
 	
 
 
@@ -848,7 +848,9 @@ def fix_exception_handler(root,atok):
 
 
 
-
+def generic_fix(root,atok):
+	if match_node(root,(ast.Import,ast.ImportFrom)):
+		fix_import(root,atok)
 
 
 def dummy():
