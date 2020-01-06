@@ -65,23 +65,26 @@ def identity(information, *arg,**kwargs):
 
 
 
-def create_fake(root,text,start_position,node_type,real_tokens = None, **kwargs):
+def create_fake(root,node_type,*,text = "",start_position = 0,
+	parent = None,parent_field = None, parent_field_index = None, 
+	real_tokens = None, **kwargs):
 	if real_tokens  and not isinstance(real_tokens,list):
 		real_tokens = [real_tokens]
 	if not real_tokens:
 		fake_token = asttokens.Token(0,text,0,0,0,
 			root.first_token.index,start_position,start_position + len(text))
 	fake_node = node_type(**kwargs) 
-	fake_node.parent = root.parent
-	fake_node.parent_field = root.parent_field
-	fake_node.parent_field_index = root.parent_field_index
+	fake_node.parent = root.parent if parent is None else parent
+	fake_node.parent_field = root.parent_field if parent_field is None else parent_field
+	fake_node.parent_field_index = root.parent_field_index if parent_field_index is None else parent_field_index
 	fake_node.first_token = fake_token if not real_tokens else real_tokens[0]
 	fake_node.last_token = fake_token if not real_tokens else real_tokens[-1] 
 	fake_node.fake = True
 	return fake_node
 
-def empty_fake(root,star_position):
-	return create_fake(root,"",star_position,ast.Name,id = "",ctx = ast.Load())
+def empty_fake(root,start_position):
+	return create_fake(root,ast.Name, text = "",start_position = start_position,
+		id = "",ctx = ast.Load())
 
 def set_fake(root,name,fake_node):
 	fake_name = name + "_fake"
@@ -352,7 +355,8 @@ def get_definition_name(root,atok):
 	d = atok.find_token(root.first_token,tokenize.NAME,"def") 
 	x = next_token(atok,d)	
 	if x:
-		return create_fake(root,x.string,x.startpos,ast.Name,id = x.string,ctx = ast.Store())
+		return create_fake(root,ast.Name,text = x.string,start_position=x.startpos,
+			id = x.string,ctx = ast.Store())
 	else:
 		return None
 
@@ -361,7 +365,8 @@ def get_definition_parameter_name(root,atok):
 		return None 	
 	x = root.first_token
 	print([x])
-	return create_fake(root,x.string,x.startpos,ast.Name,id = x.string,ctx = ast.Store())
+	return create_fake(root,ast.Name,start_position = x.startpos,text = x.string,
+		id = x.string,ctx = ast.Store())
 
 
 	
@@ -371,7 +376,8 @@ def get_class_name(root,atok):
 	d = atok.find_token(root.first_token,tokenize.NAME,"class") 
 	x = next_token(atok,d)	
 	if x:
-		return create_fake(root,x.string,x.startpos,ast.Name,id = x.string,ctx = ast.Store())
+		return create_fake(root,ast.Name,start_position = x.startpos,text = x.string,
+			id = x.string,ctx = ast.Store())
 	else:
 		return None
 
@@ -409,11 +415,12 @@ def get_module(root,atok):
 	print("inside get a module date days ",m,"\n")
 	output = None
 	for t in m:
-
 		if not output:
-			output  = create_fake(root,"",None,ast.Name,real_tokens=[t,t],id=t.string,ctx=ast.Load())
+			output  = create_fake(root,ast.Name,real_tokens=[t,t],
+				id=t.string,ctx=ast.Load())
 		else:
-			output  = create_fake(root,"",None,ast.Attribute,real_tokens=[m[0],t],value=output,attr=t.string,ctx=ast.Load())
+			output  = create_fake(root,ast.Attribute,real_tokens=[m[0],t],
+				value=output,attr=t.string,ctx=ast.Load())
 
 	print("exiting get a module function ",output,"\n")
 	return output
@@ -489,9 +496,10 @@ def get_subparts_of_string(root,name_mode = False):
 			continue
 		index = original.find(s,index)
 		if name_mode:
-			fake_node = create_fake(root,s,start_position + index,ast.Name,id = s,ctx = root.ctx)
+			fake_node = create_fake(root,ast.Name,start_position = start_position + index,text = s,
+				id = s,ctx = root.ctx)
 		else:
-			fake_node = create_fake(root,s,start_position + index,ast.Str,s = s)
+			fake_node = create_fake(root,ast.Str,start_position = start_position + index,text = s,s = s)
 		output.append(fake_node)
 		index += len(s)
 	return output if name_mode or len(output)>1 else []
@@ -500,7 +508,8 @@ def get_subparts_of_attribute(root):
 	if not match_node(root,ast.Attribute):
 		return None
 	l = root.last_token
-	fake_node = create_fake(root,l.string,l.startpos,ast.Name,id = l.string,ctx = root.ctx)
+	fake_node = create_fake(root,ast.Name,text = l.string,start_position = l.startpos,
+		id = l.string,ctx = root.ctx)
 	if  match_node(root.value,ast.Attribute):
 		return get_subparts_of_attribute(root.value) + [fake_node]
 	else:
@@ -510,10 +519,10 @@ def get_subparts_of_alias(root):
 	assert already_fixed(root)," I received an node that needs fixing "
 	names = get_fix_data(root)["name"]
 	print("names",names,"\n")
-	left_side =[create_fake(root,"",0,ast.Name,real_tokens=x,id=x.string,ctx=ast.Load())  for x in names]
+	left_side =[create_fake(root,ast.Name,real_tokens=x,id=x.string,ctx=ast.Load())  for x in names]
 	if root.asname: 
 		x = root.last_token
-		right_side = create_fake(root,"",0,ast.Name,real_tokens=x,id=x.string,ctx=ast.Load())
+		right_side = create_fake(root,ast.Name,real_tokens=x,id=x.string,ctx=ast.Load())
 		return [left_side,right_side]
 	else:
 		return left_side
@@ -830,7 +839,7 @@ def fix_exception_handler(root,atok):
 	f = atok.find_token(previous_token(atok,f),tokenize.NAME, "except",reverse = True)
 
 	
-	store_fix_data(root,{"node":create_fake(root,"",None,ast.Name, token,id = token.string,ctx = ast.Load())})
+	store_fix_data(root,{"node":create_fake(root,ast.Name,real_tokens =  token,id = token.string,ctx = ast.Load())})
 
 	root.first_token=root.type.first_token
 	root.last_token = token
