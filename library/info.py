@@ -98,7 +98,7 @@ def set_fake(root,name,fake_node):
 
 	
 def get_fake(root,name):
-	return getattr(root,name + "_fake")
+	return getattr(root,name + "_fake",None)
 
 
 ################################################################################################
@@ -396,7 +396,7 @@ def get_class_name(root,atok):
 	d = atok.find_token(root.first_token,tokenize.NAME,"class") 
 	x = next_token(atok,d)	
 	if x:
-		return create_fake(root,ast.Name,start_position = x.startpos,text = x.string,
+		return create_fake(root,ast.Name,real_tokens = x,
 			id = x.string,ctx = ast.Store())
 	else:
 		return None
@@ -803,13 +803,19 @@ def fix_alias(root,atok):
 		return False
 
 
-def fix_argument(root,atok,token):
+def fix_argument(root,atok,token = None):
 	print("enduring fix argument ",root,root.parent_field,atok,[token])
 	if already_fixed(root):
 		return token
+	if token is None:
+		return None
 	mark_fixed(root)
+
 	root.first_token = token
-	if root.annotation:
+
+	fake_node = create_fake(root,ast.Name, real_tokens=token,id = token.string,ctx = ast.Load())
+	set_fake(root,"arg",fake_node)
+	if getattr(root,"annotation",False):
 		root.last_token = root.annotation.last_token
 		return root.annotation.last_token
 	else:
@@ -818,27 +824,27 @@ def fix_argument(root,atok,token):
 
 
 def fix_definition(root,atok):
-	print("enduring fix definition ",root,atok)
+	print("enduring fix definition ",root,atok,get_fake(root.args,"kwarg"))
 	if already_fixed(root):
+		print(" already fixed")
 		return True
 
 	# there is a discrepancy between the 3.3 and 3.4 versions of the abstract syntax tree
 	# in 3.3 the variable arguments and the variable keyboard arguments are stored in a little bit differently
 	x = root.args
-	if x.vararg and not already_fixed(x.vararg):
+	print([x.first_token,x.last_token])
+	if x.vararg and not get_fake(x,"vararg"):
 		print(" I am in the process of fixing the viable arguments ",x.vararg,x.varargannotation)
-		x.vararg = ast.arg(arg=x.vararg,annotation=x.varargannotation)
-		x.vararg.parent = x
-		x.vararg.parent_field = "vararg" 
-		x.vararg.parent_field_index = None
-		mark_fixed(x.vararg) 
-	if x.kwarg and not already_fixed(x.kwarg):
+		fake_node = create_fake(x,ast.arg,text = "",start_position = 0,
+			parent = x,parent_field = "vararg", 
+			arg=x.vararg,annotation=x.varargannotation)
+		set_fake(x,"vararg",fake_node)
+	if x.kwarg and not get_fake(x,"kwarg"):
 		print(" I am in the process of fixing the keyword viable arguments ",x.kwarg,x.kwargannotation)
-		x.kwarg = ast.arg(arg=x.kwarg,annotation=x.kwargannotation) 
-		x.kwarg.parent = x
-		x.kwarg.parent_field = "kwarg"
-		x.kwarg.parent_field_index = None
-		mark_fixed(x.kwarg)
+		fake_node = create_fake(x,ast.arg,text = "",start_position = 0,
+			parent = x,parent_field = "kwarg", 
+			arg=x.kwarg,annotation=x.kwargannotation)
+		set_fake(x,"kwarg",fake_node)
 	
 	# I think the following might be done easier with more iter tools library
 	token = root.first_token
@@ -853,7 +859,7 @@ def fix_definition(root,atok):
 			token = j.last_token
 		print("token ",[token])
 	if x.vararg:
-		i=x.vararg
+		i=get_fake(x,"vararg")
 		print("viable argument problem ")
 		token = next_token(atok,token)
 		token = atok.find_token(token,tokenize.NAME,i.arg)
@@ -867,7 +873,7 @@ def fix_definition(root,atok):
 		if j:
 			token = j.last_token
 	if x.kwarg:
-		i=x.kwarg
+		i=get_fake(x,"kwarg")
 		print("keyword viable arguments problem",[token],"\n\n")
 		token = next_token(atok,token)
 		print("before searching for the argument that Tolkien was \n",[token],"\n")
@@ -915,13 +921,17 @@ def generic_fix(root,atok):
 		ast.alias: fix_alias,
 		ast.ExceptHandler: fix_exception_handler,
 		ast.Attribute:fix_attribute, 
+		ast.FunctionDef:fix_definition,
+		ast.arg:fix_argument,  
 	}
+	print(type(root),root,match_node(root,ast.FunctionDef))
 	try:
 		fixer = next(v for k,v in temporary.items() if match_node(root,k))
-		fixer(root,atok)
-		return True
 	except:
+		print("I failed with",root)
 		return False
+	fixer(root,atok)
+	return True
 
 
 
