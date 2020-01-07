@@ -100,6 +100,20 @@ def set_fake(root,name,fake_node):
 def get_fake(root,name):
 	return getattr(root,name + "_fake",None)
 
+def fake_attribute_from_tokens(root,tokens,**kwargs):
+	if len(tokens)==1:
+		return create_fake(root,ast.Name ,real_tokens = tokens[-1],
+			 id = tokens[-1].string, ctx = ast.Load(),**kwargs)
+	top_fake = create_fake(root,ast.Attribute,real_tokens = tokens,ctx = ast.Load(),**kwargs)
+	fake_name = create_fake(root,ast.Name ,real_tokens = tokens[-1], 
+		parent = top_fake,parent_field = "attr",
+		id = tokens[-1].string, ctx = ast.Load())
+	top_fake.attr = fake_name
+	top_fake.value = fake_attribute_from_tokens(top_fake,tokens[:-1],
+		parent = top_fake,parent_field = "value")
+	return top_fake
+		
+
 
 ################################################################################################
 ################################################################################################
@@ -781,8 +795,11 @@ def fix_import(root,atok):
 			name.last_token = token
 			store_fix_data(name,{"name":stack})
 			fix_pipeline(name,atok)
-	mark_fixed(root)
 	store_fix_data(root,data)
+	if match_node(root,ast.ImportFrom) and data:
+		fake_module = fake_attribute_from_tokens(root,data["module"],parent = root,parent_field="module")
+		set_fake(root,"module",fake_module)
+	mark_fixed(root)
 	return True
 
 def fix_alias(root,atok):
@@ -833,6 +850,7 @@ def fix_definition(root,atok):
 	# in 3.3 the variable arguments and the variable keyboard arguments are stored in a little bit differently
 	x = root.args
 	print([x.first_token,x.last_token])
+
 	if x.vararg and not get_fake(x,"vararg"):
 		print(" I am in the process of fixing the viable arguments ",x.vararg,x.varargannotation)
 		fake_node = create_fake(x,ast.arg,text = "",start_position = 0,
