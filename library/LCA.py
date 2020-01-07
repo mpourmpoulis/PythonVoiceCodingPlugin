@@ -24,6 +24,8 @@ class LCA():
 		self.sequence.append((self.depth, node))
 		self.cycle+=1
 		for child in ast.iter_child_nodes(node):
+			if not hasattr(child,"parent"):
+				continue
 			self.field_history[node].append((self.cycle,child.parent_field,getattr(child,"parent_field_index",None)))
 			self.visit(child)
 			first, last = self.visits[node]

@@ -5,7 +5,7 @@ from PythonVoiceCodingPlugin.interface.common.utility import make_region,make_se
 class InterfaceAction():
 	"""docstring for InterfaceAction"""
 	def __init__(self):
-		self.data={}
+		self.data = {}
 	def execute(self,view):
 		pass
 
