@@ -71,6 +71,7 @@ class Application():
 		secondary_query_description = get_secondary_query(query_description)
 		if secondary_query_description:
 			self.backup=[deepcopy(self.state),deepcopy(self.global_state)]
+			should_execute_secondary  = True
 
 		try:
 			s(view_information,query_description,extra)
@@ -125,7 +126,8 @@ class Application():
 						self.state["mode"] = "single"
 					else:
 						self.state["mode"] = "multiple"
-
+			else:
+				should_execute_secondary = False
 
 			
 			# if alternatives:
@@ -170,7 +172,7 @@ class Application():
 			interface.push_action(HighlightCleverAction(self.state[name],name))				
 
 
-		if secondary_query_description:
+		if secondary_query_description  and should_execute_secondary:
 			interface.push_action(ClearHighlightAction("alternatives"))
 			secondary_success = self.respond_to_query(interface,secondary_query_description,secondary=True)
 			if not secondary_success:
