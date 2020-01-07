@@ -101,6 +101,7 @@ def get_fake(root,name):
 	return getattr(root,name + "_fake",None)
 
 def fake_attribute_from_tokens(root,tokens,**kwargs):
+	print("entering fake attributes from tokens ",root,tokens,kwargs)
 	if len(tokens)==1:
 		return create_fake(root,ast.Name ,real_tokens = tokens[-1],
 			 id = tokens[-1].string, ctx = ast.Load(),**kwargs)
@@ -108,7 +109,8 @@ def fake_attribute_from_tokens(root,tokens,**kwargs):
 	fake_name = create_fake(root,ast.Name ,real_tokens = tokens[-1], 
 		parent = top_fake,parent_field = "attr",
 		id = tokens[-1].string, ctx = ast.Load())
-	top_fake.attr = fake_name
+	set_fake(top_fake,"attr", fake_name)
+	top_fake.attr = tokens[-1].string
 	top_fake.value = fake_attribute_from_tokens(top_fake,tokens[:-1],
 		parent = top_fake,parent_field = "value")
 	return top_fake
@@ -797,8 +799,10 @@ def fix_import(root,atok):
 			fix_pipeline(name,atok)
 	store_fix_data(root,data)
 	if match_node(root,ast.ImportFrom) and data:
+		print("I made up to hear with tokens",data["module"])
 		fake_module = fake_attribute_from_tokens(root,data["module"],parent = root,parent_field="module")
 		set_fake(root,"module",fake_module)
+		mark_fixed(fake_module)
 	mark_fixed(root)
 	return True
 
@@ -928,9 +932,10 @@ def fix_attribute(root,atok):
 	fake_node = create_fake(root,ast.Name,real_tokens = l,
 		parent = root,parent_field = "attr",
 		id = l.string,ctx = root.ctx)
+	print("I failed test here \n\nself.man")
 	set_fake(root,"attr",fake_node)
 	if match_node(root.value,ast.Attribute):
-		fix_attribute(root,atok)
+		fix_attribute(root.value,atok)
 	mark_fixed(root)
 
 def generic_fix(root,atok):
@@ -944,6 +949,7 @@ def generic_fix(root,atok):
 	}
 	print(type(root),root,match_node(root,ast.FunctionDef))
 	try:
+		print("")
 		fixer = next(v for k,v in temporary.items() if match_node(root,k))
 	except:
 		print("I failed with",root)
