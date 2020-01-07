@@ -8,6 +8,7 @@ class SelectionQuery(Query):
 	# attributes and methods the user can override\change
 	################################################################
 	multiple_in = False
+	initial_origin_force_update = False
 
 	def handle_single(self,view_information,query_description,extra = {}):
 		pass
