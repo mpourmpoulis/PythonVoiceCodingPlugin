@@ -938,6 +938,13 @@ def fix_attribute(root,atok):
 		fix_attribute(root.value,atok)
 	mark_fixed(root)
 
+
+def fix_keyword(root,atok):
+	set_fake(root,"arg",create_fake(root,ast.Name,real_tokens=root.first_token,
+		id=root.first_token.string ,ctx = ast.Load()))
+	mark_fixed(root)
+
+
 def generic_fix(root,atok):
 	temporary = {
 		(ast.Import,ast.ImportFrom):fix_import,
@@ -946,6 +953,7 @@ def generic_fix(root,atok):
 		ast.Attribute:fix_attribute, 
 		ast.FunctionDef:fix_definition,
 		ast.arg:fix_argument,  
+		ast.keyword:fix_keyword,
 	}
 	print(type(root),root,match_node(root,ast.FunctionDef))
 	try:
