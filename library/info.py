@@ -594,6 +594,8 @@ def get_sub_index(root,index):
 		candidates =  root.elts
 	elif match_node(root,(ast.Dict)):
 		candidates = list(zip(root.keys,root.values))
+		if len(candidates)==1:
+			candidates = list(candidates[0])
 	elif match_node(root,(ast.BoolOp)) :
 		candidates =  root.values
 	elif match_node(root,(ast.BinOp)) :
