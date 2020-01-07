@@ -41,7 +41,7 @@ class SelectBigRoi(SelectionQuery):
 			definition_node = search_upwards(origin,ast.FunctionDef)
 		definition_node  = ( 
 			definition_node 
-			if definition_node  and query_description["big_roi"] not in ["import statement","class name",
+			if definition_node  and query_description["big_roi"] not in ["import statement","import module","import value","class name",
 							"base class","decorator"]
 			else root
 		)
@@ -120,6 +120,7 @@ class SelectBigRoi(SelectionQuery):
 		information = getattr(information,"secondary",information)
 		candidates = tiebreak_on_lca(definition_node,origin,find_all_nodes(definition_node, targets, exclusions))
 		candidates = [information(x)  for x in candidates if information(x)]
+		print("candidates",candidates)
 		result, alternatives = obtain_result(None, candidates)
 		return  self._backward_result(result, alternatives,build)
 
