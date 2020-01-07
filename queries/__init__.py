@@ -12,6 +12,7 @@ from PythonVoiceCodingPlugin.queries.insert_item import InsertItem
 from PythonVoiceCodingPlugin.queries.delete_alternatives import DeleteAlternatives
 from PythonVoiceCodingPlugin.queries.swap_back import SwapBack
 from PythonVoiceCodingPlugin.queries.select_part import SelectPart
+from PythonVoiceCodingPlugin.queries.select_back import SelectBack
 
 
 
@@ -41,6 +42,7 @@ def get_query(query_description):
 		"delete_alternatives":DeleteAlternatives,
 		"swap_back": SwapBack,
 		"select_part": SelectPart,
+		"select_back": SelectBack,
 	}
 	return h[index]
 	
