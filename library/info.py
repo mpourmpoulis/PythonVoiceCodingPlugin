@@ -184,6 +184,14 @@ def get_right(root):
 	}
 	return getattr( root ,h[type( root)]) if type( root) in h else None
 
+def get_header(root):
+	return (
+		root.test if match_node(root,(ast.While,ast.If)) else
+		root.arguments if match_node(root,(ast.FunctionDef)) else
+		root.target if match_node(root,(ast.For)) else None
+
+
+	)
 def get_body(root):
 	return root.body if match_node(root,(ast.IfExp, ast.If ,ast.For,ast.While, ast.Try)) else None
 	
@@ -903,7 +911,12 @@ def fix_definition(root,atok):
 		print("After that Tolkien was \n",[token],"\n")
 		fix_argument(i,atok,token)
 
-
+	# fixing x, the arguments
+	temporary =[getattr(x,"first_token") for x in ast.iter_child_nodes(x)] + [getattr(x,"last_token") for x in ast.iter_child_nodes(x)] 
+	temporary = sorted([x  for x in temporary if x],key=lambda x: x.index)
+	if temporary:
+		x.first_token = temporary[0]
+		x.last_token = temporary[-1]
 	mark_fixed(root)
 	return True
 
