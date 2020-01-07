@@ -198,13 +198,15 @@ class SelectBigRoi(SelectionQuery):
 		targets, exclusions, information  =  self.decode(query_description,build)
 		temporary_information = lambda x: match_node(x,ast.FunctionDef) 
 		root,atok,m,r  = build
-		
+		print("definition_node",definition_node)
 		direction = query_description["vertical_abstract_only_direction"]
 		ndir = query_description["ndir"]
-		row = view_information["rowcol"](selection[0])[0] + 1 if definition_node is root else definition_node.first_token.start[0]
-		bonus = 1 if definition_node.first_token.startpos > selection[1] else 0
-
+		print(" let's check if ",definition_node is root)
+		row = view_information["rowcol"](m.backward(selection)[0])[0] + 1 if definition_node is root else definition_node.first_token.start[0]
+		bonus = 1 if definition_node.first_token.startpos > selection[1]  else 0
+		print(" inside big region of interest case for ",row," ",ndir + bonus)
 		t = decode_abstract_vertical(root,atok,targets,row, ndir + bonus,direction,True,temporary_information)
+		print(" after which we obtained ",ast.dump(t)[:100])
 		if query_description["adjective"]=="None":
 			information = getattr(information,"secondary",information)
 			candidates = tiebreak_on_lca(root,definition_node,find_all_nodes(t, targets, exclusions))
