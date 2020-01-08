@@ -78,7 +78,7 @@ class SelectArgument(SelectionQuery):
 		################################################################
 		# if no adjective is given
 		################################################################
-		if q["adjective"] == "None":
+		if q["nth"] == "None":
 			if origin  and calling_node:
 				result = calling_node if calling_node in information_nodes else None
 				information_nodes = [x  for x in tiebreaker(information_nodes) if x != calling_node]
@@ -92,7 +92,7 @@ class SelectArgument(SelectionQuery):
 		################################################################
 		# adjective is given
 		################################################################
-		if q["adjective"] != "None":
+		if q["nth"] != "None":
 			additional_parameters["small_root"] = select_node			
 			if origin  and calling_node:
 				additional_parameters["penalized"] = [calling_node] if calling_node else []
@@ -100,7 +100,7 @@ class SelectArgument(SelectionQuery):
 			result, alternatives = adjective_strategy(
 				atok=atok,
 				root = root,
-				adjective_word = q["adjective"],
+				adjective_word = q["nth"],
 				level_nodes = every_caller,
 				information_nodes = information_nodes,
 				**additional_parameters
@@ -330,7 +330,7 @@ class SelectArgument(SelectionQuery):
 			if  not calling_parent or calling_parent is level.root:
 				return None
 			if query_description["level_index"]== 0 or correspond_to_index_in_call(calling_parent,query_description["level_index"]-1,field,field_index):
-				adj = translate_adjective[query_description["adjective"]]-1
+				adj = translate_adjective[query_description["nth"]]-1
 				n = level(node, 3,adj)
 				return node if n is node else None
 			else:

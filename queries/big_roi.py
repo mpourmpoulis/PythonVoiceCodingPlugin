@@ -142,7 +142,7 @@ class SelectBigRoi(SelectionQuery):
 		result, alternatives = adjective_strategy(
 				atok=atok,
 				root = definition_node,
-				adjective_word = query_description["adjective"],
+				adjective_word = query_description["nth"],
 				level_nodes = find_all_nodes(definition_node, (ast.If,ast.While,ast.For,ast.Try,ast.With,ast.FunctionDef,ast.ClassDef)),
 				information_nodes = find_matching(definition_node,temporary_information),
 				**additional_parameters
@@ -198,16 +198,13 @@ class SelectBigRoi(SelectionQuery):
 		targets, exclusions, information  =  self.decode(query_description,build)
 		temporary_information = lambda x: match_node(x,ast.FunctionDef) 
 		root,atok,m,r  = build
-		print("definition_node",definition_node)
+
 		direction = query_description["vertical_abstract_only_direction"]
 		ndir = query_description["ndir"]
-		print(" let's check if ",definition_node is root)
 		row = view_information["rowcol"](m.backward(selection)[0])[0] + 1 if definition_node is root else definition_node.first_token.start[0]
 		bonus = 1 if definition_node.first_token.startpos > selection[1]  else 0
-		print(" inside big region of interest case for ",row," ",ndir + bonus)
 		t = decode_abstract_vertical(root,atok,targets,row, ndir + bonus,direction,True,temporary_information)
-		print(" after which we obtained ",ast.dump(t)[:100])
-		if query_description["adjective"]=="None":
+		if query_description["nth"]=="None":
 			information = getattr(information,"secondary",information)
 			candidates = tiebreak_on_lca(root,definition_node,find_all_nodes(t, targets, exclusions))
 			candidates = [information(x)  for x in candidates if information(x)]
@@ -218,7 +215,7 @@ class SelectBigRoi(SelectionQuery):
 			result, alternatives = adjective_strategy(
 				atok=atok,
 				root = t,
-				adjective_word = query_description["adjective"],
+				adjective_word = query_description["nth"],
 				level_nodes = find_all_nodes(t,(ast.If,ast.While,ast.For,ast.Try,ast.With,ast.FunctionDef)),
 				information_nodes = find_matching(t,lambda x: information(x) if match_node(x,targets,exclusions) else None),
 				**additional_parameters
