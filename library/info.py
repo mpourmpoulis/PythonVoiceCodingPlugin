@@ -962,9 +962,11 @@ def fix_attribute(root,atok):
 
 
 def fix_keyword(root,atok):
-	set_fake(root,"arg",create_fake(root,ast.Name,real_tokens=root.first_token,
-		parent = root,parent_field = "arg",
-		id=root.first_token.string ,ctx = ast.Load()))
+	if not already_fixed(root):
+		set_fake(root,"arg",create_fake(root,ast.Name,real_tokens=root.first_token,
+			parent = root,parent_field = "arg",
+			id=root.first_token.string ,ctx = ast.Load())
+		)
 	mark_fixed(root)
 
 

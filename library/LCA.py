@@ -38,8 +38,16 @@ class LCA():
 		return self.sequence[self.visits[node][0]][0]
 
 	def __call__(self,first_node,second_node,include_depth = False):
-		x,y = self.visits[first_node]
-		w,v = self.visits[second_node]
+		try : 
+			x,y = self.visits[first_node]
+			w,v = self.visits[second_node]
+		except :
+			print(ast.dump(first_node),"\n")
+			print(second_node,ast.dump(second_node),"\n")
+			raise
+
+		
+		
 		l = min(x,w)
 		r = max(y,v)
 
