@@ -1,5 +1,11 @@
 # Argument Selection Command
 
+![](./gif/arg0.gif)
+
+This is a SelectionQuery that was originally designed to enable you to select an argument from a function call,hence the name. With release 0.1.0, it has also been expanded so that you can pick up the calling function, below referred to as "caller", as well as the names of the keyword passed parameters.
+
+if you open up my bundles, you will see that the corresponding rules are:
+
 ```python
 "[(smart|<operation>)] [<nth>] (argument <argument_index>|keyword <keyword_index>|caller [<sub_index>])"
 
@@ -12,27 +18,35 @@
 "[(smart|<operation>)] outer [<level_index>] [<nth>] (argument <argument_index>|keyword <keyword_index>|caller [<sub_index>])"
 ```
 
-![](./gif/arg0.gif)
-
-This is a SelectionQuery that was originally designed to enable you to select an argument from a function call,hence the name. With release 0.1.0, it has also been expanded so that you can pick up the calling function, below referred to as "caller", as well as the names of the keyword passed parameters.
-
-The full syntax supported is:
-
-
+but in essence, the full syntax comes down to:
 
 ```python
-"[smart] [<adjective>] argument <argument_index>"
+"[smart] [<nth>] argument <argument_index>"
 
-"[smart] <vertical_direction> [<ndir>] [<adjective>] argument <argument_index>"
+"[smart] <vertical_direction> [<ndir>] [<nth>] argument <argument_index>"
 
-"[smart] [<adjective>] <level> [<level_index>] argument <argument_index>"
+"[smart] [<nth>] inside [<level_index>]  argument <argument_index>"
 
-"[smart] <level> [<level_index>] <adjective> argument <argument_index>"
+"[smart] inside [<level_index>] <nth> argument <argument_index>"
+
+"[smart] outer [<level_index>] [<nth>] argument <argument_index>"
 ```
 
-We will go briefly over each of these four posibilities, clarifying all the parameters and give you an idea of how they work. 
+if you want find out more about what is whole "operation" thing you can find more information [here](doc/Operations.md). as far as
 
-What you should keep in mind is that they search for results in a single line. For cases 1,3,4 that is the current line whereas for case 2 that is the line directly or indirectly specified.
+```python
+"(argument <argument_index>|keyword <keyword_index>|caller [<sub_index>])"
+```
+
+is concerned, this is just part of the expansion I mentioned above and more on this [later](#Keywords). 
+
+The important part is that it comes in five formats, which enable you to specify which function call you want to extract information from. We will go briefly over each of these five posibilities, clarifying all the parameters and give you an idea of how they work. 
+
+What you should also keep in mind is that they in general search for results in a single logical line. For cases 1,3,4,5 that is the current line whereas for case 2 that is the line you indirectly specify with 
+
+```python
+"<vertical_direction> [<ndir>]"
+```
 
 ## Case one 
 The most simple command is 
