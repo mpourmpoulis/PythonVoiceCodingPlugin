@@ -27,7 +27,7 @@ class PasteBack(InsertionQuery):
                 "underscore": ("_","_"),
                 "(comma|,)": (",",","),
                 "ace":(" "," "),
-            }.get(surrounding)
+            }.get(surrounding,("",""))
 		if query_description["format"]==1:
 			selection = state["initial_origin"]
 			if state["initial_mode"]=="multiple":
