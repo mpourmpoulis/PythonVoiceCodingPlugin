@@ -586,12 +586,14 @@ def get_subparts_of_alias(root):
 
 def get_sub_index(root,index):
 	candidates = []
+	if isinstance(root,tuple):
+		root = list(root)
 	if isinstance(root,list):
 		if len(root)!=1:
 			candidates =  root
 		else:
 			root = root[0]
-
+	
 	if match_node(root,(ast.List,ast.Tuple,ast.Set)):
 		candidates =  root.elts
 	elif match_node(root,(ast.Dict)):
