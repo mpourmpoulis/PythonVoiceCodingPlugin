@@ -2,8 +2,22 @@
 
 ![](./gif/arg0.gif)
 
-This is a SelectionQuery that enables you to select an argument from a function call.
-It supports the following syntaxes: 
+This is a SelectionQuery that was originally designed to enable you to select an argument from a function call,hence the name. With release 0.1.0, it has also been expanded so that you can pick up the calling function, below referred to as "caller", as well as the names of the keyword passed parameters.
+
+The full syntax supported is:
+
+```python
+"[(smart|<operation>)] [<nth>] (argument <argument_index>|keyword <keyword_index>|caller [<sub_index>])"
+
+"[(smart|<operation>)] <vertical_direction> [<ndir>] [<nth>] (argument <argument_index>|keyword <keyword_index>|caller [<sub_index>])"
+
+"[(smart|<operation>)] [<nth>] inside [<level_index>]  (argument <argument_index>|keyword <keyword_index>|caller [<sub_index>])"
+
+"[(smart|<operation>)] inside [<level_index>] <nth> (argument <argument_index>|keyword <keyword_index>|caller [<sub_index>])"
+
+"[(smart|<operation>)] outer [<level_index>] [<nth>] (argument <argument_index>|keyword <keyword_index>|caller [<sub_index>])": 
+            lazy_value("argument",5),
+```
 
 ```python
 "[smart] [<adjective>] argument <argument_index>"
