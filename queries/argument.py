@@ -2,7 +2,7 @@ import ast
 
 from PythonVoiceCodingPlugin.library import sorted_by_source_region,get_source_region,make_flat
 from PythonVoiceCodingPlugin.library.selection_node import nearest_node_from_offset,node_from_range
-from PythonVoiceCodingPlugin.library.info import identity,get_argument_from_call, make_information ,correspond_to_index_in_call,get_caller,get_sub_index
+from PythonVoiceCodingPlugin.library.info import identity,get_argument_from_call,get_keyword_argument, make_information ,correspond_to_index_in_call,get_caller,get_sub_index
 import PythonVoiceCodingPlugin.library.info as info
 from PythonVoiceCodingPlugin.library.LCA import LCA
 from PythonVoiceCodingPlugin.library.level_info import LevelVisitor
@@ -28,6 +28,8 @@ class SelectArgument(SelectionQuery):
 	def get_information(self,query_description):
 		if "argument_index" in query_description:
 			return make_information(get_argument_from_call,query_description["argument_index"]-1)
+		elif "keyword_index" in query_description:
+			return make_information(get_keyword_argument,query_description["keyword_index"]-1,only_keyword=True)
 		else:
 			if "sub_index" not in query_description:
 				return get_caller
@@ -36,6 +38,7 @@ class SelectArgument(SelectionQuery):
 				return lambda x:get_sub_index(get_caller(x),i)
 	
 	def get_statement(self,origin):
+		print("\norigin\n",ast.dump(origin))
 		candidate_statement = search_upwards(origin,ast.stmt)
 		big = (ast.If,ast.While,ast.For,ast.FunctionDef,ast.With,ast.ClassDef,ast.Try)
 		if match_node(candidate_statement,big):

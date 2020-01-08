@@ -338,11 +338,14 @@ def get_positional_argument(root,index = None):
 			if  temporary else None
 	)
 
-def get_keyword_argument(root,index = None,only_value = True):
-	temporary =  root.keywords if match_node(root,(ast.Call )) else None	
-	temporary = [x.value  for x in temporary if only_value] if temporary else None
+def get_keyword_argument(root,index = None,only_value = True,only_keyword = False):
+	temporary =  root.keywords if match_node(root,(ast.Call )) else None
+	if only_value and not only_keyword:	
+		temporary = [x.value  for x in temporary] if temporary else None
+	elif only_keyword:
+		temporary = [get_fake(x,"arg")  for x in temporary if generic_fix(x,None)] if temporary else None
 	return (
-		(temporary[index] if index and len(temporary)>index else temporary) 
+		(temporary[index] if index is not None and len(temporary)>index else temporary) 
 			if  temporary else None
 	)
 
