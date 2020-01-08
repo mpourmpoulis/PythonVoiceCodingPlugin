@@ -78,7 +78,7 @@ class SelectArgument(SelectionQuery):
 		################################################################
 		# if no adjective is given
 		################################################################
-		if q["nth"] == "None":
+		if "nth" not in q:
 			if origin  and calling_node:
 				result = calling_node if calling_node in information_nodes else None
 				information_nodes = [x  for x in tiebreaker(information_nodes) if x != calling_node]
@@ -92,7 +92,7 @@ class SelectArgument(SelectionQuery):
 		################################################################
 		# adjective is given
 		################################################################
-		if q["nth"] != "None":
+		if "nth" in q:
 			additional_parameters["small_root"] = select_node			
 			if origin  and calling_node:
 				additional_parameters["penalized"] = [calling_node] if calling_node else []
@@ -179,11 +179,6 @@ class SelectArgument(SelectionQuery):
 		vertical_direction = query_description["vertical_direction"]
 		ndir = query_description["ndir"]
 
-		if vertical_direction in ["up","down"]:
-			row, column = view_information["rowcol"](m.backward(selection)[0])
-			nr = max(0,row + ndir if vertical_direction=="down" else row - ndir)
-			t = view_information["text_point"](nr,0)
-			selection = (t,t)
 
 		build = self.general_build if self.general_build else line_partial(selection[0])
 		if not build  or not build[0] :
