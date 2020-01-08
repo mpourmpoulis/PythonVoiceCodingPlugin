@@ -970,22 +970,21 @@ def fix_keyword(root,atok):
 	mark_fixed(root)
 
 
+fixable = {
+	ast.Import:fix_import,
+	ast.ImportFrom:fix_import,
+	ast.alias: fix_alias,
+	ast.ExceptHandler: fix_exception_handler,
+	ast.Attribute:fix_attribute, 
+	ast.FunctionDef:fix_definition,
+	ast.arg:fix_argument,  
+	ast.keyword:fix_keyword,
+}
+
+
 def generic_fix(root,atok = None):
-	temporary = {
-		(ast.Import,ast.ImportFrom):fix_import,
-		ast.alias: fix_alias,
-		ast.ExceptHandler: fix_exception_handler,
-		ast.Attribute:fix_attribute, 
-		ast.FunctionDef:fix_definition,
-		ast.arg:fix_argument,  
-		ast.keyword:fix_keyword,
-	}
-	print(type(root),root,match_node(root,ast.FunctionDef))
-	try:
-		print("")
-		fixer = next(v for k,v in temporary.items() if match_node(root,k))
-	except:
-		print("I failed with",root)
+	fixer = fixable.get(root)
+	if not fixer:
 		return True
 	try : 
 		fixer(root,atok)
