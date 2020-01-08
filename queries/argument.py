@@ -142,7 +142,7 @@ class SelectArgument(SelectionQuery):
 	def handle_single(self,view_information,query_description,extra = {}):
 		f = query_description["format"]
 		possibilities = {
-			1: self.case_one,2: self.case_two,3: self.case_three,4: self.case_four,
+			1: self.case_one,2: self.case_two,3: self.case_three,4: self.case_four,5:self.case_five,
 		}
 		return  possibilities[f](view_information,query_description, extra)
 
@@ -267,23 +267,6 @@ class SelectArgument(SelectionQuery):
 			else:
 				return None
 
-		# these will be written but I just want to check that it works
-		priority = {}
-		print(query_description["level"],"the information in the query description")
-		if query_description["level"]=="outer":
-			if query_description["level_index"]==0:
-				query_description["level_index"] = 1
-			_,calling_parents = search_upwards_log(origin,targets=ast.stmt,log_targets=(ast.Call))
-			print("inside here",calling_parents)
-			index = query_description["level_index"]
-			print(len(calling_parents)," that is the length ")
-			if index<len(calling_parents):
-				priority["child_level"] = 1
-				print("I am inside here")
-				origin = calling_parents[index]
-				print(ast.dump(origin))
-			transformation = None
-			inverse_transformation=None	
 
 
 		result, alternatives = self.process_line(
@@ -336,22 +319,6 @@ class SelectArgument(SelectionQuery):
 
 
 
-		priority = {}
-		print(query_description["level"],"the information in the query description")
-		if query_description["level"]=="outer":
-			if query_description["level_index"]==0:
-				query_description["level_index"] = 1
-			_,calling_parents = search_upwards_log(origin,targets=ast.stmt,log_targets=(ast.Call))
-			print("inside here",calling_parents)
-			index = query_description["level_index"]
-			print(len(calling_parents)," that is the length ")
-			if index<len(calling_parents):
-				priority["child_level"] = 1
-				print("I am inside here")
-				origin = calling_parents[index]
-				print(ast.dump(origin))
-			transformation = None
-			inverse_transformation=None	
 
 
 
@@ -364,7 +331,6 @@ class SelectArgument(SelectionQuery):
 			tiebreaker = lambda x: tiebreak_on_lca(statement_node,origin,x),
 			transformation = transformation,
 			inverse_transformation = inverse_transformation,
-			priority = priority
 
 		)	
 		return self._backward_result(result, alternatives,build)
@@ -372,5 +338,38 @@ class SelectArgument(SelectionQuery):
 
 	
 
+	def case_five(self,view_information,query_description, extra = {}):
+		################################################################	
+		#		<level> [<level_index>] <adjective> (argument <argument_index>|caller [<sub_index>])
+		###############################################################	
+		selection = self._get_selection(view_information,extra)
+		build = self.general_build if self.general_build else line_partial(selection[0])
+		if not build  or not build[0] :
+			return None,None
+		root,atok,m,r  = build 
+		selection = m.forward(selection)
+		origin = nearest_node_from_offset(root,atok, selection[0]) if selection[0]==selection[1] else node_from_range(root,atok, selection)
+		statement_node = self.get_statement(origin)
+		priority = {}
+		if query_description["level_index"]==0:
+			query_description["level_index"] = -1
+		_,calling_parents = search_upwards_log(origin,targets=ast.stmt,log_targets=(ast.Call))
+		index = query_description["level_index"]
+		print("the Dixie's ",index,len(calling_parents),"\n")
+		if index<len(calling_parents):
+			priority["child_level"] = 1
+			origin = calling_parents[index]
+		result, alternatives = self.process_line(
+			q = query_description,
+			root = statement_node,
+			atok = atok,
+			origin = origin,
+			select_node = origin if selection[0]!=selection[1] else None,
+			tiebreaker = lambda x: tiebreak_on_lca(statement_node,origin,x),
+			priority = priority
 
+		)	
+		return self._backward_result(result, alternatives,build)
+
+	
 
