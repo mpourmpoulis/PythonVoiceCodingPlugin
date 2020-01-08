@@ -48,7 +48,12 @@ What you should also keep in mind is that they in general search for results in 
 "<vertical_direction> [<ndir>]"
 ```
 
+### Quick note for 0.0.4 users
+
+"nth" corresponds to what used to be "adjective",but has been seen in order to be closer to what their grammars use for ordinal adjectives and make things easier for newcomers to understand.
+
 ## Case one 
+
 The most simple command is 
 
 ```python
@@ -79,25 +84,28 @@ To illustrate all of the above :
 ![](./gif/arg2.gif)
 
 
-But what if you want to have more control over what you select?  In that case you might need to use an adjective as a positional descriptor as well. 
-
-The adjective parameter is (as the name suggests) one or two adjectives such as first, second , last
+But what if you want to have more control over what you select?  In that case you might need to use an nth/ordinal adjective as a positional descriptor as well. This is done by 
 
 ```python
-Choice("adjective",{ 
+"nth"
+```
 
-"first" : "first", "second": "second", "third": "third",
+Which can take the following values:
 
-"fourth": "fourth", "fifth": "fifth", "sixth": "sixth",
- 
-"seventh": "seventh", "eighth": "eighth", "ninth":"ninth", 
-  
-"last":"last", "second last": "second last",
-
-"third last": "third last", "fourth last": "fourth last", 
-
-
-} )
+```python
+"first"
+"second"
+"third"
+"fourth"
+"fifth"
+"sixth"
+"seventh"
+"eighth"
+"ninth"
+"last"
+"second last"
+"third last"
+"fourth last"
 ```
 
 specifying from which function call we want to select an argument:
@@ -117,23 +125,33 @@ The way this works is a little bit complicated but I hope you get the main idea.
 ## Case two 
  
 What if you want to select something in a different line? Then you can use :
+
 ```python
-"[smart] <vertical_direction> [<ndir>] [<adjective>] argument <argument_index>"
+"[smart] <vertical_direction> [<ndir>] [<nth>] argument <argument_index>"
 ```  
-Vertical direction is one of the below 4 keywords:
+
+vertical_direction can belong to one of the two following families,as the name suggests enables you to specify whether you want something that these are above or below your current cursor position.
+
 ```python
-Choice("vertical_direction",{ 
+"(up|sauce|above)":"upwards",
 
-"up":"up", "down":"down",
-
-"above":"above", "below":"below", 
-
-} )
+"(down|dunce|below)":"downwards",
 ```
-and ndir is an interger specifying how many lines (relative to the current) up or down your roi is.
 
+and ndir is an interger specifying how many "interesting"(!) lines relative to the current line up or down your roi is. if omitted it has a default value of one
 
-But why both "above" and "up"? The difference lies in that above only counts "interesting lines", that is(physical) lines containing function calls. The following example should clarify this:
+```python
+defaults = {
+    "ndir":1,
+}
+```
+
+please do pay attention to the whole "interesting" thing!Unlike say Caster navigation rules of the form:
+
+```python
+"sauce/dunce [<n>]"
+```
+we only count (physical) lines containing function calls! The following example should clarify this:
 
 ![](./gif/arg5.gif)
 
