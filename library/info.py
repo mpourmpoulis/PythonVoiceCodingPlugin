@@ -431,7 +431,6 @@ def get_class_name(root,atok):
 
 
 def get_arg(root, atok):
-	print("inside get argument ",ast.dump(root) if isinstance(root,ast.AST) else "")
 	if not match_node(root,ast.arg):
 		if match_node(root,ast.FunctionDef):
 			fix_definition(root,atok)
@@ -846,6 +845,10 @@ def fix_argument(root,atok,token = None):
 	if already_fixed(root):
 		return token
 	if token is None:
+		print("\n\n\nenduring inside here\n\n below world ",root)
+		fix_definition(root.parent.parent,atok)
+		if not already_fixed(root):
+			raise Exception("these ARG node has not been marked as fixed")
 		return None
 	mark_fixed(root)
 

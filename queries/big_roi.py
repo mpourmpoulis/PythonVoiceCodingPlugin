@@ -118,7 +118,8 @@ class SelectBigRoi(SelectionQuery):
 		build, selection, origin, definition_node = self.preliminary(view_information, query_description,extra)
 		targets, exclusions, information  =  self.decode(query_description,build)
 		information = getattr(information,"secondary",information)
-		candidates = tiebreak_on_lca(definition_node,origin,find_all_nodes(definition_node, targets, exclusions))
+		selector = lambda x:match_node(x,targets,exclusions) and generic_fix(x,build[1])
+		candidates = tiebreak_on_lca(definition_node,origin,find_all_nodes(definition_node, selector = selector))
 		candidates = [information(x)  for x in candidates if information(x)]
 		print("candidates",candidates)
 		result, alternatives = obtain_result(None, candidates)
@@ -131,9 +132,10 @@ class SelectBigRoi(SelectionQuery):
 		###############################################################	
 		build, selection, origin, definition_node = self.preliminary(view_information, query_description,extra)
 		targets, exclusions, information  =  self.decode(query_description,build)
-		temporary_information = lambda x: information(x) if match_node(x,targets,exclusions) else None
-		additional_parameters = {}
 		root,atok,m,r  = build 
+		temporary_information = lambda x: information(x) if match_node(x,targets,exclusions)  and generic_fix(x,atok) else None
+		additional_parameters = {}
+		
 
 		if selection[0]!=selection[1]:
 			additional_parameters["small_root"] = origin
@@ -159,8 +161,8 @@ class SelectBigRoi(SelectionQuery):
 		###############################################################	
 		build, selection, origin, definition_node = self.preliminary(view_information, query_description,extra)
 		targets, exclusions, information  =  self.decode(query_description,build)
-		temporary_information = lambda x: information(x) if match_node(x,targets,exclusions) else None
 		root,atok,m,r  = build
+		temporary_information = lambda x: information(x) if match_node(x,targets,exclusions) and generic_fix(x,atok) else None
 
 		direction = query_description["vertical_direction"]
 		ndir = query_description["ndir"]
@@ -206,7 +208,8 @@ class SelectBigRoi(SelectionQuery):
 		t = decode_abstract_vertical(root,atok,targets,row, ndir + bonus,direction,True,temporary_information)
 		if query_description["nth"]=="None":
 			information = getattr(information,"secondary",information)
-			candidates = tiebreak_on_lca(root,definition_node,find_all_nodes(t, targets, exclusions))
+			selector = lambda x:match_node(x,targets,exclusions) and generic_fix(x,build[1])
+			candidates = tiebreak_on_lca(root,definition_node,find_all_nodes(t, selector = selector))
 			candidates = [information(x)  for x in candidates if information(x)]
 			result, alternatives = obtain_result(None, candidates)
 			return  self._backward_result(result, alternatives,build)
