@@ -162,7 +162,7 @@ class SelectBigRoi(SelectionQuery):
 		temporary_information = lambda x: information(x) if match_node(x,targets,exclusions) else None
 		root,atok,m,r  = build
 
-		direction = query_description["vertical_abstract_only_direction"]
+		direction = query_description["vertical_direction"]
 		ndir = query_description["ndir"]
 		row, column = view_information["rowcol"](m.backward(selection)[0])
 
@@ -199,7 +199,7 @@ class SelectBigRoi(SelectionQuery):
 		temporary_information = lambda x: match_node(x,ast.FunctionDef) 
 		root,atok,m,r  = build
 
-		direction = query_description["vertical_abstract_only_direction"]
+		direction = query_description["vertical_direction"]
 		ndir = query_description["ndir"]
 		row = view_information["rowcol"](m.backward(selection)[0])[0] + 1 if definition_node is root else definition_node.first_token.start[0]
 		bonus = 1 if definition_node.first_token.startpos > selection[1]  else 0
