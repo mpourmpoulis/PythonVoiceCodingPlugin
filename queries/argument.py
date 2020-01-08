@@ -187,7 +187,7 @@ class SelectArgument(SelectionQuery):
 		selection = m.forward(selection)
 
 		# this is the wrong but for some reason it is working:)
-		if vertical_direction in ["above","below"]:
+		if vertical_direction in ["upwards","downwards"]:
 			row, column = view_information["rowcol"](m.backward(selection)[0]) 
 			nr = decode_abstract_vertical(root,atok,ast.Call,row+1, ndir,vertical_direction)-1
 			t = view_information["text_point"](nr,0)
