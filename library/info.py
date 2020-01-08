@@ -213,10 +213,11 @@ def get_pure_if_condition(root):
 		else None		
 	)
 
-def get_elif_condition(root):
+def get_elif_condition(root,atok):
+	print("wtf\n",ast.dump(root),[root.first_token.string])
 	return (
 		root.test 
-		if match_node(root,(ast.If))  and root.first_token.string=="elif"
+		if match_node(root,(ast.If))  and root.first_token.string!="if"
 		else None		
 	)
 
