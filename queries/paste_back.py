@@ -14,7 +14,20 @@ class PasteBack(InsertionQuery):
 		history  =  extra["history"]
 		candidates = result_alternatives_sequence(state,text = True)
 		candidates_location = result_alternatives_sequence(state,location = True)
-		surrounding = query_description.get("surrounding_punctuation",("",""))
+		surrounding = query_description.get("surrounding_punctuation")
+		surrounding = {
+                "quotes":     ('"','"'),
+                "thin quotes": ("'","'"),
+                "tickris":   ("`","`"),
+                "prekris":     ("(",")"),
+                "brax":        ("[","]"),
+                "curly":       ("{","}"),
+                "angle":     ("<",">"),
+                "dot":(".","."),
+                "underscore": ("_","_"),
+                "(comma|,)": (",",","),
+                "ace":(" "," "),
+            }.get(surrounding)
 		if query_description["format"]==1:
 			selection = state["initial_origin"]
 			if state["initial_mode"]=="multiple":
