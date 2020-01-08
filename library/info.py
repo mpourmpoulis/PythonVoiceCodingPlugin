@@ -970,7 +970,7 @@ def fix_keyword(root,atok):
 	mark_fixed(root)
 
 
-def generic_fix(root,atok):
+def generic_fix(root,atok = None):
 	temporary = {
 		(ast.Import,ast.ImportFrom):fix_import,
 		ast.alias: fix_alias,
@@ -986,8 +986,11 @@ def generic_fix(root,atok):
 		fixer = next(v for k,v in temporary.items() if match_node(root,k))
 	except:
 		print("I failed with",root)
+		return True
+	try : 
+		fixer(root,atok)
+	except :
 		return False
-	fixer(root,atok)
 	return True
 
 
