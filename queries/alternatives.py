@@ -25,7 +25,8 @@ class SelectAlternative(SelectionQuery):
 				result = result[0]
 		else:
 			result = [decode_item_selection(x,query_description,"individual",name,decrement=False) for x in candidates]
-			result = make_flat(result)
+			# result = make_flat(result)
+			print("result is ",result)
 		return result, []
 
 

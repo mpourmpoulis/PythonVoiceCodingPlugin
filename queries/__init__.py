@@ -69,7 +69,7 @@ def get_secondary_query(query_description):
 			},
 			"edit":{
 				"command":"alternative",
-				"format":2,
+				"format":3,
 				"color":0,
 			},
 		}
