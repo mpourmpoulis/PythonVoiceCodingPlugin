@@ -573,9 +573,10 @@ def get_subparts_of_attribute(root):
 		return [root.value,fake_node]
 
 def get_subparts_of_alias(root):
-	assert already_fixed(root)," I received an node that needs fixing "
-	names = get_fix_data(root)["name"]
-	print("names",names,"\n")
+	assert already_fixed(root)," I received an node that needs fixing " + ast.dump(root)
+	names = get_fix_data(root).get("name")
+	if not names:
+		return []
 	left_side =[create_fake(root,ast.Name,real_tokens=x,id=x.string,ctx=ast.Load())  for x in names]
 	if root.asname: 
 		x = root.last_token
@@ -797,6 +798,12 @@ def fix_import(root,atok):
 			i = atok.find_token(root.first_token,tokenize.NAME,"import")
 			name.first_token = next_token(atok,i)
 			name.last_token = next_token(atok,i)
+			# fake_name = create_fake(name, ast.Name,real_tokens = root.first_token,
+			# 	parent = name,parent_field = "name"
+			# 	id = root.first_token.string,ctx = ast.Load()
+			# )
+			mark_fixed(name)
+			# set_fake()
 		else:
 			stack = []
 			local_data = {}
