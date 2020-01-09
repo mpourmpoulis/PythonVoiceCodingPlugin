@@ -159,10 +159,20 @@ Though if we want to be more precise, we count lines that contain the beginning 
 
 ![](./gif/arg9.gif)
 
- so you can see that
-	* physical lines still determine the line to which above/below refer  
-	* result and  alternatives from that physical line are  being prioritized, but 
-	* The whole logical line is scanned for alternatives ! 
+so you can see that
+
+* physical lines still determine the line to which above/below refer  
+
+* result and  alternatives from that physical line are  being prioritized, but 
+
+* The whole logical line is scanned for alternatives ! 
+
+#### quick note for 0.0.4 users
+
+In the past the keywords up and above used to have different semantics, but with 0.1.0 this has changed, we for keywords up/sauce having now the same meaning with above. This was done so us to make things more compatible with what users might be from other grammars, and either way,judging from the personal uses of my tool,up was used nowhere near as often as below/above.
+
+
+#### handling edge cases
 
 In a more complex scenario, if there are multiple functional calls in the physical line and you up for using an ordinal adjective, in order to to preserve sanity, the main result will be decided by taking into consideration the order of lexical appearance:
 
