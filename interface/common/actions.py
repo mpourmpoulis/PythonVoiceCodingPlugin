@@ -106,7 +106,7 @@ class HighlightCleverAction(InterfaceAction):
 	def __init__(self, region,name, avoid = [],colorize = False):  
 		self.data = {"region":region, "name":name , "avoid":avoid,"colorize":colorize}
 
-	def execute(self,view,sublime,**kwargs):
+	def execute(self,view,sublime,**kwargs_x):
 		# these are the standard color maps for highlighting using the region-ish api
 		standard_color={
 			"red":"redish", "blue":"bluish", "green":"greenish", "yellow":"yellowish", "orange":"orangish"

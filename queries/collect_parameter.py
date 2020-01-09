@@ -7,7 +7,7 @@ from PythonVoiceCodingPlugin.library.traverse import search_upwards,search_upwar
 
 from PythonVoiceCodingPlugin.queries.abstract import CollectionQuery
 from PythonVoiceCodingPlugin.queries.strategies import decode_item_selection
-
+from PythonVoiceCodingPlugin.queries.strategies import decode_abstract_vertical
 
 
 
@@ -20,6 +20,17 @@ class CollectParameter(CollectionQuery):
 			return None,None
 		root,atok,m,r = build 
 		definition_nodes = [search_upwards(origin,ast.FunctionDef)] if query_description["format"]>=2 else find_all_nodes(root,ast.FunctionDef)
+		if query_description["format"]>=2:
+			if "vertical_direction"  in query_description:
+				definition_node = definition_nodes[0]
+				temporary_information = lambda x: match_node(x,ast.FunctionDef) 
+				direction = query_description["vertical_direction"]
+				ndir = query_description["ndir"]
+				row = view_information["rowcol"](m.backward(selection)[0])[0] + 1 if definition_node is None else definition_node.first_token.start[0]
+				bonus = 1 if definition_node.first_token.startpos > selection[1]  else 0
+				t = decode_abstract_vertical(root,atok,(),row, ndir + bonus,direction,True,temporary_information)
+				definition_nodes = [t]
+
 		name_nodes = make_flat([get_argument_from_definition(x)  for x in definition_nodes])
 		names = list(OrderedDict([(x,0)  for x in name_nodes]).keys())
 		if query_description["format"]==1:
