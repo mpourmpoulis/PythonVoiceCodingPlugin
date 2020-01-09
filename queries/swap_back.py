@@ -6,8 +6,12 @@ def overlap_regions(x,y):
 
 @no_build_attempt
 class SwapBack(InsertionQuery):
-	select_insertion = True
+	select_insertion = False
 	multiple_in = True
+
+	def handle_multiple(self,view_information,query_description,extra = {}):
+		return self.handle_single(view_information,query_description,extra)
+		
 
 	def handle_single(self,view_information,query_description,extra = {}):
 		state = extra["state"]
