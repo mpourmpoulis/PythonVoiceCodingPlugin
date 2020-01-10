@@ -31,7 +31,7 @@ class SwapBack(InsertionQuery):
 				else:
 					raise Exception("Swamp cannot swap regions of overlap!!!")
 			else:
-				decision = candidates[query_description["color"]]
+				decision = candidates[query_description.get("color",0)]
 			location_text = [(state["origin"],state["origin_text"]),decision]
 		if query_description["format"]==2:
 			location_text = [candidates[query_description["color"+i]]  
