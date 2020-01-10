@@ -23,6 +23,11 @@ Package Control installation is currently not working! please take a look at htt
 ## Update
 you can now also install via package control, see installation instructions [below](#Installation)
 
+## Documentation
+
+Documentation is available [here](doc/README.md)
+
+
 ## Motivation
 
 The project was inspired by [Gustav Wengel's article](https://medium.com/bambuu/state-of-voice-coding-2017-3d2ff41c5015) on the state of voice coding  and my personal experiences
@@ -151,9 +156,6 @@ For the time being be warned, that the plug-in has not been tested with portable
 
 For any further installation questions, feel free to ask [here](https://github.com/mpourmpoulis/PythonVoiceCodingPlugin/issues/5)
 
-## Documentation
-
-Documentation is available [here](doc/README.md)
 
 ## Support for voice coding framework
 
