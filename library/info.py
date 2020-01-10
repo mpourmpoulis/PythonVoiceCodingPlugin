@@ -102,6 +102,8 @@ def get_fake(root,name):
 
 def fake_attribute_from_tokens(root,tokens,**kwargs):
 	print("entering fake attributes from tokens ",root,tokens,kwargs)
+	if not tokens:
+		return None
 	if len(tokens)==1:
 		return create_fake(root,ast.Name ,real_tokens = tokens[-1],
 			 id = tokens[-1].string, ctx = ast.Load(),**kwargs)
@@ -748,10 +750,12 @@ def correspond_to_index_in_call(root, index,field,field_index):
 ################################################################
 
 def mark_fixed(root):
-	root._has_been_fixed = True
+	if root:
+		root._has_been_fixed = True
 
 def mark_under_fixing(root):
-	root._is_under_fixing = True
+	if root:
+		root._is_under_fixing = True
 
 def needs_fix(root):
 	pass
@@ -782,6 +786,7 @@ def get_fix_data(root):
 
 
 def fix_import(root,atok):
+	print("who do full mold on ",already_fixed(root))
 	if already_fixed(root):
 		return True
 	data = {}
@@ -793,6 +798,7 @@ def fix_import(root,atok):
 			for s in split_string(root.module,only_first = True):
 				token = atok.find_token(token,tokenize.NAME,s)
 				data["module"].append(token)
+	print("names are ",root.names)
 	for name in root.names:
 		if name.name=="*":
 			i = atok.find_token(root.first_token,tokenize.NAME,"import")
@@ -805,6 +811,7 @@ def fix_import(root,atok):
 			mark_fixed(name)
 			# set_fake()
 		else:
+			print("processing the LIS node ", ast.dump(name))
 			stack = []
 			local_data = {}
 			for s in split_string(name.name,only_first = True):
@@ -993,10 +1000,10 @@ fixable = {
 
 
 def generic_fix(root,atok = None):
-	fixer = fixable.get(root)
+	fixer = fixable.get(type(root))
 	if not fixer:
 		return True
-	try : 
+	try :
 		fixer(root,atok)
 	except :
 		return False
