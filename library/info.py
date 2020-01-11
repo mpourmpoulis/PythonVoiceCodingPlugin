@@ -403,10 +403,8 @@ def get_definition_name(root,atok):
 	if not match_node(root,ast.FunctionDef):
 		return None
 	if not already_fixed(root):
-		generic_fix(root,atok)
-	print("exiting the physician name ",get_fake(root,"name"))	
+		generic_fix(root,atok)	
 	assert already_fixed(root),"Definition has not been fixed"
-	print("exiting the physician name ",get_fake(root,"name"))
 	return get_fake(root,"name")
 	
 def get_definition_parameter_name(root,atok):
@@ -422,13 +420,10 @@ def get_definition_parameter_name(root,atok):
 def get_class_name(root,atok):
 	if not match_node(root,ast.ClassDef):
 		return None
-	d = atok.find_token(root.first_token,tokenize.NAME,"class") 
-	x = next_token(atok,d)	
-	if x:
-		return create_fake(root,ast.Name,real_tokens = x,
-			id = x.string,ctx = ast.Store())
-	else:
-		return None
+	if not already_fixed(root):
+		generic_fix(root,atok)	
+	assert already_fixed(root),"Class Name has not been fixed"
+	return get_fake(root,"name")
 
 
 def get_arg(root, atok):
@@ -992,6 +987,19 @@ def fix_keyword(root,atok):
 	mark_fixed(root)
 
 
+def fix_class(root,atok):
+	d = atok.find_token(root.first_token,tokenize.NAME,"class") 
+	x = next_token(atok,d)	
+	if x:
+		fake_node  = create_fake(root,ast.Name,real_tokens = x,
+			parent = root,parent_field = "name",
+			id = x.string,ctx = ast.Store())
+		set_fake(root,"name",fake_node)
+		mark_fixed(root)
+	else:
+		return None
+	
+
 fixable = {
 	ast.Import:fix_import,
 	ast.ImportFrom:fix_import,
@@ -1001,6 +1009,7 @@ fixable = {
 	ast.FunctionDef:fix_definition,
 	ast.arg:fix_argument,  
 	ast.keyword:fix_keyword,
+	ast.ClassDef:fix_class, 
 }
 
 
