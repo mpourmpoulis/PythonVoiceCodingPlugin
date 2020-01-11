@@ -186,13 +186,14 @@ def get_right(root):
 	}
 	return getattr( root ,h[type( root)]) if type( root) in h else None
 
-def get_header(root):
+def get_weak_header(root,atok):
 	return (
 		root.test if match_node(root,(ast.While,ast.If)) else
 		root.arguments if match_node(root,(ast.FunctionDef)) else
-		root.target if match_node(root,(ast.For)) else None
-
-
+		root.target if match_node(root,(ast.For)) else 
+		root.bases + root.keywords if match_node(root,(ast.ClassDef)) else 
+		root.items if match_node(root,(ast.With)) else 
+		root.type if match_node(root,(ast.ExceptHandler)) else None
 	)
 def get_body(root):
 	return root.body if match_node(root,(ast.IfExp, ast.If ,ast.For,ast.While, ast.Try)) else None

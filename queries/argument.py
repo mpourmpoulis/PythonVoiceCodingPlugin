@@ -2,7 +2,7 @@ import ast
 
 from PythonVoiceCodingPlugin.library import sorted_by_source_region,get_source_region,make_flat
 from PythonVoiceCodingPlugin.library.selection_node import nearest_node_from_offset,node_from_range
-from PythonVoiceCodingPlugin.library.info import identity,get_argument_from_call,get_keyword_argument, make_information ,correspond_to_index_in_call,get_caller,get_sub_index
+from PythonVoiceCodingPlugin.library.info import identity,get_argument_from_call,get_keyword_argument, make_information ,correspond_to_index_in_call,get_caller,get_sub_index,get_weak_header
 import PythonVoiceCodingPlugin.library.info as info
 from PythonVoiceCodingPlugin.library.LCA import LCA
 from PythonVoiceCodingPlugin.library.level_info import LevelVisitor
@@ -43,12 +43,17 @@ class SelectArgument(SelectionQuery):
 		else:
 			return identity(match_node,ast.Call)
 	
-	def get_statement(self,origin):
+	def get_statement(self,origin,atok):
 		print("\norigin\n",ast.dump(origin))
+		self.global_constrained_space = None
 		candidate_statement = search_upwards(origin,ast.stmt)
 		big = (ast.If,ast.While,ast.For,ast.FunctionDef,ast.With,ast.ClassDef,ast.Try)
 		if match_node(candidate_statement,big):
 			candidate_statement = search_upwards_for_parent(origin,ast.stmt)
+			if match_node(candidate_statement,big):
+				region = get_source_region(atok,get_weak_header(candidate_statement,atok))
+				if region:
+					self.global_constrained_space = region
 		return candidate_statement
 
 	def process_line(self,q, root ,atok, origin  = None, select_node = None,tiebreaker = lambda x: x, 
@@ -137,7 +142,12 @@ class SelectArgument(SelectionQuery):
 			
 		if second_tiebreaker:
 			alternatives = second_tiebreaker(result,alternatives)
-		
+
+		if self.global_constrained_space:
+			inside = lambda x,y: (y[0]<=x[0]<y[1] and y[0]<x[1]<=y[1])
+			result = result if inside(get_source_region(atok,result),self.global_constrained_space) else None
+			alternatives = [x  for x in alternatives if inside(get_source_region(atok,x),self.global_constrained_space)]
+			result,alternatives = obtain_result(result,alternatives)
 
 
 
@@ -168,7 +178,7 @@ class SelectArgument(SelectionQuery):
 		root,atok,m,r  = build
 		selection = m.forward(selection)
 		origin = nearest_node_from_offset(root,atok, selection[0]) if selection[0]==selection[1] else node_from_range(root,atok, selection)
-		statement_node = self.get_statement(origin)
+		statement_node = self.get_statement(origin,atok)
 		result, alternatives = self.process_line(
 			q = query_description,
 			root = statement_node,
@@ -204,7 +214,7 @@ class SelectArgument(SelectionQuery):
 			selection = m.forward(selection)		
 
 		origin = nearest_node_from_offset(root,atok, selection[0]) if selection[0]==selection[1] else node_from_range(root,atok, selection)
-		statement_node = self.get_statement(origin)
+		statement_node = self.get_statement(origin,atok)
 
 
 		# 
@@ -246,7 +256,7 @@ class SelectArgument(SelectionQuery):
 		root,atok,m,r  = build 
 		selection = m.forward(selection)
 		origin = nearest_node_from_offset(root,atok, selection[0]) if selection[0]==selection[1] else node_from_range(root,atok, selection)
-		statement_node = self.get_statement(origin)
+		statement_node = self.get_statement(origin,atok)
 
 		###############################################################
 		# transformations
@@ -302,7 +312,7 @@ class SelectArgument(SelectionQuery):
 		root,atok,m,r  = build 
 		selection = m.forward(selection)
 		origin = nearest_node_from_offset(root,atok, selection[0]) if selection[0]==selection[1] else node_from_range(root,atok, selection)
-		statement_node = self.get_statement(origin)
+		statement_node = self.get_statement(origin,atok)
 
 		###############################################################
 		# transformationszooming
