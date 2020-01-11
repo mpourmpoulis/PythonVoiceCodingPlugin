@@ -30,6 +30,8 @@ class SelectArgument(SelectionQuery):
 			return make_information(get_argument_from_call,query_description["argument_index"]-1)
 		elif "keyword_index" in query_description:
 			return make_information(get_keyword_argument,query_description["keyword_index"]-1,only_keyword=True)
+		elif "keyword_value_index" in query_description:
+			return make_information(get_keyword_argument,query_description["keyword_value_index"]-1,only_value=True)
 		elif "entire_keyword_index" in query_description:
 			return make_information(get_keyword_argument,query_description["entire_keyword_index"]-1,only_keyword=False,only_value = False)
 		elif "caller" in query_description:
