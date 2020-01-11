@@ -149,7 +149,8 @@ def is_base(root):
 		)
 	)
 
-
+def is_default_value(root):
+	return getattr(root,"parent_field","") in ["kw_defaults","defaults"] and root  is  not None
 
 
 ################################################################################################
@@ -782,7 +783,6 @@ def get_fix_data(root):
 
 
 def fix_import(root,atok):
-	print("who do full mold on ",already_fixed(root))
 	if already_fixed(root):
 		return True
 	data = {}
@@ -968,6 +968,8 @@ def fix_exception_handler(root,atok):
 	return True
 
 def fix_attribute(root,atok):
+	if already_fixed(root):
+		return True
 	l = root.last_token
 	fake_node = create_fake(root,ast.Name,real_tokens = l,
 		parent = root,parent_field = "attr",
@@ -989,6 +991,8 @@ def fix_keyword(root,atok):
 
 
 def fix_class(root,atok):
+	if already_fixed(root):
+		return True
 	d = atok.find_token(root.first_token,tokenize.NAME,"class") 
 	x = next_token(atok,d)	
 	if x:
