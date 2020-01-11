@@ -32,12 +32,14 @@ class SelectArgument(SelectionQuery):
 			return make_information(get_keyword_argument,query_description["keyword_index"]-1,only_keyword=True)
 		elif "entire_keyword_index" in query_description:
 			return make_information(get_keyword_argument,query_description["entire_keyword_index"]-1,only_keyword=False,only_value = False)
-		else:
+		elif "caller" in query_description:
 			if "sub_index" not in query_description:
 				return get_caller
 			else:
 				i = query_description["sub_index"] - 1
 				return lambda x:get_sub_index(get_caller(x),i)
+		else:
+			return identity(match_node,ast.Call)
 	
 	def get_statement(self,origin):
 		print("\norigin\n",ast.dump(origin))
