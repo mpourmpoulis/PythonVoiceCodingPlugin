@@ -409,10 +409,10 @@ def get_definition_name(root,atok):
 def get_definition_parameter_name(root,atok):
 	if not match_node(root,ast.arg):
 		return None 	
-	x = root.first_token
-	print([x])
-	return create_fake(root,ast.Name,start_position = x.startpos,text = x.string,
-		id = x.string,ctx = ast.Store())
+	if not already_fixed(root):
+		generic_fix(root,atok)	
+	assert already_fixed(root),"Arg has not been fixed"
+	return get_fake(root,"arg")
 
 
 	
