@@ -636,6 +636,8 @@ def get_sub_index(root,index):
 			candidates = [root.type,get_fix_data(root).get("node")]
 		else:
 			candidates = [root.type]
+	elif match_node(root,(ast.keyword)):
+		candidates = [get_fake(root,"arg"), root.value]
 
 	
 	# in the following cases we Certs deeper in the tree
