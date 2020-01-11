@@ -16,6 +16,8 @@ def build_tree(code : str):
 def get_source_region(atok, element):
     if element is None:
     	return None
+    if isinstance(element,tuple):
+    	elemental = list(element)
     if isinstance(element,ast.AST):
     	return atok.get_text_range(element)         
     else:   
