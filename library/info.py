@@ -427,7 +427,7 @@ def get_class_name(root,atok):
 	return get_fake(root,"name")
 
 
-def get_arg(root, atok):
+def get_arg_from_definition(root, atok):
 	if not match_node(root,ast.arg):
 		if match_node(root,ast.FunctionDef):
 			fix_definition(root,atok)
@@ -436,6 +436,8 @@ def get_arg(root, atok):
 		fix_definition(root.parent,atok)
 	elif match_parent(root.parent,ast.FunctionDef):
 		fix_definition(root.parent.parent,atok)
+	else:
+		return None
 	return root
 
 ################################################################
