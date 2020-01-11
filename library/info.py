@@ -311,14 +311,13 @@ def get_exception_name(root,atok):
 	if not match_node(root,ast.ExceptHandler):
 		return None
 	fix_exception_handler(root,atok)
-	data = get_fix_data(root) 
-	return data.get("node")
+	return get_fake(root,"name")
 
 def get_exception_handler(root,atok):
 	if not match_node(root,ast.ExceptHandler):
 		return None
 	fix_exception_handler(root,atok)
-	output = [x  for x in [root.type,get_fix_data(root).get("node")] if x]
+	output = [x  for x in [root.type,get_fake(root,"name")] if x]
 	print("Output\n\n",output,"\n")
 	# print(ast.dump()) 	
 	return output if output else empty_fake(root,root.first_token.endpos)
@@ -959,7 +958,6 @@ def fix_exception_handler(root,atok):
 	f = atok.find_token(previous_token(atok,f),tokenize.NAME, "except",reverse = True)
 	print(" in the exception Hunter token",[token])
 	fake_name_node = create_fake(root,ast.Name,real_tokens =  token,id = token.string,ctx = ast.Load())
-	store_fix_data(root,fake_name_node)
 	set_fake(root,"name",fake_name_node)
 	root.first_token=root.type.first_token
 	root.last_token = token
