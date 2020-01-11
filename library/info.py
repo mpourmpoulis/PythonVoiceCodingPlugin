@@ -402,14 +402,13 @@ def get_argument_from_definition(root,raw = True,index = None):
 def get_definition_name(root,atok):
 	if not match_node(root,ast.FunctionDef):
 		return None
-	d = atok.find_token(root.first_token,tokenize.NAME,"def") 
-	x = next_token(atok,d)	
-	if x:
-		return create_fake(root,ast.Name,text = x.string,start_position=x.startpos,
-			id = x.string,ctx = ast.Store())
-	else:
-		return None
-
+	if not already_fixed(root):
+		generic_fix(root,atok)
+	print("exiting the physician name ",get_fake(root,"name"))	
+	assert already_fixed(root),"Definition has not been fixed"
+	print("exiting the physician name ",get_fake(root,"name"))
+	return get_fake(root,"name")
+	
 def get_definition_parameter_name(root,atok):
 	if not match_node(root,ast.arg):
 		return None 	
@@ -907,6 +906,12 @@ def fix_definition(root,atok):
 	token = atok.find_token(token,tokenize.NAME,"def")
 	token = next_token(atok,token )
 	print("token ",[token])
+	if match_node(root,ast.FunctionDef):
+		fake_node = create_fake(root,ast.Name,real_tokens = token,
+			parent = root,parent_field = "name", 
+			id= token.string,ctx = ast.Load())
+		set_fake(root,"name",fake_node)
+
 	for i,j in zip(x.args,[None]*(len(x.args)-len(x.defaults))+x.defaults):
 		token = next_token(atok,token)
 		token = atok.find_token(token,tokenize.NAME,i.arg)
@@ -1001,11 +1006,14 @@ fixable = {
 
 def generic_fix(root,atok = None):
 	fixer = fixable.get(type(root))
+	print("inside generic fix ",fixer,"\n")
 	if not fixer:
 		return True
 	try :
 		fixer(root,atok)
 	except :
+		print("these failed miserably \n\n")
+		raise
 		return False
 	return True
 
