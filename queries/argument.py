@@ -368,7 +368,7 @@ class SelectArgument(SelectionQuery):
 		root,atok,m,r  = build 
 		selection = m.forward(selection)
 		origin = nearest_node_from_offset(root,atok, selection[0]) if selection[0]==selection[1] else node_from_range(root,atok, selection)
-		statement_node = self.get_statement(origin)
+		statement_node = self.get_statement(origin,atok)
 		priority = {}
 		if query_description["level_index"]==0:
 			query_description["level_index"] = -1
