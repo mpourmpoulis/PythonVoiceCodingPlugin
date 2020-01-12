@@ -1,6 +1,6 @@
 # Argument Selection Command
 
-![](./gif/arg0.gif)
+![](./gif/arg17.gif)
 
 This is a SelectionQuery that was originally designed to enable you to select an argument from a function call,hence the name. With release 0.1.0, it has also been expanded so that you can pick up the calling function, below referred to as "caller", as well as the names of the keyword passed parameters.
 
@@ -38,7 +38,7 @@ if you want find out more about what is whole "operation" thing you can find mor
 "(argument <argument_index>|keyword <keyword_index>|caller [<sub_index>])"
 ```
 
-is concerned, this is just part of the expansion I mentioned above and more on this [later](#Keywords). 
+is concerned, this is just part of the expansion I mentioned above and more on this [later](#Selectable). 
 
 The important part is that it comes in five formats, which enable you to specify which function call you want to extract information from. We will go briefly over each of these five posibilities, clarifying all the parameters and give you an idea of how they work. 
 
@@ -195,7 +195,7 @@ now let's see something different:
 in this example we use the command:
 
 ```python
-"[smart] [<adjective>] <level> [<level_index>]  argument <argument_index>"
+"[smart] [<nth>] inside [<level_index>]  argument <argument_index>"
 ```
 For the time being, the only available option for the level parameter is
 
@@ -221,8 +221,100 @@ This, looks very similar to the previous one. However, instead of using the adje
 As you can see, the syntax looks like:
 
 ```python
-"[smart] <level> [<level_index>] <adjective> argument <argument_index>"
+"[smart] inside [<level_index>] <nth> argument <argument_index>"
 ```
+
+
+## Case five
+
+
+
+
+
+## Selectable
+
+
+As was previously mentioned, with release 0.1.0 this type of query seen an expansion regarding what users can select from a functional call using it
+
+```python
+"(argument <argument_index>|keyword <keyword_index>|keyword value <keyword_value_index>|entire keyword <entire_keyword_index>|<caller> [<sub_index>]|entire call)"
+```
+
+### Caller / Calling Function
+
+One important feature that was missing from older versions and the first  expansion I implemented is the ability to select the caller/calling function. This corresponds to 
+
+```python
+"<caller> [<sub_index>]"
+```
+
+where `<caller>` is simply the word wrapped up as a choice (purely for technical reasons)
+
+```python
+Choice("caller",{
+            "caller": "caller",
+            }
+        ),
+```
+
+as you might quickly notice , is followed by `<sub_index>` which is of course an integer like all indices and is also optional unlike all the other indices you see above. If you omitt it, vein the entire caller is selected, whereas by including it, you are able to sub index the calling function and to select only a small part of it.
+
+![](./gif/arg12.gif)
+
+### Keyword 
+
+So great, we have seen that we can select arguments whether passed positionally or by keyword. but in the latter case, there is also one important bit, namely the the name of the keyword parameter! using
+
+```python
+"keyword <keyword_index>"
+```
+
+We can do just that!
+
+![](./gif/arg13.gif)
+
+
+### Keyword Value
+
+
+
+
+![](./gif/arg14.gif)
+
+### Entire Keyword 
+
+finally, it would be a shame if you could not select the whole 
+
+```python
+"keyword name = keyword value"
+```
+
+construction, as for purposes such as say deletion you often need both the keyword name and the value. by saying 
+
+```python
+"entire keyword <entire_keyword_index>"
+```
+
+You can do just that!
+
+
+![](./gif/arg15.gif)
+
+### Entire Call 
+
+last but not least, by saying 
+
+```
+entire call
+```
+
+You are able to select the entire function called
+
+![](./gif/arg16.gif)
+
+
+
+
 
 
 
