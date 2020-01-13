@@ -652,7 +652,7 @@ def get_sub_index(root,index):
 			candidates = [root.type]
 	elif match_node(root,(ast.keyword)):
 		candidates = [get_fake(root,"arg"), root.value]
-
+	
 	
 	# in the following cases we Certs deeper in the tree
 	if match_node(root,(ast.Index)):
@@ -675,6 +675,12 @@ def get_sub_index(root,index):
 			print(temporary)
 			if temporary:
 				return temporary
+	if match_node(root,(ast.arg )):
+		if root.annotation:
+			candidates = [get_fake(root,"arg"), root.annotation]
+		else:
+			return get_sub_index(get_fake(root,"arg"),index)
+
 
 
 
