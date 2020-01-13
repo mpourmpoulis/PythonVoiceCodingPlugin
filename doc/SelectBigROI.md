@@ -38,7 +38,7 @@ Choice("big_roi",{
  } ),
 ```
 
-I think most of them should be pretty self explanatory.
+I hope most of them should be  self explanatory but you can find examples [below](#Selectable).
 
 There are four syntaxes for this command:
 
@@ -140,6 +140,134 @@ Once we have established which function we are to search, the command will then 
  but will search inside that function!
 
 ![](./gif/big5.gif)
+
+# Selectable
+
+
+### Assignment And Expression Statements
+
+probably one of the most basic examples and one of the most frequently used ones as well
+
+```python
+"(assignment right| right)" : "assignment right",
+"(assignment left| left)" : "assignment left",
+"assignment [full]" : "assignment full",
+"(expression statement|expression)" : "expression statement",
+```
+
+![](./gif/big20.gif)
+
+
+### If conditions While loops With clauses
+
+```python
+"if condition" : "if condition",
+"else if condition" : "else if condition",
+"while condition" : "while condition",
+"with item" : "with clause",
+```
+
+![](./gif/big21.gif)
+
+
+### If expressions
+
+```python
+"if expression":"if expression",
+"if expression condition" : "if expression condition",
+"if expression body" : "if expression body",
+"if expression else" : "if expression else",
+```
+
+![](./gif/big22.gif)
+
+### Iterator  and Iterable
+
+```python
+"iterator" : "iterator",
+"iterable" : "iterable",
+```
+![](./gif/big23.gif)
+
+### Comprehensions
+
+```python
+"comprehension condition" : "comprehension condition",
+"comprehension value" : "comprehension value",
+```
+![](./gif/big24.gif)
+
+### Exception Handling
+
+```python
+"exception":"exception",
+"exception name":"exception name",
+"handler":"handler",
+```
+
+![](./gif/big25.gif)
+
+### Assertions And Exceptions Raising
+
+```python
+"assertion message" : "assertion message",
+"assertion condition" : "assertion condition",
+
+"exception raised" : "exception raised",
+"raised cause": "raised cause",
+```
+
+![](./gif/big26.gif)
+
+
+### Functional Definitions
+
+![](./gif/big27.gif)
+
+
+### Class Definitions
+
+```python
+"class name": "class name",
+"decorator":"decorator",
+"base class":"base class",
+```
+
+![](./gif/big28.gif)
+
+### Import 
+
+```python
+"import statement":"import statement",
+"import value" : "import value",
+"module" : "import module",
+```
+
+![](./gif/big29.gif)
+
+### Lambda
+
+![](./gif/big30.gif)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 # SubIndexes
 
