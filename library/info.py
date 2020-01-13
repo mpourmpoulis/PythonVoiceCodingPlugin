@@ -474,21 +474,9 @@ def get_module(root,atok):
 		return None
 	if not already_fixed(root):
 		fix_import(root,atok)
-	data = get_fix_data(root)
-	m = data["module"]
-	print("inside get a module date days ",m,"\n")
-	output = None
-	for t in m:
-		if not output:
-			output  = create_fake(root,ast.Name,real_tokens=[t,t],
-				id=t.string,ctx=ast.Load())
-		else:
-			output  = create_fake(root,ast.Attribute,real_tokens=[m[0],t],
-				value=output,attr=t.string,ctx=ast.Load())
+	assert already_fixed(root),"inside get_module I received an node that is not fixed" 
+	return get_fake(root,"module")
 
-	print("exiting get a module function ",output,"\n")
-	return output
-	
 
 ################################################################
 # 	 sub indexing functions
@@ -809,6 +797,7 @@ def fix_import(root,atok):
 	token = root.first_token
 	data["module"] = []
 	if match_node(root,ast.ImportFrom):
+		starting_token = token
 		if root.module  is not None:
 			for s in split_string(root.module,only_first = True):
 				token = atok.find_token(token,tokenize.NAME,s)
@@ -843,11 +832,26 @@ def fix_import(root,atok):
 			store_fix_data(name,{"name":stack})
 			fix_pipeline(name,atok)
 	store_fix_data(root,data)
-	if match_node(root,ast.ImportFrom) and data:
-		print("I made up to hear with tokens",data["module"])
-		fake_module = fake_attribute_from_tokens(root,data["module"],parent = root,parent_field="module")
-		set_fake(root,"module",fake_module)
-		mark_fixed(fake_module)
+	if match_node(root,ast.ImportFrom):
+		if data["module"]:
+			print("I made up to hear with tokens",data["module"])
+			fake_module = fake_attribute_from_tokens(root,data["module"],parent = root,parent_field="module")
+			set_fake(root,"module",fake_module)
+			def update_first(root,token):
+				if match_node(root,ast.Attribute):
+					root.first_token = token
+					update_first(root.value,token)
+			update_first(fake_module,next_token(atok,starting_token))
+			mark_fixed(fake_module)
+		else:
+			print("\n\n\n"," I am inside the case where everything is broken","\n\n\n")
+			fake_module = create_fake(root,ast.Name,
+				text = "." * root.level,start_position = next_token(atok,starting_token).startpos,
+				parent = root,parent_field="module",
+				id = "." * root.level,ctx=ast.Load() 
+			)
+			set_fake(root,"module",fake_module)
+			mark_fixed(fake_module)
 	mark_fixed(root)
 	return True
 
