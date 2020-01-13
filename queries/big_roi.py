@@ -206,7 +206,7 @@ class SelectBigRoi(SelectionQuery):
 		row = view_information["rowcol"](m.backward(selection)[0])[0] + 1 if definition_node is root else definition_node.first_token.start[0]
 		bonus = 1 if definition_node.first_token.startpos > selection[1]  else 0
 		t = decode_abstract_vertical(root,atok,targets,row, ndir + bonus,direction,True,temporary_information)
-		if query_description["nth"]=="None":
+		if "nth" not in query_description:
 			information = getattr(information,"secondary",information)
 			selector = lambda x:match_node(x,targets,exclusions) and generic_fix(x,build[1])
 			candidates = tiebreak_on_lca(root,definition_node,find_all_nodes(t, selector = selector))
