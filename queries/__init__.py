@@ -8,6 +8,8 @@ from PythonVoiceCodingPlugin.queries.collect_parameter import CollectParameter
 from PythonVoiceCodingPlugin.queries.collect_module import CollectModule
 from PythonVoiceCodingPlugin.queries.collect_function_name import CollectFunctionName
 from PythonVoiceCodingPlugin.queries.collect_imported_value import CollectImportedValue
+from PythonVoiceCodingPlugin.queries.collect_decorator import CollectDecorator
+from PythonVoiceCodingPlugin.queries.collect_class_name import CollectClassName
 from PythonVoiceCodingPlugin.queries.insert_item import InsertItem
 from PythonVoiceCodingPlugin.queries.delete_alternatives import DeleteAlternatives
 from PythonVoiceCodingPlugin.queries.swap_back import SwapBack
@@ -27,18 +29,24 @@ def get_query(query_description):
 			"module":"collect_module",
 			"import value":"collect_imported_value",
 			"function name":"collect_function_name",
-
+			"class name":"collect_class_name",
+			"decorator":"collect_decorator",
 		}[query_description["collectable"]]
 	h = {
 		"argument": SelectArgument,
 		"alternative": SelectAlternative,
 		"big_roi": SelectBigRoi,
 		"paste_back": PasteBack,
+
 		"collect_variable": CollectVariable,
 		"collect_parameter":CollectParameter,
 		"collect_module":CollectModule,
 		"collect_imported_value": CollectImportedValue,
 		"collect_function_name": CollectFunctionName,
+		"collect_decorator":CollectDecorator,
+		"collect_class_name":CollectClassName,
+
+
 		"insert_item": InsertItem,
 		"delete_alternatives":DeleteAlternatives,
 		"swap_back": SwapBack,

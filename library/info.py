@@ -160,6 +160,17 @@ def is_default_value(root):
 #
 ################################################################################################
 ################################################################################################
+def get_decorator_text(root,atok,everything):
+	if not is_decorator(root):
+		return None
+	if everything:
+		return  atok.get_text(root)
+	else:
+		if match_node(root,ast.Call):
+			return atok.get_text(root.func)
+
+
+
 
 def get_name(root):
 	return (root if match_node(root,(ast.Name)) else 

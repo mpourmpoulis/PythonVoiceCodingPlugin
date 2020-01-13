@@ -12,7 +12,7 @@ from PythonVoiceCodingPlugin.queries.abstract import CollectionQuery
 
 
 class CollectFunctionName(CollectionQuery):
-	indexable = True
+	indexable = False
 	label = 'Function Names'
 	def handle_single(self,view_information,query_description,extra = {}):
 		build, selection, origin = self._preliminary(view_information,query_description,extra)
@@ -22,8 +22,8 @@ class CollectFunctionName(CollectionQuery):
 		definition_nodes = find_all_nodes(root,(ast.FunctionDef))
 		name_nodes = [x.name  for x in definition_nodes]
 		names = list(OrderedDict([(x,0)  for x in name_nodes]).keys())
-		result = names[query_description["collect_index"] - 1] if query_description["format"]==2 else None
-		return result, names
+		result = None
+		return names
 
 
 

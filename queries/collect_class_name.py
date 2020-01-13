@@ -14,26 +14,17 @@ from PythonVoiceCodingPlugin.queries.strategies import adjective_strategy,decode
 from PythonVoiceCodingPlugin.queries.strategies import decode_item_selection
 
 
-class CollectVariable(CollectionQuery):
-	indexable = True
-	label = 'Variables'
+class CollectClassName(CollectionQuery):
+	label = 'ClassName'
 	def handle_single(self,view_information,query_description,extra = {}):
 		build, selection, origin = self._preliminary(view_information,query_description,extra)
 		if not  build: 
 			return None,None
 		root,atok,m,r = build 
-		definition_node = search_upwards(origin,ast.FunctionDef) if query_description["format"]!=1 else root
-		name_nodes = [(get_id(x),0)  for x in find_all_nodes(definition_node,ast.Name) if is_store(x)]
+		definition_node = search_upwards(origin,ast.ClassDef) if query_description["format"]!=1 else root
+		name_nodes = [(x.name,0)  for x in find_all_nodes(definition_node,ast.ClassDef)]
 		names = list(OrderedDict(name_nodes).keys())
-		if query_description["format"]==1:
-			result = None 
-		else:
-			mode = {
-				2:"individual", 
-				3:"range",
-			}[query_description["format"]]
-			result = ",".join(decode_item_selection(names,query_description,mode,"item_index"))
-		return result, names
+		return names
 
 
 
