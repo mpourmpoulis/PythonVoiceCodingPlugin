@@ -38,19 +38,25 @@ Choice("big_roi",{
  } ),
 ```
 
-I hope most of them should be  self explanatory but you can find examples [below](#Selectable).
+I hope most of them should be  self explanatory  and  you can find examples [below](#Selectable).
 
-There are four syntaxes for this command:
+There are four syntaxes for you find the location of those regions of interest:
+
+
+
 
 ```python 
 "smart <big_roi> [<big_roi_sub_index>]"
 
-"[smart] <adjective> <big_roi> [<big_roi_sub_index>]"
+"[smart] <nth> <big_roi> [<big_roi_sub_index>]"
 
-"[smart] <vertical_abstract_only_direction> [<ndir>] <big_roi> [<big_roi_sub_index>]"
+"[smart] <vertical_direction> [<ndir>] <big_roi> [<big_roi_sub_index>]"
 
-"[smart] <vertical_abstract_only_direction> [<ndir>] <block> [<adjective>] <big_roi> [<big_roi_sub_index>]"
+"[smart] <vertical_direction> [<ndir>] <block> [<nth>] <big_roi> [<big_roi_sub_index>]"
 ```
+
+
+technically the rules you're going to see in my grammar bundles also havethe prefix
 
 # Case one 
 
