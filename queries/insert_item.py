@@ -4,6 +4,7 @@ from PythonVoiceCodingPlugin.queries.strategies import decode_item_selection
 @no_build_attempt
 class InsertItem(InsertionQuery):
 	select_insertion = True
+	multiple_in = True
 
 	def handle_single(self,view_information,query_description,extra = {}):
 		collection = extra["global_state"]["collection"]
