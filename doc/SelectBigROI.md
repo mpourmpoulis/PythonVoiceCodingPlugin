@@ -157,6 +157,7 @@ probably one of the most basic examples and one of the most frequently used ones
 
 ![](./gif/big20.gif)
 
+A small example with sub indexing is also included:)
 
 ### If conditions While loops With clauses
 
@@ -206,6 +207,8 @@ probably one of the most basic examples and one of the most frequently used ones
 ```
 
 ![](./gif/big25.gif)
+
+Please note that empty handlers are supported as well and that some examples with some indexing are included.
 
 ### Assertions And Exceptions Raising
 
