@@ -107,7 +107,7 @@ something similar applies for parameters as well
 however in this case we have a little bit more expressiveness available, as we can also insert barometers from other functions! 
 
 
-![](./gif/collect5.gif)
+![](./gif/collect6.gif)
 
 ```python
 "[smart] [<vertical_direction> [<ndir>] [function]] parameter <item_index>  [<item_index2> [and <item_index3>]]"
