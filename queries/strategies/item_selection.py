@@ -1,3 +1,5 @@
+from copy import deepcopy
+
 def translate_indices(query_description,name,decrement):
 	y = [name + x  for x in ["","2","3","4"]]
 	value = 1 if decrement else 0
@@ -16,7 +18,7 @@ def decode_item_selection(items,query_description,mode,name,decrement=True):
 		elif len(indices) == 1:
 			return items[indices[0]:]
 		else: 
-			return items
+			return deepcopy(items)
 
 
 
