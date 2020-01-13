@@ -155,12 +155,10 @@ Once we have established which function we are to search, the command will then 
 probably one of the most basic examples and one of the most frequently used ones as well
 
 ```python
-{
 "(assignment right| right)" : "assignment right",
 "(assignment left| left)" : "assignment left",
 "assignment [full]" : "assignment full",
 "(expression statement|expression)" : "expression statement",
-}
 ```
 
 ![](./gif/big20.gif)
@@ -170,12 +168,10 @@ A small example with sub indexing is also included:)
 ### If conditions While loops With clauses
 
 ```python
-{
 "if condition" : "if condition",
 "else if condition" : "else if condition",
 "while condition" : "while condition",
 "with item" : "with clause",
-}
 ```
 
 ![](./gif/big21.gif)
