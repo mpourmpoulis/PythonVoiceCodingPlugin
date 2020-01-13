@@ -23,6 +23,7 @@ class CollectClassName(CollectionQuery):
 		root,atok,m,r = build 
 		definition_node = search_upwards(origin,ast.ClassDef) if query_description["format"]!=1 else root
 		name_nodes = [(x.name,0)  for x in find_all_nodes(definition_node,ast.ClassDef)]
+		name_nodes = name_nodes + [(atok.get_text(x),0)  for x in find_matching(definition_node,is_base)]
 		names = list(OrderedDict(name_nodes).keys())
 		return names
 
