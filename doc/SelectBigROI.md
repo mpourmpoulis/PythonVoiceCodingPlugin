@@ -176,7 +176,7 @@ A small example with sub indexing is also included:)
 ```python
 "if expression":"if expression",
 "if expression condition" : "if expression condition",
-"if expression body" : "if expression body",
+"if expression value" : "if expression body",
 "if expression else" : "if expression else",
 ```
 
