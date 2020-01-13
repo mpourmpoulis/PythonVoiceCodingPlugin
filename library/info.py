@@ -886,6 +886,13 @@ def fix_argument(root,atok,token = None):
 		root.last_token = token
 		return token
 
+def fix_argument_list(root,atok):
+	if not  match_node(root,ast.arguments):
+		return False
+	if already_fixed(root) or fix_definition(root.parent,atok):
+		return True
+	return False
+
 
 def fix_definition(root,atok):
 	print("enduring fix definition ",root,atok,get_fake(root.args,"kwarg"))
@@ -1025,7 +1032,8 @@ fixable = {
 	ast.ExceptHandler: fix_exception_handler,
 	ast.Attribute:fix_attribute, 
 	ast.FunctionDef:fix_definition,
-	ast.arg:fix_argument,  
+	ast.arg:fix_argument, 
+	ast.arguments:fix_argument_list,  
 	ast.keyword:fix_keyword,
 	ast.ClassDef:fix_class, 
 }
