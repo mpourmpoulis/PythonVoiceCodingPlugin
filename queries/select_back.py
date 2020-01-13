@@ -17,4 +17,3 @@ class SelectBack(SelectionQuery):
 		elif query_description["format"]==2:
 			return state["origin"],[]
 
-

@@ -61,7 +61,7 @@ please do note, two important factors. `[smart] item` :
 
 * because collections currently persist between tabs, you can insert items from other source files!
 
-* Is going to use the latest  collection built, even if the display bar has been hidden.
+* Is going to use the latest  collection built, even if the display bar has been hidden because of another query/pressing escape.
 
 * works with multiple cursors, inserting the same thing in all of them
 
