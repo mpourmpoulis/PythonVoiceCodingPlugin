@@ -83,7 +83,7 @@ now the full syntax, looks like
 
 As with the other selection queries,  the whole "operation" thing you see at the start of each command, is not really a part of the big ROI queries themselves but rather a prefix , which causes some action to be taken with the result of the query instead of selecting it and can accompany virtually all selection queries in general. as an example,
 
-![](./gif/arg18.gif)
+![](./gif/big36.gif)
 
 Please note that in the fourth case, this prefix is missing. If you wish, nothing stops you from editing the definition to match the other three rules, I just chose it not to enable by default because I fear it might make the spoken queries too long and unnecessarily increase grammar complexity.
 
@@ -176,9 +176,9 @@ Another,more preferable for short distances if you ask me, alternative you can u
 vertical_direction can belong to one of the two following families and as the name suggests enables you to specify whether you want something that is above or below your current cursor position.
 
 ```python
-"(up|sauce|above)":"upwards",
+"(up|sauce|above)":"upwards"
 
-"(down|dunce|below)":"downwards",
+"(down|dunce|below)":"downwards"
 ```
 
 and ndir is an interger specifying how many "interesting"(!) lines relative to the current line up or down your roi is. if omitted it has a default value of one
