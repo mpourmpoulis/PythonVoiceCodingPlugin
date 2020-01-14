@@ -138,7 +138,7 @@ What if you want to select something in a different line? Then you can use :
 "[smart] <vertical_direction> [<ndir>] [<nth>] argument <argument_index>"
 ```  
 
-vertical_direction can belong to one of the two following families,as the name suggests enables you to specify whether you want something that these are above or below your current cursor position.
+vertical_direction can belong to one of the two following families,as the name suggests enables you to specify whether you want something that is above or below your current cursor position.
 
 ```python
 "(up|sauce|above)":"upwards",

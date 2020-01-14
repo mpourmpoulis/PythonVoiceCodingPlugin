@@ -4,41 +4,89 @@ These commands are responsible for selecting "big" regions of interest. By "big"
 
 ![](./gif/big2.gif)
 
+Regarding the available big regions of interest, you can find more details [below](#Selectable) , but I hope most of them are sufficiently self-explanatory. Now before any reason you do not like the names I have given, you can always customize as you see fit. Remember only change the spoken part, that is the key of each key value pair , so as not to break the plug-in backened!
 
-In particular, the currently offered "big roi´s" are :
+
 
 ```python
-Choice("big_roi",{ 
-"if condition" : "if condition", 
-"else if condition" : "else if condition", 
-"while condition" : "while condition", 
+Choice("big_roi",{
 
-"if expression condition" : "if expression condition", 
-"if expression body" : "if expression body", 
-"if expression":"if expression",
+                "if condition" : "if condition",
+                "else if condition" : "else if condition",
+                "while condition" : "while condition",
+                "with item" : "with clause",
 
-"return value" : "return value", 
+                "exception":"exception",
+                "exception name":"exception name",
+                "handler":"handler",
 
-"pass":"pass", 
-"break" : "break", 
-"continue" : "continue", 
+                "if expression condition" : "if expression condition",
+                "if expression value" : "if expression body",
+                "if expression":"if expression",
+                "if expression else" : "if expression else",
 
-"assertion message" : "assertion message",
- "assertion condition" : "assertion condition", 
- 
-"(assignment right| right)" : "assignment right",
-"(assignment left| left)" : "assignment left", 
-"assignment full" : "assignment full",
+                "comprehension condition" : "comprehension condition",
+                "comprehension value" : "comprehension value",
 
- "import statement":"import statement", 
+                "return value" : "return value",
+                "pass":"pass",
+                "break" : "break",
+                "continue" : "continue",
 
-"(expression statement|expression)" : "expression statement", 
+                "assertion message" : "assertion message",
+                "assertion condition" : "assertion condition",
+                "exception raised" : "exception raised",
+                "raised cause": "raised cause",
 
-"iterator" : "iterator", "iterable" : "iterable",
- } ),
+                "(assignment right| right)" : "assignment right",
+                "(assignment left| left)" : "assignment left",
+                "assignment [full]" : "assignment full",
+                "(expression statement|expression)" : "expression statement",
+
+
+                "import statement":"import statement",
+                "import value" : "import value",
+                "module" : "import module",
+                
+                
+
+                "iterator" : "iterator",
+                "iterable" : "iterable",
+
+                "function name": "definition name",
+                "function parameter": "definition parameter",
+                "parameter list": "definition parameter list",
+                "default value": "default value",
+                
+
+                "lambda":"lambda",
+                "lambda body":"lambda body",
+
+                
+                "class name": "class name",
+                "decorator":"decorator",
+                "base class":"base class",
+
+    }
+)
 ```
 
-I hope most of them should be  self explanatory  and  you can find examples [below](#Selectable).
+now the full syntax, looks like
+
+```python
+"(smart|<operation>) <big_roi> [<sub_index>]"
+"[(smart|<operation>)] <nth> <big_roi> [<sub_index>]"
+"[(smart|<operation>)] <vertical_direction> [<ndir>] <big_roi> [<sub_index>]"
+"[smart] <vertical_direction> [<ndir>] <block> [<nth>] <big_roi> [<sub_index>]"
+```
+
+
+As with the other selection queries,  the whole "operation" thing you see at the start of each command, is not really a part of the big ROI queries themselves but rather a prefix , which causes some action to be taken with the result of the query instead of selecting it and can accompany virtually all selection queries in general. as an example,
+
+![](./gif/arg18.gif)
+
+Please note that in the fourth case, this prefix is missing. If you wish, nothing stops you from editing the definition to match the other three rules, I just chose it not to enable by default because I fear it might make the spoken queries too long and unnecessarily increase grammar complexity.
+
 
 There are four syntaxes for you find the location of those regions of interest:
 
@@ -70,7 +118,7 @@ As you might expect, the plugin will try to find matches to big roi description 
 
 ![](./gif/big1.gif)
 
-t is also important to note that with exception of the import statements, all other queries search only within the current function.
+it is also important to note that most queries search only within the current function.
 
 
 # Case two 
@@ -78,7 +126,7 @@ t is also important to note that with exception of the import statements, all ot
 another alternative are commands of the types:
 
 ```python 
-"[smart] <adjective> <big_roi> [<big_roi_sub_index>]"
+"[smart] <nth> <big_roi> [<big_roi_sub_index>]"
 ```
 you should probably be already familiar with adjectives, so here is an example of how you can use them:
 
@@ -94,16 +142,25 @@ as with case one, only the current function searched. ( pay attention to my last
 Another alternative you can use is to provide information about the relative vertical position of your ROI with a command like that:
 
 ```python
-"[smart] <vertical_abstract_only_direction> [<ndir>] <big_roi> [<big_roi_sub_index>]"
+"[smart] <vertical_direction> [<ndir>] <big_roi> [<big_roi_sub_index>]"
 ```
-The only difference compared to argument selection is that you can only use the more "abstract", 'above' and 'below' keywords:
 
-```python 
-Choice("vertical_abstract_only_direction",{ 
-	"above":"above",
- 	"below":"below", 
- } ),
+vertical_direction can belong to one of the two following families and as the name suggests enables you to specify whether you want something that is above or below your current cursor position.
+
+```python
+"(up|sauce|above)":"upwards",
+
+"(down|dunce|below)":"downwards",
 ```
+
+and ndir is an interger specifying how many "interesting"(!) lines relative to the current line up or down your roi is. if omitted it has a default value of one
+
+```python
+defaults = {
+    "ndir":1,
+}
+```
+
 As an example:
 
 ![](./gif/big4.gif)
@@ -115,13 +172,13 @@ Another important detail is that these types of queries are not limited to searc
 
 # Case four 
 
-Ok this is a bit different:)
+
 This variant combines vertical and positional order information. 
 
 ```python
-"[smart] <vertical_abstract_only_direction> [<ndir>] <block> [<adjective>] <big_roi> [<big_roi_sub_index>]"
+"[smart] <vertical_direction> [<ndir>] <block> [<nth>] <big_roi> [<big_roi_sub_index>]"
 ```
-What on earth is that "block" thing over there? Well for the time being there is only one option available:
+For the time being there is only one option available:
 
 ```python 
 Choice("block",{ 
@@ -133,14 +190,14 @@ Choice("block",{
 So essentially, we can specify a function using a relative vertical desciption with the above/below keywords!
 
 ```python 
-"<vertical_abstract_only_direction> [<ndir>] <block>"
+"<vertical_direction> [<ndir>] <block>"
 ```
 
 
 Once we have established which function we are to search, the command will then work more or less like cases one and two
 
 ```python
-"[<adjective>] <big_roi> [<big_roi_sub_index>]"
+"[<nth>] <big_roi> [<big_roi_sub_index>]"
 ```
 
  but will search inside that function!
