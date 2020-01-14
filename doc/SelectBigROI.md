@@ -231,6 +231,12 @@ Please note that empty handlers are supported as well and that some examples wit
 
 ### Functional Definitions
 
+```python
+"function name"
+"function parameter"
+"parameter list"
+```
+
 ![](./gif/big27.gif)
 
 
@@ -247,9 +253,9 @@ Please note that empty handlers are supported as well and that some examples wit
 ### Import 
 
 ```python
-"import statement":"import statement",
-"import value" : "import value",
-"module" : "import module",
+"import statement"
+"import value" 
+"module" 
 ```
 
 ![](./gif/big29.gif)
