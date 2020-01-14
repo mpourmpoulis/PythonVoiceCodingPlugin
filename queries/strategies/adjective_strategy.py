@@ -23,7 +23,9 @@ def adjective_strategy(
 	**kwargs):
 
 	# we cannot operate without those parameters
-	if not atok  or not root or not level_nodes or not information_nodes  or not adjective_word:
+	# removed  level_nodes
+	if not atok  or not root  or not information_nodes  or not adjective_word:
+		print("disaster stroke ",atok,root,level_nodes,information_nodes,adjective_word,"\n")
 		return None, None
 
 
@@ -50,6 +52,7 @@ def adjective_strategy(
 	small_special = sorted_by_source_region(atok, small_special)
 	level_nodes = sorted_by_source_region(atok, level_nodes)
 	information_nodes = sorted_by_source_region(atok,information_nodes)
+	print("information_nodes",information_nodes,"\n")
     ################################################################
 	# small root level and lexical order strategy
 	################################################################
