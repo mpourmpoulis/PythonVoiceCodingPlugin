@@ -114,32 +114,60 @@ Ok lets start with the simple one, namely queries of the form:
 "smart <big_roi>"
 ``` 
 
-As you might expect, the plugin will try to find matches to big roi description , prioritizing ones "nearer" in the AST with respect to the current selection.
+As you might expect, the plugin will try to find matches to big roi description , prioritizing ones "nearer" in the AST with respect to the current selection. Some random examples:
 
 ![](./gif/big1.gif)
 
-it is also important to note that most queries search only within the current function.
+One thing that is really important to note and is not made clear by the above gif, is what region are these queries  actually searching in order to retrieve results and alternatives? 
+
+* a select few are always searching the entire code, for instance `import statement` or `class name` 
+
+* most of them behave in their little bit more "contained" manner 
+
+	- if invoked from the global scope the entire code will be searched, prioritizing things that are global in scope but providing alternatives that are inside functions as well.
+
+	- If you invoked from inside say a function, then only that function will be searched
+
+To illustrate this:
+
+![](./gif/big35.gif)
+
 
 
 # Case two 
 
-another alternative are commands of the types:
+If you will have a little bit more control over what select, one of the ways to achieve that is through the command
 
 ```python 
 "[smart] <nth> <big_roi> [<big_roi_sub_index>]"
 ```
-you should probably be already familiar with adjectives, so here is an example of how you can use them:
+
+where nth is an ordinal nth adjective and can take the following values
+
+```python
+"first"             "second"
+"third"             "fourth"
+"fifth"             "sixth"
+"seventh"           "eighth"
+"ninth"             "last"
+"second last"       "third last"
+"fourth last"
+```
+
+As a first remark, their region searched is the same with case one,and for most queries that means the current function( pay attention to my last example where alternatives are only offered from the nested function definition!)
+
 
 ![](./gif/big3.gif)
 
-as with case one, only the current function searched. ( pay attention to my last example where alternatives are only offered from the nested function definition!)
+Please also note that the plug-in is going to try a variety of ways to interpret this adjective. I hope the below example might give you a hint about the heuristics employed:
 
+![](./gif/big34.gif) 
 
 
 
 # Case three 
 
-Another alternative you can use is to provide information about the relative vertical position of your ROI with a command like that:
+Another,more preferable for short distances if you ask me, alternative you can use is to provide information about the relative vertical position of your ROI with a command like that:
 
 ```python
 "[smart] <vertical_direction> [<ndir>] <big_roi> [<big_roi_sub_index>]"
@@ -165,9 +193,10 @@ As an example:
 
 ![](./gif/big4.gif)
 
-Another important detail is that these types of queries are not limited to searching only the current function like the adjective ones! 
+A very important detail is that these types of queries are not limited to searching only the current function like the nth adjective ones or the ones from the first case! 
 
 ![](./gif/big11.gif)
+
 
 
 # Case four 
