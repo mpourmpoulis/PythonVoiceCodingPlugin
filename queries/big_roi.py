@@ -79,7 +79,7 @@ class SelectBigRoi(SelectionQuery):
 			"iterable":((ast.For,ast.comprehension),(),get_iterable),
 			"iterator":((ast.For,ast.comprehension),(),get_iterator),
 			"definition name":((ast.FunctionDef),(),get_definition_name),
-			"definition parameter": (ast.arg,(),get_arg_from_definition),
+			"definition parameter": ((ast.FunctionDef,ast.arg),(),get_arg_from_definition),
 			"definition parameter list": (ast.arguments,(),standard),
 			 # "parameter annotation" : "parameter annotation",
             "default value": (ast.AST,(),identity(is_default_value)),
