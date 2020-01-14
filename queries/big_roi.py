@@ -140,6 +140,7 @@ class SelectBigRoi(SelectionQuery):
 
 		if selection[0]!=selection[1]:
 			additional_parameters["small_root"] = origin
+			additional_parameters["penalized"] = [origin]
 		additional_parameters["only_information"] = True
 		# just looking on the shape of this code you know there's a bug in here somewhere:)
 		result, alternatives = adjective_strategy(
