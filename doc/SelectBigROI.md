@@ -281,10 +281,14 @@ and because I forgot one rather important case
 
 ```python
 "return value" 
-"pass"
-"break" 
-"continue" 
 ```
+ 
+Please note 
+
+* that empty return values can be selected and must be taken into account when counting ndir
+
+* yield is also covered under this case
+
 ![](./gif/big32.gif)
 
 ### Iterator  and Iterable
