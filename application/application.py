@@ -59,8 +59,7 @@ class Application():
 			if not secondary:
 				print("and during inside here ",query_description)
 				need_update = retrieve_state(self.state,view_information,code)
-				print("\n needed update: ",need_update,"\n")
-				print(" after update this state ",self.state)
+				
 		except:
 			clear_state(self.state)
 			if False:
@@ -156,7 +155,6 @@ class Application():
 					interface.push_action(ReplaceAction(location,result))
 				self.update_locations([(x,result)  for x in writing_positions])
 			if items:
-				print(s.label,"labeling\n")
 				interface.push_action(DisplayNiceAction(s.label,items,True))  
 				self.state["collection"] = items
 				self.global_state["collection"] = items

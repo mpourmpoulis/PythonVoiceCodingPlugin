@@ -64,7 +64,6 @@ class ClearHighlightAction(InterfaceAction):
 	def execute(self,view,**kwargs):
 		index = 0
 		while True:
-			print(self.data["name"],index," attempted deletion ")
 			index+=1
 			r = view.get_regions(self.data["name"]+str(index)) 
 			if r:

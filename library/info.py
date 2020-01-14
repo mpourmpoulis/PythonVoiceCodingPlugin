@@ -101,7 +101,6 @@ def get_fake(root,name):
 	return getattr(root,name + "_fake",None)
 
 def fake_attribute_from_tokens(root,tokens,**kwargs):
-	print("entering fake attributes from tokens ",root,tokens,kwargs)
 	if not tokens:
 		return None
 	if len(tokens)==1:
@@ -229,7 +228,6 @@ def get_pure_if_condition(root):
 	)
 
 def get_elif_condition(root,atok):
-	print("wtf\n",ast.dump(root),[root.first_token.string])
 	return (
 		root.test 
 		if match_node(root,(ast.If))  and root.first_token.string!="if"
@@ -331,8 +329,6 @@ def get_exception_handler(root,atok):
 		return None
 	fix_exception_handler(root,atok)
 	output = [x  for x in [root.type,get_fake(root,"name")] if x]
-	print("Output\n\n",output,"\n")
-	# print(ast.dump()) 	
 	return output if output else empty_fake(root,root.first_token.endpos)
 
 
@@ -465,7 +461,6 @@ def get_fixed_import_value(root,atok):
 	if not match_node(root,(ast.Import,ast.ImportFrom)):
 		return None
 	fix_import(root,atok)
-	print(" siding board value stuff ",ast.dump(root))
 	return root.names
 	
 
@@ -522,7 +517,6 @@ def split_string(s :str ,even_letters = True,only_first = False):
 		return [s]
 	second_attempt = [x  for x in re.split("[_]",s) if not x.isspace()]
 	if len(second_attempt) > 1:
-		print(" from second attempt")
 		return second_attempt
 	# https://stackoverflow.com/questions/29916065/how-to-do-camelcase-split-in-python answer from Jossef Harush 
 	third_attempt = re.sub('([A-Z][a-z]+)', r' \1', re.sub('([A-Z]+)', r' \1', s)).split()
@@ -793,7 +787,6 @@ def fix_import(root,atok):
 	if already_fixed(root):
 		return True
 	data = {}
-	print("\n\n enduring fixing board statement\n")
 	token = root.first_token
 	data["module"] = []
 	if match_node(root,ast.ImportFrom):
@@ -802,7 +795,6 @@ def fix_import(root,atok):
 			for s in split_string(root.module,only_first = True):
 				token = atok.find_token(token,tokenize.NAME,s)
 				data["module"].append(token)
-	print("names are ",root.names)
 	for name in root.names:
 		if name.name=="*":
 			i = atok.find_token(root.first_token,tokenize.NAME,"import")
@@ -815,7 +807,6 @@ def fix_import(root,atok):
 			mark_fixed(name)
 			# set_fake()
 		else:
-			print("processing the LIS node ", ast.dump(name))
 			stack = []
 			local_data = {}
 			for s in split_string(name.name,only_first = True):
@@ -824,7 +815,6 @@ def fix_import(root,atok):
 				stack.append(token)
 			local_data["elements"] = stack
 			name.first_token = stack[0]			
-			print("matching name ",name.name," into ",token.string,"\n")
 			if name.asname:
 				token = next_token(atok,token)
 				token = atok.find_token(token,tokenize.NAME,name.asname)
@@ -834,7 +824,6 @@ def fix_import(root,atok):
 	store_fix_data(root,data)
 	if match_node(root,ast.ImportFrom):
 		if data["module"]:
-			print("I made up to hear with tokens",data["module"])
 			fake_module = fake_attribute_from_tokens(root,data["module"],parent = root,parent_field="module")
 			set_fake(root,"module",fake_module)
 			def update_first(root,token):
@@ -844,7 +833,6 @@ def fix_import(root,atok):
 			update_first(fake_module,next_token(atok,starting_token))
 			mark_fixed(fake_module)
 		else:
-			print("\n\n\n"," I am inside the case where everything is broken","\n\n\n")
 			fake_module = create_fake(root,ast.Name,
 				text = "." * root.level,start_position = next_token(atok,starting_token).startpos,
 				parent = root,parent_field="module",
@@ -867,18 +855,15 @@ def fix_alias(root,atok):
 			for i,x in enumerate(names)]
 		set_fake(root,"name",name_nodes)
 		mark_fixed(name)
-		print("field",root._fields)
 		return True
 	else:
 		return False
 
 
 def fix_argument(root,atok,token = None):
-	print("enduring fix argument ",root,root.parent_field,atok,[token])
 	if already_fixed(root):
 		return token
 	if token is None:
-		print("\n\n\nenduring inside here\n\n below world ",root)
 		fix_definition(root.parent.parent,atok)
 		if not already_fixed(root):
 			raise Exception("these ARG node has not been marked as fixed")
@@ -905,24 +890,19 @@ def fix_argument_list(root,atok):
 
 
 def fix_definition(root,atok):
-	print("enduring fix definition ",root,atok,get_fake(root.args,"kwarg"))
 	if already_fixed(root):
-		print(" already fixed")
 		return True
 
 	# there is a discrepancy between the 3.3 and 3.4 versions of the abstract syntax tree
 	# in 3.3 the variable arguments and the variable keyboard arguments are stored in a little bit differently
 	x = root.args
-	print([x.first_token,x.last_token])
 
 	if x.vararg and not get_fake(x,"vararg"):
-		print(" I am in the process of fixing the viable arguments ",x.vararg,x.varargannotation)
 		fake_node = create_fake(x,ast.arg,text = "",start_position = 0,
 			parent = x,parent_field = "vararg", 
 			arg=x.vararg,annotation=x.varargannotation)
 		set_fake(x,"vararg",fake_node)
 	if x.kwarg and not get_fake(x,"kwarg"):
-		print(" I am in the process of fixing the keyword viable arguments ",x.kwarg,x.kwargannotation)
 		fake_node = create_fake(x,ast.arg,text = "",start_position = 0,
 			parent = x,parent_field = "kwarg", 
 			arg=x.kwarg,annotation=x.kwargannotation)
@@ -932,7 +912,6 @@ def fix_definition(root,atok):
 	token = root.first_token
 	token = atok.find_token(token,tokenize.NAME,"def")
 	token = next_token(atok,token )
-	print("token ",[token])
 	if match_node(root,ast.FunctionDef):
 		fake_node = create_fake(root,ast.Name,real_tokens = token,
 			parent = root,parent_field = "name", 
@@ -945,16 +924,13 @@ def fix_definition(root,atok):
 		fix_argument(i,atok,token)
 		if j:
 			token = j.last_token
-		print("token ",[token])
 	if x.vararg:
 		i=get_fake(x,"vararg")
-		print("viable argument problem ")
 		token = next_token(atok,token)
 		token = atok.find_token(token,tokenize.NAME,i.arg)
 		fix_argument(i,atok,token)
 
 	for i,j in zip(x.kwonlyargs,x.kw_defaults):
-		print("you word only problem")
 		token = next_token(atok,token)
 		token = atok.find_token(token,tokenize.NAME,i.arg)
 		fix_argument(i,atok,token)
@@ -962,11 +938,8 @@ def fix_definition(root,atok):
 			token = j.last_token
 	if x.kwarg:
 		i=get_fake(x,"kwarg")
-		print("keyword viable arguments problem",[token],"\n\n")
 		token = next_token(atok,token)
-		print("before searching for the argument that Tolkien was \n",[token],"\n")
 		token = atok.find_token(token,tokenize.NAME,i.arg)
-		print("After that Tolkien was \n",[token],"\n")
 		fix_argument(i,atok,token)
 
 	# fixing x, the arguments
@@ -985,11 +958,9 @@ def fix_exception_handler(root,atok):
 		mark_fixed(root)
 		return True
 	token = root.type.last_token
-	print(" inside fixing before finding the token",[token,root.type.first_token])
 	token = atok.find_token(next_token(atok,token),tokenize.NAME, root.name)
 	f = root.type.first_token
 	f = atok.find_token(previous_token(atok,f),tokenize.NAME, "except",reverse = True)
-	print(" in the exception Hunter token",[token])
 	fake_name_node = create_fake(root,ast.Name,real_tokens =  token,id = token.string,ctx = ast.Load())
 	set_fake(root,"name",fake_name_node)
 	root.first_token=root.type.first_token
@@ -1004,7 +975,6 @@ def fix_attribute(root,atok):
 	fake_node = create_fake(root,ast.Name,real_tokens = l,
 		parent = root,parent_field = "attr",
 		id = l.string,ctx = root.ctx)
-	print("I failed test here \n\nself.man")
 	set_fake(root,"attr",fake_node)
 	if match_node(root.value,ast.Attribute):
 		fix_attribute(root.value,atok)
@@ -1051,13 +1021,11 @@ fixable = {
 
 def generic_fix(root,atok = None):
 	fixer = fixable.get(type(root))
-	print("inside generic fix ",fixer,"\n")
 	if not fixer:
 		return True
 	try :
 		fixer(root,atok)
 	except :
-		print("these failed miserably \n\n")
 		raise
 		return False
 	return True

@@ -40,7 +40,6 @@ def get_regions_while_you_still_can(view_information,name):
 	return result
 
 def invert_guided(data,guide):	
-	print("inside guide\n",data,guide)
 	output = []
 	for x in guide:
 		output.append([])
@@ -55,9 +54,6 @@ def horizontal_to_vertical(data):
 	if not data:
 		return []
 	l =  max([len(x)  for x in data]) 
-	print(" just before horizontal to vertical \n")
-	print([[y[x]  for y in data if x<len(y)]  for x in range(0,l)])
-	print(" about was the conversion")
 	return [[y[x]  for y in data if x<len(y)]  for x in range(0,l)]
 
 
@@ -105,9 +101,7 @@ def convert_multiple_to_single(state,mode,initial_mode,lenient = False):
 			if data == []:
 				data = None
 			elif isinstance(data,list) and len(data)==1 and isinstance(data[0],list) and len(data[0])==1:
-				print(" inside this case",k,data)
 				data = data[0][0]
-				print(" outside this case",k,data)
 			else:
 				if lenient:
 					pass

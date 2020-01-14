@@ -150,6 +150,7 @@ class SelectBigRoi(SelectionQuery):
 				information_nodes = find_matching(definition_node,temporary_information),
 				**additional_parameters
 		)
+		print("result, alternatives",result, alternatives,"\n")
 		information = getattr(information,"secondary",information)
 		result = information(result) if result else None
 		alternatives  =[ information(x)  for x in alternatives] if alternatives else []
