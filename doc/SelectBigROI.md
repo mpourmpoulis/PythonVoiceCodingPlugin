@@ -155,23 +155,25 @@ Once we have established which function we are to search, the command will then 
 probably one of the most basic examples and one of the most frequently used ones as well
 
 ```python
-"(assignment right| right)" : "assignment right",
-"(assignment left| left)" : "assignment left",
-"assignment [full]" : "assignment full",
-"(expression statement|expression)" : "expression statement",
+"(assignment right| right)" 
+"(assignment left| left)" 
+"assignment [full]" 
+"(expression statement|expression)" 
 ```
 
 ![](./gif/big20.gif)
 
-A small example with sub indexing is also included:)
+and because I forgot one rather important case
+
+![](./gif/big31.gif)
 
 ### If conditions While loops With clauses
 
 ```python
-"if condition" : "if condition",
-"else if condition" : "else if condition",
-"while condition" : "while condition",
-"with item" : "with clause",
+"if condition" 
+"else if condition" 
+"while condition" 
+"with item" 
 ```
 
 ![](./gif/big21.gif)
@@ -180,36 +182,46 @@ A small example with sub indexing is also included:)
 ### If expressions
 
 ```python
-"if expression":"if expression",
-"if expression condition" : "if expression condition",
-"if expression value" : "if expression body",
-"if expression else" : "if expression else",
+"if expression"
+"if expression condition" 
+"if expression value" 
+"if expression else" 
 ```
 
 ![](./gif/big22.gif)
 
+### Return Value
+
+```python
+"return value" 
+"pass"
+"break" 
+"continue" 
+```
+![](./gif/big32.gif)
+
 ### Iterator  and Iterable
 
 ```python
-"iterator" : "iterator",
-"iterable" : "iterable",
+"iterator" 
+"iterable" 
 ```
 ![](./gif/big23.gif)
 
 ### Comprehensions
 
 ```python
-"comprehension condition" : "comprehension condition",
-"comprehension value" : "comprehension value",
+"comprehension condition" 
+"comprehension value" 
 ```
 ![](./gif/big24.gif)
 
 ### Exception Handling
 
 ```python
-"exception":"exception",
-"exception name":"exception name",
-"handler":"handler",
+"exception"
+"exception name"
+"handler"
 ```
 
 ![](./gif/big25.gif)
@@ -219,11 +231,11 @@ Please note that empty handlers are supported as well and that some examples wit
 ### Assertions And Exceptions Raising
 
 ```python
-"assertion message" : "assertion message",
-"assertion condition" : "assertion condition",
+"assertion message" 
+"assertion condition" 
 
-"exception raised" : "exception raised",
-"raised cause": "raised cause",
+"exception raised" 
+"raised cause"
 ```
 
 ![](./gif/big26.gif)
@@ -234,6 +246,7 @@ Please note that empty handlers are supported as well and that some examples wit
 ```python
 "function name"
 "function parameter"
+"default value"
 "parameter list"
 ```
 
@@ -243,9 +256,9 @@ Please note that empty handlers are supported as well and that some examples wit
 ### Class Definitions
 
 ```python
-"class name": "class name",
-"decorator":"decorator",
-"base class":"base class",
+"class name"
+"decorator"
+"base class"
 ```
 
 ![](./gif/big28.gif)
@@ -260,15 +273,29 @@ Please note that empty handlers are supported as well and that some examples wit
 
 ![](./gif/big29.gif)
 
+please do pay attention, the sub indexing import statement has the same effect as import  value!
+
 ### Lambda
+
+```python
+"lambda"
+"lambda body"
+```
 
 ![](./gif/big30.gif)
 
+please do pay attention, the sub indexing Lambda has the same effect as Lambda Body!
 
+### Continue Break Pass
 
+Nothing really special about them
 
+```python
+"lambda"
+"lambda body"
+```
 
-
+![](./gif/big33.gif)
 
 
 
