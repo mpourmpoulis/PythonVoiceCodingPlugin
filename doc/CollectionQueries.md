@@ -28,6 +28,13 @@ is available. the `collectable` parameter can have one of the following values
 ![](./gif/collect5.gif)
 
 
+Now there are various small things to note:
+
+* everything is collected from the entire code, so that means that the variables and parameters are collected from other functions as well
+
+* When you are collecting modules, if you import from x.y.z, all three [x.y.z,x.y,x] paths are collected!
+
+* When collecting decorators, both the entire decorator as well as the calling function is collected.
 
 ## Inserting Items
 
