@@ -170,7 +170,7 @@ Please also note that the plug-in is going to try a variety of ways to interpret
 Another,more preferable for short distances if you ask me, alternative you can use is to provide information about the relative vertical position of your ROI with a command like that:
 
 ```python
-"[smart] <vertical_direction> [<ndir>] <big_roi> [<big_roi_sub_index>]"
+"[smart] <vertical_direction> [<ndir>] <big_roi> [<sub_index>]"
 ```
 
 vertical_direction can belong to one of the two following families and as the name suggests enables you to specify whether you want something that is above or below your current cursor position.
@@ -205,7 +205,7 @@ A very important detail is that these types of queries are not limited to search
 This variant combines vertical and positional order information. 
 
 ```python
-"[smart] <vertical_direction> [<ndir>] <block> [<nth>] <big_roi> [<big_roi_sub_index>]"
+"[smart] <vertical_direction> [<ndir>] <block> [<nth>] <big_roi> [<sub_index>]"
 ```
 For the time being there is only one option available:
 
@@ -226,7 +226,7 @@ So essentially, we can specify a function using a relative vertical desciption w
 Once we have established which function we are to search, the command will then work more or less like cases one and two
 
 ```python
-"[<nth>] <big_roi> [<big_roi_sub_index>]"
+"[<nth>] <big_roi> [<sub_index>]"
 ```
 
  but will search inside that function!
