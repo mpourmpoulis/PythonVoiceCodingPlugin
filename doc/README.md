@@ -1,5 +1,22 @@
 # User Guide 
 
+## Documentation Index
+
+some quick links to the various documentation files
+
+* [Argument Queries](./SelectArgument.md)
+
+* [Big Roi Queries](./SelectBigROI.md)
+
+* [Sub Indexing](./SubIndexing.md)
+
+* [Collection Queries](./CollectionQueries.md)
+
+* [Operations](./Operations.md)
+
+* [grammar sublime interface](./GrammarSublimeInterface.md)
+
+
 ## Quick Command Overview
 
 Here we will briefly go over the commands offered. 
