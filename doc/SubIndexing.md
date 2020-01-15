@@ -1,18 +1,73 @@
+# SubIndexing 
 
-# SubIndexes
+Or the art of picking up smaller regions out of bigger ones!
 
-So far we have seen cases where we can select an entire region of interest.
-However,there are cases where you are interested in only a portion of this whole ROI. For instance there may be multiple targets in the left hand of an assignment and you want to select only one of them. Or your function may return multiple values. or your right hand side contains a dictionary and you want a specific key-value pair. In those cases the 
 
-```python 
-IntegerRefST("big_roi_sub_index",0,10),
+The core idea behind it is that most regions of interest can be conceptually broken into smaller pieces which we can enumerate. By using that enumeration we can then describe which one we want using a unified,easy to speak and even more importantly easy to remember syntax.
+
+
+![](./gif/sub0.gif)
+
+Now there are two ways in which the sub indexing functionality becomes available to the end-user:
+
+## Suffix Other Queries
+
+If you have already taken a look at [Big Roi queries](./SelectBigROI.md) then you may have noticed that the old rules contained an optional suffix `[<sub_index>]` (which of course is an integer like all indices!)
+
+
+```python
+"(smart|<operation>) <big_roi> [<sub_index>]"
 ```
-comes in useful:
+
+If this index is omitted, then the entire region of interest is selected. By including it in the command you can select only one of
+
+* multiple targets in the left hand of an assignment
+
+* multiple values of a  return  statement
+
+* multiple dotted names of an attribute on the right side of an assignment
+
+* multiple items of a list on the right side of an assignment
+
+* multiple conditions that are connected with Boolean operations to form the if condition 
+
+![](./gif/sub1.gif)
+
+Similar functionality is also available for picking up parts of a `caller` when using [argument queries](./SelectArgument.md)
+
+But of course, but when just one level deep, is not enough to handle a lot of cases. Furthermore, what if we have already somehow selected some region and want a piece of it? do we have described again? What if we can't? Also what happens even want an entire range of for the minor parts?
+
+in order to provide an answer to all these important questions, release 0.1.0 has introduced another way to use sub indexing
 
 
-![](./gif/big2.gif)
+## Dedicated Sub Indexing Commands
 
-Okay , can we do something similar for other cases? like select only a portion of an if condition?
+These queries operate on the current selection into support multiple cursors. The full syntax looks like
+
+```python
+"[(smart|<operation>)] [<nth>] part <sub_index>"
+
+"[(smart|<operation>)] [<nth>] part <sub_index> until (<sub_index2>|the end)"
+
+"[(smart|<operation>)] ([<nth>] any|any <nth2>) part <sub_index>"
+
+"[(smart|<operation>)] ([<nth>] every|every <nth2>) part <sub_index>"
+```
+
+Stripping away the [operation prefix](./Operations.md) we obtain 
+
+
+```python
+"[smart] [<nth>] part <sub_index>"
+
+"[smart] [<nth>] part <sub_index> until (<sub_index2>|the end)"
+
+"[smart] ([<nth>] any|any <nth2>) part <sub_index>"
+
+"[smart] ([<nth>] every|every <nth2>) part <sub_index>"
+```
+
+
 
 ![](./gif/big6.gif)
 
