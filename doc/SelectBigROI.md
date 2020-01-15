@@ -94,13 +94,13 @@ There are four syntaxes for you find the location of those regions of interest:
 
 
 ```python 
-"smart <big_roi> [<big_roi_sub_index>]"
+"smart <big_roi> [<sub_index>]"
 
-"[smart] <nth> <big_roi> [<big_roi_sub_index>]"
+"[smart] <nth> <big_roi> [<sub_index>]"
 
-"[smart] <vertical_direction> [<ndir>] <big_roi> [<big_roi_sub_index>]"
+"[smart] <vertical_direction> [<ndir>] <big_roi> [<sub_index>]"
 
-"[smart] <vertical_direction> [<ndir>] <block> [<nth>] <big_roi> [<big_roi_sub_index>]"
+"[smart] <vertical_direction> [<ndir>] <block> [<nth>] <big_roi> [<sub_index>]"
 ```
 
 
