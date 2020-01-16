@@ -22,11 +22,27 @@
                             },
                             { 
                               "caption": "Argument Queries",
-                              "command": "browse_url", 
+                              "command": "open_url", 
                               "args":{
                                   "url":"http://github.com/mpourmpoulis/PythonVoiceCodingPlugin/blob/master/doc/SelectArgument.md"
                               }
+                            },
+                            { 
+                              "caption": "Big Roi Queries",
+                              "command": "open_url", 
+                              "args":{
+                                  "url":"https://github.com/mpourmpoulis/PythonVoiceCodingPlugin/blob/master/doc/SelectBigROI.md"
+                              }
+                            },
+                            { 
+                              "caption": "General Documentation",
+                              "command": "open_url", 
+                              "args":{
+                                  "url":"https://github.com/mpourmpoulis/PythonVoiceCodingPlugin/blob/master/doc/README.md"
+                              }
                             }
+
+
                         ]
                     }
                 ]
