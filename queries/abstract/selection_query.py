@@ -44,7 +44,6 @@ class SelectionQuery(Query):
 				result = [m.backward(get_source_region(atok, x)) if x else None for x in result] 
 			else:
 				result = m.backward(get_source_region(atok, result)) if result else None
-			#self._get_selection(view_information,extra)
 			if alternatives:
 				alternatives = [m.backward(get_source_region(atok,x)) for x in alternatives]
 			else:
