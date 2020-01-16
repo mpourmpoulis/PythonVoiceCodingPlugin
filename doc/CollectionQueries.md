@@ -93,7 +93,7 @@ the core idea is to have commands based on the form
 
 which are going to collect variables/parameters from the current function and insert them directly. Combined in these with the ideas developed above for inserting multiple items at once, we obtain something of the form
 
-#### Variables
+### Variables
 
 ```python
 "[smart] variable <item_index>  [[and] <item_index2> [and <item_index3>]]"
@@ -105,16 +105,16 @@ which are going to collect variables/parameters from the current function and in
 
 please do pay attention to the fact that variables are extracted only from the current function this time! 
 
-#### Parameters
+### Parameters
 
 something similar applies for parameters as well
 
-![](./gif/collect4.gif)
+![](./gif/collect6.gif)
 
 however in this case we have a little bit more expressiveness available, as we can also insert barometers from other functions! 
 
 
-![](./gif/collect6.gif)
+![](./gif/collect4.gif)
 
 ```python
 "[smart] [<vertical_direction> [<ndir>] [function]] parameter <item_index>  [<item_index2> [and <item_index3>]]"
@@ -123,7 +123,7 @@ however in this case we have a little bit more expressiveness available, as we c
 "[smart] [<vertical_direction> [<ndir>] [function]] (parameters all| parameter <item_index> until (<item_index2>| the end))"
 ```
 
-notice that the syntax is very similar after the one used by big regions of interest queries `"<vertical_direction> [<ndir>] <block>"` for selecting things from other functions, but function is optional, food can also be used in the more simple and traditional `"<vertical_direction> [<ndir>]"` this was chosen so most makes things easier to speak into either way we are extracting from function definitions:)
+notice that the syntax is very similar after the one used by big regions of interest queries `"<vertical_direction> [<ndir>] <block>"` for selecting things from other functions, but function is optional, so it can also be used in the more simple and traditional `"<vertical_direction> [<ndir>]"` this was chosen so most makes things easier to speak into either way we are extracting from function definitions:)
 
 
 
