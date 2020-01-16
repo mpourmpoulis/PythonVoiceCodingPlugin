@@ -15,7 +15,7 @@
 PythonVoiceCodingPlugin is a Sublime Text 3 plugin meant to enhance user experience 
 when coding python 3 by voice. 
 
-![](./gif/big37.gif)
+![](./doc/gif/big37.gif)
 
 ## Motivation
 
