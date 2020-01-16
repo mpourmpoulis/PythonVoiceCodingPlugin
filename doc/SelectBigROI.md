@@ -75,9 +75,13 @@ now the full syntax, looks like
 
 ```python
 "(smart|<operation>) <big_roi> [<sub_index>]"
+
 "[(smart|<operation>)] <nth> <big_roi> [<sub_index>]"
+
 "[(smart|<operation>)] <vertical_direction> [<ndir>] <big_roi> [<sub_index>]"
+
 "[smart] <vertical_direction> [<ndir>] <block> [<nth>] <big_roi> [<sub_index>]"
+
 ```
 
 
@@ -85,12 +89,10 @@ As with the other selection queries,  the whole "operation" thing you see at the
 
 ![](./gif/big36.gif)
 
-Please note that in the fourth case, this prefix is missing. If you wish, nothing stops you from editing the definition to match the other three rules, I just chose it not to enable by default because I fear it might make the spoken queries too long and unnecessarily increase grammar complexity.
+Please note that in the fourth case, this prefix is missing. If you wish, nothing stops you from editing the definition to match the other three rules, I just chose it not to include by default because I fear it might make the spoken queries too long and unnecessarily increase grammar complexity.
 
 
-There are four syntaxes for you find the location of those regions of interest:
-
-
+There are four syntaxes for you to specify the location of those regions of interest:
 
 
 ```python 
@@ -104,7 +106,11 @@ There are four syntaxes for you find the location of those regions of interest:
 ```
 
 
-technically the rules you're going to see in my grammar bundles also have the prefix 
+now you might also notice that there is a common optional suffix `[<sub_index>]`
+
+If it is omitted, then the entire region of interest will be selected, whereas if it is included, the region would be sub indexed and only a part of it will be selected. It is important to note that that the sub indexing has no effect on the way your description of the location is [interpreted](#) 
+
+
 
 # Case one 
 
