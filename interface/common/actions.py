@@ -143,7 +143,7 @@ class HighlightCleverAction(InterfaceAction):
 		avoid = make_region(avoid) if avoid else []
 		avoid_sequence = make_sequence(avoid)
 		overlapping = make_sequence(region) + make_sequence(avoid)
-		print("Regent:\n",region)
+		# print("Regent:\n",region)
 		for i,(br,c) in enumerate(zip_longest(region,color_order,fillvalue = None)):
 			use_reinforced = False
 			if br  is None:
