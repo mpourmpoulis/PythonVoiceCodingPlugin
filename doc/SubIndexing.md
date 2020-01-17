@@ -68,7 +68,7 @@ Stripping away the [operation prefix](./Operations.md) we obtain
 ```
 
 
-Now looking at those I hope some Bob turns are becoming visible
+Now looking at those I hope some patterns are becoming visible
 
 * all commands end with `part` followed by `<sub_index>` which is an integer (the only exception is case to where you have range but still the same spirit)
 
@@ -78,12 +78,30 @@ Now looking at those I hope some Bob turns are becoming visible
 
 * The third and fourth command are identical with that single exception over the "any" vs "every" keyword used. these are the commands that are going to use where would we want to grab multiple selections/work with more than one things.
 
+I would also like to highlight, that if in doubt remember that all 
+
 As a consequence, we are going to present side-by-side the first with the second and the third was the fourth, while highlighting their differences!
 
 ### Standalone Part
 
+As should already probably be clear, the fundamental difference between the first and second syntaxes is that with the first you select one of the many pieces, whereas a second you can select an entire range,  in a single selection. to make things clear, consider the simplified case
+
+```python
+"part <sub_index>"
+
+"part <sub_index> until (<sub_index2>|the end)"
+```
+
+and compare the two examples
+
+![](./gif/sub6.gif)
+
+
+
+
 
 ### Any And Every Part
+
 
 ```python
 "[smart] ([<nth>] any|any <nth2>) part <sub_index>"
@@ -91,7 +109,13 @@ As a consequence, we are going to present side-by-side the first with the second
 "[smart] ([<nth>] every|every <nth2>) part <sub_index>"
 ```
 
-As mentioned previously, these are the queries you would like to use when you want to work with multiple things.
+As mentioned previously, these are the queries you would like to use when you want to work with multiple things. but how exactly does it work? the core idea behind these two queries is that we first split the original region into all of the smaller ones that make it up and then we sub index each of them! to illustrate this:
+
+![](./gif/sub7.gif)
+
+
+#### Differences Between Any And Every Keywords
+
 But what are the differences? to illustrate them, let's just start with some very simple queries without any adjectives.
 
 Well as the name suggests,`every` grabs every item in multiple selection. this is useful when you want to edit all of them simultaneously
@@ -105,7 +129,26 @@ whereas, the `any` selects the first one and present the rest as alternatives. T
 ![](./gif/sub3.gif)
 
 
+#### Nth Adjective Order
 
+With that hopefully sorted out we can move forward to discussing
+
+```python
+"([<nth>] any|any <nth2>)"
+
+"([<nth>] every|every <nth2>)"
+```
+
+What is the difference between the nth adjective before/after that any/every keyword? as was previously mentioned, old descriptions are applied from left to right and as a consequence
+
+* If there is an nth adjective before the any/every every keyword, then firstly the specified part is extracted from the original region and then the rest of the query applies on that smaller part! that means we extract from this smaller part all the even smaller parts that make it up and on each of them apply the `part <sub_index>` portion of the query. 
+
+![](./gif/sub4.gif)
+
+
+*  If there is an nth adjective before the any/every every keyword,  then from the original region first we extract all of it smaller regions and then the rest of the query including the nth adjective is applied on each of them!
+
+![](./gif/sub5.gif)
 
 
 
