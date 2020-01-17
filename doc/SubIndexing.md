@@ -68,6 +68,48 @@ Stripping away the [operation prefix](./Operations.md) we obtain
 ```
 
 
+Now looking at those I hope some Bob turns are becoming visible
+
+* all commands end with `part` followed by `<sub_index>` which is an integer (the only exception is case to where you have range but still the same spirit)
+
+* Any nth adjective comes before `part` and as we will see later on, they also get applied before it does
+
+* The first and second case are identical with the single exception of their suffix, as the second supports picking up an entire range. These are the commands that are to be used when you want to grab a single selection.
+
+* The third and fourth command are identical with that single exception over the "any" vs "every" keyword used. these are the commands that are going to use where would we want to grab multiple selections/work with more than one things.
+
+As a consequence, we are going to present side-by-side the first with the second and the third was the fourth, while highlighting their differences!
+
+### Standalone Part
+
+
+### Any And Every Part
+
+```python
+"[smart] ([<nth>] any|any <nth2>) part <sub_index>"
+
+"[smart] ([<nth>] every|every <nth2>) part <sub_index>"
+```
+
+As mentioned previously, these are the queries you would like to use when you want to work with multiple things.
+But what are the differences? to illustrate them, let's just start with some very simple queries without any adjectives.
+
+Well as the name suggests,`every` grabs every item in multiple selection. this is useful when you want to edit all of them simultaneously
+
+![](./gif/sub2.gif)
+
+
+
+whereas, the `any` selects the first one and present the rest as alternatives. This is useful when you want to edit them sequentially
+
+![](./gif/sub3.gif)
+
+
+
+
+
+
+
 
 ![](./gif/big6.gif)
 
