@@ -84,6 +84,8 @@ As a consequence, we are going to present side-by-side the first with the second
 
 ### Standalone Part
 
+#### Differences Between The Second And First Case
+
 As should already probably be clear, the fundamental difference between the first and second syntaxes is that with the first you select one of the many pieces, whereas a second you can select an entire range,  in a single selection. to make things clear, consider the simplified case
 
 ```python
@@ -97,7 +99,23 @@ and compare the two examples
 ![](./gif/sub6.gif)
 
 
+#### Nth Adjective And Two Level Sub Indexing
 
+by including the optional `<nth>` adjective, which as usual can take the following values
+
+```python
+"first"             "second"
+"third"             "fourth"
+"fifth"             "sixth"
+"seventh"           "eighth"
+"ninth"             "last"
+"second last"       "third last"
+"fourth last"
+```
+
+we can enable sub indexing to take place in two stages. In the first stage the provided ordinal adjective, extracts one of the smaller parts that make up the big gear all regional region, and then the remaining `"part <sub_index>"` is applied on the smaller part. To illustrate this
+
+![](./gif/sub8.gif)
 
 
 ### Any And Every Part
@@ -152,7 +170,7 @@ What is the difference between the nth adjective before/after that any/every key
 
 
 
-
+# Selectable
 
 ![](./gif/big6.gif)
 
