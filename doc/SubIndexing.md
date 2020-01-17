@@ -6,7 +6,7 @@ Or the art of picking up smaller regions out of bigger ones!
 The core idea behind it is that most regions of interest can be conceptually broken into smaller pieces which we can enumerate. By using that enumeration we can then describe which one we want using a unified,easy to speak and even more importantly easy to remember syntax.
 
 
-![](./gif/sub0.gif)
+![](./gif/sub9.gif)
 
 Now there are two ways in which the sub indexing functionality becomes available to the end-user:
 
@@ -170,9 +170,53 @@ What is the difference between the nth adjective before/after that any/every key
 
 
 
-# Selectable
+## Selectable
+
+### Multiple Values
+
+![](./gif/sub9.gif)
+
+### Name Nodes
+
+we can also pick up part of a camel or snake case of variable names ,and not only that!
+
+![](./gif/sub10.gif)
+
+### Strings
+
+![](./gif/big10.gif)  
+
+We can pick up parts from the URL, individual words or letters, or part of a camel or snake case. this feature is still immatur  and needs more work, but I am planning to improve and also expand it with the ability to select a whole range.
+
+
+
+
+### Boolean Operations
+
 
 ![](./gif/big6.gif)
+
+As illustrated above, you need to pay attention to how the various conditions are bound together
+(or binds weaker causing it to be higher in the AST) in the can only select smaller conditions  from the outermost level!
+
+
+### Comparisons
+
+![](./gif/big7.gif)  
+
+### Arithmetic Expressions
+
+![](./gif/big12.gif)  
+
+Once again you need to pay attention to operator precedence and as you can see there are some edge cases that need to be fixed.
+
+### Attributes
+
+
+### Subscript
+
+### Forwarding Nodes
+
 
 As illustrated above, you need to pay attention to how the various conditions are bound together
 (or binds weaker causing it to be higher in the AST) in the can only select smaller conditions  from the outermost level!
