@@ -8,7 +8,8 @@ def translate_indices(query_description,name,decrement):
 
 def decode_item_selection(items,query_description,mode,name,decrement=True):
 	indices = translate_indices(query_description,name,decrement)
-	print(indices)
+	print("Indices:\n",indices)
+	print("Items:\n",items)
 	if mode == "individual":
 		print([items[x]  for x in indices])
 		return [items[x]  for x in indices]

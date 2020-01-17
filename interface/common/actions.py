@@ -1,5 +1,7 @@
 import html
 
+from itertools import zip_longest
+
 from PythonVoiceCodingPlugin.interface.common.utility import make_region,make_sequence,all_or_nothing
 
 class InterfaceAction():
@@ -141,8 +143,11 @@ class HighlightCleverAction(InterfaceAction):
 		avoid = make_region(avoid) if avoid else []
 		avoid_sequence = make_sequence(avoid)
 		overlapping = make_sequence(region) + make_sequence(avoid)
-		for i,(br,c) in enumerate(zip(region,color_order)):
+		print("Regent:\n",region)
+		for i,(br,c) in enumerate(zip_longest(region,color_order,fillvalue = None)):
 			use_reinforced = False
+			if br  is None:
+				continue
 			for r in br:
 				use_reinforced = any(
 					(x.contains(r) and x is not r) or (r.contains(x) and x in avoid_sequence)  
@@ -152,6 +157,7 @@ class HighlightCleverAction(InterfaceAction):
 				view.add_regions(self.data["name"]+str(i+1), br,
 					  reinforced_color[c] if use_reinforced  and  single_mode else standard_color[c],"circle")
 			else:
+				print("Action:\n",self.data["name"]+str(i+1),br)
 				view.add_regions(self.data["name"]+str(i+1),br)
 
 

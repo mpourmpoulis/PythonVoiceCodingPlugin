@@ -32,13 +32,13 @@ def node_from_range_old(root,atok, r ):
 
 
 def node_from_range_new(root,atok,r):
-    print(" inside the new note from range\n",root)
+    # print(" inside the new note from range\n",root)
     inside = lambda x,y: (y[0]<=x[0]<y[1] and y[0]<x[1]<=y[1])
     generic_fix(root,atok)
-    print(" the fields are now",root._fields)
+    # print(" the fields are now",root._fields)
     for child in ast.iter_child_nodes(root):
-        print(" just to check something out",child,atok.get_text_range(child))
-        print(" and the child fields are ",child._fields)
+        # print(" just to check something out",child,atok.get_text_range(child))
+        # print(" and the child fields are ",child._fields)
         if inside(r,atok.get_text_range(child)):
             print(" success with",child)
             return node_from_range_new(child,atok,r)

@@ -169,7 +169,7 @@ class Application():
 		for name in ["result","origin", "initial_origin"]:
 			interface.push_action(HighlightCleverAction(self.state[name],name))				
 
-
+		print("\nBefore exiting query:\n",self.state,"\n")	
 		if secondary_query_description  and should_execute_secondary:
 			interface.push_action(ClearHighlightAction("alternatives"))
 			secondary_success = self.respond_to_query(interface,secondary_query_description,secondary=True)
