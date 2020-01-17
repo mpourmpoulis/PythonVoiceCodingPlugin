@@ -6,7 +6,7 @@ Or the art of picking up smaller regions out of bigger ones!
 The core idea behind it is that most regions of interest can be conceptually broken into smaller pieces which we can enumerate. By using that enumeration we can then describe which one we want using a unified,easy to speak and even more importantly easy to remember syntax.
 
 
-![](./gif/sub9.gif)
+![](./gif/sub0.gif)
 
 Now there are two ways in which the sub indexing functionality becomes available to the end-user:
 
@@ -31,7 +31,7 @@ If this index is omitted, then the entire region of interest is selected. By inc
 
 * multiple conditions that are connected with Boolean operations to form the if condition 
 
-![](./gif/sub1.gif)
+![](./gif/sub9.gif)
 
 Similar functionality is also available for picking up parts of a `caller` when using [argument queries](./SelectArgument.md)
 
