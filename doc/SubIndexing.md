@@ -62,15 +62,15 @@ Stripping away the [operation prefix](./Operations.md) we obtain
 
 "[smart] [<nth>] part <sub_index> until (<sub_index2>|the end)"
 
-"[smart] ([<nth>] any|any <nth2>) part <sub_index>"
+"[smart] ([<nth>] any|any <nth2>) part [<sub_index>]"
 
-"[smart] ([<nth>] every|every <nth2>) part <sub_index>"
+"[smart] ([<nth>] every|every <nth2>) part [<sub_index>]"
 ```
 
 
 Now looking at those I hope some patterns are becoming visible
 
-* all commands end with `part` followed by `<sub_index>` which is an integer (the only exception is case to where you have range but still the same spirit)
+* all commands end with `part` followed by `<sub_index>` which is an integer (Oneexception is case 2 where you have range  but still the same spirit)
 
 * Any nth adjective comes before `part` and as we will see later on, they also get applied before it does
 
@@ -78,7 +78,7 @@ Now looking at those I hope some patterns are becoming visible
 
 * The third and fourth command are identical with that single exception over the "any" vs "every" keyword used. these are the commands that are going to use where would we want to grab multiple selections/work with more than one things.
 
-I would also like to highlight, that if in doubt remember that all 
+
 
 As a consequence, we are going to present side-by-side the first with the second and the third was the fourth, while highlighting their differences!
 
@@ -120,11 +120,12 @@ we can enable sub indexing to take place in two stages. In the first stage the p
 
 ### Any And Every Part
 
+#### Core Idea
 
 ```python
-"[smart] ([<nth>] any|any <nth2>) part <sub_index>"
+"[smart] ([<nth>] any|any <nth2>) part [<sub_index>]"
 
-"[smart] ([<nth>] every|every <nth2>) part <sub_index>"
+"[smart] ([<nth>] every|every <nth2>) part [<sub_index>]"
 ```
 
 As mentioned previously, these are the queries you would like to use when you want to work with multiple things. but how exactly does it work? the core idea behind these two queries is that we first split the original region into all of the smaller ones that make it up and then we sub index each of them! to illustrate this:
@@ -168,6 +169,16 @@ What is the difference between the nth adjective before/after that any/every key
 
 ![](./gif/sub5.gif)
 
+#### Optional Index
+
+Finally, one thing we should also note is that for these two queries, the `<sub_index>` is optional.
+
+The reason behind this the decision is that if it is not optional, then you will only be able war on things that are at least two levels deep, which in certain cases could prove troublesome.
+
+For example,
+
+![](./gif/sub11.gif)
+
 
 
 ## Selectable
@@ -186,8 +197,7 @@ we can also pick up part of a camel or snake case of variable names ,and not onl
 
 ![](./gif/big10.gif)  
 
-We can pick up parts from the URL, individual words or letters, or part of a camel or snake case. this feature is still immatur  and needs more work, but I am planning to improve and also expand it with the ability to select a whole range.
-
+We can pick up parts from the URL, individual words or letters, or part of a camel or snake case. this feature is still immatur  and needs more work, but I am planning to improve
 
 
 
