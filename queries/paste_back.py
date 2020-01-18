@@ -27,15 +27,22 @@ class PasteBack(InsertionQuery):
 				return [(x,surrounding[0]+output+surrounding[1])  for x in selection]
 
 			elif state["mode"]=="multiple":
+				try : 
+					output = [x[query_description.get("color",0)] for x in candidates]						
+				except IndexError as  e: 
+					raise Exception("tried to obtain an alternative color that is not common!")
+					
 				if state["initial_mode"]=="single":
-					raise Exception("can't paste multiple values the same origin!")
+					print("Output:\n",output)
+					try : 
+						output = make_flat(output)
+					except :
+						pass
+					output = ",".join([surrounding[0]+x+surrounding[1]  for x in  output])
+					return [(state["initial_origin"],output)]
+					# raise Exception("can't paste multiple values the same origin!")
 
 				elif state["initial_mode"]=="multiple":
-					try : 
-						print("candidates\n",candidates)
-						output = [x[query_description.get("color",0)] for x in candidates]						
-					except IndexError as  e: 
-						raise Exception("tried to obtain an alternative color that is not common!")
 					if len(state["initial_origin"]) != len(state["origin"]):
 						print("before doing anything Palenque's ",output)
 						if len(output)==1  and isinstance(output[0],list):
