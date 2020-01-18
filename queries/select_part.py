@@ -53,8 +53,11 @@ class SelectPart(SelectionQuery):
 			if "nth2"  in query_description:
 				intermediate = [get_sub_index(x,translate_adjective[query_description["nth2"]]-1) for x in intermediate]
 				intermediate = [x  for x in intermediate if x]
-			candidates = [get_sub_index(x,query_description["sub_index"]-1) for x in intermediate]
-			candidates = [x  for x in candidates if x]
+			if "sub_index"  in query_description:
+				candidates = [get_sub_index(x,query_description["sub_index"]-1) for x in intermediate]
+				candidates = [x  for x in candidates if x]
+			else:
+				candidates = intermediate
 			if query_description["format"]==3:
 				result,alternatives = obtain_result(None, candidates)
 			elif query_description["format"]==4:
