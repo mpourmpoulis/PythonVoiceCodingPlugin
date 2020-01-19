@@ -94,16 +94,24 @@ As you can see in the last example the color you specified has to be available f
 This is a little bit of legacy code to address the need to be able to work with more than colored five alternatives.
 
 ```python
-"[smart] alternative <alternative_index>"
+"smart alternative <alternative_index>"
 ```
 
 As usual `<alternative_index>` is an integer.
 
 
+### Alternatives Do Not Persist 
+
+this is something important. If you watch carefully for the previous examples you should see that after you use a command to select say `red` alternative , all the other color regions disappear. if you do not want this, you should use the [edit operation instead](#Edit-Operation)
+
+
+
+
+But except selecting alternatives can you also do other things with them? let's find out!
+
 ## Delete Operation
 
-But except selecting alternatives you can also do all the things with them. For example you can delete an alternative
-simply by specifying its color and the cursor we will then be placed at its position,ready for editing.
+For example you can delete an alternative simply by specifying its color and the cursor we will then be placed at its position,ready for editing.
 
 ![](./gif/op8.gif)
 
@@ -128,14 +136,14 @@ Furthermore, similarly to selecting alternatives, you can simultaneously delete 
 
 ### Multiple Cursors 
 
-And of course cursors are also supported
+And of course multiple cursors are also supported
 
 ![](./gif/op7.gif)
 
 
 ### Delete Prefix Operation 
 
-As mentioned [earlier](#Introduction-To-Prefix-Operations) , prefix operations are also available
+As mentioned [earlier](#Introduction-To-Prefix-Operations) , you can also use the command  in the form of prefix operations. 
 
 ![](./gif/op11.gif)
 
@@ -145,6 +153,21 @@ also please note that the  delete operation can handle overlapping results
 
 
 ## Pasting Operation
+
+But why would we want to select some text in the first place? Other than editing it in one way or another as we have seen so far, maybe to copy  and paste it somewhere? Very likely where we are currently working or in a place with similar syntactic meaning? Well, the paste back command allows just that! 
+
+It  comes in 2(or 3 depends on your viewpoint) variants
+
+* Pasting To Initial Origin, which is by far the most common based on my usage. itself comes in to sub variants
+
+	- Traditional, which is a typical two-step approach  of waiting for the result and alternative of the selection query and then using a separate pasting command. this option also gives you some formatting options , namely surround what ever is  to be pasted with some punctuation element.
+
+	- The more optimistic and more stripped down approach of included the prefix in this selection query.
+
+* Pasting Between Alternatives
+
+
+
 
 ### Pasting To Initial Origin
 
