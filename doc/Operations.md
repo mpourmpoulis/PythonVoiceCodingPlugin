@@ -1,9 +1,9 @@
 # Operations
 
-- Introduction
-	- Colors
 
 ## Introduction
+
+Before we get started going through all of the operations available, it would be to go through some basic terms.
 
 ### Colors
 
@@ -63,19 +63,22 @@ but an important technicality is that the selection query is going to get execut
 ## Select Alternatives 
 
 
-Arguably one of the queries that will become the bread-and-butter for your daily usage
+Arguably one of the queries that will become the bread-and-butter for your daily usage  and  is arguably one of the most essential commands of the project.
 
 ```python
 "smart <color>"
 ```
 
-As they enable you to select an alternative describing it with its color
+As they enable you to select an alternative describing it with the color with which they are highlighted!
 
 ![](./gif/op4.gif)
 
+
+
+
 ### Multiple Colors
 
-But that these type of queries are notlimited to only one color. Instead you can specify more to grab them all under multiple cursors!
+But that these type of queries are not limited to only one color. Instead you can specify more to grab them all under multiple cursors!
 
 ```python
 "smart <color> [<color2> [<color3> [[and] <color4>]]]"
@@ -90,7 +93,7 @@ But things go one step ahead, and this query can also be executed even in cases 
 
 ![](./gif/op6.gif)
 
-As you can see in the last example the color you specified has to be available for all different cursors!
+As you can see in the last example the color you specified has to be available for all different cursors! That is a design decision to preserve sanity.
 
 ### Legacy Syntax
 
@@ -114,6 +117,7 @@ But except selecting alternatives can you also do other things with them? let's 
 
 ## Delete Operation
 
+
 For example you can delete an alternative simply by specifying its color and the cursor we will then be placed at its position,ready for editing.
 
 ![](./gif/op8.gif)
@@ -122,13 +126,26 @@ For example you can delete an alternative simply by specifying its color and the
 "[smart] delete <color> [<color2> [<color3> [[and] <color4>]]]"
 ```
 
+
+Now you could argue that this behavior could be easily replicated by selecting alternatives and then using the standard `clear` and that is probably how you were going to approach this task with 0.0.4. But 
+
+* this is slower, as you need two commands with a pause between them
+
+* Especially, when  used as a prefix as we will see later, delete can easily speed things up and is needed quite often  and  it provides a think for very natural experience. 
+
+* And you actually cannot not fully replicate it, at least without using the edit operation, because there is one very important difference between the delete and select alternatives commands, which we are going to address right below
+
+
+
 ### Alternatives Persist
 
-One thing that is important to note, is not unlike the previews alternative selection, the delete alternatives query does not make the other alternatives disappear! That is because it is NOT a selection query and even though it does change the current selection , it does so WITHOUT creating a new result/alternatives/origin/initial_origin. the old ones are still there! 
+Unlike the previews alternative selection, the delete alternatives query does not make the other alternatives disappear! That is because it is NOT a selection query and even though it does change the current selection , it does so WITHOUT creating a new result/alternatives/origin/initial_origin. The old ones are still there! (okay the one we just deleted is kind of empty:P)
+
+![](./gif/op9.gif)
 
 This can be convenient when you want to delete one alternative, write some new code there and then proceed to do the same on another  alternative and so on... though you need to be careful because the current implementation does not track down any code  added  to a deleted alternative, hence no color on the deleted ones
 
-![](./gif/op9.gif)
+
 
 ### Multiple Colors
 
@@ -167,24 +184,80 @@ It  comes in 2(or 3 depends on your viewpoint) variants
 
 	- The more optimistic and more stripped down approach of included the prefix in this selection query.
 
-* Pasting Between Alternatives
-
+* Pasting Between Alternatives,these rules encourage you with the latest 0.1.0 version of the plug-in and it can come in handy sometimes though I do have to tell you that  personally I do use it less than the other case.
 
 
 
 ### Pasting To Initial Origin
 
+This is actually one of the first operations provided. The core idea is:
 
+* you are editing some piece of code
+
+* You want to insert another piece of code,  which is already present somewhere else
+
+* You provide the necessary description to select it
+
+* You paste it  back to your initial location.
+
+
+The syntax to allow that is
+
+```python
+"[smart] paste [<color>] back"
+```
+
+enabling you to 
+
+* paste an alternative specified by the color keyword
+
+* or omitt it and let it operate on the main result
 
 ![](./gif/op1.gif)
 
+As a side note for those who might want to edit the grammar, please do note that , while optional , color does not have a default value!
+
 #### Surrounding Punctuation
+
+Now you might notice that in the grammar the full command is
+
+```python
+"[smart] paste [<color>] back [with <surrounding_punctuation>]"
+```
+
+by means of the last optional parameter you can specify some punctuation to surround while what ever is being pasted back. currently the available options that are provided by default are
+
+```python
+Choice("surrounding_punctuation",{
+	"quotes":    "quotes",
+	"thin quotes": ("'","'"),
+	"tickris":   ("`","`"),
+	"prekris":     ("(",")"),
+	"brax":        ("[","]"),
+	"curly":       ("{","}"),
+	"angle":     ("<",">"),
+	"dot":(".","."),
+	"underscore": ("_","_"),
+	"(comma|,)": (",",","),
+	"ace":(" "," "),
+}
+``` 
+
+And I say by default because with exception of `""` which unfortunately I have not yet been able support without special handling, there is nothing specific or special about any of the other ones. These were certain simply standard ones and I kept notation consistent with Caster. So feel free to customize to your needs, even with more complex surroundings,like why not `("if "," else ")`?
+
+
 
 ![](./gif/op2.gif)
 
 #### Note For 0.0.4 Users
 
+the old syntax which involved
 
+```python
+"paste back [<paste_back_index>]"
+```
+
+Has been removed.
 
 ### Pasting Between Alternatives
 
