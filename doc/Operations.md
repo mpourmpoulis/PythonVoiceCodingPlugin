@@ -1,5 +1,8 @@
 # Operations
 
+- Introduction
+	- Colors
+
 ## Introduction
 
 ### Colors
