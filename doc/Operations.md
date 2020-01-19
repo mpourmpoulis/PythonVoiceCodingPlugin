@@ -105,7 +105,7 @@ As usual `<alternative_index>` is an integer.
 But except selecting alternatives you can also do all the things with them. For example you can delete an alternative
 simply by specifying its color and the cursor we will then be placed at its position,ready for editing.
 
-![](./gif/op7.gif)
+![](./gif/op8.gif)
 
 ```python
 "[smart] delete <color> [<color2> [<color3> [[and] <color4>]]]"
@@ -115,30 +115,33 @@ simply by specifying its color and the cursor we will then be placed at its posi
 
 One thing that is important to note, is not unlike the previews alternative selection, the delete alternatives query does not make the other alternatives disappear! That is because it is NOT a selection query and even though it does change the current selection , it does so WITHOUT creating a new result/alternatives/origin/initial_origin. the old ones are still there! 
 
-This can be convenient when you want to delete one alternative, write some new code there and then proceed to do the same on another  alternative and so on...
+This can be convenient when you want to delete one alternative, write some new code there and then proceed to do the same on another  alternative and so on... though you need to be careful because the current implementation does not track down any code  added  to a deleted alternative, hence no color on the deleted ones
 
-![](./gif/op8.gif)
+![](./gif/op9.gif)
 
 ### Multiple Colors
 
 Furthermore, similarly to selecting alternatives, you can simultaneously delete more than one alternatives! you just need to specify more than one colors!
 
-![](./gif/op9.gif)
+![](./gif/op10.gif)
 
 
 ### Multiple Cursors 
 
 And of course cursors are also supported
 
-![](./gif/op10.gif)
+![](./gif/op7.gif)
 
 
-### Delete Prefix Operation
+### Delete Prefix Operation 
 
-
-
+As mentioned [earlier](#Introduction-To-Prefix-Operations) , prefix operations are also available
 
 ![](./gif/op11.gif)
+
+also please note that the  delete operation can handle overlapping results
+
+![](./gif/op12.gif)
 
 
 ## Pasting Operation
