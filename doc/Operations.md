@@ -309,6 +309,21 @@ for the most part pretty straightforward I think
 
 Do keep in mind that alternatives do persist, though they of course get updated 
 
+
+### Traditional Swap Operation
+
+The traditional swap operation has the following syntax
+
+```python
+"[smart] swap [<color>] back"
+```
+
+and swaps the main result/alternative of the last selection query with  its ORIGIN. Please not the initial origin, like a paste back operation does! 
+
+As an example 
+
+![](./gif/op16.gif)
+
 ### Swap Prefix 
 
 And of course this functionality is also available via the `swap` prefix! your current selection is of course going to be the origin of the "silent" selection query and it will be swapped we have that the destination described by it.  
@@ -330,7 +345,9 @@ In particular, if the main result of a selection query is a subset of its origin
 "swap main back"
 ```
 
-is going to fail. On the contrary in the prefix version, if the main result fails, the plug-in is going to try with the highest ranking alternative that does not overlap with origin. This is something I decided to implement because it can make life easier in situations like:
+is going to fail. 
+
+On the contrary in the prefix version, if the main result fails, the plug-in is going to try with the highest ranking alternative that does not overlap with origin. This is something I decided to implement because it can make life easier in situations like:
 
 ![](./gif/op15.gif)
 
@@ -340,6 +357,26 @@ Currently no variant of the swap operation supports multiple cursors.
 
 
 ## Edit Operation
+
+```python
+"edit <color> [<color2> [<color3> [[and] <color4>]]]"
+```
+
+This command works like select alternative but it does not affect neither the origin/initial_origin nor the result/alternatives. It simply changes the cursor selection!
+
+
+![](./gif/op17.gif)
+
+
+
+now this a little bit different from what we have seen so far, in in that edit command is actually pseudo-command. If you actually take a look at the grammar, what are you going to see is 
+
+```python
+"edit <color> [<color2> [<color3> [[and] <color4>]]]":
+	lazy_value("alternative",3,operation = "edit"),
+```
+
+it is actually implemented via 
 
 ## Utilities 
 
