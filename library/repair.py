@@ -49,12 +49,16 @@ UNARY = {
 	"assert","del","elif","for","global","if","import","nonlocal","raise",
 	"while","with","yield","else",
 	'+', '-', '~', '@', 'not', ('not','in') , 
-	"is",
+	"is","def","class"
 }
 
 
 STARTING_UNARY = {
 	'+', '-', '~', '@', 'not', ('not','in') , "*", "**", ("else",":"),"is",("yield","from"),
+}
+
+FORCE_NAME_UNARY = {
+	"def","class",
 }
 
 BOTH_SIDES  = {
@@ -133,6 +137,11 @@ def before_unary(t):
 	return False
 
 def after_unary(t):
+	if t[0].string in FORCE_NAME_UNARY:
+		return t[1]  is  None or not(
+			t[1].type == token.NAME
+		)
+
 	return t[1] is None  or not(
 		start_atom(t[1]) or 
 		t[1].string in STARTING_UNARY or 
