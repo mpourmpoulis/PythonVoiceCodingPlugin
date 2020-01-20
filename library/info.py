@@ -72,7 +72,7 @@ def create_fake(root,node_type,*,text = "",start_position = 0,
 	if real_tokens  and not isinstance(real_tokens,list):
 		real_tokens = [real_tokens]
 	if not real_tokens:
-		fake_token = asttokens.Token(0,text,0,0,0,
+		fake_token = asttokens.Token(0,text,(0,0),(0,0),"",
 			root.first_token.index,start_position,start_position + len(text))
 	fake_node = node_type(**kwargs) 
 	fake_node.parent = root.parent if parent is None else parent
