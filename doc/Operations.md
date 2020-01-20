@@ -225,7 +225,7 @@ Now you might notice that in the grammar the full command is
 "[smart] paste [<color>] back [with <surrounding_punctuation>]"
 ```
 
-by means of the last optional parameter you can specify some punctuation to surround while what ever is being pasted back. currently the available options that are provided by default are
+by means of the last optional parameter you can specify some punctuation to surround  what ever is being pasted back. Currently the available options that are provided by default are
 
 ```python
 Choice("surrounding_punctuation",{
@@ -288,6 +288,56 @@ you are able to paste one of the colored alternatives/result on one or multiple 
 
 
 ## Swap Operation
+
+another important operation that is addedwith 0.1.0 is Swap. Now this one is a little bit trickier than on the other ones you kinda need two selections to swap them. Like the pasting Operation it comes into  2(3) formats 
+
+* swapping a result/alternative with the origin , this is what the prefix version also does
+
+* swapping alternatives with each other and the main result 
+
+Let us start with the second case
+
+### Swap Colors 
+
+for the most part pretty straightforward I think 
+
+```python
+"[smart] swap <color> with <color2>"
+```
+
+![](./gif/op13.gif)
+
+Do keep in mind that alternatives do persist, though they of course get updated 
+
+### Swap Prefix 
+
+And of course this functionality is also available via the `swap` prefix! your current selection is of course going to be the origin of the "silent" selection query and it will be swapped we have that the destination described by it.  
+
+![](./gif/op14.gif)
+
+
+#### Final Cursor Position 
+
+Something to note, is that the cursor will be placed at the destination, which is where your original selection will be!
+
+#### A Tiny Bit Of Extra Functionality
+
+However, unlike the other commands we have seen so far,  when used in prefix mode the swap operation does not fully mimic its traditional variant. 
+
+In particular, if the main result of a selection query is a subset of its origin then attempting to run
+
+```python
+"swap main back"
+```
+
+is going to fail. On the contrary in the prefix version, if the main result fails, the plug-in is going to try with the highest ranking alternative that does not overlap with origin. This is something I decided to implement because it can make life easier in situations like:
+
+![](./gif/op15.gif)
+
+### No Multiple Cursors 
+
+Currently no variant of the swap operation supports multiple cursors.
+
 
 ## Edit Operation
 
