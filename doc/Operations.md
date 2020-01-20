@@ -131,7 +131,7 @@ Now you could argue that this behavior could be easily replicated by selecting a
 
 * this is slower, as you need two commands with a pause between them
 
-* Especially, when  used as a prefix as we will see later, delete can easily speed things up and is needed quite often  and  it provides a think for very natural experience. 
+* Especially, when  used as a prefix as we will see later, delete can easily speed things up and is needed quite often  and  it provides  for  a very natural experience. 
 
 * And you actually cannot not fully replicate it, at least without using the edit operation, because there is one very important difference between the delete and select alternatives commands, which we are going to address right below
 

@@ -8,11 +8,14 @@ The core idea behind it is that most regions of interest can be conceptually bro
 
 ![](./gif/sub0.gif)
 
+
+you can find more information about what parts you can extract [below](#selectable).
+
 Now there are two ways in which the sub indexing functionality becomes available to the end-user:
 
 ## Suffix Other Queries
 
-If you have already taken a look at [Big Roi queries](./SelectBigROI.md) then you may have noticed that the old rules contained an optional suffix `[<sub_index>]` (which of course is an integer like all indices!)
+If you have already taken a look at [Big Roi queries](./SelectBigROI.md) then you may have noticed that all the rules contained an optional suffix `[<sub_index>]` (which of course is an integer like all indices!)
 
 
 ```python
@@ -35,14 +38,14 @@ If this index is omitted, then the entire region of interest is selected. By inc
 
 Similar functionality is also available for picking up parts of a `caller` when using [argument queries](./SelectArgument.md)
 
-But of course, but when just one level deep, is not enough to handle a lot of cases. Furthermore, what if we have already somehow selected some region and want a piece of it? do we have described again? What if we can't? Also what happens even want an entire range of for the minor parts?
+But of course, but going just one level deep, is not enough to handle a lot of cases. Furthermore, what if we have already somehow selected some region and want a piece of it? Do we have to describe it again? What if we can't? Also what happens when we want an entire range of for the minor parts?
 
-in order to provide an answer to all these important questions, release 0.1.0 has introduced another way to use sub indexing
+In order to provide an answer to all these important questions, release 0.1.0 has introduced another way to use sub indexing
 
 
 ## Dedicated Sub Indexing Commands
 
-These queries operate on the current selection into support multiple cursors. The full syntax looks like
+These queries operate on the current selection  and  support multiple cursors. The full syntax looks like
 
 ```python
 "[(smart|<operation>)] [<nth>] part <sub_index>"
@@ -54,7 +57,7 @@ These queries operate on the current selection into support multiple cursors. Th
 "[(smart|<operation>)] ([<nth>] every|every <nth2>) part <sub_index>"
 ```
 
-Stripping away the [operation prefix](./Operations.md) we obtain 
+Stripping away the [operation prefix](./Operations.md#Introduction-To-Prefix-Operations) we obtain 
 
 
 ```python
@@ -147,6 +150,7 @@ whereas, the `any` selects the first one and present the rest as alternatives. T
 
 ![](./gif/sub3.gif)
 
+as alternatives persist when using [delete](./Operations.md#) or [edit](./Operations.md#)
 
 #### Nth Adjective Order
 
@@ -181,44 +185,66 @@ For example,
 
 
 
-## Selectable
+## Selectable 
+
+We have hopefully clarified the syntax and you have already probably seen some examples of what parts you can pickup from a selection. But it is time to go through them and lead to bead Maureen dictate
 
 ### Multiple Values
 
+One common case and probably one  where sub indexing feels the most natural, is when we have multiple `,` separated values. 
+
 ![](./gif/sub9.gif)
+
 
 ### Name Nodes
 
-we can also pick up part of a camel or snake case of variable names ,and not only that!
+Moving on to a case where there isn't always a proper delimiter like above. In particular , while variable names are represented as single tokens, they are often comprised by more than just one words,which are glued together via snake case or camel case or so on. With sub indexing you can pick up of those individual awards for many formats
+
 
 ![](./gif/sub10.gif)
 
+And this is not limited to variable names, but is more general as you can see below
+
+![](./gif/sub11.gif)
+
 ### Strings
+
 
 ![](./gif/big10.gif)  
 
-We can pick up parts from the URL, individual words or letters, or part of a camel or snake case. this feature is still immatur  and needs more work, but I am planning to improve
+We can pick up parts from the URL, individual words or letters, or part of a camel or snake case. despite being there since 0.0.4 and actually predating the above variable thing ,this feature is still imature  and needs more work!
 
 
 
 ### Boolean Operations
 
+Furthermore, you can pick up the individual conditions that make up a Boolean expression. However, they are also a little bit tricky as you do need to pay attention to operator precedence!
 
 ![](./gif/big6.gif)
 
-As illustrated above, you need to pay attention to how the various conditions are bound together
-(or binds weaker causing it to be higher in the AST) in the can only select smaller conditions  from the outermost level!
+
+In this example because `or` binds weaker than `and` , it is higher in the AST  and  so the two comparisons are viewed the single part. 
+
+
 
 
 ### Comparisons
 
+Once you have selected a comparison, you can also pick up the various values the are being compared
+
 ![](./gif/big7.gif)  
+
+As you can see in the above example,extracted from comparisons is not limited only to situations where there is just a left side and a right side but can handle more items. It is also not limited to standard arithmetical comparisons such as `==`,`<`, and so on but also covers cases where we  check if an item belongs to a container via the `in` keyword. 
+
+
 
 ### Arithmetic Expressions
 
+And of course it would be a big shame if you couldn't have similar functionality for arithmetical expressions. However just like Boolean operations it is one of those linear vs tree view situations  and  once again you need to pay attention to operator precedence 
+
 ![](./gif/big12.gif)  
 
-Once again you need to pay attention to operator precedence and as you can see there are some edge cases that need to be fixed.
+Unfortunately, as you can see ,there are some edge cases that need to be fixed.
 
 ### Attributes
 
