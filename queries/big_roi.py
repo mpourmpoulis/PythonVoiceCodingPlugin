@@ -122,7 +122,6 @@ class SelectBigRoi(SelectionQuery):
 		selector = lambda x:match_node(x,targets,exclusions) and generic_fix(x,build[1])
 		candidates = tiebreak_on_lca(definition_node,origin,find_all_nodes(definition_node, selector = selector))
 		candidates = [information(x)  for x in candidates if information(x)]
-		print("candidates",candidates)
 		result, alternatives = obtain_result(None, candidates)
 		return  self._backward_result(result, alternatives,build)
 
