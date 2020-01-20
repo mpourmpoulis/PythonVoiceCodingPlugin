@@ -40,8 +40,7 @@ class SwapBack(InsertionQuery):
 		for j in range(0,len(location_text)):
 			x = location_text[j]
 			y = location_text[j-1]
-			if overlap_regions(x[0],y[0]):
-				raise
+			assert not overlap_regions(x[0],y[0]),"Locations Are " + x + " " + y
 			output.append((x[0],y[1]))
 
 		return output
