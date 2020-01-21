@@ -4,7 +4,7 @@ These commands are responsible for selecting "big" regions of interest. By "big"
 
 ![](./gif/big37.gif)
 
-Regarding the available big regions of interest, you can find more details [below](#Selectable) , but I hope most of them are sufficiently self-explanatory. Now if for any reason you do not like the names I have given, you can always customize as you see fit. Remember only change the spoken part, that is the key of each key value pair , so as not to break the plug-in backened!
+Regarding the available big regions of interest, you can find more details [below](#Selectable) , but I hope most of them are sufficiently self-explanatory.  Now if for any reason you do not like the names I have given, you can always customize as you see fit. Remember only change the spoken part, that is the key of each key value pair , so as not to break the plug-in backened! 
 
 
 
@@ -67,11 +67,15 @@ Choice("big_roi",{
                 "decorator":"decorator",
                 "base class":"base class",
 
+                # "same":"same",
+
     }
 )
 ```
 
-now the full syntax, looks like
+As a final note,there is also a commented line, about which we are going to talk [later](#experimental-same).
+
+Moving on the full syntax, looks like
 
 ```python
 "(smart|<operation>) <big_roi> [<sub_index>]"
@@ -394,6 +398,19 @@ Nothing really special about them
 
 ![](./gif/big33.gif)
 
+
+### Experimental Same
+
+Now this something that probably should be official in the 0.1.0 release but eventually I chose not to. regardless of these decision I believe it is something that might be worth giving a try , simply uncomment the corresponding line
+
+```python
+# "same":"same",
+```
+
+what is the core idea? when you use `same`, the queries going to behave as if the type  of big region of interest specified was the same as there one from the last big ROI query executed! These can sometimes be handy as it is one word and can allow some tricks
+
+
+![](./gif/big38.gif)
 
 
 
