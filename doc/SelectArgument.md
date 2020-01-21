@@ -256,6 +256,23 @@ As was previously mentioned, with release 0.1.0 this type of query seen an expan
 "(argument <argument_index>|keyword <keyword_index>|keyword value <keyword_value_index>|entire keyword <entire_keyword_index>|<caller> [<sub_index>]|entire call)"
 ```
 
+### Argument Zero 
+
+I believe that by now you probably already have guessed what `argument <argument_index>` does:) So no need to go through that again. 
+
+
+However, what we haven't seen so far is how can we navigate to the argument section of a function call that currently has no arguments.  
+
+A solution to this problem introduced in 0.1.0 and I believe a natural sounding one is to include 0 in the range of values for the `argument_index` 
+
+```python
+IntegerRefST("argument_index", 0, 10), 
+```
+
+and use that to perform this task. 
+
+![](./gif/arg22.gif)
+
 ### Caller / Calling Function
 
 One important feature that was missing from older versions and the first  expansion I implemented is the ability to select the caller/calling function. This corresponds to 
@@ -332,7 +349,6 @@ Last but not least, if you want the entire function call
 ```
 
 will do the job for you:)
-
 
 
 
