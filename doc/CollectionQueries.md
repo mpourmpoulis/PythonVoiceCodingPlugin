@@ -117,15 +117,47 @@ however in this case we have a little bit more expressiveness available, as we c
 ![](./gif/collect4.gif)
 
 ```python
-"[smart] [<vertical_direction> [<ndir>] [function]] parameter <item_index>  [<item_index2> [and <item_index3>]]"
+"[smart] [<vertical_direction> [<ndir>]] parameter <item_index>  [<item_index2> [and <item_index3>]]"
 
 
-"[smart] [<vertical_direction> [<ndir>] [function]] (parameters all| parameter <item_index> until (<item_index2>| the end))"
+"[smart] [<vertical_direction> [<ndir>]] (parameters all| parameter <item_index> until (<item_index2>| the end))"
 ```
 
 notice that the syntax is very similar after the one used by big regions of interest queries `"<vertical_direction> [<ndir>] <block>"` for selecting things from other functions, but function is optional, so it can also be used in the more simple and traditional `"<vertical_direction> [<ndir>]"` this was chosen so most makes things easier to speak into either way we are extracting from function definitions:)
 
+#### Experimental 
 
+
+In the grammar bundles you are going to to see there are some extra commented lines 
+
+```python
+"[smart] [<vertical_direction> [<ndir>]] key parameter <item_index>  [ and <item_index2> [and <item_index3>]]":
+    lazy_value("collect_parameter",2,experimental = "True"),
+
+"[smart] [<vertical_direction> [<ndir>]] key (parameters all| parameter <item_index> until (<item_index2>| the end))":
+    lazy_value("collect_parameter",3,experimental = "True"),
+```
+
+
+
+this is a little bit more functionality that that the backened has been adopted to support but I am still not sure if what it offers is worth the additional grammar complexity. furthermore they are still immature and may be subject to change. As a consequence, I chose not to include them in the "official" grammar but if you want you can enable them yourself by simply commending those lines.
+
+Essentially they look just like the previous ones but in the spoken form there is a `key`  word before the parameter( which of course you can change to what ever you wish) and an additional `experimental = "True"`, which is just a temporary way to inform the plug-in that we want experimental functionality.
+
+where they defer is that instead of inserting
+
+```python
+parameter1,parameter2,...
+```
+
+they insert 
+
+```python
+parameter1=parameter1,parameter2=parameter2,...
+```
+
+
+![](./gif/collect7.gif)
 
 
 
