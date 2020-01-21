@@ -15,7 +15,7 @@ class CollectParameter(CollectionQuery):
 	indexable = True
 	label = 'Parameters'
 	def handle_single(self,view_information,query_description,extra = {}):
-		build, selection, origin = self._preliminary(view_information,query_description,extra)
+		build, selection, origin = self._preliminary(view_information = view_information,query_description = query_description,extra = extra)
 		if not  build: 
 			return None,None
 		root,atok,m,r = build 
@@ -33,6 +33,8 @@ class CollectParameter(CollectionQuery):
 
 		name_nodes = make_flat([get_argument_from_definition(x)  for x in definition_nodes])
 		names = list(OrderedDict([(x,0)  for x in name_nodes]).keys())
+		if "experimental"  in query_description:
+			names = [x + "=" + x  for x in names] 
 		if query_description["format"]==1:
 			result = None
 		else:
