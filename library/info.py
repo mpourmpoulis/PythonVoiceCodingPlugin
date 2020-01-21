@@ -389,9 +389,21 @@ def get_argument_from_call(root, index):
 	# print(" I would regret face", temporary)
 	return temporary[index] if temporary and len(temporary)>index else None
 
+
+
 def get_caller(root):
 	return root.func if match_node(root,(ast.Call)) else None
 
+def get_argument_from_empty_call(root):
+	if  not match_node(root,(ast.Call)):
+		return None
+
+	if get_argument_from_call(root,0):
+		return None 
+	return create_fake(root,ast.Name,
+		text = "",start_position = root.last_token.startpos,
+		parent = root,parent_field = "args"
+	)
 
 ################################################################
 # 	 arguments from   function definitions

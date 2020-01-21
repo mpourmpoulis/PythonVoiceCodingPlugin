@@ -2,7 +2,7 @@ import ast
 
 from PythonVoiceCodingPlugin.library import sorted_by_source_region,get_source_region,make_flat
 from PythonVoiceCodingPlugin.library.selection_node import nearest_node_from_offset,node_from_range
-from PythonVoiceCodingPlugin.library.info import identity,get_argument_from_call,get_keyword_argument, make_information ,correspond_to_index_in_call,get_caller,get_sub_index,get_weak_header
+from PythonVoiceCodingPlugin.library.info import identity,get_argument_from_call,get_keyword_argument, make_information ,correspond_to_index_in_call,get_caller,get_sub_index,get_weak_header,get_argument_from_empty_call
 import PythonVoiceCodingPlugin.library.info as info
 from PythonVoiceCodingPlugin.library.LCA import LCA
 from PythonVoiceCodingPlugin.library.level_info import LevelVisitor
@@ -27,6 +27,8 @@ class SelectArgument(SelectionQuery):
 
 	def get_information(self,query_description):
 		if "argument_index" in query_description:
+			if query_description["argument_index"]==0:
+				return make_information(get_argument_from_empty_call)
 			return make_information(get_argument_from_call,query_description["argument_index"]-1)
 		elif "keyword_index" in query_description:
 			return make_information(get_keyword_argument,query_description["keyword_index"]-1,only_keyword=True)
