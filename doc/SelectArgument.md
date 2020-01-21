@@ -37,7 +37,7 @@ Firstly the whole "operation" thing you see at the start of each command, is not
 ![](./gif/arg18.gif)
 
 
-if you want find out more you can find more information [here](doc/Operations.md). 
+if you want find out more you can find more information [here](./Operations.md). 
 
 As far as `ARGUMENT_LIKE_INFORMATION` is concerned,
 
