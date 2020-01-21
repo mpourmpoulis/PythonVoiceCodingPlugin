@@ -183,7 +183,11 @@ For example,
 
 ![](./gif/sub11.gif)
 
+#### Empty Results
 
+Now it may be the case but not every smaller part can be sub indexed the way you want. In those cases, where for instance you can't go deep enough, only the parts that are not empty are shown as a result/alternatives. To make this clear
+
+![](./gif/sub13.gif)
 
 ## Selectable 
 
@@ -248,8 +252,11 @@ Unfortunately, as you can see ,there are some edge cases that need to be fixed.
 
 ### Attributes
 
+![](./gif/sub12.gif)
+
 
 ### Subscript
+
 
 ### Forwarding Nodes
 
