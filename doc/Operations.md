@@ -243,7 +243,7 @@ Choice("surrounding_punctuation",{
 }
 ``` 
 
-And I say by default because with exception of `""` which unfortunately I have not yet been able support without special handling, there is nothing specific or special about any of the other ones. These were certain simply standard ones and I kept notation consistent with Caster. So feel free to customize to your needs, even with more complex surroundings,like why not `("if "," else ")`?
+And I say by default because with exception of `""` which unfortunately I have not yet been able support without special handling, there is nothing specific or special about any of the other ones. These were certain simply standard ones and I kept notation consistent with Caster. So feel free to customize to your needs, even with more complex surroundings,like I don't know `("if "," else ")` ?
 
 
 
@@ -261,7 +261,7 @@ Has been removed.
 
 ### Pasting Between Alternatives
 
-but you are not limited to basting only the initial origin. By means of
+but you are not limited to pasting only to the initial origin. By means of
 
 ```python
 "[smart] paste <color> on <color2> [<color3> [ [and] <color4>]]"
@@ -271,25 +271,104 @@ you are able to paste one of the colored alternatives/result on one or multiple 
 
 ![](./gif/op3.gif)
 
-### Pasting Prefix Operation
+### Paste Back Prefix Operation
+
+And at long last here we are! From my experience, this is probably  the method you are most likely going to enjoy using as 
+
+* it enables you to paste in a single step.
+
+* as a prefix query it is a bit more "silent"
+
+Using it is pretty straightforward
+
+```python
+"paste <description of region of interest>"
+```
+
+and  the corresponding region will be pasted on the current cursor position!
+
+![](./gif/op18.gif)
+
 
 
 ### Multiple Cursors
 
-#### Multiple Origins Single Result
+It is high time we address the issue of how things work with multiple cursors. Now in general it is my recommendation that if you are in doubt, you should best approach this with your intuition rather than trying to remember all the various cases. Nonetheless we are going to show some examples so that you can get the idea
+
+There are various sources which can introduce some complexity but don't be afraid
+
+
+
+To be honest,despite all these complications, I wouldn't say that my handling of this issue is ideal  and  some upgrades might probably be required but what is now released should cover most common cases.
+
+
+For the examples to follow, I may use the traditional and the prefix version interchangeably.
 
 #### Multiple Origins Multiple Results
 
+In general if you have multiple origins and multiple results their numbers need to be equal, that means every gets pasted on  precisely one initial origin! 
+
+
+##### Vanilla Example
+
+Let's begin with the most simple example. We have multiple origins , a selection query produces a single result for each one of them and each result gets pasted back to its corresponding origin.
+
+![](./gif/op19.gif)
+
+All origins and results match on the one on one, so no problem.
+
+##### Overlapping Results 
+
+But what if in the above case there were overlapping results? In such a case for up to one level deep there is no problem
+
+![](./gif/op20.gif) 
+
+This overlapping result is actually stored as 2! 
+
+
+
+
+
+#### Multiple Origins Single Result
+
+
+In situations like these, the previously mentioned rule of thumb
+
+```
+In general if you have multiple origins and multiple results their numbers need to be equal, that means every gets pasted on  precisely one initial origin!
+```
+
+of course cannot apply. Probably the most intuitive thing to do that in such cases is to paste this single result everywhere and this is the approach that has been taken
+
+![](./gif/op21.gif)
+
+
 #### Single Origin Multiple Results
 
+Finally, suppose now that you have started from just a single origin and value of many results. These can happen for instance if 
+
+* you grab alternatives under multiple cursors with select alternatives
+
+* You use a command which branches out multiple results per input selection  like `every part [<sub_index>]`
+
+* at some point you manually grabbed multiple cursors with external sublime key shortcuts and so on
+
+The current approach to this issue is to paste all of them back to the initial origin separated by `,` delimiter
+
+![](./gif/op22.gif)
 
 
+##### Surrounding Punctuation Around Every Element
 
+Also note that regarding `<surrounding_punctuation>` the approach taken
 
+![](./gif/op23.gif)
+
+these as you can see to surround every element with a punctuation and still have a `,` delimiter between them.
 
 ## Swap Operation
 
-another important operation that is addedwith 0.1.0 is Swap. Now this one is a little bit trickier than on the other ones you kinda need two selections to swap them. Like the pasting Operation it comes into  2(3) formats 
+another important operation that is addedwith 0.1.0 is Swap. Now this one is a little bit trickier than on the other ones as you kinda need two selections to swap them. Like the pasting Operation it comes into  2(3) formats 
 
 * swapping a result/alternative with the origin , this is what the prefix version also does
 
@@ -356,7 +435,7 @@ On the contrary in the prefix version, if the main result fails, the plug-in is 
 Currently no variant of the swap operation supports multiple cursors.
 
 
-## Edit Operation
+## Edit Color Operation
 
 ```python
 "edit <color> [<color2> [<color3> [[and] <color4>]]]"
@@ -368,15 +447,16 @@ This command works like select alternative but it does not affect neither the or
 ![](./gif/op17.gif)
 
 
+### Trivia
 
-now this a little bit different from what we have seen so far, in in that edit command is actually pseudo-command. If you actually take a look at the grammar, what are you going to see is 
+Now this a little bit different from what we have seen so far, in in that edit command is actually a pseudo-command. If you actually take a look at the grammar, what are you going to see is 
 
 ```python
 "edit <color> [<color2> [<color3> [[and] <color4>]]]":
 	lazy_value("alternative",3,operation = "edit"),
 ```
 
-it is actually implemented via 
+it is actually implemented via SelectAlternative followed by an edit prefix operation:P 
 
 ## Utilities 
 
