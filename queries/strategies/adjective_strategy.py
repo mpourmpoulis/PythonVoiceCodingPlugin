@@ -25,7 +25,6 @@ def adjective_strategy(
 	# we cannot operate without those parameters
 	# removed  level_nodes
 	if not atok  or not root  or not information_nodes  or not adjective_word:
-		print("disaster stroke ",atok,root,level_nodes,information_nodes,adjective_word,"\n")
 		return None, None
 
 

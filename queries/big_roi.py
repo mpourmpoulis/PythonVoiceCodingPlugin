@@ -20,6 +20,13 @@ class SelectBigRoi(SelectionQuery):
 		possibilities = {
 			1: self.case_one,2: self.case_two,3: self.case_three,4: self.case_four,
 		}
+		if query_description["big_roi"]=="same":
+			global_data = extra["global_data"]
+			try : 
+				query_description["big_roi"] = global_data["last_big"]
+			except :
+				raise Exception("Cannot use same if no other big ROI was used")
+		self._register_for_storage(last_big=query_description["big_roi"])			
 		return  possibilities[f](view_information,query_description, extra)
 
 	def preliminary(self,view_information,query_description, extra = {}):
@@ -50,6 +57,7 @@ class SelectBigRoi(SelectionQuery):
 	def decode(self,query_description,build):
 		def standard(x):
 			return x
+
 		possibilities = {
 			"return value": ((ast.Return,ast.Yield,ast.YieldFrom),(),get_return_value),
 			"pass":(ast.Pass,(),standard),

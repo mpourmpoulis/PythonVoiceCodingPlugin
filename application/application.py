@@ -11,6 +11,7 @@ class Application():
 	active_applications = {}
 	build_cache  = BuildCache()
 	global_state = {}
+	global_data = {}
 	
 	def __init__(self,vid):
 		self.history = []
@@ -45,7 +46,7 @@ class Application():
 	def respond_to_query(self,interface,query_description,secondary=False):
 		extra = {
 			"state":self.state,"global_state":Application.global_state,
-			"history":self.history,"secondary":secondary,
+			"history":self.history,"secondary":secondary,"global_data":Application.global_data,
 		}
 		view_information  = interface.get_view_information()
 		ui_information = interface.get_ui_information()
@@ -96,7 +97,7 @@ class Application():
 		if 	secondary:
 			self.state,self.global_state = self.backup
 
-
+		Application.global_data.update(s.data_for_storage)
 		if isinstance(s,SelectionQuery):
 			result = s.result 
 			alternatives  = s.alternatives
