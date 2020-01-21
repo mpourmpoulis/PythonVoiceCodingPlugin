@@ -189,6 +189,30 @@ Now it may be the case but not every smaller part can be sub indexed the way you
 
 ![](./gif/sub13.gif)
 
+
+### Semi Experimental
+
+if you decide to open up the grammar file, you're going to notice that there are a bunch of command lines in this section where this rule is written
+
+```python
+        # sub indexing rule
+        "[(smart|<operation>)] [<nth>] part <sub_index>":
+        # "[(smart|<operation>)] [<nth>] inner [<nth2>] part <sub_index>":
+            lazy_value("select_part",1),
+        "[(smart|<operation>)] [<nth>] part <sub_index> until (<sub_index2>|the end)":
+        # "[(smart|<operation>)] [<nth>] inner [<nth2>] part <sub_index> until (<sub_index2>|the end)":
+            lazy_value("select_part",2),
+        "[(smart|<operation>)] ([<nth>] any|any <nth2>) part [<sub_index>]":
+        # "[(smart|<operation>)] [<nth>] any [<nth2>] part [<sub_index>]":
+            lazy_value("select_part",3),
+        "[(smart|<operation>)] ([<nth>] every|every <nth2>) part [<sub_index>]":
+        # "[(smart|<operation>)] [<nth>] every [<nth2>] part [<sub_index>]":
+            lazy_value("select_part",4),
+```
+
+
+
+
 ## Selectable 
 
 We have hopefully clarified the syntax and you have already probably seen some examples of what parts you can pickup from a selection. But it is time to go through them and lead to bead Maureen dictate
