@@ -325,9 +325,12 @@ But what if in the above case there were overlapping results? In such a case for
 
 This overlapping result is actually stored as 2! 
 
+##### Intermediate Single
 
+In case, at some point in the successive selection queries that form a chain you end up with a single result, fear not!
+if it branches out once again to multiple results, provided these results match the number of initial origins, they are going to get pasted back and the one on one matching will start from the leftmost the rightmost.
 
-
+![](./gif/op24.gif) 
 
 #### Multiple Origins Single Result
 
