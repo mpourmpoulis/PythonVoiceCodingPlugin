@@ -56,6 +56,13 @@
                                   "url": "https://github.com/mpourmpoulis/PythonVoiceCodingPlugin/issues"
                               }
                             },
+                            { 
+                              "caption": "Grammar Installation",
+                              "command": "open_url", 
+                              "args":{
+                                  "url": "https://github.com/mpourmpoulis/PythonVoiceCodingPlugin/blob/master/bundles/README.md"
+                              }
+                            },
                             {
                                 "caption":"Grammar for Caster 1.0.0",
                                 "command": "open_file", 

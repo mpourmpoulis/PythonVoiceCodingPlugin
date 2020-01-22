@@ -2,13 +2,13 @@
 
 [![License](https://img.shields.io/badge/License-BSD%202--Clause-orange.svg)](https://opensource.org/licenses/BSD-2-Clause)
 
-![]( https://img.shields.io/static/v1?label=Version&message=0.0.4&color=green)
+![](https://img.shields.io/static/v1?label=Version&message=0.0.4&color=green)
 
-![]( https://img.shields.io/static/v1?label=Caster&message=0.5.11|0.6.11&color=blue)
+![](https://img.shields.io/static/v1?label=Caster&message=0.5.11|0.6.11|1.0.0&color=blue)
 
-![]( https://img.shields.io/static/v1?label=Aenea&message=supported&color=red)
+![](https://img.shields.io/static/v1?label=Aenea&message=supported&color=red)
 
-![]( https://img.shields.io/static/v1?label=Platform&message=Windows|Linux&color=yellow)
+![](https://img.shields.io/static/v1?label=Platform&message=Windows|Linux&color=yellow)
 
 
 
@@ -17,11 +17,19 @@ when coding python 3 by voice.
 
 ![](doc/gif/arg5.gif)
 
-# IMPORTANT NOTE: 
-Package Control installation is currently not working! please take a look at https://github.com/mpourmpoulis/PythonVoiceCodingPlugin/issues/7 and use installation via git. This will be solved ASAP.
 
 ## Update
-you can now also install via package control, see installation instructions [below](#Installation)
+
+Release 0.0.5 he's out fixing problems of 0.0.4 regarding the installation via package control and adds a useful utilities under Preferences > Package Settings  > PythonVoiceCodingPlugin iincluding links to online documentation issues, grammar bundles and so on. It is meant to be only temporary i'm currently wrapping up the development of 0.1.0. Also you should know that Caster 1.x.x is also supported but  you must enable it by saying
+
+```
+enable python voice coding plugin
+```
+
+ if you have any problem or questions regarding installation , whether of the plug-in itself or the grammar necessary to use it please let me know at my issues!
+
+
+you can now also install via package control, see installation instructions [below](#installation)
 
 ## Documentation
 
@@ -79,6 +87,10 @@ Needless to say, while coding PythonVoiceCodingPlugin , PythonVoiceCodingPlugin 
 The code is available on [github](https://github.com/mpourmpoulis/PythonVoiceCodingPlugin)
 along with its initial release (0.0.0)!
 
+### Update 0.0.5
+
+Release 0.0.5 he's out fixing problems of 0.0.4 regarding the installation via package control and adds a useful utilities under Preferences > Package Settings  > PythonVoiceCodingPlugin
+
 Update:  release 0.0.2 is out and with many thanks to @LexiconCode  there are now bundles for Caster 0.6.11! 
 Update:  Due an important error I missed, you might be faced with a situation where the pluggin cannot load and thus no commands are executed. in such a case please upgrade to release 0.0.3 which fixes it. I am sorry for any disconvenience caused!
 Update: release 0.0.4 is out shipping with aenea support.
@@ -96,6 +108,68 @@ There are of course certain limitations which I would like to make clear from th
 
 ## Installation 
 
+In order to install, you must install both the plugging as well as the corresponding [grammar](bundles/README.md). 
+
+
+There are currently two installation methods for performing the first task 
+
+
+### Package Control
+
+Release 0.0.5 fixes the errors that prevented 0.0.4 from installing directly from package control. You can now install the package simply by 
+
+- open Command Palette
+
+- execute
+
+```
+Package Control:Install Package
+```
+
+And then simply
+
+```
+PythonVoiceCodingPlugin
+```
+
+
+
+#### note for those who installed between 0.0.4 and 0.0.5 
+
+previously the installation of plug-in included running
+
+```
+Package Control:Add Repository
+```
+
+and then entering a URL to my repository
+
+```
+https://github.com/mpourmpoulis/PythonVoiceCodingPlugin
+```
+
+
+which enabled you to install directly from a master branch rather than my releases and you should be seing a fake version like v2020.01.05.( and so on ) instead of v0.0.4.
+
+This was only temporary solution  and I recommend that you ran 
+```
+Package Control:Remove Repository
+```
+
+so was only install/upgrade from releasees.
+
+
+
+
+For the time being be warned, that the plug-in has not been tested with portable versions of sublime!
+
+
+For any further installation questions, feel free to ask [here](https://github.com/mpourmpoulis/PythonVoiceCodingPlugin/issues/5)
+
+
+
+### Git Install
+
 Currently you can download the plugin directly from github and place it in sublime package folder
 
 for windows users this should be:
@@ -109,64 +183,34 @@ and on Ubuntu it is :
 ~/.config/sublime-text-3/Packages/
 ```
 
+Currently the Master Branch  and the releases  0.0.5 ships with its dependencies so the next step is not really necessary.
+
 To install dependencies,using your installation of python (this worked for me with 3.7.4 and 3.5.2) run from inside the plug-in folder (PythonVoiceCodingPlugin):
 ```bash
 python3 -m pip install --target third_party -r requirements.txt
 ```
 
-Be sure to check instructions to install the [bundles as well](bundles/README.md)
 
 
-### Package Control
 
-For the time being, as 0.0.4 is not compatible with package control, please install using the following instructions:
-
-- open Command Palette
-
-- execute 
-
-```
-Package Control:Add Repository
-```
-
-- Paste
-
-```
-https://github.com/mpourmpoulis/PythonVoiceCodingPlugin
-```
-
-- Then execute:
-
-```
-Package Control:Install Package
-```
-
-- enter
-
-```
-PythonVoiceCodingPlugin
-```
-
-you should see a fake version like v2020.01.05.( and so on ) instead of v0.0.4, which is from  master insured work out-of-the-box.
-
-Install it, and then be sure to install the bundles as well.
-
-For the time being be warned, that the plug-in has not been tested with portable versions of sublime!
-
-
-For any further installation questions, feel free to ask [here](https://github.com/mpourmpoulis/PythonVoiceCodingPlugin/issues/5)
 
 
 ## Support for voice coding framework
 
 ### Short version:
 
-For the time being the full system has been tested with Caster 0.5.11 on a Windows 10 machine. I plan better support for aenea in the near future and would love to (if possible) provide bundles for more systems on the long run:) The plugin code itself is intentionally pure python so it should probably run fine on other OS that sublime supports (tp be updated after linux test)
+they are available grammars for Caster 0.5.11,0.6.11 as well as >=1.0.0  with many thanks to [LexiconCode](https://github.com/LexiconCode)!
 
-Update: with many thanks to @LexiconCode from 0.0.2 there is a bundle for Caster 0.6.11!
+It is my highest recommendation if you are using older versions of Caster that you upgrade to the latest master. Sooner or later the plug-in is going to drop support for those older versions and either way the newer version has a lot of improvements!
 
-##### Update 0.0.4
-release 0.0.4 now [supports aenea](https://github.com/mpourmpoulis/PythonVoiceCodingPlugin/blob/master/bundles/Aenea/README.md)! the system has been tested with bundles for Caster 0.5.11  and 0.6.11 with the plug-in running on Ubuntu 16.04!
+Regarding operating system support, the plug-in has been tested both on Windows 10 and  on Ubuntu 16.04 as release 0.0.4 introduced support for [aenea](https://github.com/mpourmpoulis/PythonVoiceCodingPlugin/blob/master/bundles/Aenea/README.md)!
+
+
+
+
+
+
+
 
 ### Long version:
 
