@@ -20,26 +20,61 @@
                                     "default": "{\n\t$0\n}\n"
                                 }
                             },
-                            { 
-                              "caption": "Argument Queries",
-                              "command": "open_url", 
-                              "args":{
-                                  "url":"http://github.com/mpourmpoulis/PythonVoiceCodingPlugin/blob/master/doc/SelectArgument.md"
-                              }
+                            {
+                                "caption": "Online Documentation",
+                                "children": 
+                                [
+                                    { 
+                                      "caption": "Argument Queries",
+                                      "command": "open_url", 
+                                      "args":{
+                                          "url": "http://github.com/mpourmpoulis/PythonVoiceCodingPlugin/blob/master/doc/SelectArgument.md"
+                                      }
+                                    },
+                                    { 
+                                      "caption": "Big Roi Queries",
+                                      "command": "open_url", 
+                                      "args":{
+                                          "url":"https://github.com/mpourmpoulis/PythonVoiceCodingPlugin/blob/master/doc/SelectBigROI.md"
+                                      }
+                                    },
+                                    { 
+                                      "caption": "General Documentation",
+                                      "command": "open_url", 
+                                      "args":{
+                                          "url":"https://github.com/mpourmpoulis/PythonVoiceCodingPlugin/blob/master/doc/README.md"
+                                      }
+                                    }
+  
+  
+                                ]
                             },
-                            { 
-                              "caption": "Big Roi Queries",
-                              "command": "open_url", 
-                              "args":{
-                                  "url":"https://github.com/mpourmpoulis/PythonVoiceCodingPlugin/blob/master/doc/SelectBigROI.md"
-                              }
+                            {
+                                "caption":"Grammar for Caster 1.0.0",
+                                "command": "open_file", 
+                                "args":{
+                                  "file":"${packages}/PythonVoiceCodingPlugin/bundles/Caster/python_voice_coding_plugin_caster_v1-0-0.py"
+                                }
+
+
                             },
-                            { 
-                              "caption": "General Documentation",
-                              "command": "open_url", 
-                              "args":{
-                                  "url":"https://github.com/mpourmpoulis/PythonVoiceCodingPlugin/blob/master/doc/README.md"
-                              }
+                            {
+                                "caption":"Grammar for Caster 0.5.11",
+                                "command": "open_file", 
+                                "args":{
+                                  "file":"${packages}/PythonVoiceCodingPlugin/bundles/Caster/python_voice_coding_plugin_caster_v0-5-11.py"
+                                }
+
+
+                            },
+                            {
+                                "caption":"Grammar for Caster 0.6.11",
+                                "command": "open_file", 
+                                "args":{
+                                  "file":"${packages}/PythonVoiceCodingPlugin/bundles/Caster/python_voice_coding_plugin_caster_v0-6-11.py"
+                                }
+
+
                             }
 
 
