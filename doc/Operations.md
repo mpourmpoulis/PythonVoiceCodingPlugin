@@ -1,5 +1,49 @@
 # Operations
 
+<!-- MarkdownTOC autolink="true" -->
+
+- [Introduction](#introduction)
+	- [Colors](#colors)
+	- [Introduction To Prefix Operations](#introduction-to-prefix-operations)
+- [Select Alternatives](#select-alternatives)
+	- [Multiple Colors](#multiple-colors)
+	- [Multiple Cursors](#multiple-cursors)
+	- [Legacy Syntax](#legacy-syntax)
+	- [Alternatives Do Not Persist](#alternatives-do-not-persist)
+- [Delete Operation](#delete-operation)
+	- [Alternatives Persist](#alternatives-persist)
+	- [Multiple Colors](#multiple-colors-1)
+	- [Multiple Cursors](#multiple-cursors-1)
+	- [Delete Prefix Operation](#delete-prefix-operation)
+- [Pasting Operation](#pasting-operation)
+	- [Pasting To Initial Origin](#pasting-to-initial-origin)
+		- [Surrounding Punctuation](#surrounding-punctuation)
+		- [Note For 0.0.4 Users](#note-for-004-users)
+	- [Pasting Between Alternatives](#pasting-between-alternatives)
+	- [Paste Back Prefix Operation](#paste-back-prefix-operation)
+	- [Multiple Cursors](#multiple-cursors-2)
+		- [Multiple Origins Multiple Results](#multiple-origins-multiple-results)
+			- [Vanilla Example](#vanilla-example)
+			- [Overlapping Results](#overlapping-results)
+			- [Intermediate Single](#intermediate-single)
+		- [Multiple Origins Single Result](#multiple-origins-single-result)
+		- [Single Origin Multiple Results](#single-origin-multiple-results)
+			- [Surrounding Punctuation Around Every Element](#surrounding-punctuation-around-every-element)
+- [Swap Operation](#swap-operation)
+	- [Swap Colors](#swap-colors)
+	- [Traditional Swap Operation](#traditional-swap-operation)
+	- [Swap Prefix](#swap-prefix)
+		- [Final Cursor Position](#final-cursor-position)
+		- [A Tiny Bit Of Extra Functionality](#a-tiny-bit-of-extra-functionality)
+	- [No Multiple Cursors](#no-multiple-cursors)
+- [Edit Color Operation](#edit-color-operation)
+	- [Trivia](#trivia)
+- [Utilities](#utilities)
+	- [Setting Initial Origin](#setting-initial-origin)
+	- [Return To Origin](#return-to-origin)
+
+<!-- /MarkdownTOC -->
+
 
 ## Introduction
 
