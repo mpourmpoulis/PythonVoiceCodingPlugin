@@ -14,8 +14,8 @@ This is a SelectionQuery that was originally designed to enable you to select an
 	- [Quick note for 0.0.4 users](#quick-note-for-004-users)
 - [Case one](#case-one)
 - [Case two: Using Vertical](#case-two-using-vertical)
-		- [node for 0.0.4 users](#node-for-004-users)
-		- [handling edge cases](#handling-edge-cases)
+	- [node for 0.0.4 users](#node-for-004-users)
+	- [handling edge cases](#handling-edge-cases)
 - [Case three: Inside](#case-three-inside)
 - [Case four: Second Inside Variant](#case-four-second-inside-variant)
 - [Case five: Outer Keyword](#case-five-outer-keyword)
@@ -203,12 +203,12 @@ so you can see that
 
 * The whole logical line is scanned for alternatives ! 
 
-####  node for 0.0.4 users
+###  node for 0.0.4 users
 
 In the past the keywords up and above used to have different semantics, but with 0.1.0 this has changed, we for keywords up/sauce having now the same meaning with above. This was done so us to make things more compatible with what users might be from other grammars, and either way,judging from the personal uses of my tool,up was used nowhere near as often as below/above.
 
 
-#### handling edge cases
+### handling edge cases
 
 In a more complex scenario, if there are multiple functional calls in the physical line and you up for using an ordinal adjective, in order to to preserve sanity, the main result will be decided by taking into consideration the order of lexical appearance:
 
