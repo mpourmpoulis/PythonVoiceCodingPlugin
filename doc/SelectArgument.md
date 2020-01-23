@@ -4,6 +4,32 @@
 
 This is a SelectionQuery that was originally designed to enable you to select an argument from a function call,hence the name. With release 0.1.0, it has also been expanded so that you can pick up the calling function, below referred to as "caller", as well as the names of the keyword passed parameters.
 
+## Contents
+
+<!-- MarkdownTOC autolink="true"  -->
+
+- [Introduction](#introduction)
+	- [Quick note for 0.0.4 users](#quick-note-for-004-users)
+- [Case one](#case-one)
+- [Case two](#case-two)
+		- [quick note for 0.0.4 users](#quick-note-for-004-users-1)
+		- [handling edge cases](#handling-edge-cases)
+- [Case three](#case-three)
+- [Case four](#case-four)
+- [Case five](#case-five)
+- [Selectable](#selectable)
+	- [Argument Zero](#argument-zero)
+	- [Caller / Calling Function](#caller--calling-function)
+	- [Keyword](#keyword)
+	- [Keyword Value](#keyword-value)
+	- [Entire Keyword](#entire-keyword)
+	- [Entire Call](#entire-call)
+
+<!-- /MarkdownTOC -->
+
+
+## Introduction
+
 if you open up my bundles, you will see that the corresponding rules are:
 
 ```python

@@ -8,6 +8,41 @@ The core idea behind it is that most regions of interest can be conceptually bro
 
 ![](./gif/sub0.gif)
 
+## Contents
+
+<!-- MarkdownTOC  autolink="true"  -->
+
+- [Introduction](#introduction)
+- [Suffix Other Queries](#suffix-other-queries)
+- [Dedicated Sub Indexing Commands](#dedicated-sub-indexing-commands)
+	- [Standalone Part](#standalone-part)
+		- [Differences Between The Second And First Case](#differences-between-the-second-and-first-case)
+		- [Nth Adjective And Two Level Sub Indexing](#nth-adjective-and-two-level-sub-indexing)
+	- [Any And Every Part](#any-and-every-part)
+		- [Core Idea](#core-idea)
+		- [Differences Between Any And Every Keywords](#differences-between-any-and-every-keywords)
+		- [Nth Adjective Order](#nth-adjective-order)
+		- [Optional Index](#optional-index)
+		- [Empty Results](#empty-results)
+	- [Semi Experimental](#semi-experimental)
+- [Selectable](#selectable)
+	- [Multiple Values](#multiple-values)
+	- [Name Nodes](#name-nodes)
+	- [Strings](#strings)
+	- [Boolean Operations](#boolean-operations)
+	- [Comparisons](#comparisons)
+	- [Arithmetic Expressions](#arithmetic-expressions)
+	- [Attributes](#attributes)
+	- [Subscript](#subscript)
+	- [Forwarding Nodes](#forwarding-nodes)
+	- [new with 0.0.4](#new-with-004)
+
+<!-- /MarkdownTOC -->
+
+
+
+
+## Introduction
 
 you can find more information about what parts you can extract [below](#selectable).
 
