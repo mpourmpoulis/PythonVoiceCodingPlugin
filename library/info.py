@@ -640,8 +640,8 @@ def get_sub_index(root,index):
 	elif match_node(root,ast.With):
 		candidates = root.items
 	elif match_node(root,(ast.ExceptHandler)):
-		if root.name is not None and get_fix_data(root).get("node"):
-			candidates = [root.type,get_fix_data(root).get("node")]
+		if root.name is not None and get_fake(root,"name"):
+			candidates = [root.type,get_fake(root,"name")]
 		else:
 			candidates = [root.type]
 	elif match_node(root,(ast.keyword)):
@@ -969,14 +969,15 @@ def fix_exception_handler(root,atok):
 	if not root.type or not root.name:
 		mark_fixed(root)
 		return True
+	print("Exception Handler:\n",[root.first_token,root.last_token])
 	token = root.type.last_token
 	token = atok.find_token(next_token(atok,token),tokenize.NAME, root.name)
 	f = root.type.first_token
 	f = atok.find_token(previous_token(atok,f),tokenize.NAME, "except",reverse = True)
 	fake_name_node = create_fake(root,ast.Name,real_tokens =  token,id = token.string,ctx = ast.Load())
 	set_fake(root,"name",fake_name_node)
-	root.first_token=root.type.first_token
-	root.last_token = token
+	# root.first_token=root.type.first_token
+	# root.last_token = token
 	mark_fixed(root)
 	return True
 
