@@ -9,7 +9,7 @@
 	- [Linux  and Aenea](#linux-and-aenea)
 	- [Grammar Local Settings](#grammar-local-settings)
 		- [Show Command](#show-command)
-		- [Force RPC Local Setting](#force-rpc-local-setting)
+		- [Force RPC](#force-rpc)
 - [Quick Command Overview](#quick-command-overview)
 	- [Selection Queries](#selection-queries)
 
@@ -80,7 +80,11 @@ subl --command "python_voice_coding_plugin  {\"arg\": {\"level_index\": 0, \"sub
 
 
 
-#### Force RPC Local Setting
+#### Force RPC
+
+This is a little bit of a small trick which I'm not sure if or  how many people will find useful and  you should probably avoid it, but I have found sometimes myself using it, so who knows? 
+
+Currently my setup  for Aenea is a little bit reverse from what is used to. My host these in windows 10 machine and my guest is an Ubuntu 16.04 inside the virtual box. As a consequence pure dragonfly keystrokes can work both on the Windows Host as well as the Linux guest, whereas Aenea ones only work on the guest. Furthermore,
 
 
 
