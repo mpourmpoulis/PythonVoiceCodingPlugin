@@ -13,7 +13,7 @@ These commands are responsible for selecting "big" regions of interest. By "big"
 - [Case one](#case-one)
 - [Case two: Nth Adjective](#case-two-nth-adjective)
 - [Case three: Vertical Description](#case-three-vertical-description)
-- [Case four: Vertical Block](#case-four-vertical-block)
+- [Case four: Vertical Block And Nth Adjective](#case-four-vertical-block-and-nth-adjective)
 - [Selectable](#selectable)
 	- [Assignment And Expression Statements](#assignment-and-expression-statements)
 	- [If conditions While loops With clauses](#if-conditions-while-loops-with-clauses)
@@ -240,7 +240,7 @@ A very important detail is that these types of queries are not limited to search
 
 
 
-# Case four: Vertical Block 
+# Case four: Vertical Block And Nth Adjective
 
 
 This variant combines vertical and positional order information. 
