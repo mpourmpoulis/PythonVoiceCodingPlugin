@@ -227,15 +227,15 @@ Now it may be the case but not every smaller part can be sub indexed the way you
 
 ### Semi Experimental
 
-if you decide to open up the grammar file, you're going to notice that there are a bunch of command lines in this section where this rule is written
+if you decide to open up the grammar file, you're going to notice that there are a bunch of command lines in this section where this rule is written, and which you can uncomment to enable their functionality
 
 ```python
         # sub indexing rule
         "[(smart|<operation>)] [<nth>] part <sub_index>":
-        # "[(smart|<operation>)] [<nth>] inner [<nth2>] part <sub_index>":
+        # "[(smart|<operation>)] [<nth> [inner <nth2>]] part <sub_index>":
             lazy_value("select_part",1),
         "[(smart|<operation>)] [<nth>] part <sub_index> until (<sub_index2>|the end)":
-        # "[(smart|<operation>)] [<nth>] inner [<nth2>] part <sub_index> until (<sub_index2>|the end)":
+        # "[(smart|<operation>)] [<nth> [inner <nth2>]] part <sub_index> until (<sub_index2>|the end)":
             lazy_value("select_part",2),
         "[(smart|<operation>)] ([<nth>] any|any <nth2>) part [<sub_index>]":
         # "[(smart|<operation>)] [<nth>] any [<nth2>] part [<sub_index>]":
@@ -245,7 +245,36 @@ if you decide to open up the grammar file, you're going to notice that there are
             lazy_value("select_part",4),
 ```
 
+and what the over is the ability to go even deeper! for instance as you can see in the standalone part `nth` has been replaced by
 
+```python
+"[<nth> [inner <nth2>]]"
+```
+
+which enables you to use a second adjective after the first lot has been applied. as a consequence you are this way able to go up to three levels deep in the tree! and in the any/every case you are able to use both the functionality so for example 
+
+```python
+first every second part three
+```
+breaks down into
+
+- Pick the first part
+
+- from it extract all the smaller parts
+
+- From a very small on their part , break it down into smaller pieces and pick the second
+
+- Finally, from  every of those pieces extract  their third part 
+
+So that is effectively four levels deep!  
+
+However because 
+
+* I feared that this might be overkill to include in the official grammar  and 
+
+* frankly after spending quite a lot of time thinking of a proper spoken form for those cases, I will still not satisfied  at all with any of the three candidates I ended up with, it would most likely change in the future 
+
+I chose  to include them commended.
 
 
 ## Selectable 
