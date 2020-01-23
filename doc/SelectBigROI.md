@@ -4,6 +4,30 @@ These commands are responsible for selecting "big" regions of interest. By "big"
 
 ![](./gif/big37.gif)
 
+<!-- MarkdownTOC  autolink="true"  -->
+
+- [Case one](#case-one)
+- [Case two](#case-two)
+- [Case three](#case-three)
+- [Case four](#case-four)
+- [Selectable](#selectable)
+	- [Assignment And Expression Statements](#assignment-and-expression-statements)
+	- [If conditions While loops With clauses](#if-conditions-while-loops-with-clauses)
+	- [If expressions](#if-expressions)
+	- [Return Value](#return-value)
+	- [Iterator  and Iterable](#iterator-and-iterable)
+	- [Comprehensions](#comprehensions)
+	- [Exception Handling](#exception-handling)
+	- [Assertions And Exceptions Raising](#assertions-and-exceptions-raising)
+	- [Functional Definitions](#functional-definitions)
+	- [Class Definitions](#class-definitions)
+	- [Import](#import)
+	- [Lambda](#lambda)
+	- [Continue Break Pass](#continue-break-pass)
+	- [Experimental Same](#experimental-same)
+
+<!-- /MarkdownTOC -->
+
 Regarding the available big regions of interest, you can find more details [below](#Selectable) , but I hope most of them are sufficiently self-explanatory.  Now if for any reason you do not like the names I have given, you can always customize as you see fit. Remember only change the spoken part, that is the key of each key value pair , so as not to break the plug-in backened! 
 
 
