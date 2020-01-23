@@ -13,12 +13,12 @@ This is a SelectionQuery that was originally designed to enable you to select an
 - [Introduction](#introduction)
 	- [Quick note for 0.0.4 users](#quick-note-for-004-users)
 - [Case one](#case-one)
-- [Case two](#case-two)
-		- [quick note for 0.0.4 users](#quick-note-for-004-users-1)
+- [Case two: Using Vertical](#case-two-using-vertical)
+		- [node for 0.0.4 users](#node-for-004-users)
 		- [handling edge cases](#handling-edge-cases)
-- [Case three](#case-three)
-- [Case four](#case-four)
-- [Case five](#case-five)
+- [Case three: Inside](#case-three-inside)
+- [Case four: Second Inside Variant](#case-four-second-inside-variant)
+- [Case five: Outer Keyword](#case-five-outer-keyword)
 - [Selectable](#selectable)
 	- [Argument Zero](#argument-zero)
 	- [Caller / Calling Function](#caller--calling-function)
@@ -158,7 +158,7 @@ To deal with this issue without overloading you with too many rules to learn :),
 
 The way this works is a little bit complicated but I hope you get the main idea.
 
-## Case two 
+## Case two: Using Vertical
  
 What if you want to select something in a different line? Then you can use :
 
@@ -203,7 +203,7 @@ so you can see that
 
 * The whole logical line is scanned for alternatives ! 
 
-#### quick note for 0.0.4 users
+####  node for 0.0.4 users
 
 In the past the keywords up and above used to have different semantics, but with 0.1.0 this has changed, we for keywords up/sauce having now the same meaning with above. This was done so us to make things more compatible with what users might be from other grammars, and either way,judging from the personal uses of my tool,up was used nowhere near as often as below/above.
 
@@ -222,7 +222,7 @@ Finally, even though the argument query was originally designed to operate on a 
 
 
 
-## Case three
+## Case three: Inside
 
 now let's see something different:
 
@@ -240,7 +240,7 @@ The level_index parameter specifies the index of the argument of the outer  func
 ![](./gif/arg7.gif)
 
 
-## Case four
+## Case four: Second Inside Variant
 
 This, looks very similar to the previous one. However, instead of using the nth adjective specify the outer function call, we use it to specify which one from the nested ones we want:
 
@@ -253,7 +253,7 @@ As you can see, the syntax looks like:
 ```
 
 
-## Case five
+## Case five: Outer Keyword
 
 this final rule was added in version 0.1.0 even though and more minimal version of it was one of the first rules I experimented with when this project was still just a proof of concept. 
 
