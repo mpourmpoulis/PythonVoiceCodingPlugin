@@ -11,9 +11,9 @@ These commands are responsible for selecting "big" regions of interest. By "big"
 
 - [Introduction](#introduction)
 - [Case one](#case-one)
-- [Case two](#case-two)
-- [Case three](#case-three)
-- [Case four](#case-four)
+- [Case two: Nth Adjective](#case-two-nth-adjective)
+- [Case three: Vertical Description](#case-three-vertical-description)
+- [Case four: Vertical Block](#case-four-vertical-block)
 - [Selectable](#selectable)
 	- [Assignment And Expression Statements](#assignment-and-expression-statements)
 	- [If conditions While loops With clauses](#if-conditions-while-loops-with-clauses)
@@ -175,7 +175,7 @@ To illustrate this:
 
 
 
-# Case two 
+# Case two: Nth Adjective 
 
 If you will have a little bit more control over what select, one of the ways to achieve that is through the command
 
@@ -206,7 +206,7 @@ Please also note that the plug-in is going to try a variety of ways to interpret
 
 
 
-# Case three 
+# Case three: Vertical Description
 
 Another,more preferable for short distances if you ask me, alternative you can use is to provide information about the relative vertical position of your ROI with a command like that:
 
@@ -240,7 +240,7 @@ A very important detail is that these types of queries are not limited to search
 
 
 
-# Case four 
+# Case four: Vertical Block 
 
 
 This variant combines vertical and positional order information. 
