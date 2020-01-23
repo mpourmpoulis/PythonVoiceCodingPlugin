@@ -1,8 +1,10 @@
 # Argument Selection Command
 
-![](./gif/arg17.gif)
+
 
 This is a SelectionQuery that was originally designed to enable you to select an argument from a function call,hence the name. With release 0.1.0, it has also been expanded so that you can pick up the calling function, below referred to as "caller", as well as the names of the keyword passed parameters.
+
+![](./gif/arg17.gif)
 
 ## Contents
 
