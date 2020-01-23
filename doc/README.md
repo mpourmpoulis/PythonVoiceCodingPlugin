@@ -1,10 +1,21 @@
 # User Guide 
 
-## Table Of Contents
+<!-- MarkdownTOC  autolink="true" -->
 
-- [Documentation Index](#Documentation-Index)
+- [Documentation Index](#documentation-index)
+- [General Remarks](#general-remarks)
+	- [Experiment Or Unofficial And So On Features You Need To Enable Manually](#experiment-or-unofficial-and-so-on-features-you-need-to-enable-manually)
+	- [Grammar Plug-In Interface](#grammar-plug-in-interface)
+	- [Linux  and Aenea](#linux-and-aenea)
+	- [Grammar Local Settings](#grammar-local-settings)
+		- [Show Command](#show-command)
+		- [Force RPC Local Setting](#force-rpc-local-setting)
+- [Quick Command Overview](#quick-command-overview)
+	- [Selection Queries](#selection-queries)
 
-- [Quick Command Overview](#Quick-Command-Overview)
+<!-- /MarkdownTOC -->
+
+
 
 ## Documentation Index
 
@@ -21,6 +32,60 @@ some quick links to the various documentation files
 * [Operations](./Operations.md)
 
 * [grammar sublime interface](./GrammarSublimeInterface.md)
+
+
+## General Remarks 
+
+
+
+### Experiment Or Unofficial And So On Features You Need To Enable Manually 
+
+If you open up the grammar file, you should notice that there are various lines that are commentI like all theed
+
+### Grammar Plug-In Interface 
+
+
+
+### Linux  and Aenea
+
+Because the current implementation uses the command line interface instead of keypresses, in order for the system to work with Aenea, custom RPC is needed so that the commands can be executed on the Linux machine. with 
+
+### Grammar Local Settings
+
+In the grammar file you might notice there is a section
+
+```python
+local_settings = {
+    "show_command":False,
+    "force_rpc":False,
+}
+```
+
+which are just a couple of settings for the interested user
+
+#### Show Command 
+
+This setting is for users who are interested in how the command line interface with sublime works. By setting  to true, you should see in the NatLink window, the command that is actually sent to sublime. For instance, author speaking the utterance `below function first right 1`, which falls under the 
+
+```python
+        "[smart] <vertical_direction> [<ndir>] <block> [<nth>] <big_roi> [<sub_index>]":
+            lazy_value("big_roi",4),
+```
+
+you should see in the NatLink window
+
+```python
+subl --command "python_voice_coding_plugin  {\"arg\": {\"level_index\": 0, \"sub_index\": 1, \"format\": 4, \"vertical_direction\": \"downwards\", \"nth\": \"first\", \"command\": \"big_roi\", \"big_roi\": \"assignment right\", \"block\": \"function\", \"ndir\": 1}}"
+```
+
+
+
+#### Force RPC Local Setting
+
+
+
+
+
 
 
 ## Quick Command Overview
@@ -51,64 +116,82 @@ you may find the smart keyword in brackets
 "[smart] paste <color> back"
 ```
 
-if there are conflicts with other commands, try to remove those brackets (making smart not optional). Furthermore, I I think it is best not to put brackets in cases where I haven't.  
+if there are conflicts with other commands, try to remove those brackets (making smart not optional). Furthermore, I think it is best not to put brackets in cases where I haven't.  
 
 After the small remark let's get started!
 
 
 ### Selection Queries
 
-The most simple thing you can do is to select some text. This can be done by Selection Queries/Commands. One example of such a command is [Select Argument](SelectArgument.md) command :
+At the heart of the whole project lie selection queries, as they provide you with the most fundamental functionality, namely selecting text. To that end , the spoken form for these queries essentially consists of a description for the region you are interested in and the backend processes these descriptions in order to produce
+
+* a main result, which the plug-in is going to select and is what it thinks is the best match for your description
+
+* alternatives to that main result, the top five ranking of which are going to get color highlighted in the code. as we are going to see later you can easily select one or more of them by describing them with their color
+
+As of 0.1.0 there are three types of such queries you can use to syntactically describe some region of interest:
+
+* for selection of arguments or other parts of function calls there is the [Select Argument](SelectArgument.md) command
 
 ![](./gif/arg0.gif)
 
-Another example is [Select Big ROI](SelectBigROI.md) command :
+* for selecting big Gary region of interest such as the right hand side of an assignment or an if condition there is [Select Big ROI](SelectBigROI.md) command 
 
 ![](./gif/big0.gif)
 
-For more specifics you can view the correspondong documentation but I would like to note a couple of things about two methods that both commands more or less share in order to specify which canditate you are interested in:
+* Finally, for selecting smaller piece out of a bigger region there are the dedicated [SubIndexing](./SubIndexing.md) commands 
 
-* if you wish to specify the order of your region of interest, then you probably need an adjective :
+
+
+
+For more specifics you can view the corresponding documentation but I would like to note a couple of things about the first two methods they more or less share. Essentially, despite their differences both commands they both follow the pattern
 
 ```python
-Choice("adjective",{ 
-
-"first" : "first", "second": "second", "third": "third",
-
-"fourth": "fourth", "fifth": "fifth", "sixth": "sixth",
- 
-"seventh": "seventh", "eighth": "eighth", "ninth":"ninth", 
-  
-"last":"last", "second last": "second last",
-
-"third last": "third last", "fourth last": "fourth last", 
-
-
-} )
+[optional additional positional information] [name of what you want]
 ```
+
+In general, the second part informs the plug-in of what kind of region you are looking for  and  the first part provides additional positional information about which specific of the many candidates matching  that description. If no positional information is provided, then the nearest one, as seen from the view of the AST , will be selected. ( essentially lowest common ancestor with some additional heuristics for tie-breaking)
+ 
+
+Though the format over the additional positional information  varies greatly between commands and you should go through the corresponding documentation, for the sake of making that process easier I would like to stress out that some building blocks are common. For example 
+
+
+
+* if you wish to specify the order of your region of interest, then you probably need an `nth adjective` :
+
+```python
+```python
+"first"             "second"
+"third"             "fourth"
+"fifth"             "sixth"
+"seventh"           "eighth"
+"ninth"             "last"
+"second last"       "third last"
+"fourth last"
+```
+
+
 ![](./gif/big3.gif)
 
 and 
 
-* if you want to  specify the relative vertical position with respect to your current selection, probably you need one of these keywords: 
+* if you want to  specify the relative vertical position with respect to your current selection, probably you need one of these `<vertical_direction>` keywords: 
 
-```
-Choice("vertical_direction",{ 
 
-"up":"up", "down":"down",
+```python
+"(up|sauce|above)":"upwards",
 
-"above":"above", "below":"below", 
-
-} )
+"(down|dunce|below)":"downwards",
 ```
 
-usually followed by an integer. Beware the difference between up and above! As a rule of thumb, above only takes "interesting" lines into consideration:)
+followed by an integer. Beware though there are difference between the way these are used by the plug-in because they only take "interesting" lines into consideration.
 
 ![](./gif/arg5.gif)
 
+I do not expect these examples to make this distinction clear, just keep this in mind and will discuss it more later.
 
 
-* in certain cases you can combine these two approaches:)
+* in certain cases you can combine these two approaches
 
 ![](./gif/big5.gif)
 

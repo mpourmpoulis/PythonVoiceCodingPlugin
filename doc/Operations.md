@@ -39,8 +39,8 @@
 - [Edit Color Operation](#edit-color-operation)
 	- [Trivia](#trivia)
 - [Utilities](#utilities)
-	- [Setting Initial Origin](#setting-initial-origin)
 	- [Return To Origin](#return-to-origin)
+	- [Setting Initial Origin](#setting-initial-origin)
 
 <!-- /MarkdownTOC -->
 
@@ -507,7 +507,55 @@ it is actually implemented via SelectAlternative followed by an edit prefix oper
 
 ## Utilities 
 
-### Setting Initial Origin
+Except for the more standard operations we have seen so far, release 0.1.0 comes with a handful of hopefully useful utilities, which I plan to respond in the future. For the time being the available ones are:
+
+```python
+       "[smart] back initial":
+            lazy_value("select_back",1),
+        "smart back":
+            lazy_value("select_back",2),
+        "smart here":
+            lazy_value("remember_here",1),
+
+```
+
+So let us take a look at them!
 
 ### Return To Origin
+
+So far we have seen that we can paste things back to the initial origin, But what if you want to simply go back to it?
+Release 0.1.0 has made possible via
+
+```python
+"[smart] back initial"
+```
+
+![](./gif/op26.gif)
+
+and if you want the origin, then simply
+
+```python
+"smart back"
+```
+
+![](./gif/op27.gif)
+
+This functionality  can couple nicely with the whole state persistence that characterizes prefix operations.
+
+
+### Setting Initial Origin
+
+When we discussed the concept over the initial origin, we saw thought in order for it to change we must first cause some change to our code. While this enables us to utilize powerful successive / chains of selection queries,it is problematic for instance in cases where we want the current selection to become initial origin. To address this issue the dedicated 
+
+```python
+"smart here"
+```
+
+Was introduced 
+
+![](./gif/op28.gif)
+
+
+
+
 
