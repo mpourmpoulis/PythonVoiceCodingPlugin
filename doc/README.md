@@ -4,6 +4,10 @@
 
 - [Documentation Index](#documentation-index)
 - [General Remarks](#general-remarks)
+	- [Caster Version Supported](#caster-version-supported)
+	- [Versioning And Backwards Compatibility](#versioning-and-backwards-compatibility)
+		- [TLDR](#tldr)
+		- [Long Version](#long-version)
 	- [Experiment Or Unofficial And So On Features You Need To Enable Manually](#experiment-or-unofficial-and-so-on-features-you-need-to-enable-manually)
 	- [Grammar Plug-In Interface](#grammar-plug-in-interface)
 	- [Linux  and Aenea](#linux-and-aenea)
@@ -19,7 +23,9 @@
 
 ## Documentation Index
 
-some quick links to the various documentation files
+* `WARNING` the following links contain pages heavy in gifs making their size relatively big. If you are on mobile, it might be best to view them via wifi instead of mobile data.
+
+Some quick links to the various documentation files
 
 * [Argument Queries](./SelectArgument.md)
 
@@ -36,7 +42,49 @@ some quick links to the various documentation files
 
 ## General Remarks 
 
+### Caster Version Supported
 
+Currently   Caster 0.5, 0.6, 1.0 are all supported but it is my recommendation that you update to the latest master or anything >=1.0, as 1.0.0 introduced various improvements and sooner or later support for the two older versions of Caster or will be dropped.
+
+### Versioning And Backwards Compatibility
+
+
+#### TLDR
+
+If at some point you upgraded the main plugin to version 0.1.x, you do not need to manually upgrade your grammar file as well, you can still use the old 0.1.0 grammar.
+
+#### Long Version
+
+As this project is a two-part system, consisting of both
+
+* grammar files and 
+
+* the main plug-in
+
+a question that arises is whether you can use a grammar file with the plug-in ,when their versions are different.
+This is very important because as a consequence of this architecture ,upgrades may require changes to 
+
+- Only the grammar file, for instance when changing only the spoken form of a command
+
+- Only the main plug-in, for instance when fixing a bug that appears in an edge case
+
+- Both the grammar and the main plug-in, for instance when adding completely new commands
+
+
+
+so these could be a source of confusion. In order to avoid these confusion as well as the burden of constantly manually copy pasting the grammar files
+
+* Changes to the  existing grammar will only be made on minor releases!
+
+* Patches are only going to affect the backened
+
+As a consequence you can use the grammar released with  0.1.0 with any of the 0.1.x versions of the plug-in. there will be none the less two exceptions to that rule
+
+- If there's a small critical bug that I have missed the grammar, in which case you will be notified accordingly
+
+- Experimental features, which are either way not stable and not enabled by default!
+
+We're going to see more about them.
 
 ### Experiment Or Unofficial And So On Features You Need To Enable Manually 
 
