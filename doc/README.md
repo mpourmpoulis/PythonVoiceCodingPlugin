@@ -40,17 +40,36 @@ some quick links to the various documentation files
 
 ### Experiment Or Unofficial And So On Features You Need To Enable Manually 
 
-If you open up the grammar file, you should notice that there are various lines that are commentI like all theed
+If you open up the grammar file, you should notice that there are various lines that are commented. These are features that do require modifications to the grammar bundles but which I have chosen to leave out from "official" grammar because I consider them likely going to be subject to change. This might be because they 
 
+- are experimental features that may need enhancements and further testing before settling on their final version 
 
+- are a solution that is only meant temporarily until the next minor release introduce a proper one
 
+- enhance existing functionality, but with a grammar complex cost which not all users might want.
+
+Whatever the case, what you should keep in mind is that 
+
+* They are supported by the backend
+
+* I can't really guarante that they will not receive changes on the grammar side between patches
+
+If you're interested,here are some you can try:
 
 
 * [Same in big ROI](./SelectBigROI.md#temporarily-until-small-regions)
 
 * [Temporary workaround for small regions](./SelectBigROI.md#temporary-until-small-regions)
 
+* [Going deeper with sub indexing](./SubIndexing.md#Semi-Experimental)
+
 * [Formatting parameter insertion](./CollectionQueries.md#experimental)
+
+* [Paste Back Experimental Formatting Options](./Operations.md#Experimental-Formatting-Options)
+
+
+Feedback Is Much Appreciated!
+
 
 ### Grammar Plug-In Interface 
 
