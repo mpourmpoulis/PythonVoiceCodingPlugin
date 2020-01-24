@@ -42,6 +42,16 @@ some quick links to the various documentation files
 
 If you open up the grammar file, you should notice that there are various lines that are commentI like all theed
 
+
+
+
+
+* [Same in big ROI](./SelectBigROI.md#temporarily-until-small-regions)
+
+* [Temporary workaround for small regions](./SelectBigROI.md#temporary-until-small-regions)
+
+* [Formatting parameter insertion](./CollectionQueries.md#experimental)
+
 ### Grammar Plug-In Interface 
 
 

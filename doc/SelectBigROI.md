@@ -29,6 +29,7 @@ These commands are responsible for selecting "big" regions of interest. By "big"
 	- [Lambda](#lambda)
 	- [Continue Break Pass](#continue-break-pass)
 	- [Experimental Same](#experimental-same)
+	- [Temporary Until Small Regions](#temporary-until-small-regions)
 
 <!-- /MarkdownTOC -->
 
@@ -100,11 +101,20 @@ Choice("big_roi",{
 
                 # "same":"same",
 
+                # "string" : "string",
+                # "integer literal" : "integer literal",
+                # "dictionary" : "dictionary",
+                # "list" : "list",
+                # "tuple" : "tuple",
+                # "set" : "set",
+                # "key" : "key",
+
+
     }
 )
 ```
 
-As a final note,there is also a commented line, about which we are going to talk [later](#experimental-same).
+As a final note,there is also a commented line and an entire commented block, about which we are going to talk [later](#experimental-same)  and [later](#temporary-until-small-regions) respectively.
 
 Moving on the full syntax, looks like
 
@@ -446,12 +456,26 @@ what is the core idea? when you use `same`, the queries going to behave as if th
 
 
 
+### Temporary Until Small Regions
+
+What follows has a nearly one hundred percent chance of getting removed in the future :)
+
+One of the weaknesses of the 0.1.0 release is that it does not include support for small regions via dedicated commands so in order to extract them, currently you need to use sub indexing. This of course is not always satisfying and in certain cases can even be very annoying (for instance when editing json file). As a temporary solution so that you have something to get by until release 0.2.0 introduces small regions of interest properly , the following regions have been added as Big Roi 
+
+
+```python
+# "string" : "string",
+# "integer literal" : "integer literal",
+# "dictionary" : "dictionary",
+# "list" : "list",
+# "tuple" : "tuple",
+# "set" : "set",
+# "key" : "key",
+```
 
 
 
-
-
-
+The way they work with  nth adjectives might feel even more clumsy than usual, but this is only temporary. 
 
 
 
