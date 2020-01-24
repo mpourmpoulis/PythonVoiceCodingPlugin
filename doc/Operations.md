@@ -18,6 +18,7 @@
 - [Pasting Operation](#pasting-operation)
 	- [Pasting To Initial Origin](#pasting-to-initial-origin)
 		- [Surrounding Punctuation](#surrounding-punctuation)
+			- [Experimental Formatting Options](#experimental-formatting-options)
 		- [Note For 0.0.4 Users](#note-for-004-users)
 	- [Pasting Between Alternatives](#pasting-between-alternatives)
 	- [Paste Back Prefix Operation](#paste-back-prefix-operation)
@@ -273,7 +274,7 @@ by means of the last optional parameter you can specify some punctuation to surr
 
 ```python
 Choice("surrounding_punctuation",{
-	"quotes":    "quotes",
+	"quotes":    ("quotes","quotes")
 	"thin quotes": ("'","'"),
 	"tickris":   ("`","`"),
 	"prekris":     ("(",")"),
@@ -287,11 +288,32 @@ Choice("surrounding_punctuation",{
 }
 ``` 
 
-And I say by default because with exception of `""` which unfortunately I have not yet been able support without special handling, there is nothing specific or special about any of the other ones. These were certain simply standard ones and I kept notation consistent with Caster. So feel free to customize to your needs, even with more complex surroundings,like I don't know `("if "," else ")` ?
+And I say by default because with exception of `""` which unfortunately I have not yet been able support without special handling due to escaping issues, there is nothing specific or special about any of the other ones. These were certain simply standard ones and I kept notation consistent with Caster. So feel free to customize to your needs, even with more complex surroundings.
 
 
+
+##### Experimental Formatting Options
+
+currently this is only experimental and most likely subject to change, but as an extension to the above surrounding options, the backend for 0.1.0 also supports that you provide a single string instead of a tuple. In such a case, instead of pasting something like
+
+```python
+surrounding[0] + result + surrounding[1]
+```
+
+we can denote with  `$$` the text that is to be pasted back, then this string will be pasted but with a corresponding text replacing the `$$` ! To make this clearer with an example 
+
+```python
+"truth comprehension":"$$ = [x  for x in $$ if x]",
+"force list": "$$ if isinstance($$,list) else [$$] ",
+"key value":"quotes$$quotes:$$",
+```
+
+you can do things like
 
 ![](./gif/op2.gif)
+
+
+Of course this is still pretty primitive, and serious will be needed to make format options truly powerful, but I would love to hear your thoughts, regarding whether you find this useful!
 
 #### Note For 0.0.4 Users
 
@@ -530,7 +552,7 @@ Release 0.1.0 has made possible via
 "[smart] back initial"
 ```
 
-![](./gif/op26.gif)
+
 
 and if you want the origin, then simply
 
@@ -538,10 +560,14 @@ and if you want the origin, then simply
 "smart back"
 ```
 
+![](./gif/op26.gif)
+
+Please pay attention because this is actually a selection query and does a consequence it also does set the origin!
+So in the last example,even though we are going back to the initial origin, our selection before doing so is accessible via `smart back`!
+
+Something also of importance is that this functionality  can couple nicely with the whole state persistence that characterizes prefix operations.
+
 ![](./gif/op27.gif)
-
-This functionality  can couple nicely with the whole state persistence that characterizes prefix operations.
-
 
 ### Setting Initial Origin
 
