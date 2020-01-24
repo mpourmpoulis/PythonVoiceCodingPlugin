@@ -283,6 +283,12 @@ def get_with_items(root):
 		root.items if match_node(root,ast.With) else None
 	)
 
+
+def get_subscript_key(root):
+	return (
+		root.slice if match_node(root,ast.Subscript) else None
+	)
+
 # need to revisit this
 def get_body(root):
 	return (

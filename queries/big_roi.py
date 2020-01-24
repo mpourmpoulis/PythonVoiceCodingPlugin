@@ -102,6 +102,16 @@ class SelectBigRoi(SelectionQuery):
             "decorator":((ast.AST),(),identity(is_decorator)),
             "base class":((ast.AST),(),identity(is_base)),
 
+            # to be removed with the next release 
+            "string":((ast.Str),(),standard),
+            "integer literal":((ast.Num),(),standard),
+            "dictionary":((ast.Dict),(),standard),
+            "set":((ast.Set),(),standard),
+            "tuple":((ast.Tuple),(),standard),
+            "list":((ast.List),(),standard),
+            "key":((ast.Subscript),(),get_subscript_key),
+
+
 
 		}
 
