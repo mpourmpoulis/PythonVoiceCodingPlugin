@@ -114,7 +114,7 @@ Choice("big_roi",{
 )
 ```
 
-As a final note,there is also a commented line and an entire commented block, about which we are going to talk [later](#experimental-same)  and [later](#temporary-until-small-regions) respectively.
+As a final note,there is also a commented line and an entire commented block separated by an empty line, about which we are going to talk [later](#experimental-same)  and [later](#temporary-until-small-regions) respectively.
 
 Moving on the full syntax, looks like
 
@@ -290,7 +290,7 @@ Once we have established which function we are to search, the command will then 
 
 ### Assignment And Expression Statements
 
-probably one of the most basic examples and one of the most frequently used ones as well
+Probably one of the most basic examples and one of the most frequently used ones as well
 
 ```python
 "(assignment right| right)" 
@@ -336,9 +336,9 @@ and because I forgot one rather important case
  
 Please note 
 
-* that empty return values can be selected and must be taken into account when counting ndir
+* that empty return values can be selected and must be taken into account when counting `ndir`
 
-* yield is also covered under this case
+* `yield` is also covered under this case
 
 ![](./gif/big32.gif)
 
@@ -430,11 +430,12 @@ please do pay attention, the sub indexing Lambda has the same effect as Lambda B
 
 ### Continue Break Pass
 
-Nothing really special about them
+Nothing really special about them, mostly there for the sake of completeness!
 
 ```python
-"lambda"
-"lambda body"
+"pass":"pass",
+"break" : "break",
+"continue" : "continue",
 ```
 
 ![](./gif/big33.gif)

@@ -76,7 +76,7 @@ so these could be a source of confusion. In order to avoid these confusion as we
 
 * Changes to the  existing grammar will only be made on minor releases!
 
-* Patches are only going to affect the backened
+* Patches are only going to affect the backend
 
 As a consequence you can use the grammar released with  0.1.0 with any of the 0.1.x versions of the plug-in. there will be none the less two exceptions to that rule
 
@@ -100,12 +100,12 @@ Whatever the case, what you should keep in mind is that
 
 * They are supported by the backend
 
-* I can't really guarante that they will not receive changes on the grammar side between patches
+* I can't really guarantee that they will not receive changes on the grammar side between patches
 
 If you're interested,here are some you can try:
 
 
-* [Same in big ROI](./SelectBigROI.md#temporarily-until-small-regions)
+* [Same in big ROI](./SelectBigROI.md#temporary-until-small-regions)
 
 * [Temporary workaround for small regions](./SelectBigROI.md#temporary-until-small-regions)
 
@@ -225,7 +225,7 @@ because virtually every command starts with the keyword smart!
 "smart <color> [alternative]"
 ```
 
-This was chosen in order to minimize chances of collision with other commands on your system. However, because for a variety of commands, ommitting the keyword smart makes them more convenient and easier to speak
+This was chosen in order to minimize chances of collision with other commands on your system. However, because for a variety of commands, omitting the keyword smart makes them more convenient and easier to speak
 you may find the smart keyword in brackets
 
 ```python
@@ -243,13 +243,21 @@ After the small remark let's get started!
 
 ### Selection Queries
 
-At the heart of the whole project lie selection queries, as they provide you with the most fundamental functionality, namely selecting text. To that end , the spoken form for these queries essentially consists of a description for the region you are interested in and the backend processes these descriptions in order to produce
+At the heart of the whole project lie selection queries, as they provide you with the most fundamental functionality, namely selecting text. To that end , the spoken form for these queries essentially consists of a description for the region you are interested in and the backend processes these descriptions in order to decide what it should select. However apart from the
 
-* a main result, which the plug-in is going to select and is what it thinks is the best match for your description
+* main result,which  is what it thinks is the best match for your description, the plug-in is also going to produce
 
-* alternatives to that main result, the top five ranking of which are going to get color highlighted in the code. as we are going to see later you can easily select one or more of them by describing them with their color
+* alternatives,which are other possible matches and  the top five ranking of which are going to get color highlighted in the code. 
 
-As of 0.1.0 there are three types of such queries you can use to syntactically describe some region of interest:
+The available colors are:
+
+```python
+"red","blue","green","yellow","orange"
+```
+
+and they will be assigned to alternatives in that order. As a note, if there are overlaps, the colors might be more intense or changed a bit. As we are going to see later you can easily select one (or even more of them) instead of the main result simply by describing them with their color.
+
+As of 0.1.0 there are three main such queries:
 
 * for selection of arguments or other parts of function calls there is the [Select Argument](SelectArgument.md) command
 
