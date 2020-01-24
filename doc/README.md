@@ -77,7 +77,46 @@ Feedback Is Much Appreciated!
 
 ### Linux  and Aenea
 
-Because the current implementation uses the command line interface instead of keypresses, in order for the system to work with Aenea, custom RPC is needed so that the commands can be executed on the Linux machine. with 
+Oversimplifying, in order for you to execute remote actions with Aenea ,the client sends json rpc to the server,which contains a description of which function to run on the server side and what arguments to pass to the function. 
+
+Because the current Grammar Plug-In Interface uses the sublime command line interface instead of keypresses, we need a custom function on the server-side to invoke it. To that end we need to create a server plug-in defining that function and have the client send custom RPC that will instruct the server to use it on the Linux machine. 
+
+You can find more details [here](../bundles/Aenea/README.md) about how to install this server plug-in, but essentially it comes down to copy pasting BOTH following files
+
+- PythonVoiceCodingPluginAeneaServer.py
+
+- PythonVoiceCodingPluginAeneaServer.yapsy-plugin
+
+which you can retrieve from `bundles/Aenea` folder to the appropriate server plug-in folder of the Linux machine
+
+
+
+On the client side, is more or less automatically for you, as when 
+
+```python
+settings.SETTINGS["miscellaneous"]["use_aenea"]
+```
+
+is true and which you can set in your  Caster settings.toml  file , when the grammar loads it will sent
+
+```python
+using_rpc = True
+```
+
+and after every utterance instead of invoking
+
+```python
+send_sublime("python_voice_coding_plugin", data)
+```
+
+The function
+
+```python
+aenea.communications.server.python_voice_coding_plugin_aenea_send_sublime(c="python_voice_coding_plugin",data=data)
+```
+
+will be executed transmitting the RPC!
+
 
 ### Grammar Local Settings
 
