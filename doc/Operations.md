@@ -46,6 +46,7 @@
 - [Utilities](#utilities)
 	- [Return To Origin](#return-to-origin)
 	- [Setting Initial Origin](#setting-initial-origin)
+	- [More On Prefix Operations](#more-on-prefix-operations)
 
 <!-- /MarkdownTOC -->
 
@@ -130,12 +131,29 @@ as you can see, that is quite and lot of value in maintaining information about 
 
 #### Clarifying Successive
 
-By successive selection queries,
+By successive, we mean queries between which no change is undertaken with the file, including those that get undone!
 
 
+To illustrate this, we are going to use the `back initial` command which returns the cursor to the initial origin.
+
+Compare
+
+![](./gif/op30.gif) 
+
+With 
+
+![](./gif/op31.gif)
 
 
+As you can see, we can actually use non-plugging commands that move the cursor in between them and there's still no problem. The whole succession think breaks  and  the initial origin is reset only when there is change introduced. 
 
+
+But it is very important to note that the initial origin does not automatically reset when there is change. It with only set off the next selection query. This is very important because it allows you to actually process  text at some location you've jumped into and yet retain your point of origin to return to! 
+ 
+
+![](./gif/op32.gif)
+
+This is something that would become very important when we discuss prefix operations!
 
 
 
@@ -170,7 +188,7 @@ what is going to happen after your single spoken command is that the plug-in wil
 
 - And is then followed by a secondary operation query operating on the main result
 
-but an important technicality is that the selection query is going to get executed "silently"
+But an important technicality is that the selection query is going to get executed "silently"
 
 
 
@@ -654,6 +672,35 @@ When we discussed the concept over the initial origin, we saw thought in order f
 Was introduced 
 
 ![](./gif/op28.gif)
+
+
+
+
+### More On Prefix Operations 
+
+
+When we talked earlier about prefix operations, it was briefly mentioned that these are executed silently. But what does it mean? It means that actions can be taken such as selecting some text, inserting or removing some text but at the end of the day these double queries do not change the state the way simple selection queries do. They do not set
+
+- result
+
+- alternatives
+
+- origin
+
+- initial_origin
+
+
+To illustrate this using the `edit` operation
+
+![](./gif/op29.gif)
+
+
+
+
+
+
+
+
 
 
 
