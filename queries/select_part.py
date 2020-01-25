@@ -26,7 +26,7 @@ class SelectPart(SelectionQuery):
 			return None,None
 		root,atok,m,r  = build 
 		selection = m.forward(selection)
-		origin = nearest_node_from_offset(root,atok, selection[0]) if selection[0]==selection[1] else node_from_range(root,atok, selection)
+		origin = nearest_node_from_offset(root,atok, selection[0],special = True) if selection[0]==selection[1] else node_from_range(root,atok, selection,special = True)
 		if selection[0]==selection[1]:
 			return None,None
 		second_origin = origin

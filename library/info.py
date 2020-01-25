@@ -605,7 +605,8 @@ def get_sub_index(root,index):
 		if len(root)!=1:
 			candidates =  root
 		else:
-			root = root[0]
+			# root = root[0]
+			return get_sub_index(root[0],index)
 	
 	if match_node(root,(ast.List,ast.Tuple,ast.Set)):
 		candidates =  root.elts
