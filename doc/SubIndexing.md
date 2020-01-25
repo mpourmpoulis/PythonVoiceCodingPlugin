@@ -34,6 +34,7 @@ The core idea behind it is that most regions of interest can be conceptually bro
 	- [Arithmetic Expressions](#arithmetic-expressions)
 	- [Attributes](#attributes)
 	- [Subscript](#subscript)
+	- [Old Name As New Name](#old-name-as-new-name)
 	- [Forwarding Nodes](#forwarding-nodes)
 	- [new with 0.0.4](#new-with-004)
 
@@ -345,8 +346,38 @@ Unfortunately, as you can see ,there are some edge cases that need to be fixed.
 
 ### Subscript
 
+Currently subscripts are addressed by release 0.1.0 in the following manner
+
+```python
+first_part[second_part]
+```
+
+![](./gif/sub16.gif)
+
+
+Compared to want to use to be the case in 0.0.4, this means that you can easily select the object that is being subscripted and that you can grab the whole "index" within the brackets. Because of course the subscript index may 
+
+* consist of more than one indices
+
+* be the form  `lower:upper:step`
+
+* or combination of the above,
+
+in order to grab the individual items,you need to go to level deep
+
+![](./gif/sub17.gif)
+
+
+### Old Name As New Name 
+
+
+
+
+![](./gif/sub18.gif)
 
 ### Forwarding Nodes
+
+
 
 ![](./gif/sub14.gif)
 
