@@ -132,6 +132,36 @@ For communication between the  grammar and the main plug-in  the [sublime comman
 
 #### Core Idea
 
+In the main plug-in file, I define the following class
+
+```python
+class PythonVoiceCodingPluginCommand(sublime_plugin.TextCommand):
+```
+out of which sublime is going to make a command with a name
+
+```python
+"python_voice_coding_plugin"
+```
+
+When this command is invoked one way or another, it will run the following  method
+
+```python
+def run(self, edit,arg):
+```
+
+where `edit`  is something supplied from sublime  and  `arg` is an argument I defined  and  is going to be a dictionary containing all the information we need to describe the query. 
+
+so the plan is to invoke the command line with the following command
+
+```bash
+subl --command python_voice_coding_plugin { "arg" : {
+		our parameters 
+  }
+}
+```
+
+
+
 Suppose we use a command like
 
 ```
@@ -147,7 +177,25 @@ As we're going to see later, this corresponds to the second variant of the [big 
 
 now what we want is to inform sublime of both the type  and variant of query to be executed, as well as all the necessary parameters
 
+* `nth` is a `Choice` which contains the mapping `"first" : "first"` so we're sending `"first"`
 
+* `big_roi` is a `Choice` which contains the mapping `"(assignment right| right)" : "assignment right"` so we are sending `"assignment right"`
+
+* `sub_index` is an optional `IntegerRefST("sub_index",1,10)`  so we are sending simply the number `2`
+
+* `operation` is a `Choice` which can take the following values
+
+```python
+Choice("operation",{
+                "paste": "paste",
+                "delete":"delete",
+                "swap": "swap",
+                "edit": "edit",
+            }
+        )
+```
+
+Since none of them were  spoken and it has no default value, we don't send anything for it.
 
 
 The script is going to invoke the subl commandline tool with a command like that ignoring some technicalities looks like
@@ -173,9 +221,21 @@ subl --command "python_voice_coding_plugin  {\"arg\": {\"level_index\": 0, \"sub
 
 which is a little bit different because 
 
-* For things to work in the command line we need to escape quotes
+* For things to [work](https://readthedocs.org/projects/sublime-text-unofficial-documentation/downloads/pdf/latest/#page=63) in the command line, we need to pass both the command name and the dictionary containing our parameters as a single argument. In order to do that we need to encompass them both inside `"`  and  escape  all other quotes,something which is also giving me a  bit of trouble with [this](./Operations.md#Experimental-Formatting-Options) 
 
-* You see 2 seemingly random key value pairs appearing, these correspond to parameters that appear in their specs and have default values
+* You see 2 seemingly random key value pairs appearing, these correspond to parameters that appear in other specs of the grammar and have default values.
+
+
+but the latter of the two I do not really consider that much of a problem. What I did have a problem with was forcing sublime to stay on focus after executing the command. to solve this issue I am currently sending second essentially empty `subl` command, which does not satisfy me that much and is not hundred percent bulletproof.
+
+furthermore I'm not sure  if this line
+
+```python
+subprocess.call(y, shell = True)
+```
+
+is the best but it currently works
+
 
 #### I am lazy
 
