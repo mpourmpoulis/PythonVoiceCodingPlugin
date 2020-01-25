@@ -10,6 +10,9 @@
 		- [Long Version](#long-version)
 	- [Experiment Or Unofficial And So On Features You Need To Enable Manually](#experiment-or-unofficial-and-so-on-features-you-need-to-enable-manually)
 	- [Grammar Plug-In Interface](#grammar-plug-in-interface)
+		- [Core Idea](#core-idea)
+		- [Technicalities](#technicalities)
+		- [I am lazy](#i-am-lazy)
 	- [Linux  and Aenea](#linux-and-aenea)
 	- [Grammar Local Settings](#grammar-local-settings)
 		- [Show Command](#show-command)
@@ -120,6 +123,62 @@ Feedback Is Much Appreciated!
 
 
 ### Grammar Plug-In Interface 
+
+This section deserves more documentation than currently is being provided so at some point I would see that it gets a page off its own. 
+
+
+For communication between the  grammar and the main plug-in  the [sublime command line interface](https://www.sublimetext.com/docs/3/osx_command_line.html) is used.
+
+
+#### Core Idea
+
+Suppose we use a command like
+
+```
+"first right 2"
+```
+
+As we're going to see later, this corresponds to the second variant of the [big ROI queries](./SelectBigROI.md)
+
+```python
+"[(smart|<operation>)] <nth> <big_roi> [<sub_index>]":
+	lazy_value("big_roi",2),
+```
+
+now what we want is to inform sublime of both the type  and variant of query to be executed, as well as all the necessary parameters
+
+
+
+
+The script is going to invoke the subl commandline tool with a command like that ignoring some technicalities looks like
+
+``` bash
+subl --command python_voice_coding_plugin { "arg" : {
+  "command":"argument",
+  "format":1,
+  "nth":"first",
+  "big_roi":"assignment right",
+  "sub_index":2,
+  }
+}
+```
+
+#### Technicalities
+
+Now in reality what it will send is going to be
+
+```bash
+subl --command "python_voice_coding_plugin  {\"arg\": {\"level_index\": 0, \"sub_index\": 2, \"format\": 2, \"nth\": \"first\", \"command\": \"big_roi\", \"big_roi\": \"assignment right\", \"ndir\": 1}}"
+```
+
+which is a little bit different because 
+
+* For things to work in the command line we need to escape quotes
+
+* You see 2 seemingly random key value pairs appearing, these correspond to parameters that appear in their specs and have default values
+
+#### I am lazy
+
 
 
 
