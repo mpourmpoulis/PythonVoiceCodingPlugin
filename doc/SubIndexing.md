@@ -348,6 +348,20 @@ Unfortunately, as you can see ,there are some edge cases that need to be fixed.
 
 ### Forwarding Nodes
 
+![](./gif/sub14.gif)
+
+
+
+please note however that we can still pick up such regions as a whole, the whole "forwarding" thing applies only when we try to extract something from them (when we subindex them). To clarify:
+
+![](./gif/sub15.gif)
+
+
+
+
+
+
+
 
 As illustrated above, you need to pay attention to how the various conditions are bound together
 (or binds weaker causing it to be higher in the AST) in the can only select smaller conditions  from the outermost level!

@@ -4,6 +4,10 @@
 
 - [Introduction](#introduction)
 	- [Colors](#colors)
+	- [Not Parsing Source Code](#not-parsing-source-code)
+	- [Origin And Initial Origin](#origin-and-initial-origin)
+		- [Motivation](#motivation)
+		- [Clarifying Successive](#clarifying-successive)
 	- [Introduction To Prefix Operations](#introduction-to-prefix-operations)
 - [Select Alternatives](#select-alternatives)
 	- [Multiple Colors](#multiple-colors)
@@ -48,11 +52,19 @@
 
 ## Introduction
 
-Before we get started going through all of the operations available, it would be to go through some basic terms.
+Before we get started going through all of the operations available, it would be good to go through/refresh memory regarding some basic terms.
 
-### Colors
+### Colors 
 
-as a small notice before we get started, because you are going to see colors a lot , you should be aware of the values it can take are
+As you should probably already be familiar with, Selection Queries produce alternatives which get color highlighted in the code. This is important because the commands that follow in this page can 
+
+* Use one of those alternatives instead of operating on/with the main result, for instance pasting the red alternative to one location instead of the main result
+
+or they might even
+
+* Apply some action between those alternatives, for example swapping the red alternative with the blue one
+
+So because you are going to see colors a lot , you should be aware of the values it can take 
 
 ```python
 "colors":{
@@ -66,6 +78,66 @@ as a small notice before we get started, because you are going to see colors a l
 ```
 
 with colors red until orange corresponding to alternatives and the word main to the main result.
+
+### Not Parsing Source Code
+
+As a second note, all the commands  that we are going to investigate in this page do not require parsing the source code. This means that they ran faster and can also work even when there are fatal parsing errors.  
+
+###  Origin And Initial Origin
+
+Long story short, we have seen that  a Selection Query is producing
+
+- a main  result and
+
+- alternatives
+
+Information about those is stored in the application state that plug-in maintains  for each open file. But the state also maintains information about two other important variables
+
+* `origin` which is where it came from, a.k.a. the cursor location  at the time it was invoked 
+
+* `initial_origin` which essentially is the very first origin when there are multiple successive such queries
+
+But why do we need them, why both and what precisely do we mean by successive? 
+
+#### Motivation
+
+Originally the need  came from the [paste back command](#pasting-operation) 
+
+In particular,we have seen that there is a variety of ways with which we can select some region of interest. 
+But why would we want to select that text in the first place? Very often that is because we want to
+
+* edit it or maybe
+
+* to copy  and paste it somewhere
+
+and should it be the latter case, is it not very likely that we want to insert it where we are currently working? 
+
+So we can see that there must be some concept of remembering where a query originated from. But selecting the location might sometimes be very hard to do in one go and so you might have to break the description into multiple queries. For example, you might use
+
+```python
+"up 2 functions second right"
+```
+
+followed by
+
+```python
+"second argument 2"
+```
+
+or there might be situations where you have made a mistake and selected something that is one line below what you want, so you need an additional command because of that mistake. 
+
+as you can see, that is quite and lot of value in maintaining information about where some query originated in the first place. 
+
+#### Clarifying Successive
+
+By successive selection queries,
+
+
+
+
+
+
+
 
 ### Introduction To Prefix Operations
 
@@ -291,6 +363,7 @@ Choice("surrounding_punctuation",{
 And I say by default because with exception of `""` which unfortunately I have not yet been able support without special handling due to escaping issues, there is nothing specific or special about any of the other ones. These were certain simply standard ones and I kept notation consistent with Caster. So feel free to customize to your needs, even with more complex surroundings.
 
 
+![](./gif/op29.gif)
 
 ##### Experimental Formatting Options
 
@@ -309,6 +382,7 @@ we can denote with  `$$` the text that is to be pasted back, then this string wi
 ```
 
 you can do things like
+
 
 ![](./gif/op2.gif)
 
