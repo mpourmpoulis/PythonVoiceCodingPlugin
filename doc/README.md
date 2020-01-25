@@ -6,14 +6,15 @@
 - [General Remarks](#general-remarks)
 	- [Caster Version Supported](#caster-version-supported)
 	- [Versioning And Backwards Compatibility](#versioning-and-backwards-compatibility)
-		- [TLDR](#tldr)
+		- [Short Version](#short-version)
 		- [Long Version](#long-version)
 	- [Experiment Or Unofficial And So On Features You Need To Enable Manually](#experiment-or-unofficial-and-so-on-features-you-need-to-enable-manually)
 	- [Grammar Plug-In Interface](#grammar-plug-in-interface)
 		- [Core Idea](#core-idea)
 		- [Technicalities](#technicalities)
-		- [I am lazy](#i-am-lazy)
+		- [I am lazy And I Know It](#i-am-lazy-and-i-know-it)
 	- [Linux  and Aenea](#linux-and-aenea)
+	- [Sublime Settings](#sublime-settings)
 	- [Grammar Local Settings](#grammar-local-settings)
 		- [Show Command](#show-command)
 		- [Force RPC](#force-rpc)
@@ -52,7 +53,7 @@ Currently   Caster 0.5, 0.6, 1.0 are all supported but it is my recommendation t
 ### Versioning And Backwards Compatibility
 
 
-#### TLDR
+#### Short Version
 
 If at some point you upgraded the main plugin to version 0.1.x, you do not need to manually upgrade your grammar file as well, you can still use the old 0.1.0 grammar.
 
@@ -83,7 +84,7 @@ so these could be a source of confusion. In order to avoid these confusion as we
 
 As a consequence you can use the grammar released with  0.1.0 with any of the 0.1.x versions of the plug-in. there will be none the less two exceptions to that rule
 
-- If there's a small critical bug that I have missed the grammar, in which case you will be notified accordingly
+- If there's some critical bug that I have missed the grammar or a minor code  tweak that does not affect the rules themselves, in which case you will be notified accordingly
 
 - Experimental features, which are either way not stable and not enabled by default!
 
@@ -237,7 +238,68 @@ subprocess.call(y, shell = True)
 is the best but it currently works
 
 
-#### I am lazy
+#### I am lazy And I Know It
+
+okay so we have seen how we can send dictionary full of meaningful information the main plug-in but how do we created in the first place? Manually specifying for every rule which barometers need to be sent is a terrible waste of time and also inflexible.
+
+Instead what you are going to see a lot
+
+```python
+lazy_value("select_part",4)
+```
+
+Where the first argument is the name of command we wish to execute, and the second corresponds to format/variant of that rule.
+
+
+
+
+But this is just a wrapper around
+
+```python
+def lazy_value(c,f,**kwargs):
+    return  R(Function(noob_send, command = c, format = f,**kwargs))
+```
+
+
+Dragonfly makes available to the registered action 
+
+* All the parameters of the spec which were spoken 
+
+* All the default values of the grammar
+
+* Some Other Stuff, which we filter out
+
+
+as a consequence, if we include `**kwargs` in its signature
+
+```python
+def noob_send(command,format,**kwargs):
+```
+
+We can catch all of them automatically and we only need to manually set the `command` and `format` for every rule! 
+
+
+but we can actually do more than that, because  the  `lazy_value` also has `**kwargs` which enables us to pass our own parameters. this is something that is already used by some of the rules and enables you to pull  the following trick for customizing 
+
+```python
+"banana [<adjective>] <big_roi> [<big_roi_sub_index>]":
+            lazy_value("big_roi",4,vertical_direction = "upwards",
+                ndir = 2,block = "function"), 
+```
+
+then the following two commands 
+
+```python
+"banana first  if condition 3"
+```
+
+and 
+
+```python
+"up 2 functions first if condition 3"
+```
+
+should have the same effect!
 
 
 
@@ -284,6 +346,24 @@ aenea.communications.server.python_voice_coding_plugin_aenea_send_sublime(c="pyt
 
 will be executed transmitting the RPC!
 
+
+### Sublime Settings 
+
+Currently there are two settings available which you can edit by using 
+
+```
+Preferences > Package Settings > PythonVoiceCodingPlugin > Settings
+```
+
+These are
+
+* `show_invisible` 
+	- If set, if their main result of a selection query is not in the visible region , the the plug-in will scroll up or down so that becomes visible 
+	- Default True 
+
+* `show_error`
+	- If set, a pop up will appear when for instance an parsing error occurs
+	- Default True
 
 ### Grammar Local Settings
 
