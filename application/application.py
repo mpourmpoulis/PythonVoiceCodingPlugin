@@ -104,7 +104,8 @@ class Application():
 			selection = view_information["selection"]
 
 			mode = isinstance(result,list) or isinstance(selection,list)
-			update_origin(self.state,"origin",selection,mode)
+			if not secondary:
+				update_origin(self.state,"origin",selection,mode)
 			self.state["mode"] = "multiple" if mode else "single"
 			if self.state["initial_count"]<view_information["change_count"] or s.initial_origin_force_update and not secondary:
 				self.state["initial_mode"] = "multiple" if mode else "single"
