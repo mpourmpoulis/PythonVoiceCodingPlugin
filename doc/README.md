@@ -488,7 +488,6 @@ Though the format over the additional positional information  varies greatly bet
 * if you wish to specify the order of your region of interest, then you probably need an `nth adjective` :
 
 ```python
-```python
 "first"             "second"
 "third"             "fourth"
 "fifth"             "sixth"
@@ -499,7 +498,7 @@ Though the format over the additional positional information  varies greatly bet
 ```
 
 
-![](./gif/big3.gif)
+![](./gif/big34.gif) 
 
 and 
 
