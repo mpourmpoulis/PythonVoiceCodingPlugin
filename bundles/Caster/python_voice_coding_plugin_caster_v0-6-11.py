@@ -105,7 +105,7 @@ ARGUMENT_LIKE_INFORMATION = "(argument <argument_index>|keyword <keyword_index>|
 
 ######################################################################################### 
 
-class PythonVoiceCodingPluginRule(MappingRule):
+class PythonVoiceCodingPluginRule(MergeRule):
     mapping = {
         "[smart] paste [<color>] back [with <surrounding_punctuation>]":
             lazy_value("paste_back",1),
