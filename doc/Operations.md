@@ -145,15 +145,15 @@ With
 ![](./gif/op32.gif)
 
 
-As you can see, we can actually use non-plugging commands that move the cursor in between them and there's still no problem. The whole succession think breaks  and  the initial origin is reset only when there is change introduced. 
+As you can see, we can actually use non-plugging commands that move the cursor in between them and there's still no problem. The whole succession thing breaks  and  the initial origin is reset only when there is change introduced. 
 
 
-But it is very important to note that the initial origin does not automatically reset when there is change. It with only set off the next selection query. This is very important because it allows you to actually process  text at some location you've jumped into and yet retain your point of origin to return to! 
+But it is very important to note that the initial origin does not automatically reset when there is change. It will only reset after the next selection query. This is very important because it allows you to actually process  text at some location you've jumped into and yet retain your point of origin to return to! 
  
 
 ![](./gif/op33.gif)
 
-This is something that would become very important when we discuss prefix operations!
+This is something that will become very important when we discuss prefix operations!
 
 
 
@@ -692,17 +692,49 @@ When we talked earlier about prefix operations, it was briefly mentioned that th
 
 To illustrate this using the `edit` operation
 
+![](./gif/op30.gif)
+
+but I do emphasize on the  `end of the day` !  All these are double queries consist of
+
+* a selection query
+
+* an operation command 
+
+and while one of those double commands is running, there exists a temporary state which 
+
+* the first selection query can modify as if everything was normal 
+
+* is passed to the operation command to work with 
+
+* is discarded later to maintain silence
+
+If these sounds confusing, fear not! This is to ensure that the actions taken, whether selecting or inserting or removing text, do not differ from the two-step approach. Compare 
+
+![](./gif/op34.gif)
+
+with
+
+![](./gif/op35.gif)
+
+
+as you can see the actual actions taken are identical with either approach. What changes is with a one-step approach we still maintain our old initial origin to return back to! To convince you even further
+
+![](./gif/op36.gif)
+
+
+
+These of course does give us some extra flexibility and can power trickier workflows
+
+![](./gif/op37.gif)
+
+
+and why not
+
 ![](./gif/op29.gif)
 
 
+or even the simple
 
-
-
-
-
-
-
-
-
+![](./gif/op38.gif)
 
 

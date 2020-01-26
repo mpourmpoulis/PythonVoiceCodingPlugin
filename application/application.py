@@ -107,7 +107,7 @@ class Application():
 			if not secondary:
 				update_origin(self.state,"origin",selection,mode)
 			self.state["mode"] = "multiple" if mode else "single"
-			if self.state["initial_count"]<view_information["change_count"] or s.initial_origin_force_update and not secondary:
+			if (self.state["initial_count"]<view_information["change_count"] or s.initial_origin_force_update) and not secondary:
 				self.state["initial_mode"] = "multiple" if mode else "single"
 				self.state["initial_count"] = view_information["change_count"]
 				update_origin(self.state,"initial_origin",selection,mode)
