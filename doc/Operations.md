@@ -142,7 +142,7 @@ Compare
 
 With 
 
-![](./gif/op31.gif)
+![](./gif/op32.gif)
 
 
 As you can see, we can actually use non-plugging commands that move the cursor in between them and there's still no problem. The whole succession think breaks  and  the initial origin is reset only when there is change introduced. 
@@ -151,7 +151,7 @@ As you can see, we can actually use non-plugging commands that move the cursor i
 But it is very important to note that the initial origin does not automatically reset when there is change. It with only set off the next selection query. This is very important because it allows you to actually process  text at some location you've jumped into and yet retain your point of origin to return to! 
  
 
-![](./gif/op32.gif)
+![](./gif/op33.gif)
 
 This is something that would become very important when we discuss prefix operations!
 
@@ -159,7 +159,7 @@ This is something that would become very important when we discuss prefix operat
 
 ### Introduction To Prefix Operations
 
-the format of the operations we are going to discuss in this page, are queries that are executed after some selection query which has yielded some results  and  some alternatives. By using the color keyword, we are able to specify if we want these queries to operate using the main result or one of the alternatives. 
+The traditional format of the operations we are going to discuss in this page, are queries that are executed after some selection query which has yielded some results  and  some alternatives. By using the color keyword, we are able to specify if we want these queries to operate using the main result or one of the alternatives. 
 
 This of course gives us great flexibility but it does come with cost of having to perform everything in 2 steps. 
 A cost which is completely unnecessary in cases where
