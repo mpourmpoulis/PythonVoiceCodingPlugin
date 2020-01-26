@@ -10,12 +10,22 @@ from caster.lib.dfplus.merge.mergerule import MergeRule
 from caster.lib.dfplus.state.short import R
 
 
+######################################################################################### 
 
 import os
 import subprocess
 import json
 
-if settings.SETTINGS["miscellaneous"]["use_aenea"]:
+#########################################################################################
+
+local_settings = {
+    "show_command":False,
+    "force_rpc":False,
+}
+
+######################################################################################### 
+
+if settings.SETTINGS["miscellaneous"]["use_aenea"] or local_settings["force_rpc"]:
     try:
         import aenea
         from jsonrpclib import ProtocolError
@@ -25,17 +35,25 @@ if settings.SETTINGS["miscellaneous"]["use_aenea"]:
 else:
     using_rpc = False 
 
+######################################################################################### 
+
+GRAMMAR_VERSION = (0,1,0)
+
+######################################################################################### 
 
 def create_arguments(command,format,**kwargs):
     p = {x:kwargs[x] for x in kwargs.keys() if x not in ['_node','_rule','_grammar']}
     p["format"] = format  
     p["command"] = command
+    p["grammar_version"] = GRAMMAR_VERSION
     return {"arg":p}
 
 
 def send_sublime(c,data):
     x =  json.dumps(data).replace('"','\\"')
     y = "subl --command \"" + c + "  " + x + "\""
+    if local_settings["show_command"]:
+        print(y)
     subprocess.call(y, shell = True)
     subprocess.call("subl", shell = True)
 
@@ -49,77 +67,18 @@ def noob_send(command,format,**kwargs):
 def lazy_value(c,f,**kwargs):
     return  R(Function(noob_send, command = c, format = f,**kwargs))
 
+######################################################################################### 
 
-class NoobRule(MergeRule):
-    pronunciation = "python voice coding plugin"
-    mapping = {
-        # alternative rule
-        "[smart] alternative <alternative_index>":
-            lazy_value("alternative",1),
-        "smart <color> [alternative]":
-            lazy_value("alternative",2),
-
-        # paste back rule
-        "[smart] paste back [<paste_back_index>]":
-            lazy_value("paste_back",1),
-        "[smart] paste <color> back":
-            lazy_value("paste_back",2),
-
-        # argument rule
-        "[smart] [<adjective>] argument <argument_index>":
-            lazy_value("argument",1),
-        "[smart] <vertical_direction> [<ndir>] [<adjective>] argument <argument_index>":
-            lazy_value("argument",2),
-        "[smart] [<adjective>] <level> [<level_index>]  argument <argument_index>": 
-            lazy_value("argument",3),
-        "[smart] <level> [<level_index>] <adjective> argument <argument_index>": 
-            lazy_value("argument",4),
-
-        # big roi rule
-        "smart <big_roi> [<big_roi_sub_index>]":
-            lazy_value("big_roi",1),
-        "[smart] <adjective> <big_roi> [<big_roi_sub_index>]":
-            lazy_value("big_roi",2),
-        "[smart] <vertical_abstract_only_direction> [<ndir>] <big_roi> [<big_roi_sub_index>]":
-            lazy_value("big_roi",3),
-        "[smart] <vertical_abstract_only_direction> [<ndir>] <block> [<adjective>] <big_roi> [<big_roi_sub_index>]":
-            lazy_value("big_roi",4),
-
-           
-        # insert rule
-        "(smart insert|insert item) <item_index>":
-            lazy_value("insert_item",1),
-
-        # collect rule
-        "[smart] collect <collectable>":
-            lazy_value("collect_indexable",1),
-        "[smart] variable <collect_index>":
-            lazy_value("collect_variable",2),
-        "[smart] parameter <collect_index>":
-            lazy_value("collect_parameter",2),
-        "[smart] module <collect_index>":
-            lazy_value("collect_module",2),
-        "[smart] imported (value|object) <collect_index>":
-            lazy_value("collect_imported_value",2),
-
-
- 
-        # banana example
-        # "banana [<adjective>] <big_roi> [<big_roi_sub_index>]":
-            # lazy_value("big_roi",4,vertical_abstract_only_direction = "above",
-                # ndir = 1,block = "function"),
- 
-    }
-    extras = [  
-        IntegerRefST("argument_index", 1, 10),  
-        IntegerRefST("alternative_index", 1, 10), 
-        IntegerRefST("ndir",1,20),
-        IntegerRefST("level_index",1,10),                                                                                                                                                       
-        IntegerRefST("big_roi_sub_index",0,10), 
-        IntegerRefST("paste_back_index",0,10),
-        IntegerRefST("collect_index",1,30),
-        IntegerRefST("item_index",1,30) ,                                                                                                                                                     
-        Choice("adjective",{
+names={
+    "colors":{
+                "main":0,
+                "red":1,
+                "blue":2, 
+                "green":3,
+                "yellow":4,
+                "orange":5,
+    },
+    "nth_ordinal_adjective":{
                 "first" : "first",
                 "second": "second",
                 "third": "third",
@@ -133,55 +92,219 @@ class NoobRule(MergeRule):
                 "second last": "second last",
                 "third last": "third last",
                 "fourth last": "fourth last",
-            }
-        ) , 
-        Choice("vertical_direction",{
-                "up":"up",
-                "down":"down",
-                "above":"above",
-                "below":"below",
-            }
-        ),
-        Choice("vertical_abstract_only_direction",{
-                "above":"above",
-                "below":"below",
-            }
-        ),
-        Choice("color",{
-                "red":1,
-                "blue":2, 
-                "green":3,
-                "yellow":4,
-                "orange":5,
-            }
-        ),
-        Choice("level",{
-                "inside":"inside",
-            }
-        ),
+    },
+    "vertical_direction":{
+        "(up|sauce|above)":"upwards",
+        "(down|dunce|below)":"downwards",
+    }
+
+}
+
+ARGUMENT_LIKE_INFORMATION = "(argument <argument_index>|keyword <keyword_index>|keyword value <keyword_value_index>|entire keyword <entire_keyword_index>|<caller> [<sub_index>]|entire call)"
+
+
+######################################################################################### 
+
+class PythonVoiceCodingPluginRule(MergeRule):
+    pronunciation="python voice coding plugin"
+    mapping = {
+        "[smart] paste [<color>] back [with <surrounding_punctuation>]":
+            lazy_value("paste_back",1),
+        "[smart] paste <color> on <color2> [<color3> [ [and] <color4>]]":
+            lazy_value("paste_back",2), 
+
+        # alternative rule
+        "smart alternative <alternative_index>":
+            lazy_value("alternative",1),
+        "smart <color>":
+            lazy_value("alternative",2),
+        "smart <color> [<color2> [<color3> [[and] <color4>]]]":
+            lazy_value("alternative",3),
+
+        "edit <color> [<color2> [<color3> [[and] <color4>]]]":
+            lazy_value("alternative",3,operation = "edit"),
+
+        # delete
+        "[smart] delete <color> [<color2> [<color3> [[and] <color4>]]]":
+            lazy_value("delete_alternatives",1),
+        
+        # swap
+        "[smart] swap [<color>] back":
+            lazy_value("swap_back",1),
+        "[smart] swap <color> with <color2>":
+            lazy_value("swap_back",2),
+
+        # utilities
+        "[smart] back initial":
+            lazy_value("select_back",1),
+        "smart back":
+            lazy_value("select_back",2),
+        "smart here":
+            lazy_value("remember_here",1),
+
+
+        # sub indexing rule
+        "[(smart|<operation>)] [<nth>] part <sub_index>":
+        # "[(smart|<operation>)] [<nth>] inner [<nth2>] part <sub_index>":
+            lazy_value("select_part",1),
+        "[(smart|<operation>)] [<nth>] part <sub_index> until (<sub_index2>|the end)":
+        # "[(smart|<operation>)] [<nth>] inner [<nth2>] part <sub_index> until (<sub_index2>|the end)":
+            lazy_value("select_part",2),
+        "[(smart|<operation>)] ([<nth>] any|any <nth2>) part [<sub_index>]":
+        # "[(smart|<operation>)] [<nth>] any [<nth2>] part [<sub_index>]":
+            lazy_value("select_part",3),
+        "[(smart|<operation>)] ([<nth>] every|every <nth2>) part [<sub_index>]":
+        # "[(smart|<operation>)] [<nth>] every [<nth2>] part [<sub_index>]":
+            lazy_value("select_part",4),
+
+
+        # argument rule
+        "[(smart|<operation>)] [<nth>] " + ARGUMENT_LIKE_INFORMATION:
+            lazy_value("argument",1),
+        "[(smart|<operation>)] <vertical_direction> [<ndir>] [<nth>] " + ARGUMENT_LIKE_INFORMATION:
+            lazy_value("argument",2),
+        "[(smart|<operation>)] [<nth>] inside [<level_index>] " + ARGUMENT_LIKE_INFORMATION: 
+            lazy_value("argument",3),
+        "[(smart|<operation>)] inside [<level_index>] <nth> " + ARGUMENT_LIKE_INFORMATION: 
+            lazy_value("argument",4),
+        "[(smart|<operation>)] outer [<level_index>] [<nth>] " + ARGUMENT_LIKE_INFORMATION: 
+            lazy_value("argument",5),
+
+        # big roi rule
+        "(smart|<operation>) <big_roi> [<sub_index>]":
+            lazy_value("big_roi",1),
+        "[(smart|<operation>)] <nth> <big_roi> [<sub_index>]":
+            lazy_value("big_roi",2),
+        "[(smart|<operation>)] <vertical_direction> [<ndir>] <big_roi> [<sub_index>]":
+            lazy_value("big_roi",3),
+        "[smart] <vertical_direction> [<ndir>] <block> [<nth>] <big_roi> [<sub_index>]":
+            lazy_value("big_roi",4),
+
+           
+        # item rule
+        "[smart] item <item_index>":
+            lazy_value("insert_item",1),
+        "[smart] (item|items)  (all| <item_index> until (<item_index2>| the end))":
+            lazy_value("insert_item",2),
+        "[smart] (item|items) <item_index>   <item_index2> [  and  <item_index3>]":
+            lazy_value("insert_item",3),
+
+
+        # collect rule
+        "[smart] collect <collectable>":
+            lazy_value("collect_indexable",1),
+
+        # variable rule
+        "[smart] variable <item_index>  [[and] <item_index2> [and <item_index3>]]":
+            lazy_value("collect_variable",2),
+        "[smart] (variables all|variable <item_index> until (<item_index2>| the end))": 
+            lazy_value("collect_variable",3),
+
+        # parameter rule
+        "[smart] [<vertical_direction> [<ndir>]] parameter <item_index>  [and <item_index2> [and <item_index3>]]":
+            lazy_value("collect_parameter",2),
+        "[smart] [<vertical_direction> [<ndir>]] (parameters all| parameter <item_index> until (<item_index2>| the end))":
+            lazy_value("collect_parameter",3),
+        
+        # "[smart] [<vertical_direction> [<ndir>]] key parameter <item_index>  [ and <item_index2> [and <item_index3>]]":
+            # lazy_value("collect_parameter",2,experimental = "True"),
+
+        # "[smart] [<vertical_direction> [<ndir>]] key (parameters all| parameter <item_index> until (<item_index2>| the end))":
+            # lazy_value("collect_parameter",3,experimental = "True"),
+        
+    }
+    extras = [  
+        IntegerRefST("argument_index", 0, 10),  
+        IntegerRefST("keyword_index", 1, 10),  
+        IntegerRefST("entire_keyword_index", 1, 10), 
+        IntegerRefST("keyword_value_index", 1, 10), 
+        IntegerRefST("alternative_index", 1, 10), 
+        IntegerRefST("ndir",1,20),
+        IntegerRefST("level_index",1,10),                                                                                                                                                       
+        IntegerRefST("paste_back_index",0,10),
+        IntegerRefST("collect_index",1,30),
+        IntegerRefST("item_index",1,30),  
+        IntegerRefST("item_index2",1,30),                                                                                                                                                     
+        IntegerRefST("item_index3",1,30),                                                                                                                                                     
+        IntegerRefST("item_index4",1,30),
+        IntegerRefST("sub_index",1,10),
+        IntegerRefST("sub_index2",1,10),                                                                        
+        Choice("nth",names["nth_ordinal_adjective"]),
+        Choice("nth2",names["nth_ordinal_adjective"]), 
+        Choice("vertical_direction",names["vertical_direction"]),
+        Choice("color", names["colors"]),
+        Choice("color2", names["colors"]),
+        Choice("color3", names["colors"]),
+        Choice("color4", names["colors"]),
         Choice("big_roi",{
+
                 "if condition" : "if condition",
                 "else if condition" : "else if condition",
                 "while condition" : "while condition",
+                "with item" : "with clause",
+
+                "exception":"exception",
+                "exception name":"exception name",
+                "handler":"handler",
+
                 "if expression condition" : "if expression condition",
-                "if expression body" : "if expression body",
+                "if expression value" : "if expression body",
                 "if expression":"if expression",
+                "if expression else" : "if expression else",
+
                 "comprehension condition" : "comprehension condition",
+                "comprehension value" : "comprehension value",
+
                 "return value" : "return value",
                 "pass":"pass",
                 "break" : "break",
                 "continue" : "continue",
+
                 "assertion message" : "assertion message",
                 "assertion condition" : "assertion condition",
+                "exception raised" : "exception raised",
+                "raised cause": "raised cause",
+
                 "(assignment right| right)" : "assignment right",
                 "(assignment left| left)" : "assignment left",
-                "assignment full" : "assignment full",
-                "import statement":"import statement",
-                #"(import|imported) (value|item|object|element)":"import value",
-                #"module" : "module", 
+                "assignment [full]" : "assignment full",
                 "(expression statement|expression)" : "expression statement",
+
+
+                "import statement":"import statement",
+                "import value" : "import value",
+                "module" : "import module",
+                
+                
+
                 "iterator" : "iterator",
                 "iterable" : "iterable",
+
+                "function name": "definition name",
+                "function parameter": "definition parameter",
+                "parameter list": "definition parameter list",
+                "default value": "default value",
+                
+
+                "lambda":"lambda",
+                "lambda body":"lambda body",
+
+                
+                "class name": "class name",
+                "decorator":"decorator",
+                "base class":"base class",
+
+                # "same" : "same",
+
+
+                # "string" : "string",
+                # "integer literal" : "integer literal",
+                # "dictionary" : "dictionary",
+                # "list" : "list",
+                # "tuple" : "tuple",
+                # "set" : "set",
+                # "key" : "key",
+
 
             }
         ),
@@ -191,35 +314,61 @@ class NoobRule(MergeRule):
         ),
         Choice("collectable",{
                 "(variable|variables)":"variable",
-                "( parameter | parameters)":"parameter",
-                "(module|modules)":"module",
-                "(import|imported) (value|item|object|element)":"import value",
-                "function ( name |names)":"function name",
+                "( parameter | parameters)":"parameter",                
+                "imported value":"import value",
+                "module" : "module",
+                "function (name|names)":"function name",
+                "class name" : "class name",
+                "decorator" : "decorator",
             }
         ),
-
+        Choice("surrounding_punctuation",{
+                "quotes":    ("quotes","quotes"),
+                "thin quotes": ("'","'"),
+                "tickris":   ("`","`"),
+                "prekris":     ("(",")"),
+                "brax":        ("[","]"),
+                "curly":       ("{","}"),
+                "angle":     ("<",">"),
+                "dot":(".","."),
+                "underscore": ("_","_"),
+                "(comma|,)": (",",","),
+                "ace":(" "," "),
+                # "truth comprehension":"$$ = [x  for x in $$ if x]",
+                # "force list": "$$ if isinstance($$,list) else [$$] ",
+                # "truth": "$$ = $$ if $$ else ",
+                # "key value":"quotes$$quotes:$$",
+            }
+        ),
+        Choice("operation",{
+                "paste": "paste",
+                "delete":"delete",
+                "swap": "swap",
+                "edit": "edit",
+            }
+        ),
+        Choice("caller",{
+            "caller": "caller",
+            }
+        ),
    
     ]
     defaults = {
-        "adjective":"None",
         "ndir":1,
-        "level_index":1,
-        "big_roi_sub_index":0,
-        "paste_back_index":0,
+        "level_index":0,
 
     }
-
 
 #---------------------------------------------------------------------------
 
 context = AppContext(executable="sublime_text")
-grammar = Grammar("pvcp", context=context)
+grammar = Grammar("PythonVoiceCodingPlugin", context=context)
 
 if settings.SETTINGS["apps"]["sublime"]:
     if settings.SETTINGS["miscellaneous"]["rdp_mode"]:
-        control.nexus().merger.add_global_rule(NoobRule())
+        control.nexus().merger.add_global_rule(PythonVoiceCodingPluginRule())
     else:
-        rule = NoobRule(name="python voice coding plugin")
+        rule = PythonVoiceCodingPluginRule(name="python voice coding plugin")
         gfilter.run_on(rule)
         grammar.add_rule(rule)
         grammar.load()
