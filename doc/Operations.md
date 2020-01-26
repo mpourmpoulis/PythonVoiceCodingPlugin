@@ -138,7 +138,7 @@ To illustrate this, we are going to use the `back initial` command which returns
 
 Compare
 
-![](./gif/op30.gif) 
+![](./gif/op31.gif) 
 
 With 
 
