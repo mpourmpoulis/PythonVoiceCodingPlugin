@@ -18,8 +18,12 @@
 	- [Grammar Local Settings](#grammar-local-settings)
 		- [Show Command](#show-command)
 		- [Force RPC](#force-rpc)
-- [Quick Command Overview](#quick-command-overview)
+- [Quick Functionality Overview](#quick-functionality-overview)
+	- [A Bit Of Advice](#a-bit-of-advice)
+	- [A Small Remark](#a-small-remark)
 	- [Selection Queries](#selection-queries)
+	- [Operations](#operations)
+	- [Collection Queries](#collection-queries)
 
 <!-- /MarkdownTOC -->
 
@@ -45,6 +49,8 @@ Some quick links to the various documentation files
 
 
 ## General Remarks 
+
+
 
 ### Caster Version Supported
 
@@ -405,35 +411,32 @@ Forces RPC no matter what. Might be useful  when host is windows  and  guest is 
 
 
 
-## Quick Command Overview
+## Quick Functionality Overview
 
-Here we will briefly go over the commands offered. 
+Here we will really really briefly go over the functionality offered. you can find more extensive documentation in the outgoing links. 
 
-Before we get started, a small general remark: 
-```
-tip: if you do not know what to say, say smart :P
-```
+### A Bit Of Advice
 
-because virtually every command starts with the keyword smart! 
+It is my recommendation,
+
+Also keep in mind that whenever you find anything ending in `index` that is an integer!
+
+### A Small Remark
+
+
+Before we get started, a small general remark , virtually every command starts with the keyword smart! 
 
 ```python
 "smart <big_roi> [<big_roi_sub_index>]"
 
-"smart <color> [alternative]"
-```
+"smart <color>"
 
-This was chosen in order to minimize chances of collision with other commands on your system. However, because for a variety of commands, omitting the keyword smart makes them more convenient and easier to speak
-you may find the smart keyword in brackets
-
-```python
 "[smart] alternative <alternative_index>"
-
-"[smart] paste back [<paste_back_index>]"
-
-"[smart] paste <color> back"
 ```
 
-if there are conflicts with other commands, try to remove those brackets (making smart not optional). Furthermore, I think it is best not to put brackets in cases where I haven't.  
+This was chosen in order to minimize chances of collision with other commands on your system. However, because for most commands, omitting the keyword smart makes them more convenient and easier to speak you may find the smart keyword is optional in some commands.
+
+if there are conflicts with other commands, make it not optional/edit to suit! 
 
 After the small remark let's get started!
 
@@ -523,55 +526,30 @@ I do not expect these examples to make this distinction clear, just keep this in
 Details vary but that is the. spirit! Ok , what else?
 
 
-### Alternatives
+### Operations
 
-As you can see, these commands select some ROI (region of interest) and generate alternatives. These alternatives are shown to the user in an output panel on the bottom of the screen and the top ones get highlighted in the code as well. 
+As you can see, these commands select some ROI (region of interest) and generate alternatives. what can we do with those alternatives?
 
-We can select one of those alternatives with the alternative rule which comes in two variations:
+the plug-in ships with a variety of commands that you can run after a selection query that enable you to perform various operations with the main results /one of the alternatives, in certain cases multiple of them or even work with the point origin of the selection query as well!For example
 
-```python
-"[smart] alternative <alternative_index>"
+we can select them
 
-"smart <color> [alternative]"
-```
-![](./gif/d1.gif)
+![](./gif/op5.gif)
 
-alternative_index is an integer
-```python
-(Tip : index --> integer)
-``` 
-whereas color is an adjective corresponding the color highlighting:
+Or perhaps delete them
 
-```python
-Choice("color",{
-		"red":1, "blue":2, "green":3, "yellow":4, "orange":5, 
-	} 
-)
-```
+![](./gif/op10.gif)
 
-### Paste Back 
+or we can swap them 
 
-But why would we want to select some text in the first place? Other than editing it, maybe to copy it and paste it somewhere? Very likely where we are currently working? Well, the paste back command allows just that! 
+![](./gif/op13.gif)
+
+Or we can paste them
 
 ![](./gif/d2.gif)
 
-As you can see it comes in two formats: 
-```python
-"[smart] paste back [<paste_back_index>]"
+Furthermore by using the prefix `operation` that appears at the start of selection queries
 
-"[smart] paste <color> back"
-```
-
-If no alternative is specified the main result is pasted back!
-
-Please also pay attention to the following:
-
-![](./gif/d3.gif)
-
-That is you can use successive selection queries and paste back will insert in your original starting position!
-
-
-So we can select some basic stuff and we can insert it where we are writing. What elae can we do?
 
 ### Collection Queries 
 
@@ -585,41 +563,7 @@ Collection Queries try to address this issue. These collect the text of interest
 
 ![](./gif/d4.gif)
 
-you can collect a variety of things:
 
-```python
-Choice("collectable",{
-	"(variable|variables)":"variable",
-	"( parameter | parameters)":"parameter",
-	"(module|modules)":"module",
-	"imported (value|object)":"import value",
-	"function ( name |names)":"function name",
-} 
-```
-please note that these items are collected from the whole source code.
-
-### Insert Item
-
-These "items" can then be inserted in the current cursor position by means of the 
-
-```python
-"(smart insert|insert item) <item_index>"
-```
-command. Item_index specifies which item from the collection you want
-
-![](./gif/d5.gif)
-
-### index collectible
-
-certain collectible items such as variables and parameters can be index collected by means of a query like
-
-```python
-"[smart] variable <collect_index>"
-```
-In such a case, items will only be collected from the current function  and in item will be inserted
-based on the index specified and their order of appearance
-
-![](./gif/d6.gif)
 
 
 
