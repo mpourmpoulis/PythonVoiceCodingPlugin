@@ -41,7 +41,7 @@ Some quick links to the various documentation files
 
 * [Operations](./Operations.md)
 
-* [grammar sublime interface](./GrammarSublimeInterface.md)
+
 
 
 ## General Remarks 
@@ -397,9 +397,7 @@ subl --command "python_voice_coding_plugin  {\"arg\": {\"level_index\": 0, \"sub
 
 #### Force RPC
 
-This is a little bit of a small trick which I'm not sure if or  how many people will find useful and  you should probably avoid it, but I have found sometimes myself using it, so who knows? 
-
-Currently my setup  for Aenea is a little bit reverse from what is used to. My host these in windows 10 machine and my guest is an Ubuntu 16.04 inside the virtual box. As a consequence pure dragonfly keystrokes can work both on the Windows Host as well as the Linux guest, whereas Aenea ones only work on the guest. Furthermore,
+Forces RPC no matter what. Might be useful  when host is windows  and  guest is a Linux inside  virtual box. As pure dragonfly keystrokes may work both on the Windows Host as well as the Linux guest, whereas Aenea ones only work on the guest, the setting enables you to use the plug-in without putting everything on Aenea. Nonetheless, you lose the remote context( the Windows context would be used )
 
 
 

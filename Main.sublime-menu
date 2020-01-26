@@ -44,7 +44,36 @@
                                       "args":{
                                           "url":"https://github.com/mpourmpoulis/PythonVoiceCodingPlugin/blob/master/doc/README.md"
                                       }
+                                    },
+                                    { 
+                                      "caption": "Operations",
+                                      "command": "open_url", 
+                                      "args":{
+                                          "url": "https://github.com/mpourmpoulis/PythonVoiceCodingPlugin/blob/master/doc/Operations.md"
+                                      }
+                                    },
+                                    { 
+                                      "caption": "Sub Indexing",
+                                      "command": "open_url", 
+                                      "args":{
+                                          "url": "https://github.com/mpourmpoulis/PythonVoiceCodingPlugin/blob/master/doc/SubIndexing.md"
+                                      }
+                                    },
+                                    { 
+                                      "caption": "CollectionQueries",
+                                      "command": "open_url", 
+                                      "args":{
+                                          "url": "https://github.com/mpourmpoulis/PythonVoiceCodingPlugin/blob/master/doc/CollectionQueries.md"
+                                      }
+                                    },
+                                    { 
+                                      "caption": "Grammar Installation",
+                                      "command": "open_url", 
+                                      "args":{
+                                          "url": "https://github.com/mpourmpoulis/PythonVoiceCodingPlugin/blob/master/bundles/README.md"
+                                      }
                                     }
+
   
   
                                 ]
@@ -56,13 +85,7 @@
                                   "url": "https://github.com/mpourmpoulis/PythonVoiceCodingPlugin/issues"
                               }
                             },
-                            { 
-                              "caption": "Grammar Installation",
-                              "command": "open_url", 
-                              "args":{
-                                  "url": "https://github.com/mpourmpoulis/PythonVoiceCodingPlugin/blob/master/bundles/README.md"
-                              }
-                            },
+                            
                             {
                                 "caption":"Grammar for Caster 1.0.0",
                                 "command": "open_file", 

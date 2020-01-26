@@ -1,0 +1,12 @@
+PythonVoiceCodingPlugin
+
+Release 0.0.5 he's out fixing problems of 0.0.4 regarding the installation via package control and adds a useful utilities under Preferences > Package Settings  > PythonVoiceCodingPlugin iincluding links to online documentation issues, grammar bundles and so on.
+
+Code wise it is identical in its core with 0.0.4, which makes it almost 2 months old. However
+I am currently wrapping up the development of 0.1.0. Also you should know that Caster 1.x.x is also supported but  you must enable it by saying
+
+
+enable python voice coding plugin
+
+
+ if you have any problem or questions regarding installation , whether of the plug-in itself or the grammar necessary to use it please let me know at my issues!
