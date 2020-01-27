@@ -556,16 +556,16 @@ But more on thought when we talk about [operations](./Operations.md)
 
 but it can also collect all the modules function names and so on other in the file via [collection query](./CollectionQueries.md)
 
-![](doc/gif/collect5.gif)
+![](./gif/collect5.gif)
 
 These would be displayed in a panel at the bottom of the screen and you can then insert one or more of them
 
-![](doc/gif/collect1.gif)
+![](./gif/collect1.gif)
 
 As it can become common that you have a variable or parameter name or an expression with perhaps many atoms that are hard to dictate, there is also one step approach for those
 
 
-![](doc/gif/collect6.gif)
+![](./gif/collect6.gif)
 
 
 
