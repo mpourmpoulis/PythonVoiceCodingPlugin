@@ -1,7 +1,8 @@
 import ast
 
-from PythonVoiceCodingPlugin.library import nearest_node_from_offset,sorted_by_source_region,get_source_region,node_from_range,make_flat
-from PythonVoiceCodingPlugin.library.info import identity,get_argument_from_call, make_information ,correspond_to_index_in_call
+from PythonVoiceCodingPlugin.library import sorted_by_source_region,get_source_region,make_flat
+from PythonVoiceCodingPlugin.library.selection_node import nearest_node_from_offset,node_from_range
+from PythonVoiceCodingPlugin.library.info import identity,get_argument_from_call,get_keyword_argument, make_information ,correspond_to_index_in_call,get_caller,get_sub_index,get_weak_header,get_argument_from_empty_call
 import PythonVoiceCodingPlugin.library.info as info
 from PythonVoiceCodingPlugin.library.LCA import LCA
 from PythonVoiceCodingPlugin.library.level_info import LevelVisitor
@@ -22,10 +23,40 @@ from PythonVoiceCodingPlugin.queries.strategies import adjective_strategy,decode
 
 
 class SelectArgument(SelectionQuery):
-	"""docstring for SelectArgument"""
-	# def __init__(self):
-		# super(SelectArgument, self).__init__()
+	multiple_in = True
 
+	def get_information(self,query_description):
+		if "argument_index" in query_description:
+			if query_description["argument_index"]==0:
+				return make_information(get_argument_from_empty_call)
+			return make_information(get_argument_from_call,query_description["argument_index"]-1)
+		elif "keyword_index" in query_description:
+			return make_information(get_keyword_argument,query_description["keyword_index"]-1,only_keyword=True)
+		elif "keyword_value_index" in query_description:
+			return make_information(get_keyword_argument,query_description["keyword_value_index"]-1,only_value=True)
+		elif "entire_keyword_index" in query_description:
+			return make_information(get_keyword_argument,query_description["entire_keyword_index"]-1,only_keyword=False,only_value = False)
+		elif "caller" in query_description:
+			if "sub_index" not in query_description:
+				return get_caller
+			else:
+				i = query_description["sub_index"] - 1
+				return lambda x:get_sub_index(get_caller(x),i)
+		else:
+			return identity(match_node,ast.Call)
+	
+	def get_statement(self,origin,atok):
+		print("\norigin\n",ast.dump(origin))
+		self.global_constrained_space = None
+		candidate_statement = search_upwards(origin,ast.stmt)
+		big = (ast.If,ast.While,ast.For,ast.FunctionDef,ast.With,ast.ClassDef,ast.Try)
+		if match_node(candidate_statement,big):
+			candidate_statement = search_upwards_for_parent(origin,ast.stmt)
+			if match_node(candidate_statement,big):
+				region = get_source_region(atok,get_weak_header(candidate_statement,atok))
+				if region:
+					self.global_constrained_space = region
+		return candidate_statement
 
 	def process_line(self,q, root ,atok, origin  = None, select_node = None,tiebreaker = lambda x: x, 
 					line = None, transformation = None,inverse_transformation = None, priority = {}, 
@@ -38,7 +69,7 @@ class SelectArgument(SelectionQuery):
 			additional_parameters["constrained_space"] = constrained_space
 
 
-		information = make_information(get_argument_from_call,q["argument_index"]-1)
+		information = self.get_information(q)
 		information_nodes = sorted_by_source_region(atok, find_matching(root, information))
 
 		if origin:
@@ -63,7 +94,7 @@ class SelectArgument(SelectionQuery):
 		################################################################
 		# if no adjective is given
 		################################################################
-		if q["adjective"] == "None":
+		if "nth" not in q:
 			if origin  and calling_node:
 				result = calling_node if calling_node in information_nodes else None
 				information_nodes = [x  for x in tiebreaker(information_nodes) if x != calling_node]
@@ -77,7 +108,7 @@ class SelectArgument(SelectionQuery):
 		################################################################
 		# adjective is given
 		################################################################
-		if q["adjective"] != "None":
+		if "nth" in q:
 			additional_parameters["small_root"] = select_node			
 			if origin  and calling_node:
 				additional_parameters["penalized"] = [calling_node] if calling_node else []
@@ -85,7 +116,7 @@ class SelectArgument(SelectionQuery):
 			result, alternatives = adjective_strategy(
 				atok=atok,
 				root = root,
-				adjective_word = q["adjective"],
+				adjective_word = q["nth"],
 				level_nodes = every_caller,
 				information_nodes = information_nodes,
 				**additional_parameters
@@ -113,7 +144,12 @@ class SelectArgument(SelectionQuery):
 			
 		if second_tiebreaker:
 			alternatives = second_tiebreaker(result,alternatives)
-		
+
+		if self.global_constrained_space:
+			inside = lambda x,y: (y[0]<=x[0]<y[1] and y[0]<x[1]<=y[1])
+			result = result if inside(get_source_region(atok,result),self.global_constrained_space) else None
+			alternatives = [x  for x in alternatives if inside(get_source_region(atok,x),self.global_constrained_space)]
+			result,alternatives = obtain_result(result,alternatives)
 
 
 
@@ -127,7 +163,7 @@ class SelectArgument(SelectionQuery):
 	def handle_single(self,view_information,query_description,extra = {}):
 		f = query_description["format"]
 		possibilities = {
-			1: self.case_one,2: self.case_two,3: self.case_three,4: self.case_four,
+			1: self.case_one,2: self.case_two,3: self.case_three,4: self.case_four,5:self.case_five,
 		}
 		return  possibilities[f](view_information,query_description, extra)
 
@@ -142,9 +178,10 @@ class SelectArgument(SelectionQuery):
 		if not build  or not build[0] :
 			return None,None
 		root,atok,m,r  = build
+		
 		selection = m.forward(selection)
 		origin = nearest_node_from_offset(root,atok, selection[0]) if selection[0]==selection[1] else node_from_range(root,atok, selection)
-		statement_node = search_upwards(origin,ast.stmt)
+		statement_node = self.get_statement(origin,atok)
 		result, alternatives = self.process_line(
 			q = query_description,
 			root = statement_node,
@@ -164,11 +201,6 @@ class SelectArgument(SelectionQuery):
 		vertical_direction = query_description["vertical_direction"]
 		ndir = query_description["ndir"]
 
-		if vertical_direction in ["up","down"]:
-			row, column = view_information["rowcol"](m.backward(selection)[0])
-			nr = max(0,row + ndir if vertical_direction=="down" else row - ndir)
-			t = view_information["text_point"](nr,0)
-			selection = (t,t)
 
 		build = self.general_build if self.general_build else line_partial(selection[0])
 		if not build  or not build[0] :
@@ -177,7 +209,7 @@ class SelectArgument(SelectionQuery):
 		selection = m.forward(selection)
 
 		# this is the wrong but for some reason it is working:)
-		if vertical_direction in ["above","below"]:
+		if vertical_direction in ["upwards","downwards"]:
 			row, column = view_information["rowcol"](m.backward(selection)[0]) 
 			nr = decode_abstract_vertical(root,atok,ast.Call,row+1, ndir,vertical_direction)-1
 			t = view_information["text_point"](nr,0)
@@ -185,7 +217,7 @@ class SelectArgument(SelectionQuery):
 			selection = m.forward(selection)		
 
 		origin = nearest_node_from_offset(root,atok, selection[0]) if selection[0]==selection[1] else node_from_range(root,atok, selection)
-		statement_node = search_upwards(origin,ast.stmt)
+		statement_node = self.get_statement(origin,atok)
 
 
 		# 
@@ -227,7 +259,7 @@ class SelectArgument(SelectionQuery):
 		root,atok,m,r  = build 
 		selection = m.forward(selection)
 		origin = nearest_node_from_offset(root,atok, selection[0]) if selection[0]==selection[1] else node_from_range(root,atok, selection)
-		statement_node = search_upwards(origin,ast.stmt)
+		statement_node = self.get_statement(origin,atok)
 
 		###############################################################
 		# transformations
@@ -243,7 +275,7 @@ class SelectArgument(SelectionQuery):
 			if  not calling_parent:
 				return None
 			field,field_index = lca.get_field_with_respect_to(node,calling_parent)
-			if correspond_to_index_in_call(calling_parent,query_description["level_index"]-1,field,field_index):
+			if query_description["level_index"]== 0 or correspond_to_index_in_call(calling_parent,query_description["level_index"]-1,field,field_index):
 				if calling_parent not in temporary:
 					temporary[calling_parent] = []
 				temporary[calling_parent].append(node)
@@ -257,7 +289,8 @@ class SelectArgument(SelectionQuery):
 			else:
 				return None
 
-			
+
+
 		result, alternatives = self.process_line(
 			q = query_description,
 			root = statement_node,
@@ -266,14 +299,14 @@ class SelectArgument(SelectionQuery):
 			select_node = origin if selection[0]!=selection[1] else None,
 			tiebreaker = lambda x: tiebreak_on_lca(statement_node,origin,x),
 			transformation = transformation,
-			inverse_transformation = inverse_transformation
+			inverse_transformation = inverse_transformation,
 
 		)
 		return self._backward_result(result, alternatives,build)
 
 	def case_four(self,view_information,query_description, extra = {}):
 		################################################################	
-		#		<adjective> inside <level_index> argument <argument_index> 
+		#		<level> [<level_index>] <adjective> (argument <argument_index>|caller [<sub_index>])
 		###############################################################	
 		selection = self._get_selection(view_information,extra)
 		build = self.general_build if self.general_build else line_partial(selection[0])
@@ -282,7 +315,7 @@ class SelectArgument(SelectionQuery):
 		root,atok,m,r  = build 
 		selection = m.forward(selection)
 		origin = nearest_node_from_offset(root,atok, selection[0]) if selection[0]==selection[1] else node_from_range(root,atok, selection)
-		statement_node = search_upwards(origin,ast.stmt)
+		statement_node = self.get_statement(origin,atok)
 
 		###############################################################
 		# transformationszooming
@@ -296,17 +329,21 @@ class SelectArgument(SelectionQuery):
 			calling_parent, field,field_index = level[node] 
 			if  not calling_parent or calling_parent is level.root:
 				return None
-			if correspond_to_index_in_call(calling_parent,query_description["level_index"]-1,field,field_index):
-				adj = translate_adjective[query_description["adjective"]]-1
+			if query_description["level_index"]== 0 or correspond_to_index_in_call(calling_parent,query_description["level_index"]-1,field,field_index):
+				adj = translate_adjective[query_description["nth"]]-1
 				n = level(node, 3,adj)
 				return node if n is node else None
 			else:
 				return None
 
 		def inverse_transformation(node):
-			return [node]														
+			return [node]	
 
-			
+
+
+
+
+
 		result, alternatives = self.process_line(
 			q = query_description,
 			root = statement_node,
@@ -315,13 +352,46 @@ class SelectArgument(SelectionQuery):
 			select_node = origin if selection[0]!=selection[1] else None,
 			tiebreaker = lambda x: tiebreak_on_lca(statement_node,origin,x),
 			transformation = transformation,
-			inverse_transformation = inverse_transformation
+			inverse_transformation = inverse_transformation,
 
-		)
+		)	
 		return self._backward_result(result, alternatives,build)
 
 
 	
 
+	def case_five(self,view_information,query_description, extra = {}):
+		################################################################	
+		#		<level> [<level_index>] <adjective> (argument <argument_index>|caller [<sub_index>])
+		###############################################################	
+		selection = self._get_selection(view_information,extra)
+		build = self.general_build if self.general_build else line_partial(selection[0])
+		if not build  or not build[0] :
+			return None,None
+		root,atok,m,r  = build 
+		selection = m.forward(selection)
+		origin = nearest_node_from_offset(root,atok, selection[0]) if selection[0]==selection[1] else node_from_range(root,atok, selection)
+		statement_node = self.get_statement(origin,atok)
+		priority = {}
+		if query_description["level_index"]==0:
+			query_description["level_index"] = -1
+		_,calling_parents = search_upwards_log(origin,targets=ast.stmt,log_targets=(ast.Call))
+		index = query_description["level_index"]
+		print("the Dixie's ",index,len(calling_parents),"\n")
+		if index<len(calling_parents):
+			priority["child_level"] = 1
+			origin = calling_parents[index]
+		result, alternatives = self.process_line(
+			q = query_description,
+			root = statement_node,
+			atok = atok,
+			origin = origin,
+			select_node = origin if selection[0]!=selection[1] else None,
+			tiebreaker = lambda x: tiebreak_on_lca(statement_node,origin,x),
+			priority = priority
 
+		)	
+		return self._backward_result(result, alternatives,build)
+
+	
 

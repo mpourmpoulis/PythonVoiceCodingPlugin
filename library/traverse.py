@@ -3,7 +3,7 @@ import ast
 from PythonVoiceCodingPlugin.third_party.astmonkey import transformers
 from PythonVoiceCodingPlugin.third_party.asttokens import asttokens  
 
-from PythonVoiceCodingPlugin.library import build_tree,get_source_region,nearest_node_from_offset,make_flat
+from PythonVoiceCodingPlugin.library import build_tree,get_source_region,make_flat
 
 def match_node(node,targets = (),exclusions = ()):
     targets  = targets if targets else ast.AST 
@@ -28,7 +28,8 @@ def find_all_nodes(root , targets = (), exclusions = (), visit_all_levels = True
     targets = targets if targets else ast.AST 
     node_wanted = selector if selector else lambda node: match_node(node,targets,exclusions)
     reachable = ast.walk if visit_all_levels else ast.iter_child_nodes
-    return sorted([node  for node in reachable(root) if node_wanted(node)]  , key=lambda s: (s.first_token.startpos))
+    return sorted([node  for node in reachable(root) if node_wanted(node) and hasattr(node,"first_token")], 
+        key=lambda s: (s.first_token.startpos))
 
 def find_information(root, information, flatten = False, visit_all_levels = True):
     reachable = ast.walk if visit_all_levels else ast.iter_child_nodes

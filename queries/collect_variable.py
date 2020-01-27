@@ -1,7 +1,7 @@
 import ast
 from collections import OrderedDict
 
-from PythonVoiceCodingPlugin.library import nearest_node_from_offset,sorted_by_source_region,get_source_region,node_from_range,make_flat
+from PythonVoiceCodingPlugin.library import sorted_by_source_region,get_source_region,make_flat
 from PythonVoiceCodingPlugin.library.info import *
 from PythonVoiceCodingPlugin.library.LCA import LCA
 from PythonVoiceCodingPlugin.library.level_info import LevelVisitor
@@ -11,7 +11,7 @@ from PythonVoiceCodingPlugin.library.traverse import search_upwards,search_upwar
 from PythonVoiceCodingPlugin.queries.abstract import CollectionQuery
 from PythonVoiceCodingPlugin.queries.tiebreak import tiebreak_on_lca
 from PythonVoiceCodingPlugin.queries.strategies import adjective_strategy,decode_abstract_vertical,translate_adjective,obtain_result
-
+from PythonVoiceCodingPlugin.queries.strategies import decode_item_selection
 
 
 class CollectVariable(CollectionQuery):
@@ -22,11 +22,17 @@ class CollectVariable(CollectionQuery):
 		if not  build: 
 			return None,None
 		root,atok,m,r = build 
-		definition_node = search_upwards(origin,ast.FunctionDef) if query_description["format"]==2 else root
+		definition_node = search_upwards(origin,ast.FunctionDef) if query_description["format"]!=1 else root
 		name_nodes = [(get_id(x),0)  for x in find_all_nodes(definition_node,ast.Name) if is_store(x)]
 		names = list(OrderedDict(name_nodes).keys())
-		print(names,"names")
-		result = names[query_description["collect_index"] - 1] if query_description["format"]==2 else None
+		if query_description["format"]==1:
+			result = None 
+		else:
+			mode = {
+				2:"individual", 
+				3:"range",
+			}[query_description["format"]]
+			result = ",".join(decode_item_selection(names,query_description,mode,"item_index"))
 		return result, names
 
 

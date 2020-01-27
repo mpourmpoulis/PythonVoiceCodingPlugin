@@ -24,6 +24,8 @@ class LCA():
 		self.sequence.append((self.depth, node))
 		self.cycle+=1
 		for child in ast.iter_child_nodes(node):
+			if not hasattr(child,"parent"):
+				continue
 			self.field_history[node].append((self.cycle,child.parent_field,getattr(child,"parent_field_index",None)))
 			self.visit(child)
 			first, last = self.visits[node]
@@ -36,8 +38,16 @@ class LCA():
 		return self.sequence[self.visits[node][0]][0]
 
 	def __call__(self,first_node,second_node,include_depth = False):
-		x,y = self.visits[first_node]
-		w,v = self.visits[second_node]
+		try : 
+			x,y = self.visits[first_node]
+			w,v = self.visits[second_node]
+		except :
+			print(ast.dump(first_node),"\n")
+			print(second_node,ast.dump(second_node),"\n")
+			raise
+
+		
+		
 		l = min(x,w)
 		r = max(y,v)
 

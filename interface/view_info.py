@@ -17,6 +17,8 @@ class ViewInformation():
 			return self.view.rowcol
 		elif value == "text_point":
 			return self.view.text_point
+		elif value == "get_regions":
+			return lambda y:[(x.begin(),x.end()) for x in  self.view.get_regions(y)]
 		else:
 			return None
 

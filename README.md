@@ -2,7 +2,7 @@
 
 [![License](https://img.shields.io/badge/License-BSD%202--Clause-orange.svg)](https://opensource.org/licenses/BSD-2-Clause)
 
-![](https://img.shields.io/static/v1?label=Version&message=0.0.4&color=green)
+![](https://img.shields.io/static/v1?label=Version&message=0.1.0&color=green)
 
 ![](https://img.shields.io/static/v1?label=Caster&message=0.5.11|0.6.11|1.0.0&color=blue)
 
@@ -15,25 +15,42 @@
 PythonVoiceCodingPlugin is a Sublime Text 3 plugin meant to enhance user experience 
 when coding python 3 by voice. 
 
-![](doc/gif/arg5.gif)
+![](doc/gif/big37.gif)
 
 
-## Update
+## Contents
 
-Release 0.0.5 he's out fixing problems of 0.0.4 regarding the installation via package control and adds a useful utilities under Preferences > Package Settings  > PythonVoiceCodingPlugin iincluding links to online documentation issues, grammar bundles and so on. It is meant to be only temporary i'm currently wrapping up the development of 0.1.0. Also you should know that Caster 1.x.x is also supported but  you must enable it by saying
+<!-- MarkdownTOC  autolink="true" -->
 
-```
-enable python voice coding plugin
-```
+- [Documentation](#documentation)
+- [Motivation](#motivation)
+- [Release and Version](#release-and-version)
+- [Limitations](#limitations)
+- [Installation](#installation)
+  - [Package Control](#package-control)
+    - [note for those who installed between 0.0.4 and 0.0.5](#note-for-those-who-installed-between-004-and-005)
+  - [Git Install](#git-install)
+- [Support for voice coding framework](#support-for-voice-coding-framework)
+- [License](#license)
+- [Dependencies](#dependencies)
+- [Acknowledgements](#acknowledgements)
+  - [Useful Learning Resources](#useful-learning-resources)
+  - [Development tools](#development-tools)
 
- if you have any problem or questions regarding installation , whether of the plug-in itself or the grammar necessary to use it please let me know at my issues!
+<!-- /MarkdownTOC -->
 
 
-you can now also install via package control, see installation instructions [below](#installation)
+
+
 
 ## Documentation
 
-Documentation is available [here](doc/README.md)
+Documentation is available [here](doc/README.md)  you can also find links to documentation under
+
+```
+Preferences > Package Settings  > PythonVoiceCodingPlugin
+```
+
 
 
 ## Motivation
@@ -44,14 +61,14 @@ with  [Caster](https://github.com/dictation-toolbox/Caster). Despite the excelle
 In particular, navigation through the code sometimes felt a little bit too mechanistic. Say for instance you want to go to some location or select some text. For the most part ,you are  describing what actions 
 need to be taken to get there. What if you could instead simply describe (syntactically)  what you want to select? 
 
-![](doc/gif/big3.gif)
+![](doc/gif/arg17.gif)
 
 PythonVoiceCodingPlugin tries to enable you to do just that!
 To provide this functionality, it ships with bundles the implement a grammar, hopefully expressive enough for describing regions of interest, while running on the voice coding macro system side. These bundles
 cooperate with the core plugin, running on the editor side, arguably the more suitable of the two environments
 for analyzing source code and decoding the meaning of queries within the given context. 
 
-![](doc/gif/d4.gif)
+![](doc/gif/op2.gif)
 
 
 I want to be honest. This is not exactly the best code ever written. It is far from it:) And it is far from the full functionality i would want it to offer. Nonetheless, I still think that PythonVoiceCodingPlugin is a tool that :
@@ -76,7 +93,7 @@ I want to be honest. This is not exactly the best code ever written. It is far f
 * is partly customizable. If you find yourself using certain commands with some given parameters often and want a shorthand smaller command, you can always follow my commented banana example:)
 
 
-![](doc/gif/d5.gif)
+![](doc/gif/op37.gif)
 
 As I said, far (really far) from perfect but nonetheless an out-of-the-box solution which I hope to be helpful ,especially for beginners to get up to speed , and a step towards the right direction. I hope you enjoy using it as much as I have enjoyed coding it:)
 
@@ -85,15 +102,9 @@ Needless to say, while coding PythonVoiceCodingPlugin , PythonVoiceCodingPlugin 
 ## Release and Version 
 
 The code is available on [github](https://github.com/mpourmpoulis/PythonVoiceCodingPlugin)
-along with its initial release (0.0.0)!
 
-### Update 0.0.5
+The latest release  is  0.1.0!
 
-Release 0.0.5 he's out fixing problems of 0.0.4 regarding the installation via package control and adds a useful utilities under Preferences > Package Settings  > PythonVoiceCodingPlugin
-
-Update:  release 0.0.2 is out and with many thanks to @LexiconCode  there are now bundles for Caster 0.6.11! 
-Update:  Due an important error I missed, you might be faced with a situation where the pluggin cannot load and thus no commands are executed. in such a case please upgrade to release 0.0.3 which fixes it. I am sorry for any disconvenience caused!
-Update: release 0.0.4 is out shipping with aenea support.
 
 ## Limitations
 
@@ -116,7 +127,7 @@ There are currently two installation methods for performing the first task
 
 ### Package Control
 
-Release 0.0.5 fixes the errors that prevented 0.0.4 from installing directly from package control. You can now install the package simply by 
+Release 0.0.5 fixed the errors that prevented 0.0.4 from installing directly from package control. You can now install the package simply by 
 
 - open Command Palette
 
@@ -197,71 +208,21 @@ python3 -m pip install --target third_party -r requirements.txt
 
 ## Support for voice coding framework
 
-### Short version:
+
 
 they are available grammars for Caster 0.5.11,0.6.11 as well as >=1.0.0  with many thanks to [LexiconCode](https://github.com/LexiconCode)!
 
-It is my highest recommendation if you are using older versions of Caster that you upgrade to the latest master. Sooner or later the plug-in is going to drop support for those older versions and either way the newer version has a lot of improvements!
+It is my highest recommendation if you are using older versions of Caster that you upgrade to the latest one. Sooner or later the plug-in is going to drop support for those older versions and either way the newer version has a lot of improvements!
 
 Regarding operating system support, the plug-in has been tested both on Windows 10 and  on Ubuntu 16.04 as release 0.0.4 introduced support for [aenea](https://github.com/mpourmpoulis/PythonVoiceCodingPlugin/blob/master/bundles/Aenea/README.md)!
 
 
-
-
-
-
-
-
-### Long version:
-
-Ok this can get a little bit  complicated because there is a variety of operating systems, speech recognition backends, macro systems and toolkits built upon them which may or may not introduce complications. To give you an example lets see a few cases of how Caster with Dragon Naturally Speaking can be used: 
-
-- everything native in Windows 
-
-- in combination with aenea on linux host with windows guest where dragon is running and keystrokes are send to the host via rpc commands 
-
-- linux guest receiving keystrokes from pure dragonfly windows host 
-
-- oh and what about that linux guest receiving aenea rpc from windows host?:)
-
-
-
-To understand why all this may become an issue, we need to take a look at how communication between dragonfly and the plugin works. 
-
-
-Probably by far the most convenient way is via sublime comand line interface. This is the default method used. For example after a command of the form 
-
-```python
-"[smart] [<adjective>] argument <argument_index>"
-```
-like
+Also note that if you are using the latest version of Caster, you must also enable the grammar by saying
 
 ```
-"first argument 2"
+enable python voice coding plugin
 ```
 
-The script invokes the subl cli tool with a command like that:
-
-``` bash
-subl --command python_voice_coding_plugin { "arg" : {
-  "command":"argument",
-  "format":1,
-  "adjective":"first",
-  "argument_index":2,
-  }
-}
-```
-So effectively we trigger the command our plugin provides in its top file and pass information about the type of query we want and the parameters we used as a dict encoded as a json string. 
-
-Of course this does not work across virtual machine barriers:) 
-
-To counter this issue the simplest idea, which involves only keystrokes, is to open with some key command sublime console and using a text command to invoke the PythonVoiceCodingPlugin command from the command line. But 
-from my experience this is often way to slow if there are a lot of parameters to pass and messes up with user-interface, as it opens up the console.
-
-So this is not implemented, even though  it does not need custom rpc.
-
-
-For the time being I have bundles for 0.5.11 release of Caster that work as expected on Windows 10 64bit.
 
 
 
@@ -309,6 +270,8 @@ Many thanks to the contributors and maintainers of the following pypi packages:
 
 For specific versions be sure to check the requirements.txt
 
+For their licensees check out the dedicated [file](https://github.com/mpourmpoulis/PythonVoiceCodingPlugin/blob/master/DEPENDENCES_LICENSE.md)
+
 ## Acknowledgements
 
 ### Useful Learning Resources
@@ -336,10 +299,23 @@ Many thanks to all of the developers that have put their time and effort behind 
 
 * Natlink
 
-* Dragonfly
+* Dragonfly  and [Dragonfly2](https://github.com/dictation-toolbox/dragonfly)
 
 * Caster
 
 
+also some of the other tools I found useful developing this project
+
+* TabNine 
+
+* Quoda
+
+* Automatic Package Reloader
+
+* MarkdownTOC 
+
+* ScreenToGif 
+
+* Jedi 
 
 

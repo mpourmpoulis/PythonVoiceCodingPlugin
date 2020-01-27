@@ -6,6 +6,7 @@ class Query():
 		self.code = code
 		self.general_build = latest_build
 		self.exceptions_raised = None
+		self.data_for_storage = {}
 		self.attempt_build()
 		
 
@@ -25,6 +26,9 @@ class Query():
 
 	def _get_selection(self,view_information,extra = {}):
 		return extra["selection"] if "selection" in extra else view_information["selection"]
+
+	def _register_for_storage(self,**kwargs):
+		self.data_for_storage.update(kwargs)
 
 def no_build_attempt(cls):
 	cls.attempt_build = lambda x: None

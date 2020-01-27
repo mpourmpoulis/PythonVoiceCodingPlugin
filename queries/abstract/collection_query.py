@@ -1,5 +1,6 @@
 from copy import deepcopy
-from PythonVoiceCodingPlugin.library import get_source_region , nearest_node_from_offset,node_from_range
+from PythonVoiceCodingPlugin.library import get_source_region
+from PythonVoiceCodingPlugin.library.selection_node import nearest_node_from_offset,node_from_range
 from PythonVoiceCodingPlugin.library.modification import ModificationHandler
 from PythonVoiceCodingPlugin.queries.abstract.query import Query
 

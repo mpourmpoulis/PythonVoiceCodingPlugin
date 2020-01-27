@@ -1,6 +1,6 @@
 import ast
 
-from PythonVoiceCodingPlugin.library import nearest_node_from_offset,sorted_by_source_region,get_source_region
+from PythonVoiceCodingPlugin.library import sorted_by_source_region,get_source_region
 from PythonVoiceCodingPlugin.library.LCA import LCA
 from PythonVoiceCodingPlugin.library.level_info import LevelVisitor
 from PythonVoiceCodingPlugin.queries.utility import ResultAccumulator,reestablish_priority
@@ -23,7 +23,8 @@ def adjective_strategy(
 	**kwargs):
 
 	# we cannot operate without those parameters
-	if not atok  or not root or not level_nodes or not information_nodes  or not adjective_word:
+	# removed  level_nodes
+	if not atok  or not root  or not information_nodes  or not adjective_word:
 		return None, None
 
 
@@ -50,6 +51,7 @@ def adjective_strategy(
 	small_special = sorted_by_source_region(atok, small_special)
 	level_nodes = sorted_by_source_region(atok, level_nodes)
 	information_nodes = sorted_by_source_region(atok,information_nodes)
+	# print("information_nodes",information_nodes,"\n")
     ################################################################
 	# small root level and lexical order strategy
 	################################################################

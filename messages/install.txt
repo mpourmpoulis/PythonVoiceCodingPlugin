@@ -1,13 +1,31 @@
-PythonVoiceCodingPlugin
+Thanks For downloading or upgrading to the latest 0.1.0 version of PythonVoiceCodingPlugin! Release 0.1.0 introduces a variety of new features. Just to name a few
 
-Release 0.0.5 he's out fixing problems of 0.0.4 regarding the installation via package control and adds a useful utilities under Preferences > Package Settings  > PythonVoiceCodingPlugin iincluding links to online documentation issues, grammar bundles and so on.
+1) you can now execute paste/delete/swap operations in a single step instead of 2
+2) partial support for multiple cursors and multiple results
+3) drastic improvements in sub indexing and new dedicated commands!
+4) richer argument and big ROI queries
 
-Code wise it is identical in its core with 0.0.4, which makes it almost 2 months old. However
-I am currently wrapping up the development of 0.1.0. Also you should know that Caster 1.x.x is also supported but  you must enable it by saying
+and much more, including some experimental features you can manually enable! You can find more information in my documentation, links to the online version of which you can find along with other useful utilities under
 
+Preferences > Package Settings  > PythonVoiceCodingPlugin
+
+It supports all version of Caster 0.5, 0.6, 1.x but please upgrade as support for older versions will sooner or later be dropped! as a note if you're using any version above 1.0.0 except for copy pasting the grammar in the appropriate folder you must also enable it by saying
 
 enable python voice coding plugin
 
+if you have any problem or questions regarding installation , whether of the plug-in itself or the grammar necessary to use it please let me know at my issues!
 
- if you have any problem or questions regarding installation , whether of the plug-in itself or the grammar necessary to use it please let me know at my issues!
+NOTE FOR MAC Installers
 
+Honestly you called me a little bit unprepared,i didn't expect anyone to download on Mac:P 
+
+Firstly the core plug-in has not been tested on Mac, though it is pure Python so probably should work?
+
+Secondly currently the grammar is written to be used with Caster which does not support Mac. Nonetheless you could adapt it to standalone dragonfly or what ever suits your system.
+
+
+If you are using Talon , an alternative you might want to check out is
+
+https://github.com/dwiel/talon_community/blob/master/apps/jetbrains_psi.py
+
+though I have not tested it.

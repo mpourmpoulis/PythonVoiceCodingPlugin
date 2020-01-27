@@ -49,10 +49,11 @@ class InsertionQuery(Query):
 			if hasattr(self.handle_single,"_original"):
 				return [],[]
 			self.writing_locations_text = self.handle_single(view_information,query_description, extra)
-		self.writing_locations_text = sorted(self.writing_locations_text, key = lambda x:x[0])
+		self.writing_locations_text = sorted(self.writing_locations_text, key = lambda x:x[0],reverse=True)
 		if self.select_insertion:
 			m = ModificationHandler()
 			for location,t in self.writing_locations_text:
+				print(" inside the loop ", location,t,"\n")
 				m.modify_from(0, location, t)
 			self.optional_selection = [m.forward(x[0])  for x in self.writing_locations_text]
 		return self.writing_locations_text,self.optional_selection

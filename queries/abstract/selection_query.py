@@ -8,6 +8,7 @@ class SelectionQuery(Query):
 	# attributes and methods the user can override\change
 	################################################################
 	multiple_in = False
+	initial_origin_force_update = False
 
 	def handle_single(self,view_information,query_description,extra = {}):
 		pass
@@ -35,13 +36,19 @@ class SelectionQuery(Query):
 	def get_the_latest_build(self):
 		return self.general_build
 
-	def _backward_result(self,result,alternatives,build):
+	def _backward_result(self,result,alternatives,build,individually = False):
 		if build  and  build[0]:
 			m = build[2]
-			atok = build[1] 
-			result = m.backward(get_source_region(atok, result)) if result else None
-			#self._get_selection(view_information,extra)
-			alternatives = [m.backward(get_source_region(atok,x)) for x in alternatives]
+			atok = build[1]
+			print("\n\n",self,result,alternatives,build,individually)
+			if individually:
+				result = [m.backward(get_source_region(atok, x)) if x else None for x in result] 
+			else:
+				result = m.backward(get_source_region(atok, result)) if result else None
+			if alternatives:
+				alternatives = [m.backward(get_source_region(atok,x)) for x in alternatives]
+			else:
+				alternatives = []
 			return result, alternatives
 		else:
 			return None,None
@@ -61,6 +68,8 @@ class SelectionQuery(Query):
 					temporary_extra = deepcopy(extra)
 					temporary_extra["selection"] = s
 					r,a = self.handle_single(view_information,query_description,temporary_extra)
+					if not isinstance(r,list):
+						r =[r]
 					self.result.append(r)
 					self.alternatives.append(a)
 			else:
@@ -69,6 +78,9 @@ class SelectionQuery(Query):
 			if hasattr(self.handle_single,"_original"):
 				return None,None
 			self.result ,self.alternatives = self.handle_single(view_information,query_description, extra)
+			if isinstance(self.result,list):
+				self.result = [self.result]
+				self.alternatives = [self.alternatives]
 		return self.result,self.alternatives
 
 

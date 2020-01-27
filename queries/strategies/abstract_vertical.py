@@ -12,10 +12,10 @@ def decode_abstract_vertical(root,atok, target,current_line, index,direction,
 		line_information.add(n.first_token.start[0])
 	line_information = sorted(list(line_information))
 	ll=len(line_information)
-	if direction=="below":	
+	if direction=="downwards":	
 		i = bisect_right(line_information,current_line)
 		i = min(ll-1,i+index-1)
-	elif direction=="above":
+	elif direction=="upwards":
 		i = bisect_left(line_information,current_line)
 		i  = max(0,i-index)
 	else:

@@ -1,9 +1,13 @@
 import html
 
+from itertools import zip_longest
+
+from PythonVoiceCodingPlugin.interface.common.utility import make_region,make_sequence,all_or_nothing
+
 class InterfaceAction():
 	"""docstring for InterfaceAction"""
 	def __init__(self):
-		self.data={}
+		self.data = {}
 	def execute(self,view):
 		pass
 
@@ -20,9 +24,17 @@ class SelectionAction(InterfaceAction):
 			if not isinstance(region,list):
 				region = [region]
 			for r in region:
-				view.sel().add(sublime.Region(r[0],r[1]))
-			if settings.get("show_visible",False):
-				view.show(sublime.Region(region[0][0],region[0][1]))
+				if isinstance(r,list):
+					for x in r:
+						view.sel().add(sublime.Region(x[0],x[1]))
+				else:
+					view.sel().add(sublime.Region(r[0],r[1]))
+			if settings.get("show_invisible",False):
+				try : 
+					view.show(sublime.Region(region[0][0],region[0][1]))
+				except :
+					view.show(sublime.Region(region[0][0][0],region[0][0][1]))
+				
 			
 
 
@@ -92,10 +104,10 @@ class HighlightManyAction(InterfaceAction):
 
 class HighlightCleverAction(InterfaceAction):
 	"""docstring for HighlightAction(InterfaceAction"""
-	def __init__(self, region,name, result):  
-		self.data = {"region":region, "name":name , "result":result}
+	def __init__(self, region,name, avoid = [],colorize = False):  
+		self.data = {"region":region, "name":name , "avoid":avoid,"colorize":colorize}
 
-	def execute(self,view,sublime,**kwargs):
+	def execute(self,view,sublime,**kwargs_x):
 		# these are the standard color maps for highlighting using the region-ish api
 		standard_color={
 			"red":"redish", "blue":"bluish", "green":"greenish", "yellow":"yellowish", "orange":"orangish"
@@ -115,33 +127,38 @@ class HighlightCleverAction(InterfaceAction):
 		color_order = ["red","blue","green","yellow","orange"]
 
 		# transform the region variable into at list of sublime regions
+		single_mode = False
 		region =  self.data["region"]
 		if not isinstance(region ,list):
-			region = [region]
-		region  = [ sublime.Region(x[0],x[1])  for x in region if x]
+			region = [[region]] if region else [[]]
+		elif isinstance(region,list):
+			assert all_or_nothing(region,isinstance,list)," singular regions and sequences of regions are mixed"
+			if all(not isinstance(x,list) for x in region):
+				region = [[x]  for x in region]
+				single_mode = True
+		region = make_region(region)
 
 		# transform the result into a sublime region
-		result = self.data["result"]
-		result = sublime.Region(result[0],result[1])
-
-		for i,(r,c) in enumerate(zip(region,color_order)):
+		avoid = self.data["avoid"]
+		avoid = make_region(avoid) if avoid else []
+		avoid_sequence = make_sequence(avoid)
+		overlapping = make_sequence(region) + make_sequence(avoid)
+		# print("Regent:\n",region)
+		for i,(br,c) in enumerate(zip_longest(region,color_order,fillvalue = None)):
 			use_reinforced = False
-			# we use reinforced color if the region is contained within another 
-			for x,y in zip(region,color_order):
-				if x.contains(r) and x is not r:
-					use_reinforced = True
+			if br  is None:
+				continue
+			for r in br:
+				use_reinforced = any(
+					(x.contains(r) and x is not r) or (r.contains(x) and x in avoid_sequence)  
+					for x in overlapping
+				) or r.b-r.a==1 or use_reinforced
+			if self.data["colorize"] and i<5:
+				view.add_regions(self.data["name"]+str(i+1), br,
+					  reinforced_color[c] if use_reinforced  and  single_mode else standard_color[c],"circle")
+			else:
+				view.add_regions(self.data["name"]+str(i+1),br)
 
-			# to avoid foreground background problems if the region contains the selection it will not be reinforced
-			if r.contains(result):
-				use_reinforced = False
-			# however if the region is contained within the selection it must be reinforced
-			elif result.contains(r):
-				use_reinforced = True
-			if r.b-r.a==1:
-				use_reinforced = True
-			# we add the region alongside with an index
-			view.add_regions(self.data["name"]+str(i+1), [r], reinforced_color[c] if use_reinforced else standard_color[c],
-				"circle")
 
 
 
@@ -219,13 +236,12 @@ class PopUpErrorAction(InterfaceAction):
 		if not settings.get("show_error",False):
 			return 
 		final_text = "<p></p><h>Something is off!</h>" + "<p>" + html.escape(self.text) + "</p>"
-		print(" inside final text processing ",final_text)
 		def on_hide():
 			view.show_popup(final_text,max_width=1024, max_height=10000, flags= sublime.HIDE_ON_MOUSE_MOVE_AWAY)
 		view.show_popup(final_text,max_width=1024, max_height=10000, 
-			flags= sublime.COOPERATE_WITH_AUTO_COMPLETE,on_hide = on_hide)
+			flags= sublime.HIDE_ON_MOUSE_MOVE_AWAY,on_hide = on_hide)
 		print(view.is_popup_visible())
-
+# hello world
 #  style=\"background-color:#000080\"
 		
 

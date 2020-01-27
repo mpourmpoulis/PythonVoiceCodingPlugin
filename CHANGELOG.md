@@ -1,5 +1,26 @@
 # Changelog
 
+## [Unreleased]
+
+### Added
+
+* upgrades in the  paste back query where it can now support surrounded punctuation.
+
+* the module delete alternatives has been added.
+
+* View information now also exposes they get regions sublime API
+
+* The interface module now has a clear_actions methods to flush the already pushed actions.
+
+### Fixed
+
+* fixed an important bug in the insertion query module. the writing positions were sorted, but on an ascending order which simply broke everything when there are multiple of them. Fix this to sort them in descending order, so the changes that are executed first do not affect the others.
+
+### Changed
+
+* the application module has been adopted, sought after selection queries we do not only store that arraigns corresponding to the main result in the alternative but we also keep the corresponding text.
+
+*  the  paste back query now reads the corresponding text directly from the state instead of getting their location and obtaining from the code as it did in the past
 
 ## [0.0.4] - 2019-11-27
 
