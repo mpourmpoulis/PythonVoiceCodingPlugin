@@ -35,8 +35,8 @@ The core idea behind it is that most regions of interest can be conceptually bro
 	- [Attributes](#attributes)
 	- [Subscript](#subscript)
 	- [Old Name As New Name](#old-name-as-new-name)
-	- [Forwarding Nodes](#forwarding-nodes)
-	- [new with 0.0.4](#new-with-004)
+	- [Range Of Elements](#range-of-elements)
+	- [Looking Deeper Nodes](#looking-deeper-nodes)
 
 <!-- /MarkdownTOC -->
 
@@ -45,7 +45,10 @@ The core idea behind it is that most regions of interest can be conceptually bro
 
 ## Introduction
 
-you can find more information about what parts you can extract [below](#selectable).
+You can find more information about what parts you can extract [below](#selectable). In general,I have tried to make sub indexing work as naturally as possible,because I really want you to be able to approach these commands as intuitively as possible without trying to remember all of the various rules. Nonetheless there were cases where design decisions need to be made. And also compromises needed to be reached regarding the issue that you can view code both in a more linear fashion (tokens one after the other) as well as more treelike fashion (like how it is represented in the AST). I hope that my end decisions are not too far away from what you consider as natural thing to do!
+
+
+
 
 Now there are two ways in which the sub indexing functionality becomes available to the end-user:
 
@@ -280,7 +283,7 @@ I chose  to include them commended.
 
 ## Selectable 
 
-We have hopefully clarified the syntax and you have already probably seen some examples of what parts you can pickup from a selection. But it is time to go through them and lead to bead Maureen dictate
+We have hopefully clarified the syntax and you have already probably seen some examples of what parts you can pickup from a selection. But it is time to go through some of them, though you should keep in mind that there are more variable!
 
 ### Multiple Values
 
@@ -363,7 +366,7 @@ Compared to want to use to be the case in 0.0.4, this means that you can easily 
 
 * or combination of the above,
 
-in order to grab the individual items,you need to go to level deep
+in order to grab the individual items,you need to go 2 levels deep,which is of course an additional cost compared to 0.0.4
 
 ![](./gif/sub17.gif)
 
@@ -377,56 +380,43 @@ in order to grab the individual items,you need to go to level deep
 
 ![](./gif/sub18.gif)
 
-### Forwarding Nodes
 
+### Range Of Elements
+
+Only for dictionaries,sets, lists and tuples
 
 
 ![](./gif/sub14.gif)
 
 
 
-please note however that we can still pick up such regions as a whole, the whole "forwarding" thing applies only when we try to extract something from them (when we subindex them). To clarify:
+### Looking Deeper Nodes
+
+
+For certain types of regions such as unary operations, where you have something like 
+
+```python
+not some_condition
+```
+
+sub indexing the unary operation returns the result of sub indexing the
+
+```python
+some_condition
+```
+
+
+
+
+please note however that we can still pick up such regions as a whole, the whole "looking deeper" thing applies only when we try to extract something from them (when we subindex them). To clarify:
 
 ![](./gif/sub15.gif)
 
 
+you can find more examples that are similar to this one in the [big ROI](./SelectBigROI.md) documentation. Please note also that though partly arbitrarily,partly for compatibility with `caller`, partly because there are already many options for arguments, something similar applies for function calls , as sub indexing them yields the same result see if we walked only with the calling function part!
+
+
+![](./gif/sub19.gif)
 
 
 
-
-
-
-As illustrated above, you need to pay attention to how the various conditions are bound together
-(or binds weaker causing it to be higher in the AST) in the can only select smaller conditions  from the outermost level!
-
-This feature existed ever since the initial release but was only documented on 0.0.1 . This release also expanded the feature from applying only to ast.BoolOp nodes to encompass ast.Compare nodes as well! in plain English:
-
-![](./gif/big7.gif)  
-
-furthermore, big_roi_sub_index can make our lives easier even in cases like the one below:
-
-![](./gif/big8.gif)  
-
-where we want to play with the indexes of a subscript!
-
-### new with 0.0.4
-
-Sub indexing functionality has been expanded to include picking up parts of strings :
-
-![](./gif/big10.gif)  
-
-We can pick up parts from the URL, individual words or letters, or part of a camel or snake case. this feature is still immatur  and needs more work, but I am planning to improve and also expand it with the ability to select a whole range.
-
-Also something that was kind of missing,you can now select a subset of an arithmetic expression :
-
-![](./gif/big12.gif)  
-
-Once again you need to pay attention to operator precedence and as you can see there are some edge cases that need to be fixed.
-
-Finally, we clarify one more thing! What about relative vertical offsets when using above? We know that these abstract vertical keywords only count interesting lines, but what do we count as interesting here? To stay compatible with all of the above, we count all lines containing our desired big region of interest regardless of whether we can extract or not from them information with the sub index! As an example:
-
-![](./gif/big9.gif)  
-
-
-please note however that there are limitations  and sub indexes are more of a solution to make the simplest case faster
-rather than a systematic way of handling complex code!

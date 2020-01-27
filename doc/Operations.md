@@ -46,7 +46,7 @@
 - [Utilities](#utilities)
 	- [Return To Origin](#return-to-origin)
 	- [Setting Initial Origin](#setting-initial-origin)
-	- [More On Prefix Operations](#more-on-prefix-operations)
+- [More On Prefix Operations](#more-on-prefix-operations)
 
 <!-- /MarkdownTOC -->
 
@@ -285,6 +285,7 @@ This can be convenient when you want to delete one alternative, write some new c
 ### Multiple Colors
 
 Furthermore, similarly to selecting alternatives, you can simultaneously delete more than one alternatives! you just need to specify more than one colors!
+
 
 ![](./gif/op10.gif)
 
@@ -545,6 +546,7 @@ for the most part pretty straightforward I think
 "[smart] swap <color> with <color2>"
 ```
 
+
 ![](./gif/op13.gif)
 
 Do keep in mind that alternatives do persist, though they of course get updated 
@@ -676,7 +678,7 @@ Was introduced
 
 
 
-### More On Prefix Operations 
+## More On Prefix Operations 
 
 
 When we talked earlier about prefix operations, it was briefly mentioned that these are executed silently. But what does it mean? It means that actions can be taken such as selecting some text, inserting or removing some text but at the end of the day these double queries do not change the state the way simple selection queries do. They do not set
