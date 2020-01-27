@@ -1,4 +1,6 @@
+import traceback
 from copy import deepcopy
+
 
 from PythonVoiceCodingPlugin.queries import *
 from PythonVoiceCodingPlugin.application.build_cache import BuildCache
@@ -55,16 +57,13 @@ class Application():
 		code = view_information["code"]
 		change_count = view_information["change_count"]
 		latest_build = Application.build_cache.get_build(self.vid,change_count)
-		print("state\n\n",self.state,"\n\n")
+		# print("state\n\n",self.state,"\n\n")
 		try:
 			if not secondary:
-				print("and during inside here ",query_description)
 				need_update = retrieve_state(self.state,view_information,code)
 				
 		except:
 			clear_state(self.state)
-			if False:
-				raise
 
 		# get the corresponding query and execute it
 		s = get_query(query_description)(code,latest_build)
@@ -76,17 +75,18 @@ class Application():
 		try:
 			s(view_information,query_description,extra)
 		except Exception as e:
-			if not s.exceptions_raised:
-				print("inside exceptions raised",e)
-				raise
+			# check if there are exceptions with parsing
+			if s.exceptions_raised:
+				interface.clear_actions()
+				interface.push_action(PopUpErrorAction(str(s.exceptions_raised)))
 				return False
+
+			interface.clear_actions()
+			traceback.print_exc()
+			return False
 			
 
-		# check if there are exceptions
-		if s.exceptions_raised:
-			interface.clear_actions()
-			interface.push_action(PopUpErrorAction(str(s.exceptions_raised)))
-			return False
+		
 
 
 		# register build for later use
@@ -171,7 +171,7 @@ class Application():
 		for name in ["result","origin", "initial_origin"]:
 			interface.push_action(HighlightCleverAction(self.state[name],name))				
 
-		print("\nBefore exiting query:\n",self.state,"\n")	
+		# print("\nBefore exiting query:\n",self.state,"\n")	
 		if secondary_query_description  and should_execute_secondary:
 			interface.push_action(ClearHighlightAction("alternatives"))
 			secondary_success = self.respond_to_query(interface,secondary_query_description,secondary=True)
