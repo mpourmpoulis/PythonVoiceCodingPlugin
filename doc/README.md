@@ -547,20 +547,26 @@ Or we can paste them
 
 ![](./gif/d2.gif)
 
-Furthermore by using the prefix `operation` that appears at the start of selection queries
+Furthermore by using the prefix `operation` that appears at the start of selection queries we can do that all in one go
+
+But more on thought when we talk about [operations](./Operations.md)
 
 
 ### Collection Queries 
 
-Imagine a case where you have a variable or parameter name or an expression with perhaps many atoms that are hard to dictate. 
+but it can also collect all the modules function names and so on other in the file via [collection query](./CollectionQueries.md)
 
-If you dont want to rely on autocompletion you can for instance select it and paste it back:) But what if you need to write it several times in dofferent locations? Or what if it is so far away in the code you cannot really describe it?(say an imported item whose full name you dont even remember)
+![](doc/gif/collect5.gif)
+
+These would be displayed in a panel at the bottom of the screen and you can then insert one or more of them
+
+![](doc/gif/collect1.gif)
+
+As it can become common that you have a variable or parameter name or an expression with perhaps many atoms that are hard to dictate, there is also one step approach for those
 
 
-Collection Queries try to address this issue. These collect the text of interesting regions and display it on the bottom panel.
+![](doc/gif/collect6.gif)
 
-
-![](./gif/d4.gif)
 
 
 
