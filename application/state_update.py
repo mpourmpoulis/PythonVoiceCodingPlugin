@@ -142,7 +142,7 @@ def retrieve_text(state,code):
 	for k in ["result","origin","initial_origin","alternatives"]:
 		state[k+"_text"] = get_location_text(state[k],code)
 
-import traceback
+		
 def retrieve_state(state,view_information,code):
 	'''		
 		normally I would like these to be implemented by means of modification handlers
@@ -153,7 +153,7 @@ def retrieve_state(state,view_information,code):
 		functionality
 	'''
 	# print("\n\n retrieving modeg\n",state["mode"],state["initial_mode"],"\n\n")		
-	print("\n\nRetrieving state\n",state,"\n\n")		
+	# print("\n\nRetrieving state\n",state,"\n\n")		
 	if state["change_count"]>=view_information["change_count"]:
 		return False
 	if state["change_count"]==-1:
@@ -165,17 +165,16 @@ def retrieve_state(state,view_information,code):
 		convert_single_to_multiple(state,state["mode"],state["initial_mode"])
 		sublime_data = {x:get_regions_while_you_still_can(view_information,x) 
 			for x in ["result","origin","alternatives","initial_origin"]}
-		print("\nSublime date at ease\n",sublime_data,"\n")
+		# print("\nSublime date at ease\n",sublime_data,"\n")
 
 		state = retrieve_primitive(state,sublime_data)
 		convert_multiple_to_single(state,state["mode"],state["initial_mode"])
-		print("\n\nAfter conversion:\n",state,"\n")
+		# print("\n\nAfter conversion:\n",state,"\n")
 	except:
 		clear_state(state)
 		retrieve_text(state,code)
-		traceback.print_exc()
 		raise
-	print("Before Retrieving Text:\n",state)
+	# print("Before Retrieving Text:\n",state)
 	retrieve_text(state,code)
 	return True
 	

@@ -12,9 +12,9 @@ class SelectAlternative(SelectionQuery):
 		
 	def handle_single(self,view_information,query_description,extra = {}):
 		state = extra["state"]
-		print("state:\n",state)
+		# print("state:\n",state)
 		candidates = result_alternatives_sequence(state,location=True)
-		print("candidates:\n",candidates)
+		# print("candidates:\n",candidates)
 		if "alternative_index" in query_description:
 			name="alternative_index"
 		elif "color" in query_description:
@@ -33,7 +33,7 @@ class SelectAlternative(SelectionQuery):
 					result = make_flat(result)
 				except :
 					pass
-			print("result is ",result)
+			# print("result is ",result)
 		return result, []
 
 

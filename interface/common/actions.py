@@ -157,7 +157,6 @@ class HighlightCleverAction(InterfaceAction):
 				view.add_regions(self.data["name"]+str(i+1), br,
 					  reinforced_color[c] if use_reinforced  and  single_mode else standard_color[c],"circle")
 			else:
-				print("Action:\n",self.data["name"]+str(i+1),br)
 				view.add_regions(self.data["name"]+str(i+1),br)
 
 
@@ -237,7 +236,6 @@ class PopUpErrorAction(InterfaceAction):
 		if not settings.get("show_error",False):
 			return 
 		final_text = "<p></p><h>Something is off!</h>" + "<p>" + html.escape(self.text) + "</p>"
-		print(" inside final text processing ",final_text)
 		def on_hide():
 			view.show_popup(final_text,max_width=1024, max_height=10000, flags= sublime.HIDE_ON_MOUSE_MOVE_AWAY)
 		view.show_popup(final_text,max_width=1024, max_height=10000, 

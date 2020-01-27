@@ -44,18 +44,18 @@ def node_from_range_new(root,atok,r,special = False):
         # print(" just to check something out",child,atok.get_text_range(child))
         # print(" and the child fields are ",child._fields)
         if inside(r,atok.get_text_range(child)):
-            print(" success with",child,"special = ",special)
+            # print(" success with",child,"special = ",special)
             return node_from_range_new(child,atok,r,special)
     if special:
-        print("Special:\n",ast.dump(root))
+        # print("Special:\n",ast.dump(root))
         if match_node(root,(ast.Tuple,ast.List,ast.Set,ast.Dict,ast.DictComp)):
-            print("Inside Here After Special")
+            # print("Inside Here After Special")
             temporary = get_sub_index(root,None)
 
             l = [x  for x in temporary for y in [get_source_region(atok,x)] 
                 if inside((r[0],r[0]),y) or inside((r[1],r[1]),y) or inside(y,r)]
-            print("temporary:\n",temporary)
-            print("L:\n",l)
+            # print("temporary:\n",temporary)
+            # print("L:\n",l)
             if l  and l!=temporary:
                 return l
 

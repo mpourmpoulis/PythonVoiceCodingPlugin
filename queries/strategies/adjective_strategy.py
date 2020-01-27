@@ -51,7 +51,7 @@ def adjective_strategy(
 	small_special = sorted_by_source_region(atok, small_special)
 	level_nodes = sorted_by_source_region(atok, level_nodes)
 	information_nodes = sorted_by_source_region(atok,information_nodes)
-	print("information_nodes",information_nodes,"\n")
+	# print("information_nodes",information_nodes,"\n")
     ################################################################
 	# small root level and lexical order strategy
 	################################################################
