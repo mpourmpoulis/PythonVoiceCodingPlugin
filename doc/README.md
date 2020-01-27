@@ -19,7 +19,6 @@
 		- [Show Command](#show-command)
 		- [Force RPC](#force-rpc)
 - [Quick Functionality Overview](#quick-functionality-overview)
-	- [A Bit Of Advice](#a-bit-of-advice)
 	- [A Small Remark](#a-small-remark)
 	- [Selection Queries](#selection-queries)
 	- [Operations](#operations)
@@ -415,11 +414,10 @@ Forces RPC no matter what. Might be useful  when host is windows  and  guest is 
 
 Here we will really really briefly go over the functionality offered. you can find more extensive documentation in the outgoing links. 
 
-### A Bit Of Advice
 
-It is my recommendation,
 
-Also keep in mind that whenever you find anything ending in `index` that is an integer!
+
+
 
 ### A Small Remark
 
@@ -522,7 +520,10 @@ I do not expect these examples to make this distinction clear, just keep this in
 
 ![](./gif/big5.gif)
 
-Details vary but that is the. spirit! Ok , what else?
+Details vary but that is the. spirit!
+
+Also if in doubt remember that in general descriptions are to be interpreted from left to right!
+Also keep in mind that whenever you find anything ending in `index` that is an integer!
 
 
 ### Operations
