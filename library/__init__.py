@@ -21,7 +21,8 @@ def get_source_region(atok, element):
     if isinstance(element,ast.AST):
     	return atok.get_text_range(element)         
     else:   
-        regions = [atok.get_text_range(node)  for node in element]
+        # regions = [atok.get_text_range(node)  for node in element]
+        regions = [get_source_region(atok,node)  for node in element]
         start = min( regions,key = lambda s: s[0])[0]
         end = max( regions,key = lambda s: s[1])[1] 
         return ( start , end) 
