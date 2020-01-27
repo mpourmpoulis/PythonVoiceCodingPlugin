@@ -2,7 +2,7 @@
 
 [![License](https://img.shields.io/badge/License-BSD%202--Clause-orange.svg)](https://opensource.org/licenses/BSD-2-Clause)
 
-![](https://img.shields.io/static/v1?label=Version&message=0.0.4&color=green)
+![](https://img.shields.io/static/v1?label=Version&message=0.1.0&color=green)
 
 ![](https://img.shields.io/static/v1?label=Caster&message=0.5.11|0.6.11|1.0.0&color=blue)
 
@@ -15,7 +15,33 @@
 PythonVoiceCodingPlugin is a Sublime Text 3 plugin meant to enhance user experience 
 when coding python 3 by voice. 
 
-![](doc/gif/arg5.gif)
+![](./gif/big37.gif)
+
+
+## Contents
+
+<!-- MarkdownTOC  autolink="true" -->
+
+- [Update](#update)
+- [Documentation](#documentation)
+- [Motivation](#motivation)
+- [Release and Version](#release-and-version)
+  - [Update 0.0.5](#update-005)
+- [Limitations](#limitations)
+- [Installation](#installation)
+  - [Package Control](#package-control)
+    - [note for those who installed between 0.0.4 and 0.0.5](#note-for-those-who-installed-between-004-and-005)
+  - [Git Install](#git-install)
+- [Support for voice coding framework](#support-for-voice-coding-framework)
+  - [Short version:](#short-version)
+  - [Long version:](#long-version)
+- [License](#license)
+- [Dependencies](#dependencies)
+- [Acknowledgements](#acknowledgements)
+  - [Useful Learning Resources](#useful-learning-resources)
+  - [Development tools](#development-tools)
+
+<!-- /MarkdownTOC -->
 
 
 ## Update
@@ -44,14 +70,14 @@ with  [Caster](https://github.com/dictation-toolbox/Caster). Despite the excelle
 In particular, navigation through the code sometimes felt a little bit too mechanistic. Say for instance you want to go to some location or select some text. For the most part ,you are  describing what actions 
 need to be taken to get there. What if you could instead simply describe (syntactically)  what you want to select? 
 
-![](doc/gif/big3.gif)
+![](./gif/arg17.gif)
 
 PythonVoiceCodingPlugin tries to enable you to do just that!
 To provide this functionality, it ships with bundles the implement a grammar, hopefully expressive enough for describing regions of interest, while running on the voice coding macro system side. These bundles
 cooperate with the core plugin, running on the editor side, arguably the more suitable of the two environments
 for analyzing source code and decoding the meaning of queries within the given context. 
 
-![](doc/gif/d4.gif)
+![](./gif/op2.gif)
 
 
 I want to be honest. This is not exactly the best code ever written. It is far from it:) And it is far from the full functionality i would want it to offer. Nonetheless, I still think that PythonVoiceCodingPlugin is a tool that :
@@ -76,7 +102,7 @@ I want to be honest. This is not exactly the best code ever written. It is far f
 * is partly customizable. If you find yourself using certain commands with some given parameters often and want a shorthand smaller command, you can always follow my commented banana example:)
 
 
-![](doc/gif/d5.gif)
+![](./gif/op37.gif)
 
 As I said, far (really far) from perfect but nonetheless an out-of-the-box solution which I hope to be helpful ,especially for beginners to get up to speed , and a step towards the right direction. I hope you enjoy using it as much as I have enjoyed coding it:)
 
