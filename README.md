@@ -22,7 +22,6 @@ when coding python 3 by voice.
 
 <!-- MarkdownTOC  autolink="true" -->
 
-- [Update](#update)
 - [Documentation](#documentation)
 - [Motivation](#motivation)
 - [Release and Version](#release-and-version)
@@ -41,22 +40,17 @@ when coding python 3 by voice.
 <!-- /MarkdownTOC -->
 
 
-## Update
-
-Release 0.0.5 he's out fixing problems of 0.0.4 regarding the installation via package control and adds a useful utilities under Preferences > Package Settings  > PythonVoiceCodingPlugin iincluding links to online documentation issues, grammar bundles and so on. It is meant to be only temporary i'm currently wrapping up the development of 0.1.0. Also you should know that Caster 1.x.x is also supported but  you must enable it by saying
-
-```
-enable python voice coding plugin
-```
-
- if you have any problem or questions regarding installation , whether of the plug-in itself or the grammar necessary to use it please let me know at my issues!
 
 
-you can now also install via package control, see installation instructions [below](#installation)
 
 ## Documentation
 
-Documentation is available [here](doc/README.md)
+Documentation is available [here](doc/README.md)  you can also find links to documentation under
+
+```
+Preferences > Package Settings  > PythonVoiceCodingPlugin
+```
+
 
 
 ## Motivation
@@ -223,6 +217,11 @@ It is my highest recommendation if you are using older versions of Caster that y
 Regarding operating system support, the plug-in has been tested both on Windows 10 and  on Ubuntu 16.04 as release 0.0.4 introduced support for [aenea](https://github.com/mpourmpoulis/PythonVoiceCodingPlugin/blob/master/bundles/Aenea/README.md)!
 
 
+Also note that if you are using the latest version of Caster, you must also enable the grammar by saying
+
+```
+enable python voice coding plugin
+```
 
 
 
