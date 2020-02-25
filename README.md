@@ -10,7 +10,7 @@
 
 ![](https://img.shields.io/static/v1?label=Platform&message=Windows|Linux&color=yellow)
 
-[![](https://img.shields.io/gitter/room/PythonVoiceCodingPlugin/community.svg)](https://gitter.im/PythonVoiceCodingPlugin/community)
+[![](https://img.shields.io/gitter/room/mpourmpoulis/PythonVoiceCodingPlugin.svg)](https://gitter.im/PythonVoiceCodingPlugin/community)
 
 PythonVoiceCodingPlugin is a Sublime Text 3 plugin meant to enhance user experience 
 when coding python 3 by voice. 
