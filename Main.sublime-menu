@@ -21,6 +21,13 @@
                                 }
                             },
                             {
+                              "caption":"Gitter Chat Room",
+                              "command": "open_url",
+                              "args":{
+                                "url":"https://gitter.im/PythonVoiceCodingPlugin/community"
+                              }
+                            },
+                            {
                                 "caption": "Online Documentation",
                                 "children": 
                                 [
