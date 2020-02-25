@@ -290,6 +290,16 @@ def get_subscript_key(root):
 		root.slice if match_node(root,ast.Subscript) else None
 	)
 
+def get_slice_lower(root):
+	return root.lower if match_node(root,ast.Slice) else None
+
+
+def get_slice_upper(root):
+	return root.upper if match_node(root,ast.Slice) else None
+
+def get_slice_step(root):
+	return root.step if match_node(root,ast.Slice) else None
+
 # need to revisit this
 def get_body(root):
 	return (

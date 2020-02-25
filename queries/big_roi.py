@@ -110,7 +110,9 @@ class SelectBigRoi(SelectionQuery):
             "tuple":((ast.Tuple),(),standard),
             "list":((ast.List),(),standard),
             "key":((ast.Subscript),(),get_subscript_key),
-
+            "lower":((ast.Slice),(),get_slice_lower),
+            "upper":((ast.Slice),(),get_slice_upper),
+            "step":((ast.Slice),(),get_slice_step),
 
 
 		}
