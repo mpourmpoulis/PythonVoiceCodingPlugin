@@ -114,6 +114,7 @@ class SelectBigRoi(SelectionQuery):
             "upper":((ast.Slice),(),get_slice_upper),
             "step":((ast.Slice),(),get_slice_step),
             "attribute":((ast.Attribute),(),standard),
+            "comparison":((ast.Compare),(),standard),
 
 		}
 
