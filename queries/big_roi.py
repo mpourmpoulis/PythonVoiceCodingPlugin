@@ -117,7 +117,12 @@ class SelectBigRoi(SelectionQuery):
             "comparison":((ast.Compare),(),standard),
             "arithmetic":((ast.BinOp),(),standard),
             "boolean":((ast.BoolOp),(),standard),
-            
+            "container":((ast.Compare),(),get_container_check),
+            "member":((ast.Compare),(),get_member_check),
+            "left side":((ast.Compare),(),get_comparison_left_side),
+            "right side":((ast.Compare),(),get_comparison_right_side),
+
+
 		}
 
 		temporary  = possibilities[query_description["big_roi"]]
