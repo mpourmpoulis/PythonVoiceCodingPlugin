@@ -115,7 +115,9 @@ class SelectBigRoi(SelectionQuery):
             "step":((ast.Slice),(),get_slice_step),
             "attribute":((ast.Attribute),(),standard),
             "comparison":((ast.Compare),(),standard),
-
+            "arithmetic":((ast.BinOp),(),standard),
+            "boolean":((ast.BoolOp),(),standard),
+            
 		}
 
 		temporary  = possibilities[query_description["big_roi"]]
