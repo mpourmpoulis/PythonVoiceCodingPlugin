@@ -195,6 +195,11 @@ def after_dot(t):
 		)
 	)
 	return False
+
+def after_return(t):
+	return t[1] is not None   and not(
+		start_atom(t[1])  or t[1].string.isspace()
+	)
 '''
 def after_else(t):
 	if 60<t[0].start[0]<80:
@@ -269,6 +274,11 @@ def process_token(atok,t,l,b ):
 		before = before_unary(n)
 		before_space = True
 		after = after_unary(n)
+		after_space = True
+	elif s in ["return"]:
+		before = False
+		before_space = True
+		after = after_return(n)
 		after_space = True
 	else:
 		before = False
