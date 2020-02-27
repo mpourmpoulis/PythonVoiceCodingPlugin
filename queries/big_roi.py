@@ -121,6 +121,7 @@ class SelectBigRoi(SelectionQuery):
             "member":((ast.Compare),(),get_member_check),
             "left side":((ast.Compare),(),get_comparison_left_side),
             "right side":((ast.Compare),(),get_comparison_right_side),
+            "middle":((ast.Compare),(),get_comparison_middle),
 
 
 		}

@@ -300,17 +300,29 @@ def get_slice_upper(root):
 def get_slice_step(root):
 	return root.step if match_node(root,ast.Slice) else None
 
+
+
+
+
+# Extracting Member And Container
 def get_member_check(root):
 	return root.left if match_node(root,ast.Compare)  and all([match_node(x,(ast.In,ast.NotIn)) for x in root.ops]) else None
 
 def get_container_check(root):
 	return root.comparators[-1] if match_node(root,ast.Compare)  and all([match_node(x,(ast.In,ast.NotIn)) for x in root.ops]) else None
 
+# Extract Left Middle And Right from numerical comparisons
 def get_comparison_left_side(root):
 	return root.left if match_node(root,ast.Compare) else None
 
 def get_comparison_right_side(root):
 	return root.comparators[-1] if match_node(root,ast.Compare) else None
+
+def get_comparison_middle(root):
+	return root.comparators[0] if match_node(root,ast.Compare) and len(root.comparators)==2 else None
+
+
+
 
 # need to revisit this
 def get_body(root):
