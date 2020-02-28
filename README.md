@@ -36,6 +36,7 @@ when coding python 3 by voice.
 - [Acknowledgements](#acknowledgements)
   - [Useful Learning Resources](#useful-learning-resources)
   - [Development tools](#development-tools)
+  - [People](#people)
 
 <!-- /MarkdownTOC -->
 
@@ -317,5 +318,15 @@ also some of the other tools I found useful developing this project
 * ScreenToGif 
 
 * Jedi 
+
+
+### People
+
+Last but not least many things to
+
+* LexiconCode, for porting the grammar from 0.5 to 0.6 and 1.0 versions of Caster
+
+* FichteFoll, for pointing out various errors during package review
+
 
 
