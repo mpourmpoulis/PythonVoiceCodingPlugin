@@ -1,6 +1,37 @@
 # Changelog
 
-## [Unreleased]
+
+## [0.1.1]
+
+### Added
+
+- a bunch of preliminary versions for small regions of interest were added in the unofficial features.
+
+- recommendation has been updated to include links to the gitter chanell
+
+- the sublime menu has been edited accordingly as well!
+
+
+
+### Fixed
+
+- fixed a nasty bug in the argument queries, which prevented  above/below queries to select parts of calls inside with clauses and for loops( it did not affect counting though)
+
+- documentation fix, the documentation for the same keyword was pointing to the unofficial small regions of interest
+
+### Changed
+
+- the escaping problems faced with quotes and other special characters were lifted( see below for details )
+
+- the repair module now supports correcting cases where the return keyword is followed by invalid code
+
+
+
+
+
+
+
+## [0.0.5 and 0.1.0 are not really change loged properly]
 
 ### Added
 
