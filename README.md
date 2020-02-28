@@ -2,7 +2,9 @@
 
 [![License](https://img.shields.io/badge/License-BSD%202--Clause-orange.svg)](https://opensource.org/licenses/BSD-2-Clause)
 
-![](https://img.shields.io/static/v1?label=Version&message=0.1.0&color=green)
+<!-- ![](https://img.shields.io/static/v1?label=Version&message=0.1.0&color=green) -->
+
+![](https://img.shields.io/github/v/release/mpourmpoulis/PythonVoiceCodingPlugin.svg)
 
 ![](https://img.shields.io/static/v1?label=Caster&message=0.5.11|0.6.11|1.0.0&color=blue)
 
