@@ -6,7 +6,9 @@
 
 ![](https://img.shields.io/github/v/release/mpourmpoulis/PythonVoiceCodingPlugin.svg)
 
-![](https://img.shields.io/static/v1?label=Caster&message=0.5.11|0.6.11|1.0.0&color=blue)
+<!-- ![](https://img.shields.io/static/v1?label=Caster&message=0.5.11|0.6.11|1.0.0&color=blue) -->
+
+![](https://img.shields.io/badge/Caster-0.5.11%7C0.6.14%7C1.0.0-blue)
 
 ![](https://img.shields.io/static/v1?label=Aenea&message=supported&color=red)
 
