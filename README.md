@@ -17,7 +17,7 @@
 [![](https://img.shields.io/gitter/room/mpourmpoulis/PythonVoiceCodingPlugin.svg)](https://gitter.im/PythonVoiceCodingPlugin/community)
 
 PythonVoiceCodingPlugin is a Sublime Text 3 plugin meant to enhance user experience 
-when coding python 3 by voice. 
+when coding python 3 by voice. It ships with  an integrated Caster  grammar bundle containing voice commands that provide you with syntactical navigation capabilities!
 
 ![](doc/gif/big37.gif)
 
