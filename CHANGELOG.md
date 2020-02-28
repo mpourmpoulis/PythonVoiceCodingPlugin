@@ -17,6 +17,8 @@
 
 - fixed a nasty bug in the argument queries, which prevented  above/below queries to select parts of calls inside with clauses and for loops( it did not affect counting though)
 
+- fixed a bug regarding empty definition parameter lists, where the initial "def" keyword would be selected. Now the cursor is correct placed between the empty brackets
+
 - documentation fix, the documentation for the same keyword was pointing to the unofficial small regions of interest
 
 ### Changed

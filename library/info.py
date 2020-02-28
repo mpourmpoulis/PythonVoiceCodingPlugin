@@ -989,6 +989,8 @@ def fix_definition(root,atok):
 	token = root.first_token
 	token = atok.find_token(token,tokenize.NAME,"def")
 	token = next_token(atok,token )
+
+	name_token = token
 	if match_node(root,ast.FunctionDef):
 		fake_node = create_fake(root,ast.Name,real_tokens = token,
 			parent = root,parent_field = "name", 
@@ -1025,6 +1027,10 @@ def fix_definition(root,atok):
 	if temporary:
 		x.first_token = temporary[0]
 		x.last_token = temporary[-1]
+	else:
+		token = next_token(atok,name_token)
+		x.first_token = x.last_token = asttokens.Token(0,"",(token.start[0],token.start[1]+1),(token.start[0],token.start[1]+1),"",
+			token.index,token.startpos+1,token.startpos+1)
 	mark_fixed(root)
 	return True
 
