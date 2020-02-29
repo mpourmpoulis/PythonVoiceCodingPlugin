@@ -18,7 +18,7 @@ import json
 #########################################################################################
 
 local_settings = {
-    "show_command":True,
+    "show_command":False,
     "force_rpc":False,
 }
 
@@ -235,8 +235,7 @@ class PythonVoiceCodingPluginRule(MappingRule):
         Choice("big_roi",{
 
                 "if condition" : "if condition",
-                "iffae" : "if condition",
-                "LFA" : "else if condition",
+                "else if condition" : "else if condition",
                 "while condition" : "while condition",
                 "with item" : "with clause",
 
@@ -278,7 +277,6 @@ class PythonVoiceCodingPluginRule(MappingRule):
                 "iterable" : "iterable",
 
                 "function name": "definition name",
-                "F name": "definition name",
                 "function parameter": "definition parameter",
                 "parameter list": "definition parameter list",
                 "default value": "default value",
