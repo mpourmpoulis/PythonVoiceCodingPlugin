@@ -73,13 +73,14 @@
                                           "url": "https://github.com/mpourmpoulis/PythonVoiceCodingPlugin/blob/master/doc/CollectionQueries.md"
                                       }
                                     },
-                                    { 
-                                      "caption": "Grammar Installation",
-                                      "command": "open_url", 
+                                    {
+                                      "caption": "Unofficial",
+                                      "command": "open_url",
                                       "args":{
-                                          "url": "https://github.com/mpourmpoulis/PythonVoiceCodingPlugin/blob/master/bundles/README.md"
+                                        "url": "https://github.com/mpourmpoulis/PythonVoiceCodingPlugin/blob/master/doc/README.md#experiment-or-unofficial-and-so-on-features-you-need-to-enable-manually"
                                       }
                                     }
+                                  
 
   
   
@@ -119,7 +120,15 @@
                                 }
 
 
+                            },
+                            { 
+                              "caption": "Grammar Installation",
+                              "command": "open_url", 
+                              "args":{
+                                  "url": "https://github.com/mpourmpoulis/PythonVoiceCodingPlugin/blob/master/bundles/README.md"
+                              }
                             }
+
 
 
                         ]
