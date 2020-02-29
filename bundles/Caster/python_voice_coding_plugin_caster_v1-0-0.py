@@ -36,7 +36,7 @@ else:
 
 ######################################################################################### 
 
-GRAMMAR_VERSION = (0,1,0)
+GRAMMAR_VERSION = (0,1,1)
 
 ######################################################################################### 
 
@@ -394,5 +394,5 @@ class PythonVoiceCodingPluginRule(MappingRule):
 
 
 def get_rule():
-    # return PythonVoiceCodingPluginRule, RuleDetails(name="python voice coding plugin", executable="sublime_text", title="Sublime Text")
-    return PythonVoiceCodingPluginRule, RuleDetails(name="develop plugin", executable=["sublime_text","VirtualBox"])
+    return PythonVoiceCodingPluginRule, RuleDetails(name="python voice coding plugin", executable="sublime_text", title="Sublime Text")
+
