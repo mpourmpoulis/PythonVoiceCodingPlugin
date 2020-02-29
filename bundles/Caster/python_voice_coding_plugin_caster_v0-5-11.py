@@ -50,12 +50,9 @@ def create_arguments(command,format,**kwargs):
 
 
 def send_sublime(c,data):
-    x =  json.dumps(data).replace('"','\\"')
-    y = "subl --command \"" + c + "  " + x + "\""
     if local_settings["show_command"]:
-        print(y)
-    subprocess.call(y, shell = True)
-    subprocess.call("subl", shell = True)
+        print(c + " " + json.dumps(data))
+    subprocess.Popen(["subl","-b", "--command",c + " " + json.dumps(data)],creationflags = 0x08000000)
 
 def noob_send(command,format,**kwargs):
     data = create_arguments(command,format,**kwargs)
@@ -294,16 +291,49 @@ class PythonVoiceCodingPluginRule(MergeRule):
                 "decorator":"decorator",
                 "base class":"base class",
 
-                # "same" : "same",
+#                 "same" : "same",
 
 
-                # "string" : "string",
-                # "integer literal" : "integer literal",
-                # "dictionary" : "dictionary",
-                # "list" : "list",
-                # "tuple" : "tuple",
-                # "set" : "set",
-                # "key" : "key",
+#                 "string" : "string",
+#                 "integer literal" : "integer literal",
+#                 "dictionary" : "dictionary",
+#                 "list" : "list",
+#                 "tuple" : "tuple",
+#                 "set" : "set",
+                
+
+#                 "subscript" : "subscript",
+#                 "subscript body" : "subscript body",
+#                 "key" : "key",
+#                 "lower" : "lower",
+#                 "upper" : "upper",
+#                 "step" : "step",
+                
+#                 "attribute" : "attribute",
+
+#                 "comparison" : "comparison",
+#                 "arithmetic" : "arithmetic",
+#                 "boolean" : "boolean",
+
+#                 "member": "member",
+#                 "container": "container",
+#                 "membership" : "membership",
+
+#                 "left side" : "left side",
+#                 "right side" : "right side",
+#                 "middle" : "middle",
+
+#                 "arithmetic left"  : "arithmetic left" ,
+#                 "arithmetic right" : "arithmetic right",
+#                 "arithmetic middle" : "arithmetic middle",
+
+#                 "boolean left" : "boolean left",
+#                 "boolean right" : "boolean right",
+#                 "boolean middle" : "boolean middle",
+
+#                 "boolean and"  : "boolean and" ,
+#                 "boolean or" : "boolean or",
+
 
 
             }

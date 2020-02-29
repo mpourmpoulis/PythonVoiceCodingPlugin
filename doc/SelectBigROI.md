@@ -108,20 +108,11 @@ Choice("big_roi",{
 
                 # "same":"same",
 
-                # "string" : "string",
-                # "integer literal" : "integer literal",
-                # "dictionary" : "dictionary",
-                # "list" : "list",
-                # "tuple" : "tuple",
-                # "set" : "set",
-                # "key" : "key",
-
-
     }
 )
 ```
 
-As a final note,there is also a commented line and an entire commented block separated by an empty line, about which we are going to talk [later](#experimental-same)  and [later](#temporary-until-small-regions) respectively.
+As a final note,there is also a commented line and an entire commented block(not shown here) separated by an empty line, about which we are going to talk [later](#experimental-same)  and [later](#temporary-until-small-regions) respectively.
 
 Moving on the full syntax, looks like
 
