@@ -333,8 +333,14 @@ def get_comparison_middle(root):
 
 
 # Extract Left Middle and Right from arithmetical operations
+
+def get_arithmetic(root):
+	if not match_node(root,ast.BinOp)  or match_parent(root,ast.BinOp):
+		return None
+	return root
+	
 def get_arithmetic_left(root):
-	if not match_node(root,ast.BinOp):
+	if not match_node(root,ast.BinOp)  or match_parent(root,ast.BinOp):
 		return None
 	items = get_sub_index(root,None)
 	if len(items)>=1:
@@ -342,7 +348,7 @@ def get_arithmetic_left(root):
 	return None
 
 def get_arithmetic_right(root):
-	if not match_node(root,ast.BinOp):
+	if not match_node(root,ast.BinOp) or match_parent(root,ast.BinOp):
 		return None
 	items = get_sub_index(root,None)
 	if len(items)>=2:
@@ -350,7 +356,7 @@ def get_arithmetic_right(root):
 	return None
 
 def get_arithmetic_middle(root):
-	if not match_node(root,ast.BinOp):
+	if not match_node(root,ast.BinOp) or match_parent(root,ast.BinOp):
 		return None
 	items = get_sub_index(root,None)
 	if len(items)==3:
