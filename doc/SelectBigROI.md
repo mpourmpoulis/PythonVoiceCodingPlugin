@@ -15,21 +15,28 @@ These commands are responsible for selecting "big" regions of interest. By "big"
 - [Case three: Vertical Description](#case-three-vertical-description)
 - [Case four: Vertical Block And Nth Adjective](#case-four-vertical-block-and-nth-adjective)
 - [Selectable](#selectable)
-	- [Assignment And Expression Statements](#assignment-and-expression-statements)
-	- [If conditions While loops With clauses](#if-conditions-while-loops-with-clauses)
-	- [If expressions](#if-expressions)
-	- [Return Value](#return-value)
-	- [Iterator  and Iterable](#iterator-and-iterable)
-	- [Comprehensions](#comprehensions)
-	- [Exception Handling](#exception-handling)
-	- [Assertions And Exceptions Raising](#assertions-and-exceptions-raising)
-	- [Functional Definitions](#functional-definitions)
-	- [Class Definitions](#class-definitions)
-	- [Import](#import)
-	- [Lambda](#lambda)
-	- [Continue Break Pass](#continue-break-pass)
-	- [Experimental Same](#experimental-same)
-	- [Temporary Until Small Regions](#temporary-until-small-regions)
+    - [Assignment And Expression Statements](#assignment-and-expression-statements)
+    - [If conditions While loops With clauses](#if-conditions-while-loops-with-clauses)
+    - [If expressions](#if-expressions)
+    - [Return Value](#return-value)
+    - [Iterator  and Iterable](#iterator-and-iterable)
+    - [Comprehensions](#comprehensions)
+    - [Exception Handling](#exception-handling)
+    - [Assertions And Exceptions Raising](#assertions-and-exceptions-raising)
+    - [Functional Definitions](#functional-definitions)
+    - [Class Definitions](#class-definitions)
+    - [Import](#import)
+    - [Lambda](#lambda)
+    - [Continue Break Pass](#continue-break-pass)
+    - [Experimental Same](#experimental-same)
+    - [Temporary Until Small Regions](#temporary-until-small-regions)
+        - [Disclaimer](#disclaimer)
+        - [Literals](#literals)
+        - [Subscripts  and Attribute](#subscripts-and-attribute)
+        - [Comparisons Arithmetical And Boolean Operations](#comparisons-arithmetical-and-boolean-operations)
+        - [More On Comparisons](#more-on-comparisons)
+        - [More On Boolean](#more-on-boolean)
+        - [More On Arithmetic](#more-on-arithmetic)
 
 <!-- /MarkdownTOC -->
 
@@ -459,24 +466,151 @@ what is the core idea? when you use `same`, the queries going to behave as if th
 
 ### Temporary Until Small Regions
 
+#### Disclaimer
+
 What follows has a nearly one hundred percent chance of getting removed in the future :)
 
-One of the weaknesses of the 0.1.0 release is that it does not include support for small regions via dedicated commands so in order to extract them, currently you need to use sub indexing. This of course is not always satisfying and in certain cases can even be very annoying (for instance when editing json file). As a temporary solution so that you have something to get by until release 0.2.0 introduces small regions of interest properly , the following regions have been added as Big Roi 
+One of the weaknesses of the 0.1.0 release is that it does not include support for small regions via dedicated commands so in order to extract them, currently you need to use sub indexing. This of course is not always satisfying and in certain cases can even be very annoying (for instance when editing json file). As a temporary solution so that you have something to get by until release 0.2.0 introduces small regions of interest properly , various regions have been added as Big Roi 
+
+A few very important things to note
+
+- The way they work with  nth adjectives might feel even more clumsy than usual, but this is only temporary. 
+
+- The search in the way the ordinal adjectives are decoded is function wide!
+
+- 
+
+
 
 
 ```python
-# "string" : "string",
-# "integer literal" : "integer literal",
-# "dictionary" : "dictionary",
-# "list" : "list",
-# "tuple" : "tuple",
-# "set" : "set",
-# "key" : "key",
+"string" : "string",
+"integer literal" : "integer literal",
+"dictionary" : "dictionary",
+"list" : "list",
+"tuple" : "tuple",
+"set" : "set",
+
+
+"subscript" : "subscript",
+"subscript body" : "subscript body",
+"key" : "key",
+"lower" : "lower",
+"upper" : "upper",
+"step" : "step",
+
+"attribute" : "attribute",
+
+"comparison" : "comparison",
+"arithmetic" : "arithmetic",
+"boolean" : "boolean",
+
+"member": "member",
+"container": "container",
+"membership" : "membership",
+
+"left side" : "left side",
+"right side" : "right side",
+"middle" : "middle",
+
+"arithmetic left"  : "arithmetic left" ,
+"arithmetic right" : "arithmetic right",
+"arithmetic middle" : "arithmetic middle",
+
+"boolean left" : "boolean left",
+"boolean right" : "boolean right",
+"boolean middle" : "boolean middle",
+
+"boolean and"  : "boolean and" ,
+"boolean or" : "boolean or",
+
+```
+
+
+in the following we are going to quickly go through these regions but not in great detail because they are either way immature, highly likely subject to future change, they lack for the time being there dedicated commands and there are technicalities with some of them! But I hope you get the main idea
+
+#### Literals
+
+![](./gif/big39.gif)
+
+
+```python
+"string" : "string",
+"integer literal" : "integer literal",
+"dictionary" : "dictionary",
+"list" : "list",
+"tuple" : "tuple",
+"set" : "set",
+```
+
+
+#### Subscripts  and Attribute
+
+![](./gif/big40.gif)
+
+```python
+"attribute" : "attribute",
+
+"subscript" : "subscript",
+"subscript body" : "subscript body",
+"key" : "key",
+"lower" : "lower",
+"upper" : "upper",
+"step" : "step"
+```
+
+#### Comparisons Arithmetical And Boolean Operations
+
+![](./gif/big41.gif)
+
+```python
+"comparison" : "comparison",
+"arithmetic" : "arithmetic",
+"boolean" : "boolean",
+```
+
+#### More On Comparisons
+
+![](./gif/big42.gif)
+
+```python
+"member": "member",
+"container": "container",
+"membership" : "membership",
+
+"left side" : "left side",
+"right side" : "right side",
+"middle" : "middle",
+```
+
+#### More On Boolean
+
+
+![](./gif/big43.gif)
+
+
+```python
+"boolean left" : "boolean left",
+"boolean right" : "boolean right",
+"boolean middle" : "boolean middle",
+
+"boolean and"  : "boolean and" ,
+"boolean or" : "boolean or",
+```
+
+#### More On Arithmetic
+
+![](./gif/big44.gif)
+
+```python
+"arithmetic left"  : "arithmetic left" ,
+"arithmetic right" : "arithmetic right",
+"arithmetic middle" : "arithmetic middle",
 ```
 
 
 
-The way they work with  nth adjectives might feel even more clumsy than usual, but this is only temporary. 
+
 
 
 
