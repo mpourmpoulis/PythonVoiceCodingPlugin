@@ -27,6 +27,7 @@
 
 - the repair module now supports correcting cases where the return keyword is followed by invalid code
 
+- changes in the code for the sublime grammar communication on the grammar side, issues with escaping characters and occasionally losing focus have been lifted via RunCommand ( custom solution  0.5.11 )
 
 
 
