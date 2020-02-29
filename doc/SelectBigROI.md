@@ -472,16 +472,6 @@ What follows has a nearly one hundred percent chance of getting removed in the f
 
 One of the weaknesses of the 0.1.0 release is that it does not include support for small regions via dedicated commands so in order to extract them, currently you need to use sub indexing. This of course is not always satisfying and in certain cases can even be very annoying (for instance when editing json file). As a temporary solution so that you have something to get by until release 0.2.0 introduces small regions of interest properly , various regions have been added as Big Roi 
 
-A few very important things to note
-
-- The way they work with  nth adjectives might feel even more clumsy than usual, but this is only temporary. 
-
-- The search in the way the ordinal adjectives are decoded is function wide!
-
-- 
-
-
-
 
 ```python
 "string" : "string",
@@ -526,12 +516,21 @@ A few very important things to note
 
 ```
 
+A few very important things to note
 
-in the following we are going to quickly go through these regions but not in great detail because they are either way immature, highly likely subject to future change, they lack for the time being there dedicated commands and there are technicalities with some of them! But I hope you get the main idea
+- The way they work with  nth adjectives might feel even more clumsy than usual, but this is only temporary. 
+
+- The search in the way the ordinal adjectives are decoded is function wide!
+
+- They can still be subindexed which can enable you to go deeper than otherwise possible in a single go! 
+
+- Take care with nested hierarchies!
+
+In the following we are going to quickly go through these regions but not in great detail because they are either way immature, highly likely subject to future change, they lack for the time being there dedicated commands and there are technicalities with some of them! But I hope you get the main idea
 
 #### Literals
 
-![](./gif/big39.gif)
+We start with the most basic stuff namely literals!
 
 
 ```python
@@ -543,10 +542,12 @@ in the following we are going to quickly go through these regions but not in gre
 "set" : "set",
 ```
 
+![](./gif/big39.gif)
 
 #### Subscripts  and Attribute
 
-![](./gif/big40.gif)
+I hope most of them are self-explanatory, load to be honest I'm not really that satisfied with `subscript body`
+and perhaps using `index` instead of `key` might also be an alternative to consider
 
 ```python
 "attribute" : "attribute",
@@ -558,6 +559,11 @@ in the following we are going to quickly go through these regions but not in gre
 "upper" : "upper",
 "step" : "step"
 ```
+
+there are some technicalities but I hope they do not disturb you too much!
+
+![](./gif/big40.gif)
+
 
 #### Comparisons Arithmetical And Boolean Operations
 
@@ -571,23 +577,38 @@ in the following we are going to quickly go through these regions but not in gre
 
 #### More On Comparisons
 
-![](./gif/big42.gif)
+Now to have a little bit more fun, given thought in most cases comparisons typically have two or maybe three comparators, we also provide regions corresponding to the left medial or right side of such a comparison
 
 ```python
-"member": "member",
-"container": "container",
-"membership" : "membership",
-
 "left side" : "left side",
 "right side" : "right side",
 "middle" : "middle",
 ```
 
+Which combined with sub indexing, enables you to go to levels deep within such a condition! now under the term comparison there are actually three things:
+
+* The more traditional `==`,`<`,`>`,and so on
+
+* The identity comparison `is`  and `is not`
+
+* Checking if an item belongs to a sequence with the `in` and `not in` keywords
+
+For the latter of the three, dedicated regions are provided in order to maximize ease of use and flexibility
+
+```python
+"member": "member",
+"container": "container",
+"membership" : "membership",
+```
+
+To visualize all of the above
+
+![](./gif/big42.gif)
+
+
 #### More On Boolean
 
-
-![](./gif/big43.gif)
-
+we can also get left middle right parts off a Boolean expression  or we can specify whether we are interested in operations using `and` or `or`
 
 ```python
 "boolean left" : "boolean left",
@@ -598,15 +619,23 @@ in the following we are going to quickly go through these regions but not in gre
 "boolean or" : "boolean or",
 ```
 
+
+![](./gif/big43.gif)
+
+
+
 #### More On Arithmetic
 
-![](./gif/big44.gif)
+As usual the left middle right pattern applies also to arithmetical operations
 
 ```python
 "arithmetic left"  : "arithmetic left" ,
 "arithmetic right" : "arithmetic right",
 "arithmetic middle" : "arithmetic middle",
 ```
+
+![](./gif/big44.gif)
+
 
 
 
