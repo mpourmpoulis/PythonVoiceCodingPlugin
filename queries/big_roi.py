@@ -109,14 +109,19 @@ class SelectBigRoi(SelectionQuery):
             "set":((ast.Set),(),standard),
             "tuple":((ast.Tuple),(),standard),
             "list":((ast.List),(),standard),
+
+            "subscript":((ast.Subscript),(),standard),
+            "subscript body":((ast.Subscript),(),get_subscript_body),
             "key":((ast.Subscript),(),get_subscript_key),
             "lower":((ast.Slice),(),get_slice_lower),
             "upper":((ast.Slice),(),get_slice_upper),
             "step":((ast.Slice),(),get_slice_step),
+            
             "attribute":((ast.Attribute),(),standard),
             "comparison":((ast.Compare),(),standard),
             "arithmetic":((ast.BinOp),(),standard),
             "boolean":((ast.BoolOp),(),standard),
+
             "container":((ast.Compare),(),get_container_check),
             "member":((ast.Compare),(),get_member_check),
             "membership":((ast.Compare),(),get_membership),
@@ -124,6 +129,17 @@ class SelectBigRoi(SelectionQuery):
             "left side":((ast.Compare),(),get_comparison_left_side),
             "right side":((ast.Compare),(),get_comparison_right_side),
             "middle":((ast.Compare),(),get_comparison_middle),
+
+            "arithmetic left":((ast.BinOp),(),get_arithmetic_left),
+            "arithmetic right":((ast.BinOp),(),get_arithmetic_right),
+            "arithmetic middle":((ast.BinOp),(),get_arithmetic_middle),
+
+            "boolean left":((ast.BoolOp),(),get_boolean_left),
+            "boolean right":((ast.BoolOp),(),get_boolean_right),
+            "boolean middle":((ast.BoolOp),(),get_boolean_middle),
+
+            "boolean and":((ast.BoolOp),(),get_boolean_and),
+            "boolean or":((ast.BoolOp),(),get_boolean_or),
 
 
 

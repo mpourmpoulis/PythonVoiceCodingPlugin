@@ -284,6 +284,13 @@ def get_with_items(root):
 		root.items if match_node(root,ast.With) else None
 	)
 
+#########################################################################
+# stuff for small regions
+#########################################################################
+
+# Extracting things from subscript
+def get_subscript_body(root):
+	return  root.value if match_node(root,ast.Subscript) else None
 
 def get_subscript_key(root):
 	return (
@@ -325,8 +332,66 @@ def get_comparison_middle(root):
 	return root.comparators[0] if match_node(root,ast.Compare) and len(root.comparators)==2 else None
 
 
+# Extract Left Middle and Right from arithmetical operations
+def get_arithmetic_left(root):
+	if not match_node(root,ast.BinOp):
+		return None
+	items = get_sub_index(root,None)
+	if len(items)>=1:
+		return items[0]
+	return None
+
+def get_arithmetic_right(root):
+	if not match_node(root,ast.BinOp):
+		return None
+	items = get_sub_index(root,None)
+	if len(items)>=2:
+		return items[-1]
+	return None
+
+def get_arithmetic_middle(root):
+	if not match_node(root,ast.BinOp):
+		return None
+	items = get_sub_index(root,None)
+	if len(items)==3:
+		return items[1]
+	return None
 
 
+# Extract Left Middle Right from Boolean expressions
+
+def get_boolean_left(root):
+	if not match_node(root,ast.BoolOp):
+		return None
+	items = root.values
+	if len(items)>=1:
+		return items[0]
+	return None
+
+def get_boolean_right(root):
+	if not match_node(root,ast.BoolOp):
+		return None
+	items = root.values
+	if len(items)>=2:
+		return items[-1]
+	return None
+
+def get_boolean_middle(root):
+	if not match_node(root,ast.BoolOp):
+		return None
+	items = root.values
+	if len(items)==3:
+		return items[1]
+	return None
+
+def get_boolean_and(root):
+	return root if match_node(root,ast.BoolOp) and match_node(root.op,ast.And) else None
+
+
+def get_boolean_or(root):
+	return root if match_node(root,ast.BoolOp) and match_node(root.op,ast.Or) else None
+
+##########################################################################
 # need to revisit this
 def get_body(root):
 	return (
