@@ -53,7 +53,7 @@ class InsertionQuery(Query):
 		if self.select_insertion:
 			m = ModificationHandler()
 			for location,t in self.writing_locations_text:
-				print(" inside the loop ", location,t,"\n")
+				# print(" inside the loop ", location,t,"\n")
 				m.modify_from(0, location, t)
 			self.optional_selection = [m.forward(x[0])  for x in self.writing_locations_text]
 		return self.writing_locations_text,self.optional_selection

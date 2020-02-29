@@ -11,7 +11,7 @@ sys.path.insert(0,os.path.join(os.path.dirname(__file__), 'third_party'))
 from PythonVoiceCodingPlugin.interface.interface import Interface
 
 
-PLUGIN_VERSION = (0,1,0)
+PLUGIN_VERSION = (0,1,1)
 
 settings = {}
 already_message = False	
@@ -28,7 +28,7 @@ class PythonVoiceCodingPluginCommand(sublime_plugin.TextCommand):
 		if "grammar_version" not in arg  and not already_message:
 			sublime.error_message("You are using main plug-in version >=0.1.0 with a grammar <= 0.0.5." + 
 				"They are not compatible." + 
-				"You can find the new newest version of the grammar along with instructions to install it" + 
+				"You can find the new newest version of the grammar along with instructions to install it\n" + 
 				" Under  Preferences > Package Settings > PythonVoiceCodingPlugin"
 
 			)

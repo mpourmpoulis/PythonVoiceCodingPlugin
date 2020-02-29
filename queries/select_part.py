@@ -19,7 +19,7 @@ class SelectPart(SelectionQuery):
 	
 
 	def handle_single(self,view_information,query_description,extra = {}):
-		print(" inside here selection where he parked ")
+		# print(" inside here selection where he parked ")
 		selection = self._get_selection(view_information,extra)
 		build = self.general_build if self.general_build else line_partial(selection[0])
 		if not build  or not build[0] :
@@ -31,8 +31,8 @@ class SelectPart(SelectionQuery):
 			return None,None
 		second_origin = origin
 		if "nth"  in query_description:
-			print(" hello world  ")
-			print(translate_adjective[query_description["nth"]])
+			# print(" hello world  ")
+			# print(translate_adjective[query_description["nth"]])
 			second_origin = get_sub_index(origin,translate_adjective[query_description["nth"]]-1)
 
 		if query_description["format"]==1:
