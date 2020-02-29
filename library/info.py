@@ -95,7 +95,8 @@ def set_fake(root,name,fake_node):
 	fields.insert(index,fake_name)
 	root._fields = tuple(fields)
 
-
+def check_fake(root):
+	return getattr(root,"fake",False)
 	
 def get_fake(root,name):
 	return getattr(root,name + "_fake",None)
@@ -201,7 +202,7 @@ def get_weak_header(root,atok):
 	return (
 		root.test if match_node(root,(ast.While,ast.If)) else
 		root.arguments if match_node(root,(ast.FunctionDef)) else
-		root.target if match_node(root,(ast.For)) else 
+		[root.target,root.iter] if match_node(root,(ast.For)) else 
 		root.bases + root.keywords if match_node(root,(ast.ClassDef)) else 
 		root.items if match_node(root,(ast.With)) else 
 		root.type if match_node(root,(ast.ExceptHandler)) else None
@@ -283,12 +284,125 @@ def get_with_items(root):
 		root.items if match_node(root,ast.With) else None
 	)
 
+#########################################################################
+# stuff for small regions
+#########################################################################
+
+# Extracting things from subscript
+def get_subscript_body(root):
+	return  root.value if match_node(root,ast.Subscript) else None
 
 def get_subscript_key(root):
 	return (
 		root.slice if match_node(root,ast.Subscript) else None
 	)
 
+def get_slice_lower(root):
+	return root.lower if match_node(root,ast.Slice) else None
+
+
+def get_slice_upper(root):
+	return root.upper if match_node(root,ast.Slice) else None
+
+def get_slice_step(root):
+	return root.step if match_node(root,ast.Slice) else None
+
+
+
+
+
+# Extracting Member And Container
+def get_member_check(root):
+	return root.left if match_node(root,ast.Compare)  and all([match_node(x,(ast.In,ast.NotIn)) for x in root.ops]) else None
+
+def get_container_check(root):
+	return root.comparators[-1] if match_node(root,ast.Compare)  and all([match_node(x,(ast.In,ast.NotIn)) for x in root.ops]) else None
+
+def get_membership(root):
+	return root if match_node(root,ast.Compare)  and all([match_node(x,(ast.In,ast.NotIn)) for x in root.ops]) else None
+
+# Extract Left Middle And Right from numerical comparisons
+def get_comparison_left_side(root):
+	return root.left if match_node(root,ast.Compare) else None
+
+def get_comparison_right_side(root):
+	return root.comparators[-1] if match_node(root,ast.Compare) else None
+
+def get_comparison_middle(root):
+	return root.comparators[0] if match_node(root,ast.Compare) and len(root.comparators)==2 else None
+
+
+# Extract Left Middle and Right from arithmetical operations
+
+def get_arithmetic(root):
+	if not match_node(root,ast.BinOp)  or match_parent(root,ast.BinOp):
+		return None
+	return root
+	
+def get_arithmetic_left(root):
+	if not match_node(root,ast.BinOp)  or match_parent(root,ast.BinOp):
+		return None
+	items = get_sub_index(root,None)
+	if len(items)>=1:
+		return items[0]
+	return None
+
+def get_arithmetic_right(root):
+	if not match_node(root,ast.BinOp) or match_parent(root,ast.BinOp):
+		return None
+	items = get_sub_index(root,None)
+	if len(items)>=2:
+		return items[-1]
+	return None
+
+def get_arithmetic_middle(root):
+	if not match_node(root,ast.BinOp) or match_parent(root,ast.BinOp):
+		return None
+	items = get_sub_index(root,None)
+	if len(items)==3:
+		return items[1]
+	return None
+
+
+# Extract Left Middle Right from Boolean expressions
+def get_boolean(root):
+	if not match_node(root,ast.BoolOp)  or match_parent(root,ast.BoolOp):
+		return None
+	return root
+
+
+def get_boolean_left(root):
+	if not match_node(root,ast.BoolOp)  or match_parent(root,ast.BoolOp):
+		return None
+	items = root.values
+	if len(items)>=1:
+		return items[0]
+	return None
+
+def get_boolean_right(root):
+	if not match_node(root,ast.BoolOp)  or match_parent(root,ast.BoolOp):
+		return None
+	items = root.values
+	if len(items)>=2:
+		return items[-1]
+	return None
+
+def get_boolean_middle(root):
+	if not match_node(root,ast.BoolOp)  or match_parent(root,ast.BoolOp):
+		return None
+	items = root.values
+	if len(items)==3:
+		return items[1]
+	return None
+
+def get_boolean_and(root):
+	return root if match_node(root,ast.BoolOp) and match_node(root.op,ast.And) else None
+
+
+def get_boolean_or(root):
+	return root if match_node(root,ast.BoolOp) and match_node(root.op,ast.Or) else None
+
+##########################################################################
 # need to revisit this
 def get_body(root):
 	return (
@@ -547,7 +661,27 @@ def split_string(s :str ,even_letters = True,only_first = False):
 
 def get_subparts_of_string(root,name_mode = False):
 	output = []
-	start_position = root.first_token.startpos + ( 1 if not name_mode else 0) 
+	if name_mode:
+		start_position = 0
+	else:
+		start_position = 1
+		if not check_fake(root):
+			x = root.first_token.string
+			# print("String:\n",x)
+			y1 = x.find("'")
+			y2 = x.find("\"")
+			if y1>=0 and y2>=0:
+				z = mean(y1,y2)
+			elif y1>=0:
+				z = y1
+			elif y2>=0:
+				z = y2
+			else:
+				raise Exception("problem with splitting a string , there is no beginning!")
+			start_position += z
+	start_position += root.first_token.startpos
+	# print("Start Position:\n",start_position)
+	# start_position = root.first_token.startpos + ( 1+(len(root.first_token.string) if root.first_token.type==tokenize.NAME else 0) if not name_mode else 0) 
 	original  = root.s if not name_mode else root.id
 	try :
 		splitted = split_string(root.s if not name_mode else root.id,even_letters = False if name_mode else True) 
@@ -931,6 +1065,8 @@ def fix_definition(root,atok):
 	token = root.first_token
 	token = atok.find_token(token,tokenize.NAME,"def")
 	token = next_token(atok,token )
+
+	name_token = token
 	if match_node(root,ast.FunctionDef):
 		fake_node = create_fake(root,ast.Name,real_tokens = token,
 			parent = root,parent_field = "name", 
@@ -967,6 +1103,10 @@ def fix_definition(root,atok):
 	if temporary:
 		x.first_token = temporary[0]
 		x.last_token = temporary[-1]
+	else:
+		token = next_token(atok,name_token)
+		x.first_token = x.last_token = asttokens.Token(0,"",(token.start[0],token.start[1]+1),(token.start[0],token.start[1]+1),"",
+			token.index,token.startpos+1,token.startpos+1)
 	mark_fixed(root)
 	return True
 

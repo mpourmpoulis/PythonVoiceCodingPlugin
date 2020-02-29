@@ -1,31 +1,25 @@
-Thanks For downloading or upgrading to the latest 0.1.0 version of PythonVoiceCodingPlugin! Release 0.1.0 introduces a variety of new features. Just to name a few
+Thanks for downloading the latest 0.1.1 version of PythonVoiceCodingPlugin! 
 
-1) you can now execute paste/delete/swap operations in a single step instead of 2
-2) partial support for multiple cursors and multiple results
-3) drastic improvements in sub indexing and new dedicated commands!
-4) richer argument and big ROI queries
+Should you face any problems or have any questions regarding the installation process, feel free to contact me in the dedicated gitter channel
 
-and much more, including some experimental features you can manually enable! You can find more information in my documentation, links to the online version of which you can find along with other useful utilities under
+	https://gitter.im/PythonVoiceCodingPlugin/community
 
-Preferences > Package Settings  > PythonVoiceCodingPlugin
+This link along with links to  the online documentation containing around 100 gifs with examples you can find under
 
-It supports all version of Caster 0.5, 0.6, 1.x but please upgrade as support for older versions will sooner or later be dropped! as a note if you're using any version above 1.0.0 except for copy pasting the grammar in the appropriate folder you must also enable it by saying
+	Preferences > Package Settings  > PythonVoiceCodingPlugin
 
-enable python voice coding plugin
+From there you can also retrieve the Caster grammars that are necessary for using the plug-in along with instructions on how to install them. It supports all version of Caster 0.5, 0.6, 1.x but please upgrade as support for older versions will soon be dropped! As a note if you're using any version above 1.0.0 you must also enable it by saying
 
-if you have any problem or questions regarding installation , whether of the plug-in itself or the grammar necessary to use it please let me know at my issues!
+	enable python voice coding plugin
 
+Finally you should be aware that there are some experimental/unofficial features you can manually enable!
+
+
+#################################	
 NOTE FOR MAC Installers
+#################################	
 
-Honestly you called me a little bit unprepared,i didn't expect anyone to download on Mac:P 
-
-Firstly the core plug-in has not been tested on Mac, though it is pure Python so probably should work?
-
-Secondly currently the grammar is written to be used with Caster which does not support Mac. Nonetheless you could adapt it to standalone dragonfly or what ever suits your system.
-
-
-If you are using Talon , an alternative you might want to check out is
-
+Honestly you caught me a little bit unprepared,I am releasing these for Windows and Linux so i didn't expect anyone to download on Mac:P Firstly the core plug-in has not been tested on Mac. Secondly currently the grammar is written to be used with Caster which does not yet officially support Mac, though https://github.com/dmakarov/Caster is an attempt to do so. So you might want to give it a try with that or adapt it to standalone dragonfly or what ever suits your system.
+Finally if you are using Talon  and Jetbrains, an alternative you might want to check out is
 https://github.com/dwiel/talon_community/blob/master/apps/jetbrains_psi.py
 
-though I have not tested it.

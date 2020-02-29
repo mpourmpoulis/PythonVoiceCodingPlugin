@@ -12,6 +12,9 @@
 	- [Grammar Plug-In Interface](#grammar-plug-in-interface)
 		- [Core Idea](#core-idea)
 		- [Technicalities](#technicalities)
+			- [Update](#update)
+			- [Old Technicalities](#old-technicalities)
+		- [Overcoming The Above Technicalities](#overcoming-the-above-technicalities)
 		- [I am lazy And I Know It](#i-am-lazy-and-i-know-it)
 	- [Linux  and Aenea](#linux-and-aenea)
 	- [Sublime Settings](#sublime-settings)
@@ -114,7 +117,7 @@ Whatever the case, what you should keep in mind is that
 If you're interested,here are some you can try:
 
 
-* [Same in big ROI](./SelectBigROI.md#temporary-until-small-regions)
+* [Same in big ROI](./SelectBigROI.md#experimental-same)
 
 * [Temporary workaround for small regions](./SelectBigROI.md#temporary-until-small-regions)
 
@@ -133,8 +136,7 @@ Feedback Is Much Appreciated!
 This section deserves more documentation than currently is being provided so at some point I would see that it gets a page off its own. 
 
 
-For communication between the  grammar and the main plug-in  the [sublime command line interface](https://www.sublimetext.com/docs/3/osx_command_line.html) is used.
-
+For communication between the  grammar and the main plug-in  the [sublime command line interface](https://www.sublimetext.com/docs/3/osx_command_line.html) is used. Up to version 0.1.0, this meant that we invoked the `subl` utility via the shell but this has changed with 0.1.1! instead it invokes it into sub process directly via dragonfly's builtin `RunCommand`!
 
 #### Core Idea
 
@@ -149,7 +151,17 @@ out of which sublime is going to make a command with a name
 "python_voice_coding_plugin"
 ```
 
-When this command is invoked one way or another, it will run the following  method
+This command can be invoked in a variety of ways, ranging from to open up the sublime console and type something like
+
+```python
+view.run_command("python_voice_coding_plugin",{ arguments in json dictionary format})
+```
+
+to having it binded to some keypresses, some icon in the sublime menu, some command in the command palette via a .sublime-commands  file or something,
+
+down to what we are  interested in, directly via the command line interface.
+
+However this command is invoked , it will run the following  method
 
 ```python
 def run(self, edit,arg):
@@ -157,16 +169,16 @@ def run(self, edit,arg):
 
 where `edit`  is something supplied from sublime  and  `arg` is an argument I defined  and  is going to be a dictionary containing all the information we need to describe the query. 
 
-so the plan is to invoke the command line with the following command
+so the plan is to invoke the command line with the something like  the following 
 
 ```bash
 subl --command python_voice_coding_plugin { "arg" : {
-		our parameters 
+		our parameters inside a dictionary 
   }
 }
 ```
 
-
+and our `python_voice_coding_plugin` will be invoked with the parameter `arg`  containing the dictionary with our extras!
 
 Suppose we use a command like
 
@@ -204,7 +216,7 @@ Choice("operation",{
 Since none of them were  spoken and it has no default value, we don't send anything for it.
 
 
-The script is going to invoke the subl commandline tool with a command like that ignoring some technicalities looks like
+The script is going to invoke the subl tool with a command like that ignoring some technicalities looks like
 
 ``` bash
 subl --command python_voice_coding_plugin { "arg" : {
@@ -219,6 +231,12 @@ subl --command python_voice_coding_plugin { "arg" : {
 
 #### Technicalities
 
+##### Update
+
+This typicality is have been sidestepped for version 0.1.1 for the Windows version, Aenea unfortunately still has some issues but I'll try to work on them! nonetheless you should be aware that these do not prevent users of the plug-in  and excluding some trouble with the [paste back formatting options](./Operations.md#Experimental-Formatting-Options) you should be fine!
+
+##### Old Technicalities
+
 Now in reality what it will send is going to be
 
 ```bash
@@ -232,7 +250,9 @@ which is a little bit different because
 * You see 2 seemingly random key value pairs appearing, these correspond to parameters that appear in other specs of the grammar and have default values.
 
 
-but the latter of the two I do not really consider that much of a problem. What I did have a problem with was forcing sublime to stay on focus after executing the command. to solve this issue I am currently sending second essentially empty `subl` command, which does not satisfy me that much and is not hundred percent bulletproof.
+but the latter of the two I do not really consider that much of a problem. What I did have a problem with was 
+
+* forcing sublime to stay on focus after executing the command. to solve this issue I am currently sending second essentially empty `subl` command, which does not satisfy me that much and is not hundred percent bulletproof.
 
 furthermore I'm not sure  if this line
 
@@ -241,6 +261,31 @@ subprocess.call(y, shell = True)
 ```
 
 is the best but it currently works
+
+#### Overcoming The Above Technicalities
+
+While working on this [proof of concept](https://github.com/mpourmpoulis/CasterSublimeSnippetInterfaceExample) which removes the need for `.sublime-snippet` files , I came across the same technicalities and after some experimenting managed to come up with a clean solution.
+
+The core idea lies in instead of running the command in the shell,we can directly create it as a subprocess and directly pass it a list of string parameters, avoiding the extra  complication that  escaping special characters ,such as `"`,`^`,`&`, and whatever your shell recognizes spatial, brings with it! 
+
+a small issue is that special care must be taken so that the sub processes does not open a GUI window that  would disturb the user interface. I managed to find a not that clean solution
+
+```python
+def send_sublime(c,data):
+	subprocess.Popen(["subl","-b", "--command",c + " " + json.dumps(data)],creationflags = 0x08000000)
+```
+
+
+Only to realize that this can be done much neater with the builtin dragonfly2 action [`RunCommand`]()
+
+```python
+def send_sublime(c,data):
+    RunCommand(["subl", "-b","--command",c + " " + json.dumps(data)],synchronous = True).execute()
+```
+
+which is of course preferable! please note that in either case the command name  and the json data still have to be wrapped inside a single argument.
+
+furthermore I also found but I also need to set the `-b` background flag to resolve my focusing issues, so now everything can be done with a single invocation!
 
 
 #### I am lazy And I Know It

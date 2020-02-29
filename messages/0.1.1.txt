@@ -1,0 +1,9 @@
+Thanks for upgrading to the latest 0.1.1 version of PythonVoiceCodingPlugin! This patch brings with it for things to note
+
+- The project now has a gitter channel https://gitter.im/PythonVoiceCodingPlugin/community to provide installation troubleshooting support which you can also find under Preferences > Package Settings  > PythonVoiceCodingPlugin
+
+- Improvements on the grammar side regarding communication with the main plug-in lifting the constraints regarding special characters in your custom paste back formatting options and some occasional focus issues. These were devised while working on a proof of concept https://github.com/mpourmpoulis/CasterSublimeSnippetInterfaceExample which enables us to create snippets purely on the grammar side without any plug-in code or sublime-snippet files.
+
+- Various back fixes in the plug-in backend, such as incorrectly handling empty definition parameter lists and a issue that might sometimes prevent you from selecting an argument from a function call inside the header of an for or with statement
+
+-  A whole bunch of new unofficial small regions of interest such as picking up the individual lower upper step of the subscript   or the left/right/middle side of comparison!

@@ -1,4 +1,4 @@
-from dragonfly import (MappingRule, Choice, Dictation, Grammar, Repeat, StartApp, Function)
+from dragonfly import (MappingRule, Choice, Dictation, Grammar, Repeat, StartApp, Function,RunCommand,FocusWindow)
 
 from castervoice.lib import control
 from castervoice.lib import settings
@@ -18,7 +18,7 @@ import json
 #########################################################################################
 
 local_settings = {
-    "show_command":False,
+    "show_command":True,
     "force_rpc":False,
 }
 
@@ -36,7 +36,7 @@ else:
 
 ######################################################################################### 
 
-GRAMMAR_VERSION = (0,1,0)
+GRAMMAR_VERSION = (0,1,1)
 
 ######################################################################################### 
 
@@ -49,12 +49,10 @@ def create_arguments(command,format,**kwargs):
 
 
 def send_sublime(c,data):
-    x =  json.dumps(data).replace('"','\\"')
-    y = "subl --command \"" + c + "  " + x + "\""
     if local_settings["show_command"]:
-        print(y)
-    subprocess.call(y, shell = True)
-    subprocess.call("subl", shell = True)
+        print(c + " " + json.dumps(data))
+    RunCommand(["subl","-b", "--command",c + " " + json.dumps(data)],synchronous = True).execute()
+
 
 def noob_send(command,format,**kwargs):
     data = create_arguments(command,format,**kwargs)
@@ -237,7 +235,8 @@ class PythonVoiceCodingPluginRule(MappingRule):
         Choice("big_roi",{
 
                 "if condition" : "if condition",
-                "else if condition" : "else if condition",
+                "iffae" : "if condition",
+                "LFA" : "else if condition",
                 "while condition" : "while condition",
                 "with item" : "with clause",
 
@@ -279,6 +278,7 @@ class PythonVoiceCodingPluginRule(MappingRule):
                 "iterable" : "iterable",
 
                 "function name": "definition name",
+                "F name": "definition name",
                 "function parameter": "definition parameter",
                 "parameter list": "definition parameter list",
                 "default value": "default value",
@@ -292,17 +292,48 @@ class PythonVoiceCodingPluginRule(MappingRule):
                 "decorator":"decorator",
                 "base class":"base class",
 
-                # "same" : "same",
+#                 "same" : "same",
 
 
-                # "string" : "string",
-                # "integer literal" : "integer literal",
-                # "dictionary" : "dictionary",
-                # "list" : "list",
-                # "tuple" : "tuple",
-                # "set" : "set",
-                # "key" : "key",
+#                 "string" : "string",
+#                 "integer literal" : "integer literal",
+#                 "dictionary" : "dictionary",
+#                 "list" : "list",
+#                 "tuple" : "tuple",
+#                 "set" : "set",
+                
 
+#                 "subscript" : "subscript",
+#                 "subscript body" : "subscript body",
+#                 "key" : "key",
+#                 "lower" : "lower",
+#                 "upper" : "upper",
+#                 "step" : "step",
+                
+#                 "attribute" : "attribute",
+
+#                 "comparison" : "comparison",
+#                 "arithmetic" : "arithmetic",
+#                 "boolean" : "boolean",
+
+#                 "member": "member",
+#                 "container": "container",
+#                 "membership" : "membership",
+
+#                 "left side" : "left side",
+#                 "right side" : "right side",
+#                 "middle" : "middle",
+
+#                 "arithmetic left"  : "arithmetic left" ,
+#                 "arithmetic right" : "arithmetic right",
+#                 "arithmetic middle" : "arithmetic middle",
+
+#                 "boolean left" : "boolean left",
+#                 "boolean right" : "boolean right",
+#                 "boolean middle" : "boolean middle",
+
+#                 "boolean and"  : "boolean and" ,
+#                 "boolean or" : "boolean or",
 
             }
         ),
@@ -322,6 +353,7 @@ class PythonVoiceCodingPluginRule(MappingRule):
         ),
         Choice("surrounding_punctuation",{
                 "quotes":    ("quotes","quotes"),
+                "experiment":('"\t/','\n\n\n"&' + r'\s'),
                 "thin quotes": ("'","'"),
                 "tickris":   ("`","`"),
                 "prekris":     ("(",")"),
@@ -363,3 +395,4 @@ class PythonVoiceCodingPluginRule(MappingRule):
 
 def get_rule():
     return PythonVoiceCodingPluginRule, RuleDetails(name="python voice coding plugin", executable="sublime_text", title="Sublime Text")
+

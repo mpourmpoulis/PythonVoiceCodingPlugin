@@ -2,18 +2,29 @@
 
 [![License](https://img.shields.io/badge/License-BSD%202--Clause-orange.svg)](https://opensource.org/licenses/BSD-2-Clause)
 
-![](https://img.shields.io/static/v1?label=Version&message=0.1.0&color=green)
-
-![](https://img.shields.io/static/v1?label=Caster&message=0.5.11|0.6.11|1.0.0&color=blue)
-
-![](https://img.shields.io/static/v1?label=Aenea&message=supported&color=red)
-
-![](https://img.shields.io/static/v1?label=Platform&message=Windows|Linux&color=yellow)
+<!-- ![](https://img.shields.io/static/v1?label=Version&message=0.1.0&color=green) -->
 
 
+
+<!-- ![](https://img.shields.io/static/v1?label=Caster&message=0.5.11|0.6.11|1.0.0&color=blue) -->
+
+[![](https://img.shields.io/badge/Caster-0.5.11%7C0.6.14%7C1.0.0-blue)](https://github.com/dictation-toolbox/Caster)
+
+<!-- ![](https://img.shields.io/static/v1?label=Aenea&message=supported&color=red) -->
+
+[![](https://img.shields.io/badge/Aenea-supported-red)](https://github.com/dictation-toolbox/aenea)
+
+<!-- ![](https://img.shields.io/static/v1?label=Platform&message=Windows|Linux&color=yellow) -->
+
+![](https://img.shields.io/badge/Platform-Windows%7CLinux-yellow)
+
+
+[![](https://img.shields.io/gitter/room/mpourmpoulis/PythonVoiceCodingPlugin.svg)](https://gitter.im/PythonVoiceCodingPlugin/community)
+
+![](https://img.shields.io/github/v/release/mpourmpoulis/PythonVoiceCodingPlugin.svg)
 
 PythonVoiceCodingPlugin is a Sublime Text 3 plugin meant to enhance user experience 
-when coding python 3 by voice. 
+when coding python 3 by voice. It ships with  an integrated Caster  grammar bundle containing voice commands that provide you with syntactical navigation capabilities!
 
 ![](doc/gif/big37.gif)
 
@@ -36,6 +47,7 @@ when coding python 3 by voice.
 - [Acknowledgements](#acknowledgements)
   - [Useful Learning Resources](#useful-learning-resources)
   - [Development tools](#development-tools)
+  - [People](#people)
 
 <!-- /MarkdownTOC -->
 
@@ -317,5 +329,15 @@ also some of the other tools I found useful developing this project
 * ScreenToGif 
 
 * Jedi 
+
+
+### People
+
+Last but not least many things to
+
+* LexiconCode, for porting the grammar from 0.5 to 0.6 and 1.0 versions of Caster
+
+* FichteFoll, for pointing out various errors during package review
+
 
 

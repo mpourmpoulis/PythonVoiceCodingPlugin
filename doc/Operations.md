@@ -22,7 +22,9 @@
 - [Pasting Operation](#pasting-operation)
 	- [Pasting To Initial Origin](#pasting-to-initial-origin)
 		- [Surrounding Punctuation](#surrounding-punctuation)
+				- [Update](#update)
 			- [Experimental Formatting Options](#experimental-formatting-options)
+				- [Update](#update-1)
 		- [Note For 0.0.4 Users](#note-for-004-users)
 	- [Pasting Between Alternatives](#pasting-between-alternatives)
 	- [Paste Back Prefix Operation](#paste-back-prefix-operation)
@@ -384,6 +386,10 @@ And I say by default because with exception of `""` which unfortunately I have n
 
 ![](./gif/op29.gif)
 
+###### Update
+
+With release 0.1.1, the above constraints regarding special characters have been lifted on the latest version of Caster and on Windows! so you can freely use `"` but for backwards compatibility the more ugly `quotes`  will be maintained until 0.2.0
+
 ##### Experimental Formatting Options
 
 currently this is only experimental and most likely subject to change, but as an extension to the above surrounding options, the backend for 0.1.0 also supports that you provide a single string instead of a tuple. In such a case, instead of pasting something like
@@ -407,6 +413,10 @@ you can do things like
 
 
 Of course this is still pretty primitive, and serious will be needed to make format options truly powerful, but I would love to hear your thoughts, regarding whether you find this useful!
+
+###### Update
+
+With release 0.1.1, the above constraints regarding special characters have been lifted on the latest version of Caster and on Windows! so you can freely use `"` but for backwards compatibility the more ugly `quotes`  will be maintained until 0.2.0
 
 #### Note For 0.0.4 Users
 
