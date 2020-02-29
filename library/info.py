@@ -365,9 +365,14 @@ def get_arithmetic_middle(root):
 
 
 # Extract Left Middle Right from Boolean expressions
+def get_boolean(root):
+	if not match_node(root,ast.BoolOp)  or match_parent(root,ast.BoolOp):
+		return None
+	return root
+
 
 def get_boolean_left(root):
-	if not match_node(root,ast.BoolOp):
+	if not match_node(root,ast.BoolOp)  or match_parent(root,ast.BoolOp):
 		return None
 	items = root.values
 	if len(items)>=1:
@@ -375,7 +380,7 @@ def get_boolean_left(root):
 	return None
 
 def get_boolean_right(root):
-	if not match_node(root,ast.BoolOp):
+	if not match_node(root,ast.BoolOp)  or match_parent(root,ast.BoolOp):
 		return None
 	items = root.values
 	if len(items)>=2:
@@ -383,7 +388,7 @@ def get_boolean_right(root):
 	return None
 
 def get_boolean_middle(root):
-	if not match_node(root,ast.BoolOp):
+	if not match_node(root,ast.BoolOp)  or match_parent(root,ast.BoolOp):
 		return None
 	items = root.values
 	if len(items)==3:

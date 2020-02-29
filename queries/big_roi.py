@@ -120,7 +120,7 @@ class SelectBigRoi(SelectionQuery):
             "attribute":((ast.Attribute),(),standard),
             "comparison":((ast.Compare),(),standard),
             "arithmetic":((ast.BinOp),(),get_arithmetic),
-            "boolean":((ast.BoolOp),(),standard),
+            "boolean":((ast.BoolOp),(),get_boolean),
 
             "container":((ast.Compare),(),get_container_check),
             "member":((ast.Compare),(),get_member_check),
