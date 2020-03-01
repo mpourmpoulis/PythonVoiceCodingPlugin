@@ -8,7 +8,7 @@
 
 <!-- ![](https://img.shields.io/static/v1?label=Caster&message=0.5.11|0.6.11|1.0.0&color=blue) -->
 
-[![](https://img.shields.io/badge/Caster-0.5.11%7C0.6.14%7C1.0.0-blue)](https://github.com/dictation-toolbox/Caster)
+[![](https://img.shields.io/badge/Caster-0.5.11and0.6.14and1.0.0-blue)](https://github.com/dictation-toolbox/Caster)
 
 <!-- ![](https://img.shields.io/static/v1?label=Aenea&message=supported&color=red) -->
 
@@ -24,7 +24,7 @@
 ![](https://img.shields.io/github/v/release/mpourmpoulis/PythonVoiceCodingPlugin.svg)
 
 PythonVoiceCodingPlugin is a Sublime Text 3 plugin meant to enhance user experience 
-when coding python 3 by voice. It ships with  an integrated Caster  grammar bundle containing voice commands that provide you with syntactical navigation capabilities!
+when coding python 3 by voice. It ships with  an integrated [Caster](https://github.com/dictation-toolbox/Caster)  grammar bundle containing voice commands that provide you with syntactical navigation capabilities!
 
 ![](doc/gif/big37.gif)
 
@@ -63,7 +63,7 @@ Documentation is available [here](doc/README.md)  you can also find links to doc
 Preferences > Package Settings  > PythonVoiceCodingPlugin
 ```
 
-
+![](doc/gif/sub11.gif)
 
 ## Motivation
 
