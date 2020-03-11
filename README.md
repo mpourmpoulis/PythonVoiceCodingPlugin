@@ -4,11 +4,11 @@
 
 <!-- ![](https://img.shields.io/static/v1?label=Version&message=0.1.0&color=green) -->
 
-
+[![](https://img.shields.io/badge/documentation-here-green)](https://github.com/dictation-toolbox/Caster)
 
 <!-- ![](https://img.shields.io/static/v1?label=Caster&message=0.5.11|0.6.11|1.0.0&color=blue) -->
 
-[![](https://img.shields.io/badge/Caster-0.5.11and0.6.14and1.0.0-blue)](https://github.com/dictation-toolbox/Caster)
+[![](https://img.shields.io/badge/Caster-v0_5_11|v0_6_14|v1_0_0-blue)](https://github.com/dictation-toolbox/Caster)
 
 <!-- ![](https://img.shields.io/static/v1?label=Aenea&message=supported&color=red) -->
 
