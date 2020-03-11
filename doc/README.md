@@ -2,7 +2,7 @@
 
 <!-- MarkdownTOC  autolink="true" -->
 
-- [Documentation Index](#documentation-index)
+- [Documentation Index and Command Reference](#documentation-index-and-command-reference)
 - [General Remarks](#general-remarks)
 	- [Caster Version Supported](#caster-version-supported)
 	- [Versioning And Backwards Compatibility](#versioning-and-backwards-compatibility)
@@ -31,7 +31,7 @@
 
 
 
-## Documentation Index
+## Documentation Index and Command Reference
 
 * `WARNING` the following links contain pages heavy in gifs making their size relatively big. If you are on mobile, it might be best to view them via wifi instead of mobile data.
 
@@ -43,9 +43,11 @@ Some quick links to the various documentation files
 
 * [Sub Indexing](./SubIndexing.md)
 
+* [Operations](./Operations.md)
+
 * [Collection Queries](./CollectionQueries.md)
 
-* [Operations](./Operations.md)
+
 
 
 
