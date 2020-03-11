@@ -37,13 +37,13 @@
 
 Some quick links to the various documentation files
 
-* [Argument Queries](./SelectArgument.md)
+* [Argument Queries](./SelectArgument.md) that enable you to select an argument or other parts from a function call
 
-* [Big Roi Queries](./SelectBigROI.md)
+* [Big Roi Queries](./SelectBigROI.md) , responsible for selecting "big" regions of interest like an "if condition" (also includes experimental smaller ones)
 
-* [Sub Indexing](./SubIndexing.md)
+* [Sub Indexing](./SubIndexing.md)  Or the art of picking up smaller regions out of bigger ones!
 
-* [Operations](./Operations.md)
+* [Operations](./Operations.md) delete/swap/paste functionality in two formats and some utilities
 
 * [Collection Queries](./CollectionQueries.md)
 
