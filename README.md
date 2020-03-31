@@ -32,6 +32,7 @@ In case you have never heard about voice programming before, you should definite
 ![](doc/gif/big37.gif)
 
 
+
 ## Contents
 
 <!-- MarkdownTOC  autolink="true" -->
@@ -41,9 +42,11 @@ In case you have never heard about voice programming before, you should definite
 - [Release and Version](#release-and-version)
 - [Limitations](#limitations)
 - [Installation](#installation)
-  - [Package Control](#package-control)
-    - [note for those who installed between 0.0.4 and 0.0.5](#note-for-those-who-installed-between-004-and-005)
-  - [Git Install](#git-install)
+  - [Install the main plugin](#install-the-main-plugin)
+    - [Package Control](#package-control)
+      - [Note for those who installed between 0.0.4 and 0.0.5](#note-for-those-who-installed-between-004-and-005)
+    - [Git Install](#git-install)
+  - [Install Grammar](#install-grammar)
 - [Support for voice coding framework](#support-for-voice-coding-framework)
 - [License](#license)
 - [Dependencies](#dependencies)
@@ -134,17 +137,25 @@ There are of course certain limitations which I would like to make clear from th
 
 ## Installation 
 
-In order to install, you must install both the plugging as well as the corresponding [grammar](bundles/README.md). 
+As this is a two-part system, in order to install, you must
+
+- install the main plugin
+
+- install the corresponding [grammar](bundles/README.md) for the version of caster you are using
+
+- put the `subl` executable which enables the communication of those two into the Windows path(from 0.1.2 and above optionally) 
 
 
-There are currently two installation methods for performing the first task 
+### Install the main plugin
+
+There are currently two installation (Package Control and git) methods for performing the first task,I highly recommend using Package Control.
 
 
-### Package Control
+#### Package Control
 
-Release 0.0.5 fixed the errors that prevented 0.0.4 from installing directly from package control. You can now install the package simply by 
+- Firstly make sure you have Package Control installed. If not, please follow the instructions [here](https://packagecontrol.io/installation)
 
-- open Command Palette
+- open Command Palette(Control+Shift+P)
 
 - execute
 
@@ -160,7 +171,7 @@ PythonVoiceCodingPlugin
 
 
 
-#### note for those who installed between 0.0.4 and 0.0.5 
+##### Note for those who installed between 0.0.4 and 0.0.5 
 
 previously the installation of plug-in included running
 
@@ -178,6 +189,7 @@ https://github.com/mpourmpoulis/PythonVoiceCodingPlugin
 which enabled you to install directly from a master branch rather than my releases and you should be seing a fake version like v2020.01.05.( and so on ) instead of v0.0.4.
 
 This was only temporary solution  and I recommend that you ran 
+
 ```
 Package Control:Remove Repository
 ```
@@ -194,9 +206,9 @@ For any further installation questions, feel free to ask [here](https://github.c
 
 
 
-### Git Install
+#### Git Install
 
-Currently you can download the plugin directly from github and place it in sublime package folder
+Alternatively you can download the plugin directly from github and place it in sublime package folder
 
 for windows users this should be:
 
@@ -209,14 +221,34 @@ and on Ubuntu it is :
 ~/.config/sublime-text-3/Packages/
 ```
 
-Currently the Master Branch  and the releases  0.0.5 ships with its dependencies so the next step is not really necessary.
+Currently the Master Branch ships with its dependencies so you're good to go!
 
-To install dependencies,using your installation of python (this worked for me with 3.7.4 and 3.5.2) run from inside the plug-in folder (PythonVoiceCodingPlugin):
+Just in case something is wrong and you want to manually install dependencies,using your installation of python (this worked for me with 3.7.4 and 3.5.2) run from inside the plug-in folder (PythonVoiceCodingPlugin):
+
 ```bash
 python3 -m pip install --target third_party -r requirements.txt
 ```
 
 
+### Install Grammar 
+
+- Make sure you have [Caster](https://caster.readthedocs.io/en/latest/) installed
+
+- Copy the grammar files to the appropriate user directory,depending on the version of caster these should be either `C:\Users\%USERNAME%\AppData\Local\caster\rules` or `C:\Users\%USERNAME%\.caster\rules
+`
+
+- Reboot/launch Caster  and if you are using 1.0 and above do not forget to enable the rule by saying `enable python voice coding plugin`
+
+in order to make this process easier, under `Preferences > Package Settings  > PythonVoiceCodingPlugin
+` you will find utilities
+
+- To retrieve those grammar files and then manually copy paste them
+
+![](doc/gif/install1.gif)
+
+- or to automatically install them to the appropriate directory if you are using Caster 1.x.x
+
+![](doc/gif/install2.gif)
 
 
 
@@ -338,7 +370,7 @@ also some of the other tools I found useful developing this project
 
 Last but not least many things to
 
-* LexiconCode, for porting the grammar from 0.5 to 0.6 and 1.0 versions of Caster
+* LexiconCode, for porting the grammar from 0.5 to 0.6 and 1.0 versions of Caster and pointing out the missing documentation for putting the `subl` utility in the path.
 
 * FichteFoll, for pointing out various errors during package review
 
