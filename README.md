@@ -29,6 +29,8 @@ when coding python 3 by voice. It ships with  an integrated [Caster](https://git
 
 In case you have never heard about voice programming before, you should definitely check out [Caster](https://caster.readthedocs.io/en/latest/), [dragonfly](https://dragonfly2.readthedocs.io/en/latest/introduction.html) and [Talon](https://talonvoice.com/).
 
+CRITICAL UPDATE: My sincerest apologies but up to release 0.1.1 a subtle yet critical installation step was not documented, which may have prevented you from using the plug-in altogether! You can find more information [here](https://github.com/mpourmpoulis/PythonVoiceCodingPlugin/issues/15) but release 0.1.2 should make that installation step redundant for most users, so simply upgrading  and [replacing the grammar files](https://github.com/mpourmpoulis/PythonVoiceCodingPlugin/issues/14) should be enough without any further action on your part! Many thanks to LexiconCode for pointing this out!
+
 ![](doc/gif/big37.gif)
 
 
@@ -47,6 +49,7 @@ In case you have never heard about voice programming before, you should definite
       - [Note for those who installed between 0.0.4 and 0.0.5](#note-for-those-who-installed-between-004-and-005)
     - [Git Install](#git-install)
   - [Install Grammar](#install-grammar)
+  - [Subl Path](#subl-path)
 - [Support for voice coding framework](#support-for-voice-coding-framework)
 - [License](#license)
 - [Dependencies](#dependencies)
@@ -121,7 +124,7 @@ Needless to say, while coding PythonVoiceCodingPlugin , PythonVoiceCodingPlugin 
 
 The code is available on [github](https://github.com/mpourmpoulis/PythonVoiceCodingPlugin)
 
-The latest release  is  0.1.0!
+The latest release  is  0.1.2!
 
 
 ## Limitations
@@ -232,6 +235,8 @@ python3 -m pip install --target third_party -r requirements.txt
 
 ### Install Grammar 
 
+Furthermore, in order to use the plug-in, you must also install the grammar! You can find additional information [here](bundles/Caster/README.md) if you intend to use this on Linux via [Aenea](bundles/Aenea/README.md) you will need a few extra steps but in a nutshell:
+
 - Make sure you have [Caster](https://caster.readthedocs.io/en/latest/) installed
 
 - Copy the grammar files to the appropriate user directory,depending on the version of caster these should be either `C:\Users\%USERNAME%\AppData\Local\caster\rules` or `C:\Users\%USERNAME%\.caster\rules
@@ -250,7 +255,19 @@ in order to make this process easier, under `Preferences > Package Settings  > P
 
 ![](doc/gif/install2.gif)
 
+### Subl Path
 
+The communication between the main plugin and the grammar happens via the sublime command line interface through the `subl` executable. Up to and including version 0.1.1, it was expected that this executable is in your Windows path but as pointed out by LexiconCode the corresponding documentation was missing! these was a big blunder on my part and may have prevented you from using the project altogether! 
+
+now you can find more information about how you can add this executable to the Windows path [here](https://stackoverflow.com/questions/9440639/sublime-text-from-command-line), but in order to work around this issue without adding an additional installation step for you, release 0.1.2 implements the following scheme:
+
+* If `subl` is already in the path, it will use normally
+
+* Otherwise, it will try to fall back to `C:\Program Files\Sublime Text 3\subl` which is where it should be if you have installed sublime in the classical way! In such a case, no extra steps are needed on your part!
+
+if sublime is installed in another directory, you must unfortunately add it to the path yourself!
+
+Please note that this does not affect Linux!
 
 
 ## Support for voice coding framework
