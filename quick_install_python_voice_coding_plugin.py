@@ -18,7 +18,7 @@ class QuickInstallPythonVoiceCodingPluginCommand(sublime_plugin.WindowCommand):
 				if os.path.isdir(os.path.join("C:\\Users",user,x)):
 					candidates.append(os.path.join("C:\\Users",user,x))
 		if not candidates:
-			return 
+			sublime.error_message("No Caster 1.x.x user directory was found! Are you sure you have it installedand you are not using an older version?")
 		def on_done(index):
 			if index==-1: 
 				return 
@@ -32,7 +32,7 @@ class QuickInstallPythonVoiceCodingPluginCommand(sublime_plugin.WindowCommand):
 				s = f.read()
 			with open(os.path.join(c,name),"w") as f:
 				f.write(s)
-
+			sublime.error_message("Grammar successfully copied!")
 		self.window.show_quick_panel(candidates,on_done)		
 
 
