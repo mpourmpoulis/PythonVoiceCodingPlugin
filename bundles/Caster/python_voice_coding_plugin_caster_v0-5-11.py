@@ -11,10 +11,10 @@ from caster.lib.dfplus.state.short import R
 
 
 ######################################################################################### 
-
-import os
-import subprocess
 import json
+import os
+import platform
+import subprocess
 
 #########################################################################################
 
