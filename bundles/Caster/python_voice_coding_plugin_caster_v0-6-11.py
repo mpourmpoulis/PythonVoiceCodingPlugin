@@ -11,10 +11,10 @@ from castervoice.lib.dfplus.state.short import R
 
 
 ######################################################################################### 
-
-import os
-import subprocess
 import json
+import os
+import platform
+import subprocess
 
 #########################################################################################
 
@@ -37,7 +37,7 @@ else:
 
 ######################################################################################### 
 
-GRAMMAR_VERSION = (0,1,1)
+GRAMMAR_VERSION = (0,1,2)
 
 ######################################################################################### 
 
@@ -49,10 +49,34 @@ def create_arguments(command,format,**kwargs):
     return {"arg":p}
 
 
+
+def validate_subl():
+    if platform.system() != 'Windows':
+        return "subl"
+    try:
+        subprocess.check_call(["subl", "-h"],stdout=subprocess.PIPE,stderr=subprocess.PIPE) # For testing purposes you can invalidate to trigger failure
+        return "subl"
+    except Exception as e:
+        try : 
+            subprocess.check_call(["C:\\Program Files\\Sublime Text 3\\subl", "-h"],stdout=subprocess.PIPE,stderr=subprocess.PIPE)
+            print("Resorting to C:\\Program Files\\Sublime Text 3\\subl.exe")
+            return  "C:\\Program Files\\Sublime Text 3\\subl"
+        except :
+            print("Sublime Text 3 `subl` executable was not in the Windows path")
+            if not os.path.isdir(r'C:\\Program Files\\Sublime Text 3'):
+                print("And there is no C:\\Program Files\\Sublime Text 3 directory to fall back to!")
+            else:
+                print("And it was not found under C:\\Program Files\\Sublime Text 3")
+            print("Please add `subl` to the path manually")
+            return "subl"
+
+subl = validate_subl()
+
+
 def send_sublime(c,data):
     if local_settings["show_command"]:
         print(c + " " + json.dumps(data))
-    RunCommand(["subl","-b", "--command",c + " " + json.dumps(data)],synchronous = True).execute()
+    RunCommand([subl,"-b", "--command",c + " " + json.dumps(data)],synchronous = True).execute()
 
 def noob_send(command,format,**kwargs):
     data = create_arguments(command,format,**kwargs)

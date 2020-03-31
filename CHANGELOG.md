@@ -1,5 +1,15 @@
 # Changelog
 
+## [0.1.2]
+
+### Added
+
+- Utility to automatically upgrade scripts in the preferences menu
+
+### Fixed
+
+- Fixed the massive subl blunder
+
 
 ## [0.1.1]
 

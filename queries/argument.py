@@ -200,8 +200,12 @@ class SelectArgument(SelectionQuery):
 		#		<vertical_direction> <ndir> <adjective> argument <argument_index>
 		###############################################################	
 		selection = self._get_selection(view_information,extra)
-		vertical_direction = query_description["vertical_direction"]
-		ndir = query_description["ndir"]
+		if "vertical_direction" in query_description:
+			vertical_direction = query_description["vertical_direction"]
+			ndir = query_description["ndir"]
+		else:
+			vertical_direction = "upwards"
+			ndir = 0
 
 
 		build = self.general_build if self.general_build else line_partial(selection[0])
@@ -228,7 +232,7 @@ class SelectArgument(SelectionQuery):
 		sharing_physical = alternative_logical_lines not in [[] ,[statement_node]]
 
 		priority = {"root_lexical_order":1} if ( statement_node.first_token.start[0] != origin.first_token.start[0]
-									or sharing_physical) else {}
+									or sharing_physical or ndir) else {}
 		result, alternatives = self.process_line(
 			q = query_description,
 			root = statement_node if not sharing_physical else statement_node.parent,

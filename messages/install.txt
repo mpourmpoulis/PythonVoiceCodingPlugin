@@ -8,9 +8,14 @@ This link along with links to  the online documentation containing around 100 gi
 
 	Preferences > Package Settings  > PythonVoiceCodingPlugin
 
-From there you can also retrieve the Caster grammars that are necessary for using the plug-in along with instructions on how to install them. It supports all version of Caster 0.5, 0.6, 1.x but please upgrade as support for older versions will soon be dropped! As a note if you're using any version above 1.0.0 you must also enable it by saying
+From there you can also retrieve the Caster grammars that are necessary for using the plug-in along with instructions on how to install them as well as a
+
+	Quick 1.0.0 Install
+
+utility. It supports all version of Caster 0.5, 0.6, 1.x but please upgrade as support for older versions will soon be dropped! As a note if you're using any version above 1.0.0 you must also enable it by saying
 
 	enable python voice coding plugin
+
 
 Finally you should be aware that there are some experimental/unofficial features you can manually enable!
 

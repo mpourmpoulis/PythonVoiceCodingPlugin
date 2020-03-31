@@ -1,0 +1,19 @@
+=====================
+CRITICAL UPDATE
+=====================
+
+My sincerest apologies but up to release 0.1.1 a subtle yet critical installation step was not documented, which may have prevented you from using the plug-in altogether! 
+
+You can find more information at https://github.com/mpourmpoulis/PythonVoiceCodingPlugin/issues/15 but release 0.1.2 should make that installation step redundant for most users, so SIMPLY UPGRADING  and replacing the grammar files should be enough without any further action on your part! 
+
+In order to rapidly upgrade your grammars, if you are using Caster 1.x.x under
+	
+	Preferences > Package Settings  > PythonVoiceCodingPlugin
+
+You will find
+
+	Quick 1.0.0 Install
+
+More information https://github.com/mpourmpoulis/PythonVoiceCodingPlugin/issues/14
+
+Many thanks to LexiconCode for pointing this massive blunder out and once again I am deeply sorry!

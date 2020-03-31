@@ -122,12 +122,18 @@
 
                             },
                             { 
-                              "caption": "Grammar Installation",
+                              "caption": "Grammar Installation Doc",
                               "command": "open_url", 
                               "args":{
                                   "url": "https://github.com/mpourmpoulis/PythonVoiceCodingPlugin/blob/master/bundles/README.md"
                               }
+                            },
+                            { 
+                              "caption": "Quick 1.0.0 Installation",
+                              "command": "quick_install_python_voice_coding_plugin", 
+                              "args":{}
                             }
+
 
 
 
