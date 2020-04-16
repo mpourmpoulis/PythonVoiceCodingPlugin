@@ -93,7 +93,7 @@ Does the problem seem to appear or disappear only some of the time? Does there s
 	- [ ] does it appear only after executing an operation(paste,delete,swap)?
 	- [ ] does it appear when you perform manual editing between commands?
 
-- [ ] correlation with a pattern in the code? a strong indicator for such a case . In case you have identified this pattern, does the error occure when it appears
+- [ ] correlation with a pattern in the code? Such a pattern might be structural, sometimes lexical,in some cases even some piece of incomplete code that was not handled properly. A strong indicator for such a case when introducing small changes to the code has things from working perfectly into breaking. In case you have identified(or you have any suspicion about) this pattern(or maybe patterns), does the error occure when it appears
 	- [ ] on the target of the query? (For instance there was a bug at some point that sometimes prevented you from selecting arguments from function calls inside with statements)
 	- [ ] on the origin of the query?
 	- [ ] in between them perhaps?
