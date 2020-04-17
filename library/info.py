@@ -1017,6 +1017,9 @@ def fix_alias(root,atok):
 def fix_argument(root,atok,token = None):
 	if already_fixed(root):
 		return token
+	# the following check was introduced to work around issue #17
+	if not match_node(root.parent.parent,ast.FunctionDef):
+		return None
 	if token is None:
 		fix_definition(root.parent.parent,atok)
 		if not already_fixed(root):
@@ -1038,7 +1041,7 @@ def fix_argument(root,atok,token = None):
 def fix_argument_list(root,atok):
 	if not  match_node(root,ast.arguments):
 		return False
-	if already_fixed(root) or fix_definition(root.parent,atok):
+	if already_fixed(root) or match_node(root.parent,(ast.FunctionDef)) and fix_definition(root.parent,atok):
 		return True
 	return False
 
@@ -1046,7 +1049,6 @@ def fix_argument_list(root,atok):
 def fix_definition(root,atok):
 	if already_fixed(root):
 		return True
-
 	# there is a discrepancy between the 3.3 and 3.4 versions of the abstract syntax tree
 	# in 3.3 the variable arguments and the variable keyboard arguments are stored in a little bit differently
 	x = root.args
