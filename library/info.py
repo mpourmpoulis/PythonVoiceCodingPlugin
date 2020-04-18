@@ -321,6 +321,17 @@ def get_container_check(root):
 def get_membership(root):
 	return root if match_node(root,ast.Compare)  and all([match_node(x,(ast.In,ast.NotIn)) for x in root.ops]) else None
 
+
+# Extracting Identity Left And Right
+def get_identity_check_left(root):
+	return root.left if match_node(root,ast.Compare)  and all([match_node(x,(ast.Is,ast.IsNot)) for x in root.ops]) else None
+
+def get_identity_check_right(root):
+	return root.comparators[-1] if match_node(root,ast.Compare)  and all([match_node(x,(ast.Is,ast.IsNot)) for x in root.ops]) else None
+
+def get_identity_check(root):
+	return root if match_node(root,ast.Compare)  and all([match_node(x,(ast.Is,ast.IsNot)) for x in root.ops]) else None
+
 # Extract Left Middle And Right from numerical comparisons
 def get_comparison_left_side(root):
 	return root.left if match_node(root,ast.Compare) else None

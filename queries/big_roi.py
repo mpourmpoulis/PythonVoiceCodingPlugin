@@ -125,6 +125,10 @@ class SelectBigRoi(SelectionQuery):
             "container":((ast.Compare),(),get_container_check),
             "member":((ast.Compare),(),get_member_check),
             "membership":((ast.Compare),(),get_membership),
+
+            "identity":((ast.Compare),(),get_identity_check),
+            "identity left":((ast.Compare),(),get_identity_check_left),
+            "identity right":((ast.Compare),(),get_identity_check_right),
             
             "left side":((ast.Compare),(),get_comparison_left_side),
             "right side":((ast.Compare),(),get_comparison_right_side),
