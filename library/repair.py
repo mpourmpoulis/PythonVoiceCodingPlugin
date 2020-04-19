@@ -92,7 +92,7 @@ def finish_atom(t):
 def before_star(t):
 	# of these does not check all cases
 	return t[-1] is None  or  not (
-		finish_atom(t[-1]) or t[-1].string in ["(","[","{",",","import","for"] or t[-1].type in [token.INDENT]
+		finish_atom(t[-1]) or t[-1].string in ["(","[","{",",","import","for","lambda"] or t[-1].type in [token.INDENT]
 	)
 
 
