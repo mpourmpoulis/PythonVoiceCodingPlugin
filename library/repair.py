@@ -151,7 +151,7 @@ def after_unary(t):
 def after_comma(t):
 	return t[1] is None  or t[1].string ==","
 def before_comma(t):
-	return t[ -1] is None  or t[-1].string in ["(","[","{"]
+	return t[ -1] is None  or t[-1].string in ["(","[","{","lambda"]
 	
 def after_bracket(t):
 	return t[1] is None   or t[1].string in ["for","if","while","with"] or (
@@ -208,6 +208,7 @@ def after_else(t):
 		start_atom(t[1]) or t[1].string in [":"]
 	)
 '''
+
 def handle_empty_compound(atok ,t,l,b,dummy):
 	n = neighbors(atok, t)
 	left,right = expand_to_line_or_statement(atok,t, l, b)
