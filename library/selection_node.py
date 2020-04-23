@@ -12,9 +12,9 @@ def nearest_node_from_offset(root,atok,offset):
     inside = lambda x,y: (y[0]<=x<y[1])
     orig_token = atok.get_token_from_offset(offset)
     token = orig_token
-    while token.string.isspace():
+    while token.string.isspace() or not token.string:
         token = atok.prev_token( token )
-    if converter.offset_to_line(offset)[0] != converter.offset_to_line(token.startpos)[0]:
+    if converter.offset_to_line(offset)[0] != converter.offset_to_line(token.startpos)[0] and orig_token.string:
         token = atok.next_token(orig_token)
         while token.string.isspace():
             token = atok.next_token( token )
@@ -60,7 +60,7 @@ def node_from_range_new(root,atok,r,special = False):
                 return l
 
 
-    return root
+    return step
 
 
 def node_from_range(root,atok, r,special = False):
