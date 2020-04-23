@@ -100,7 +100,7 @@ def after_star(t):
 	# of these does not check all cases
 	return 	t[1] is None  or not (
 		start_atom(t[1])   or	t[-1] is not None and (
-				(t[-1].string,t[1].string) in [('(',','),(',',","),(",",")")]  or 
+				# (t[-1].string,t[1].string) in [('(',','),(',',","),(",",")")]  or 
 				t[-1].string in ["import"]
 
 		)
