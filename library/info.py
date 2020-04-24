@@ -1135,7 +1135,8 @@ def fix_exception_handler(root,atok):
 	token = atok.find_token(next_token(atok,token),tokenize.NAME, root.name)
 	f = root.type.first_token
 	f = atok.find_token(previous_token(atok,f),tokenize.NAME, "except",reverse = True)
-	fake_name_node = create_fake(root,ast.Name,real_tokens =  token,id = token.string,ctx = ast.Load())
+	fake_name_node = create_fake(root,ast.Name,real_tokens =  token,id = token.string,ctx = ast.Load(),
+		parent = root,parent_field = "name")
 	set_fake(root,"name",fake_name_node)
 	# root.first_token=root.type.first_token
 	# root.last_token = token
