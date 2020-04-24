@@ -9,7 +9,6 @@ from PythonVoiceCodingPlugin.library.traverse import match_node
 
 def nearest_node_from_offset(root,atok,offset):
     converter = atok._line_numbers 
-    inside = lambda x,y: (y[0]<=x<y[1])
     original_token = atok.get_token_from_offset(offset)
     token = original_token
     while token.string.isspace() or not token.string:
@@ -22,9 +21,7 @@ def nearest_node_from_offset(root,atok,offset):
         if following:
             token = following
     s = token.startpos
-    candidates =([(node,atok.get_text_range(node)) for node in ast.walk( root ) if not isinstance(node,ast.Module) 
-    	and  inside(s,atok.get_text_range(node))])
-    return min( candidates , key= lambda y :(y[1][1]-y[1][0]) )[0]
+    return node_from_range(root,atok,(s,s),special= False,lenient = True)
 
 def node_from_range_old(root,atok, r ):
 	inside = lambda x,y: (y[0]<=x[0]<y[1] and y[0]<x[1]<=y[1])
@@ -38,9 +35,11 @@ def node_from_range_old(root,atok, r ):
 	return min( candidates , key= lambda y :(y[1][1]-y[1][0]) )[0]
 
 
-def node_from_range_new(root,atok,r,special = False):
+def node_from_range_new(root,atok,r,special = False,lenient = False):
     # print(" inside the new note from range\n",root)
     inside = lambda x,y: (y[0]<=x[0]<y[1] and y[0]<x[1]<=y[1])
+    if lenient:
+        inside = lambda x,y: (y[0]<=x[0]<=y[1] and y[0]<=x[1]<=y[1])
     generic_fix(root,atok)
     # print(" the fields are now",root._fields)
     for child in ast.iter_child_nodes(root):
@@ -48,7 +47,7 @@ def node_from_range_new(root,atok,r,special = False):
         # print(" and the child fields are ",child._fields)
         if inside(r,atok.get_text_range(child)):
             # print(" success with",child,"special = ",special)
-            return node_from_range_new(child,atok,r,special)
+            return node_from_range_new(child,atok,r,special,lenient)
     if special:
         # print("Special:\n",ast.dump(root))
         if match_node(root,(ast.Tuple,ast.List,ast.Set,ast.Dict,ast.DictComp)):
@@ -66,9 +65,9 @@ def node_from_range_new(root,atok,r,special = False):
     return root
 
 
-def node_from_range(root,atok, r,special = False):
+def node_from_range(root,atok, r,special = False,lenient = False):
     # return node_from_range_old(root,atok,r)
-    return node_from_range_new(root,atok,r,special)
+    return node_from_range_new(root,atok,r,special,lenient)
 
 
 
