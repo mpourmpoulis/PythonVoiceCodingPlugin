@@ -1130,7 +1130,7 @@ def fix_exception_handler(root,atok):
 	if not root.type or not root.name:
 		mark_fixed(root)
 		return True
-	print("Exception Handler:\n",[root.first_token,root.last_token])
+	
 	token = root.type.last_token
 	token = atok.find_token(next_token(atok,token),tokenize.NAME, root.name)
 	f = root.type.first_token

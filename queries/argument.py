@@ -26,7 +26,7 @@ class SelectArgument(SelectionQuery):
 	multiple_in = True
 
 	def get_information(self,query_description):
-		print(self,query_description)
+		# print(self,query_description)
 		if "argument_index" in query_description:
 			if query_description["argument_index"]==0:
 				return make_information(get_argument_from_empty_call)
@@ -47,7 +47,7 @@ class SelectArgument(SelectionQuery):
 			return identity(match_node,ast.Call)
 	
 	def get_statement(self,origin,atok):
-		print("\norigin\n",ast.dump(origin))
+		# print("\norigin\n",ast.dump(origin))
 		self.global_constrained_space = None
 		candidate_statement = search_upwards(origin,ast.stmt)
 		big = (ast.If,ast.While,ast.For,ast.FunctionDef,ast.With,ast.ClassDef,ast.Try,ast.ExceptHandler)
