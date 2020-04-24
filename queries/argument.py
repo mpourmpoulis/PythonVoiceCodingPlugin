@@ -50,7 +50,7 @@ class SelectArgument(SelectionQuery):
 		print("\norigin\n",ast.dump(origin))
 		self.global_constrained_space = None
 		candidate_statement = search_upwards(origin,ast.stmt)
-		big = (ast.If,ast.While,ast.For,ast.FunctionDef,ast.With,ast.ClassDef,ast.Try)
+		big = (ast.If,ast.While,ast.For,ast.FunctionDef,ast.With,ast.ClassDef,ast.Try,ast.ExceptHandler)
 		if match_node(candidate_statement,big):
 			candidate_statement = search_upwards_for_parent(origin,ast.stmt)
 			candidate_statement = candidate_statement if candidate_statement else search_upwards(origin,ast.stmt)
