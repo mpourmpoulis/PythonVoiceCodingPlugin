@@ -168,7 +168,13 @@ def after_double_dot(t):
 	return t[1] is None   or not( 
 		start_atom(t[1]) or 
 		t[1].string.isspace() or
-		t[1].string=="]"
+		t[1].string in [
+				"]","assert","raise"
+				"break","continue","pass",
+				"return","yield","await","del",
+				"global","nonlocal",
+				"import","from"
+			]
 		)
 
 def before_double_dot(t):
