@@ -1,0 +1,14 @@
+language: python
+jobs:
+  include:
+    - name: "Windows Lint"
+      os: windows
+      language: sh
+      python: "3.3"
+      cache: pip
+      before_install:
+        - choco install python --version 3.3.5
+        - export PATH="/c/Python33:/c/Python33/Scripts:$PATH"
+        - python -m pip install --upgrade pip wheel
+      script:
+        - pylint library && pylint queries && pylint applications && pylint interface
