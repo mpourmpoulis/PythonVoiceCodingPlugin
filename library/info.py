@@ -129,8 +129,9 @@ def fake_attribute_from_tokens(root,tokens,**kwargs):
 
 def is_store(root):
 	return match_node(root,ast.Store)  or (match_node(root,ast.Name) and match_node(root.ctx,ast.Store))
+
 def single(root):
-	return match_parent(node,(),ast.Attribute)
+	return match_parent(root,(),ast.Attribute)
 
 def name(root):
 	return match_node(root,ast.Name)
@@ -207,8 +208,6 @@ def get_weak_header(root,atok):
 		root.items if match_node(root,(ast.With)) else 
 		root.type if match_node(root,(ast.ExceptHandler)) else None
 	)
-def get_body(root):
-	return root.body if match_node(root,(ast.IfExp, ast.If ,ast.For,ast.While, ast.Try)) else None
 	
 
 
@@ -255,12 +254,12 @@ def get_return_value(root):
 # need to revisit
 def get_elements(root):
 	return (
-		root.elts if hasattr(root,elts) else None
+		root.elts if hasattr(root,"elts") else None
 	)
 
 def get_context(root):
 	return (
-		root.ctx if hasattr(root,ctx) else None
+		root.ctx if hasattr(root,"ctx") else None
 	)
 
 def get_key_value(root):
