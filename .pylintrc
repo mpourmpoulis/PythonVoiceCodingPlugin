@@ -1,0 +1,10 @@
+[TYPECHECK]
+ignored-modules=sublime,sublime_plugin,package_control
+
+[MASTER]
+# init-hook='import sys; sys.path.append("C:\\Users\\Admin\\AppData\\Roaming\\Sublime Text 3\\Packages")'
+init-hook="from pylint.config import find_pylintrc; import os, sys; sys.path.append(os.path.dirname(os.path.dirname(find_pylintrc())))"
+
+[MESSAGES CONTROL]
+disable=all
+enable=E
