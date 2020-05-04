@@ -11,4 +11,4 @@ jobs:
         - export PATH="/c/Python37:/c/Python37/Scripts:$PATH"
         - pip install pylint
       script:
-        - pylint library && pylint queries && pylint application && pylint interface
+        - pylint library queries application interface python_voice_coding_plugin.py
