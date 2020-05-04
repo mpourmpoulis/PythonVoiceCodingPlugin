@@ -58,7 +58,7 @@ class ModificationHandler():
 		return self.add_modification(origin, destination, original_code, destination_code,comment)
 	
 	def add_modification_updated(self, origin, destination,original_code  = None,destination_code = "", comment= None):
-		return add_modification_from(self.current_time, origin, destination,original_code ,destination_code , comment)
+		return self.add_modification_from(self.current_time, origin, destination,original_code ,destination_code , comment)
 		
 		
 
