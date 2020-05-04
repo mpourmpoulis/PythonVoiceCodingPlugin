@@ -94,6 +94,6 @@ def select_from_up(node, target, attribute, outside_level, index = None):
     return None
 
 
-def select_region_from_node_up(root, atok, node, target, attribute, outside_level, index = None):
-    return  get_source_region(select_from_node(root, atok, node, target, attribute, outside_level, index))
+# def select_region_from_node_up(root, atok, node, target, attribute, outside_level, index = None):
+#     return  get_source_region(select_from_node(root, atok, node, target, attribute, outside_level, index))
 
