@@ -1,3 +1,4 @@
+import abc
 from copy import deepcopy
 
 from PythonVoiceCodingPlugin.library import get_source_region 
@@ -10,9 +11,12 @@ class SelectionQuery(Query):
 	multiple_in = False
 	initial_origin_force_update = False
 
+	@abc.abstractmethod
 	def handle_single(self,view_information,query_description,extra = {}):
 		pass
 
+
+	@abc.abstractmethod
 	def handle_multiple(self,view_information,query_description,extra = {}):
 		pass
 		

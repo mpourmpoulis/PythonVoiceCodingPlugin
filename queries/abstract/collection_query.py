@@ -1,3 +1,4 @@
+import abc
 from copy import deepcopy
 from PythonVoiceCodingPlugin.library import get_source_region
 from PythonVoiceCodingPlugin.library.selection_node import nearest_node_from_offset,node_from_range
@@ -13,9 +14,11 @@ class CollectionQuery(Query):
 	select_insertion = True
 	label = "Collection"
 
+	@abc.abstractmethod
 	def handle_single(self,view_information,query_description,extra = {}):
 		pass
-
+		
+	@abc.abstractmethod
 	def handle_multiple(self,view_information,query_description,extra = {}):
 		pass
 
