@@ -7,7 +7,7 @@ from PythonVoiceCodingPlugin.library import get_source_region,previous_token,nex
 from PythonVoiceCodingPlugin.library.info import generic_fix,get_sub_index 
 from PythonVoiceCodingPlugin.library.traverse import match_node 
 
-def nearest_node_from_offset(root,atok,offset):
+def nearest_node_from_offset(root,atok,offset,special=False):
     converter = atok._line_numbers 
     original_token = atok.get_token_from_offset(offset)
     token = original_token
@@ -21,7 +21,7 @@ def nearest_node_from_offset(root,atok,offset):
         if following:
             token = following
     s = token.startpos
-    return node_from_range(root,atok,(s,s),special= False,lenient = True)
+    return node_from_range(root,atok,(s,s),special= special,lenient = True)
 
 def node_from_range_old(root,atok, r ):
 	inside = lambda x,y: (y[0]<=x[0]<y[1] and y[0]<x[1]<=y[1])
