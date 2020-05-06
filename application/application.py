@@ -77,6 +77,7 @@ class Application():
 		except Exception as e:
 			# check if there are exceptions with parsing
 			if s.exceptions_raised:
+				# traceback.print_tb(s.exceptions_raised)
 				interface.clear_actions()
 				interface.push_action(PopUpErrorAction(str(s.exceptions_raised)))
 				return False

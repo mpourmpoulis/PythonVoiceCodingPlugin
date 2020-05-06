@@ -20,8 +20,12 @@ def nearest_node_from_offset(root,atok,offset,special=False):
             following = next_token(atok,original_token)
         if following:
             token = following
+    raise Exception("boom")
     s = token.startpos
-    return node_from_range(root,atok,(s,s),special= special,lenient = True)
+    r = node_from_range(root,atok,(s,s),special= special,lenient = True)
+    print("r",r,ast.dump(r))
+    raise Exception("boom")
+    return r
 
 def node_from_range_old(root,atok, r ):
 	inside = lambda x,y: (y[0]<=x[0]<y[1] and y[0]<x[1]<=y[1])
