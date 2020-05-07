@@ -17,14 +17,11 @@ def nearest_node_from_offset(root,atok,offset,special=False):
         following = next_token(atok,original_token)
         while following  and following.string.isspace():
             token = following
-            following = next_token(atok,original_token)
+            following = next_token(atok,token)
         if following:
             token = following
-    raise Exception("boom")
     s = token.startpos
     r = node_from_range(root,atok,(s,s),special= special,lenient = True)
-    print("r",r,ast.dump(r))
-    raise Exception("boom")
     return r
 
 def node_from_range_old(root,atok, r ):
