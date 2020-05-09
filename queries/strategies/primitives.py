@@ -10,7 +10,7 @@ def root_level_order(accumulator,root,level,index,only_information,priority,pena
 	else:
 		first_option = None
 	if not only_information or True:
-		accumulator.push(second_option,priority if not first_option else priority + penalty)
+		accumulator.push(second_option,priority,penalty = 0 if not first_option else penalty)
 	
 def root_lexical_order(accumulator,root,level_nodes,information_nodes,index,
 		only_information,priority,penalty,lca = None,constrained_space = None):
@@ -30,8 +30,7 @@ def root_lexical_order(accumulator,root,level_nodes,information_nodes,index,
 	else:
 		first_option = None
 	if not only_information or True:
-		accumulator.push(second_option,priority if not first_option else priority + penalty)
-
+		accumulator.push(second_option,priority,penalty = 0 if not first_option else penalty)
 
 def child_level_older(accumulator,child_list,level,index,only_information,priority):
 	for i, child in enumerate(child_list) :
@@ -41,7 +40,7 @@ def child_level_older(accumulator,child_list,level,index,only_information,priori
 			# print("rejected_candidate", candidate, "from child", child)
 			if candidate in level.special  and (only_information == False or y==True):
 				# from 
-				accumulator.push(candidate,priority + i + counter)
+				accumulator.push(candidate,priority,penalty = i + counter)
 				counter += 1
 
 
