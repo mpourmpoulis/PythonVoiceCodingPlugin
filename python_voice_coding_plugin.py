@@ -21,17 +21,6 @@ def plugin_loaded():
 	settings = sublime.load_settings("python_voice_coding_plugin.sublime-settings")
 	try : 
 		from package_control import events
-		if events.post_upgrade("PythonVoiceCodingPlugin"):
-			sublime.error_message(
-"""
-CRITICAL UPDATE PythonVoiceCodingPlugin
-Up to release 0.1.1 a subtle yet critical installation step regarding communication between sublime and Caster was not documented, which may have prevented you from using the plug-in altogether! 
-
-You can find more information at https://github.com/mpourmpoulis/PythonVoiceCodingPlugin/issues/15 but simply upgrading your Caster grammar should be enough!
-For Caster 1.x.x users Preferences > Package Settings  > PythonVoiceCodingPlugin >Quick 1.0.0 Install may make these process faster!
-
-My sincerest apologies!
-""")
 	except :
 		pass
 
