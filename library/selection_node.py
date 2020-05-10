@@ -37,10 +37,11 @@ def node_from_range_old(root,atok, r ):
 
 
 def node_from_range_new(root,atok,r,special = False,lenient = False):
-    # print(" inside the new note from range\n",root)
-    inside = lambda x,y: (y[0]<=x[0]<y[1] and y[0]<x[1]<=y[1])
+    # notes like ast.Store result in (0,0) with atok.get_text_range() 
+    # which causes problems if the cursor is right at the beginning of the file  
+    inside = lambda x,y: (y[0]<=x[0]<y[1] and y[0]<x[1]<=y[1] and not y[0]==y[1]==0)
     if lenient:
-        inside = lambda x,y: (y[0]<=x[0]<=y[1] and y[0]<=x[1]<=y[1])
+        inside = lambda x,y: (y[0]<=x[0]<=y[1] and y[0]<=x[1]<=y[1] and not y[0]==y[1]==0)
     generic_fix(root,atok)
     # print(" the fields are now",root._fields)
     for child in ast.iter_child_nodes(root):
