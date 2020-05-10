@@ -24,16 +24,6 @@ def nearest_node_from_offset(root,atok,offset,special=False):
     r = node_from_range(root,atok,(s,s),special= special,lenient = True)
     return r
 
-def node_from_range_old(root,atok, r ):
-	inside = lambda x,y: (y[0]<=x[0]<y[1] and y[0]<x[1]<=y[1])
-	candidates =([(node,atok.get_text_range(node)) for node in ast.walk( root ) if not isinstance(node,ast.Module) 
-    	and  inside(r,atok.get_text_range(node))])
-	print("inside note from range \n")
-	for x in candidates:
-		print(x,atok.get_text_range(x))
-	print("outside note from range \n",min( candidates , key= lambda y :(y[1][1]-y[1][0]) )[0])
-
-	return min( candidates , key= lambda y :(y[1][1]-y[1][0]) )[0]
 
 
 def node_from_range_new(root,atok,r,special = False,lenient = False):
@@ -63,6 +53,18 @@ def node_from_range_new(root,atok,r,special = False,lenient = False):
             if l  and l!=temporary:
                 return l
 
+    if match_node(root,(ast.FunctionDef,ast.ClassDef)):
+        converter = atok._line_numbers
+        sr,sc = converter.offset_to_line(r[0])
+        er,ec = converter.offset_to_line(r[1])
+        for decorator in root.decorator_list:
+            if sr != decorator.first_token.start[0]:
+                continue
+            if er != decorator.last_token.start[0]:
+                if er != decorator.last_token.start[0] + 1  or ec != 0:
+                    continue
+            return decorator
+
 
     return root
 
@@ -74,6 +76,16 @@ def node_from_range(root,atok, r,special = False,lenient = False):
 
 
 
+def node_from_range_old(root,atok, r ):
+    inside = lambda x,y: (y[0]<=x[0]<y[1] and y[0]<x[1]<=y[1])
+    candidates =([(node,atok.get_text_range(node)) for node in ast.walk( root ) if not isinstance(node,ast.Module) 
+        and  inside(r,atok.get_text_range(node))])
+    print("inside note from range \n")
+    for x in candidates:
+        print(x,atok.get_text_range(x))
+    print("outside note from range \n",min( candidates , key= lambda y :(y[1][1]-y[1][0]) )[0])
+
+    return min( candidates , key= lambda y :(y[1][1]-y[1][0]) )[0]
 
 
 
