@@ -37,7 +37,7 @@ class LCA():
 	def get_depth(self, node):
 		return self.sequence[self.visits[node][0]][0]
 
-	def __call__(self,first_node,second_node,include_depth = False):
+	def __call__(self,first_node,second_node,only_depth = False,node_and_depth = True):
 		try : 
 			x,y = self.visits[first_node]
 			w,v = self.visits[second_node]
@@ -52,9 +52,12 @@ class LCA():
 		r = max(y,v)
 
 		ancestor = self.tree.query(l,r,"min")
-		if include_depth:
+		if node_and_depth:
+			return ancestor
+		elif only_depth:
 			return  ancestor[0]
-		return ancestor[1]
+		else:
+			return ancestor[1]
 
 	def get_field_with_respect_to(self,node,parent_node):
 		index = bisect.bisect_left(self.field_history[parent_node],(self.visits[node][0],))
