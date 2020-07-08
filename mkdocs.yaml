@@ -8,7 +8,7 @@ extra_javascript:
 google_analytics: null
 site_name: PythonVoiceCodingPlugin
 site_author: mpourmpoulis
-site_url: https://PythonVoiceCodingPlugin.readthedocs.io
+site_url: https://pythonvoicecodingplugin.readthedocs.io
 docs_dir: doc
 repo_url: https://github.com/mpourmpoulis/PythonVoiceCodingPlugin
 edit_uri: tree/master/doc
