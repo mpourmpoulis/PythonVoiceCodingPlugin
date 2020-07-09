@@ -17,7 +17,7 @@ theme:
     name: readthedocs
 
 nav:
-    - Home: README.md
+    - User Guide: README.md
     - Argument queries: SelectArgument.md
     - Big ROI queries: SelectBigROI.md
     - SubIndexing: SubIndexing.md
