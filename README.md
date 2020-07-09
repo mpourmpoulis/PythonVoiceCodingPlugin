@@ -4,7 +4,7 @@
 
 <!-- ![](https://img.shields.io/static/v1?label=Version&message=0.1.0&color=green) -->
 
-[![](https://img.shields.io/badge/documentation-here-green)](https://github.com/mpourmpoulis/PythonVoiceCodingPlugin/blob/master/doc/README.md)
+[![](https://img.shields.io/badge/documentation-here-green)](https://pythonvoicecodingplugin.readthedocs.io/en/latest/)
 
 <!-- ![](https://img.shields.io/static/v1?label=Caster&message=0.5.11|0.6.11|1.0.0&color=blue) -->
 
