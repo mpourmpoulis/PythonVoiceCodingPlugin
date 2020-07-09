@@ -95,7 +95,7 @@ python3 -m pip install --target third_party -r requirements.txt
 
 ### Install Grammar 
 
-Furthermore, in order to use the plug-in, you must also install the grammar! You can find additional information [here](../bundles/Caster/README.md) if you intend to use this on Linux via [Aenea](../bundles/Aenea/README.md) you will need a few extra steps but in a nutshell:
+Furthermore, in order to use the plug-in, you must also install the grammar! You can find additional information [here](https://github.com/mpourmpoulis/PythonVoiceCodingPlugin/tree/master/bundles) if you intend to use this on Linux via [Aenea](https://github.com/mpourmpoulis/PythonVoiceCodingPlugin/tree/master/bundles/Aenea) you will need a few extra steps but in a nutshell:
 
 - Make sure you have [Caster](https://caster.readthedocs.io/en/latest/) installed
 
