@@ -109,11 +109,11 @@ in order to make this process easier, under `Preferences > Package Settings  > P
 
 - To retrieve those grammar files and then manually copy paste them
 
-![](doc/gif/install1.gif)
+![](./gif/install1.gif)
 
 - or to automatically install them to the appropriate directory if you are using Caster 1.x.x
 
-![](doc/gif/install2.gif)
+![](./gif/install2.gif)
 
 ### Subl Path
 
