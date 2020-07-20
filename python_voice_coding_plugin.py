@@ -11,7 +11,7 @@ sys.path.insert(0,os.path.join(os.path.dirname(__file__), 'third_party'))
 from PythonVoiceCodingPlugin.interface.interface import Interface
 
 
-PLUGIN_VERSION = (0,1,2)
+PLUGIN_VERSION = (0,1,3)
 
 settings = {}
 already_message = False	
