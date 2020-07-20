@@ -33,7 +33,6 @@ def node_from_range_new(root,atok,r,special = False,lenient = False):
     if lenient:
         inside = lambda x,y: (y[0]<=x[0]<=y[1] and y[0]<=x[1]<=y[1] and not y[0]==y[1]==0)
     generic_fix(root,atok)
-    # print(" the fields are now",root._fields)
     for child in ast.iter_child_nodes(root):
         # print(" just to check something out",child,atok.get_text_range(child))
         # print(" and the child fields are ",child._fields)
@@ -80,10 +79,8 @@ def node_from_range_old(root,atok, r ):
     inside = lambda x,y: (y[0]<=x[0]<y[1] and y[0]<x[1]<=y[1])
     candidates =([(node,atok.get_text_range(node)) for node in ast.walk( root ) if not isinstance(node,ast.Module) 
         and  inside(r,atok.get_text_range(node))])
-    print("inside note from range \n")
     for x in candidates:
         print(x,atok.get_text_range(x))
-    print("outside note from range \n",min( candidates , key= lambda y :(y[1][1]-y[1][0]) )[0])
 
     return min( candidates , key= lambda y :(y[1][1]-y[1][0]) )[0]
 
