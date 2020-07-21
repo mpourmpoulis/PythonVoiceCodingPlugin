@@ -1,0 +1,22 @@
+Thanks for upgrading to the latest version v0.1.3!
+
+This is a small patch 
+
+- refactoring some old code from the age of the dinosaurs
+
+- Introduces a variety of bug fixes, especially certain edge cases with the cursor position at the beginning or the end of the file and stabilizing the behavior of argument queries using the "inside" keyword
+
+- improves code coverage most notably by allowing "partial parsing", so that ArgumentQueries  and dedicated sub indexing queries (eg,"delete part 2") can now run within the current logical line even if there are unrecoverable syntax errors in other parts of the code, so long as tokenization is still possible, a requirement I hope to remove in the future
+
+- ports the documentation to readthedocs
+
+If all things go according to plan, the next release will be 0.2.0  and will go public around mid August
+
+===============================================================
+CRITICAL UPDATE FOR THOSE UPGRADING FROM 0.1.1
+================================================================
+
+My sincerest apologies but up to release 0.1.1 a subtle yet critical installation step  was not documented, which may have prevented you from using the plug-in altogether! 
+
+You can find more information at https://github.com/mpourmpoulis/PythonVoiceCodingPlugin/issues/15 but release 0.1.2 should make that installation step redundant for most users, so SIMPLY UPGRADING  and replacing the grammar files should be enough without any further action on your part! 
+

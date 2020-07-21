@@ -1,4 +1,4 @@
-Thanks for downloading the latest 0.1.1 version of PythonVoiceCodingPlugin! 
+Thanks for downloading the latest 0.1.3 version of PythonVoiceCodingPlugin! 
 
 Should you face any problems or have any questions regarding the installation process, feel free to contact me in the dedicated gitter channel
 
@@ -12,7 +12,7 @@ From there you can also retrieve the Caster grammars that are necessary for usin
 
 	Quick 1.0.0 Install
 
-utility. It supports all version of Caster 0.5, 0.6, 1.x but please upgrade as support for older versions will soon be dropped! As a note if you're using any version above 1.0.0 you must also enable it by saying
+utility. It supports all version of Caster 0.5, 0.6, 1.x but please upgrade as support for older versions will soon be dropped, most probably with release 0.2.0 when it comes out hopefully around mid August! As a note if you're using any version above 1.0.0 you must also enable it by saying
 
 	enable python voice coding plugin
 
@@ -24,7 +24,8 @@ Finally you should be aware that there are some experimental/unofficial features
 NOTE FOR MAC Installers
 #################################	
 
-Honestly you caught me a little bit unprepared,I am releasing these for Windows and Linux so i didn't expect anyone to download on Mac:P Firstly the core plug-in has not been tested on Mac. Secondly currently the grammar is written to be used with Caster which does not yet officially support Mac, though https://github.com/dmakarov/Caster is an attempt to do so. So you might want to give it a try with that or adapt it to standalone dragonfly or what ever suits your system.
+Honestly you caught me a little bit unprepared,I am releasing these for Windows and Linux so i didn't expect anyone to download on Mac  and lacking Mac hardware, the core plug-in has not been tested on Mac. Nonetheless it is pure python I believe it should generally work and with Caster now supporting Mac it is probably worth your while to give it a try!
+
 Finally if you are using Talon  and Jetbrains, an alternative you might want to check out is
 https://github.com/dwiel/talon_community/blob/master/apps/jetbrains_psi.py
 
