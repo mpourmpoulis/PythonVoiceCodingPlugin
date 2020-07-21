@@ -303,7 +303,7 @@ class SelectArgument(SelectionQuery):
 			atok = atok,
 			origin = origin,
 			select_node = origin if selection[0]!=selection[1] else None,
-			tiebreaker = lambda x: tiebreak_on_lca(statement_node,origin,x),
+			tiebreaker = lambda x: tiebreak_on_lca(statement_node,origin,x,lca),
 			transformation = transformation,
 			inverse_transformation = inverse_transformation,
 
@@ -356,7 +356,7 @@ class SelectArgument(SelectionQuery):
 			atok = atok,
 			origin = origin,
 			select_node = origin if selection[0]!=selection[1] else None,
-			tiebreaker = lambda x: tiebreak_on_lca(statement_node,origin,x),
+			tiebreaker = lambda x: tiebreak_on_lca(statement_node,origin,x,lca),
 			transformation = transformation,
 			inverse_transformation = inverse_transformation,
 
@@ -383,7 +383,6 @@ class SelectArgument(SelectionQuery):
 			query_description["level_index"] = -1
 		_,calling_parents = search_upwards_log(origin,targets=ast.stmt,log_targets=(ast.Call))
 		index = query_description["level_index"]
-		print("the Dixie's ",index,len(calling_parents),"\n")
 		if index<len(calling_parents):
 			priority["child_level"] = 1
 			origin = calling_parents[index]

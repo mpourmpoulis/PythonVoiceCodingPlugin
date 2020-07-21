@@ -6,8 +6,7 @@ from PythonVoiceCodingPlugin.library.traverse import match_node
 
 
 
-
-def tiebreak_on_lca(root,origin,candidates):
+def tiebreak_on_lca(root,origin,candidates,lca = None):
 	"""ranks nodes based on the depth of their lowest_common_ancestor 
 	With origin (the deeper the better). In case of ties the note
 	Closer to the LCA is preferred.
@@ -20,7 +19,7 @@ def tiebreak_on_lca(root,origin,candidates):
 	Returns:
 	    TYPE: Description
 	"""
-	lca  = LCA(root)
+	lca  = LCA(root) if lca is None else lca
 	def tiebreaker(x):
 		depth,node = lca(x, origin,node_and_depth = True)
 		v = 3
