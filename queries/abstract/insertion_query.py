@@ -1,4 +1,6 @@
+import abc
 from copy import deepcopy
+
 from PythonVoiceCodingPlugin.library import get_source_region 
 from PythonVoiceCodingPlugin.library.modification import ModificationHandler
 from PythonVoiceCodingPlugin.queries.abstract.query import Query
@@ -11,9 +13,12 @@ class InsertionQuery(Query):
 	################################################################
 	multiple_in = False
 	select_insertion = True
+
+	@abc.abstractmethod
 	def handle_single(self,view_information,query_description,extra = {}):
 		pass
 
+	@abc.abstractmethod
 	def handle_multiple(self,view_information,query_description,extra = {}):
 		pass
 

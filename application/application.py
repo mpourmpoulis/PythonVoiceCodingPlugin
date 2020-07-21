@@ -30,10 +30,12 @@ class Application():
 		self.ui_controller = None
 		self.vid = vid
 
+	@staticmethod
 	def create_application_for_view(vid):
 		if vid not in Application.active_applications:
 			Application.active_applications[vid] = Application(vid)
 
+	@staticmethod
 	def get_application(vid):
 		Application.create_application_for_view(vid)
 		return Application.active_applications[vid]
@@ -77,6 +79,7 @@ class Application():
 		except Exception as e:
 			# check if there are exceptions with parsing
 			if s.exceptions_raised:
+				# traceback.print_tb(s.exceptions_raised)
 				interface.clear_actions()
 				interface.push_action(PopUpErrorAction(str(s.exceptions_raised)))
 				return False

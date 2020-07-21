@@ -125,6 +125,10 @@ class SelectBigRoi(SelectionQuery):
             "container":((ast.Compare),(),get_container_check),
             "member":((ast.Compare),(),get_member_check),
             "membership":((ast.Compare),(),get_membership),
+
+            "identity":((ast.Compare),(),get_identity_check),
+            "identity left":((ast.Compare),(),get_identity_check_left),
+            "identity right":((ast.Compare),(),get_identity_check_right),
             
             "left side":((ast.Compare),(),get_comparison_left_side),
             "right side":((ast.Compare),(),get_comparison_right_side),
@@ -222,7 +226,11 @@ class SelectBigRoi(SelectionQuery):
 		test_result = decode_abstract_vertical(root,atok,targets,row+1, 1,direction,True,
 					temporary_information,want_alternatives = False)
 		l = search_upwards_log(origin,ast.stmt)
-		if test_result in [l[0]] + l[1]  and row + 1>=test_result.first_token.start[0]:
+		if (test_result in [l[0]] + l[1]  and
+			row + 1>=test_result.first_token.start[0] and 
+			row + 1<=test_result.last_token.end[0]
+			):
+
 			ndir  = ndir + 1
 			
 

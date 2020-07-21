@@ -4,6 +4,33 @@ import sys
 import sublime
 import sublime_plugin
 
+greeting = '''
+Thanks for trying out PythonVoiceCodingPlugin!  
+
+To complete your installation, you need to copy the bundled grammar for your version of Caster into your appropriate Caster user directory. Afterwards reboot Caster  and if needed enable the grammar by saying
+
+enable python voice coding plugin
+
+You can retrieve those grammars under
+
+Preferences > Package Settings > PythonVoiceCodingPlugin
+
+where you will also find links to documentation with lots of examples and my gitter chatroom for questions and troubleshooting.
+
+To make your life easier with the copy pasting, if you're on windows and using Caster 1.x.x, there is also utility to handle this process automatically for you! Do you want to run it?
+'''
+
+
+def plugin_loaded():
+	window = sublime.active_window()
+	try :
+		from package_control import events
+		if events.install("PythonVoiceCodingPlugin"):	 
+			if sublime.yes_no_cancel_dialog(greeting)!=sublime.DIALOG_YES:
+				return
+			window.run_command("quick_install_python_voice_coding_plugin",{})
+	except :
+		pass
 
 
 

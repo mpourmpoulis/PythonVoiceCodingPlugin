@@ -35,49 +35,49 @@
                                       "caption": "Argument Queries",
                                       "command": "open_url", 
                                       "args":{
-                                          "url": "http://github.com/mpourmpoulis/PythonVoiceCodingPlugin/blob/master/doc/SelectArgument.md"
+                                          "url": "https://pythonvoicecodingplugin.readthedocs.io/en/latest/SelectArgument/"
                                       }
                                     },
                                     { 
                                       "caption": "Big Roi Queries",
                                       "command": "open_url", 
                                       "args":{
-                                          "url":"https://github.com/mpourmpoulis/PythonVoiceCodingPlugin/blob/master/doc/SelectBigROI.md"
+                                          "url":"https://pythonvoicecodingplugin.readthedocs.io/en/latest/SelectBigROI/"
                                       }
                                     },
                                     { 
                                       "caption": "General Documentation",
                                       "command": "open_url", 
                                       "args":{
-                                          "url":"https://github.com/mpourmpoulis/PythonVoiceCodingPlugin/blob/master/doc/README.md"
+                                          "url":"https://pythonvoicecodingplugin.readthedocs.io/en/latest/"
                                       }
                                     },
                                     { 
                                       "caption": "Operations",
                                       "command": "open_url", 
                                       "args":{
-                                          "url": "https://github.com/mpourmpoulis/PythonVoiceCodingPlugin/blob/master/doc/Operations.md"
+                                          "url": "https://pythonvoicecodingplugin.readthedocs.io/en/latest/Operations/"
                                       }
                                     },
                                     { 
                                       "caption": "Sub Indexing",
                                       "command": "open_url", 
                                       "args":{
-                                          "url": "https://github.com/mpourmpoulis/PythonVoiceCodingPlugin/blob/master/doc/SubIndexing.md"
+                                          "url": "https://pythonvoicecodingplugin.readthedocs.io/en/latest/SubIndexing/"
                                       }
                                     },
                                     { 
                                       "caption": "CollectionQueries",
                                       "command": "open_url", 
                                       "args":{
-                                          "url": "https://github.com/mpourmpoulis/PythonVoiceCodingPlugin/blob/master/doc/CollectionQueries.md"
+                                          "url": "https://pythonvoicecodingplugin.readthedocs.io/en/latest/CollectionQueries/"
                                       }
                                     },
                                     {
                                       "caption": "Unofficial",
                                       "command": "open_url",
                                       "args":{
-                                        "url": "https://github.com/mpourmpoulis/PythonVoiceCodingPlugin/blob/master/doc/README.md#experiment-or-unofficial-and-so-on-features-you-need-to-enable-manually"
+                                        "url": "https://pythonvoicecodingplugin.readthedocs.io/en/latest/#experiment-or-unofficial-and-so-on-features-you-need-to-enable-manually"
                                       }
                                     }
                                   
@@ -125,7 +125,7 @@
                               "caption": "Grammar Installation Doc",
                               "command": "open_url", 
                               "args":{
-                                  "url": "https://github.com/mpourmpoulis/PythonVoiceCodingPlugin/blob/master/bundles/README.md"
+                                  "url": "https://pythonvoicecodingplugin.readthedocs.io/en/latest/Installation/"
                               }
                             },
                             { 

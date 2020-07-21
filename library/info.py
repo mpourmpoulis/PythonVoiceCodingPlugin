@@ -129,8 +129,9 @@ def fake_attribute_from_tokens(root,tokens,**kwargs):
 
 def is_store(root):
 	return match_node(root,ast.Store)  or (match_node(root,ast.Name) and match_node(root.ctx,ast.Store))
+
 def single(root):
-	return match_parent(node,(),ast.Attribute)
+	return match_parent(root,(),ast.Attribute)
 
 def name(root):
 	return match_node(root,ast.Name)
@@ -207,8 +208,6 @@ def get_weak_header(root,atok):
 		root.items if match_node(root,(ast.With)) else 
 		root.type if match_node(root,(ast.ExceptHandler)) else None
 	)
-def get_body(root):
-	return root.body if match_node(root,(ast.IfExp, ast.If ,ast.For,ast.While, ast.Try)) else None
 	
 
 
@@ -255,12 +254,12 @@ def get_return_value(root):
 # need to revisit
 def get_elements(root):
 	return (
-		root.elts if hasattr(root,elts) else None
+		root.elts if hasattr(root,"elts") else None
 	)
 
 def get_context(root):
 	return (
-		root.ctx if hasattr(root,ctx) else None
+		root.ctx if hasattr(root,"ctx") else None
 	)
 
 def get_key_value(root):
@@ -320,6 +319,17 @@ def get_container_check(root):
 
 def get_membership(root):
 	return root if match_node(root,ast.Compare)  and all([match_node(x,(ast.In,ast.NotIn)) for x in root.ops]) else None
+
+
+# Extracting Identity Left And Right
+def get_identity_check_left(root):
+	return root.left if match_node(root,ast.Compare)  and all([match_node(x,(ast.Is,ast.IsNot)) for x in root.ops]) else None
+
+def get_identity_check_right(root):
+	return root.comparators[-1] if match_node(root,ast.Compare)  and all([match_node(x,(ast.Is,ast.IsNot)) for x in root.ops]) else None
+
+def get_identity_check(root):
+	return root if match_node(root,ast.Compare)  and all([match_node(x,(ast.Is,ast.IsNot)) for x in root.ops]) else None
 
 # Extract Left Middle And Right from numerical comparisons
 def get_comparison_left_side(root):
@@ -667,28 +677,29 @@ def get_subparts_of_string(root,name_mode = False):
 		start_position = 1
 		if not check_fake(root):
 			x = root.first_token.string
-			# print("String:\n",x)
 			y1 = x.find("'")
 			y2 = x.find("\"")
 			if y1>=0 and y2>=0:
-				z = mean(y1,y2)
+				z = min(y1,y2)
 			elif y1>=0:
 				z = y1
 			elif y2>=0:
 				z = y2
 			else:
 				raise Exception("problem with splitting a string , there is no beginning!")
+			try : 
+				if x[z]==x[z+1]==x[z+2]:
+					z = z + 2
+			except :
+				pass
 			start_position += z
 	start_position += root.first_token.startpos
-	# print("Start Position:\n",start_position)
-	# start_position = root.first_token.startpos + ( 1+(len(root.first_token.string) if root.first_token.type==tokenize.NAME else 0) if not name_mode else 0) 
 	original  = root.s if not name_mode else root.id
 	try :
 		splitted = split_string(root.s if not name_mode else root.id,even_letters = False if name_mode else True) 
 	except :
 		print(" exceptions were thrown")
 	index = 0
-	print("splitted ",splitted)
 	for s in splitted:
 		if not s:
 			continue
@@ -881,12 +892,11 @@ def get_raw(root):
 
 def correspond_to_index_in_call(root, index,field,field_index):
 	x = get_argument_from_call(root,index)
-	print("entering index taking \n",ast.dump(x))
 	if not x:
 		return False
 	if x.parent_field=="value":
 		x = x.parent
-	print("inside checking for index ",(x.parent_field,x.parent_field_index),(field,field_index))
+	# print("inside checking for index ",(x.parent_field,x.parent_field_index),(field,field_index))
 	return (field, field_index)==(x.parent_field,x.parent_field_index) if x else False
 
 
@@ -1016,6 +1026,9 @@ def fix_alias(root,atok):
 def fix_argument(root,atok,token = None):
 	if already_fixed(root):
 		return token
+	# the following check was introduced to work around issue #17
+	if not match_node(root.parent.parent,ast.FunctionDef):
+		return None
 	if token is None:
 		fix_definition(root.parent.parent,atok)
 		if not already_fixed(root):
@@ -1037,7 +1050,7 @@ def fix_argument(root,atok,token = None):
 def fix_argument_list(root,atok):
 	if not  match_node(root,ast.arguments):
 		return False
-	if already_fixed(root) or fix_definition(root.parent,atok):
+	if already_fixed(root) or match_node(root.parent,(ast.FunctionDef)) and fix_definition(root.parent,atok):
 		return True
 	return False
 
@@ -1045,7 +1058,6 @@ def fix_argument_list(root,atok):
 def fix_definition(root,atok):
 	if already_fixed(root):
 		return True
-
 	# there is a discrepancy between the 3.3 and 3.4 versions of the abstract syntax tree
 	# in 3.3 the variable arguments and the variable keyboard arguments are stored in a little bit differently
 	x = root.args
@@ -1116,12 +1128,13 @@ def fix_exception_handler(root,atok):
 	if not root.type or not root.name:
 		mark_fixed(root)
 		return True
-	print("Exception Handler:\n",[root.first_token,root.last_token])
+	
 	token = root.type.last_token
 	token = atok.find_token(next_token(atok,token),tokenize.NAME, root.name)
 	f = root.type.first_token
 	f = atok.find_token(previous_token(atok,f),tokenize.NAME, "except",reverse = True)
-	fake_name_node = create_fake(root,ast.Name,real_tokens =  token,id = token.string,ctx = ast.Load())
+	fake_name_node = create_fake(root,ast.Name,real_tokens =  token,id = token.string,ctx = ast.Load(),
+		parent = root,parent_field = "name")
 	set_fake(root,"name",fake_name_node)
 	# root.first_token=root.type.first_token
 	# root.last_token = token

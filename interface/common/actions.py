@@ -232,10 +232,11 @@ class PopUpErrorAction(InterfaceAction):
 	"""docstring for DisplayErrorAction"""
 	def __init__(self, text):
 		self.text = text
+
 	def execute(self,view,settings, sublime,**kwargs):
 		if not settings.get("show_error",False):
 			return 
-		final_text = "<p></p><h>Something is off!</h>" + "<p>" + html.escape(self.text) + "</p>"
+		final_text = "<p></p><h>Something is off!</h>" + "<p>" + html.escape(self.text,quote = False) + "</p>"
 		def on_hide():
 			view.show_popup(final_text,max_width=1024, max_height=10000, flags= sublime.HIDE_ON_MOUSE_MOVE_AWAY)
 		view.show_popup(final_text,max_width=1024, max_height=10000, 

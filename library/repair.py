@@ -18,6 +18,7 @@ def get_dummy(atok):
 
 def neighbors(atok,t):
 	x = next_token(atok,t)
+	x = x if x and x.type != 0 else None
 	y =  next_token(atok,x) if x else None
 	z = previous_token(atok,t)
 	w =  previous_token(atok,z) if z else None
@@ -92,7 +93,7 @@ def finish_atom(t):
 def before_star(t):
 	# of these does not check all cases
 	return t[-1] is None  or  not (
-		finish_atom(t[-1]) or t[-1].string in ["(","[","{",",","import","for"] or t[-1].type in [token.INDENT]
+		finish_atom(t[-1]) or t[-1].string in ["(","[","{",",","import","for","lambda"] or t[-1].type in [token.INDENT]
 	)
 
 
@@ -100,7 +101,7 @@ def after_star(t):
 	# of these does not check all cases
 	return 	t[1] is None  or not (
 		start_atom(t[1])   or	t[-1] is not None and (
-				(t[-1].string,t[1].string) in [('(',','),(',',","),(",",")")]  or 
+				# (t[-1].string,t[1].string) in [('(',','),(',',","),(",",")")]  or 
 				t[-1].string in ["import"]
 
 		)
@@ -123,7 +124,7 @@ def after_both_sides(t):
 	return t[1] is None or not(
 		start_atom(t[1]) or 
 		t[1].string in STARTING_UNARY or 
-		(t[1].string,t[2].string) in STARTING_UNARY
+		(t[2] is not None and (t[1].string,t[2].string) in STARTING_UNARY)
 	)
 
 def before_both_sides(t):
@@ -151,7 +152,7 @@ def after_unary(t):
 def after_comma(t):
 	return t[1] is None  or t[1].string ==","
 def before_comma(t):
-	return t[ -1] is None  or t[-1].string in ["(","[","{"]
+	return t[ -1] is None  or t[-1].string in ["(","[","{","lambda"]
 	
 def after_bracket(t):
 	return t[1] is None   or t[1].string in ["for","if","while","with"] or (
@@ -168,7 +169,13 @@ def after_double_dot(t):
 	return t[1] is None   or not( 
 		start_atom(t[1]) or 
 		t[1].string.isspace() or
-		t[1].string=="]"
+		t[1].string in [
+				"]","assert","raise"
+				"break","continue","pass",
+				"return","yield","await","del",
+				"global","nonlocal",
+				"import","from"
+			]
 		)
 
 def before_double_dot(t):
@@ -208,6 +215,7 @@ def after_else(t):
 		start_atom(t[1]) or t[1].string in [":"]
 	)
 '''
+
 def handle_empty_compound(atok ,t,l,b,dummy):
 	n = neighbors(atok, t)
 	left,right = expand_to_line_or_statement(atok,t, l, b)

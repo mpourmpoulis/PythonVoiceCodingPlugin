@@ -1,3 +1,4 @@
+import abc
 from copy import deepcopy
 
 from PythonVoiceCodingPlugin.library import get_source_region 
@@ -10,9 +11,12 @@ class SelectionQuery(Query):
 	multiple_in = False
 	initial_origin_force_update = False
 
+	@abc.abstractmethod
 	def handle_single(self,view_information,query_description,extra = {}):
 		pass
 
+
+	@abc.abstractmethod
 	def handle_multiple(self,view_information,query_description,extra = {}):
 		pass
 		
@@ -40,7 +44,6 @@ class SelectionQuery(Query):
 		if build  and  build[0]:
 			m = build[2]
 			atok = build[1]
-			print("\n\n",self,result,alternatives,build,individually)
 			if individually:
 				result = [m.backward(get_source_region(atok, x)) if x else None for x in result] 
 			else:

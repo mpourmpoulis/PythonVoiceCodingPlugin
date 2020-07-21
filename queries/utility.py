@@ -1,21 +1,21 @@
-import ast
-
 def reestablish_priority(initial,adjusted):
-	z = {initial[v]:v for v in initial}
-	w = {adjusted[v]:v for v in adjusted}
-	x = sorted(z.keys())
-	y = sorted(w.keys())
-	s = set(y)
-	if len(y)!=len(s):
-		return initial
-	output=adjusted
-	index = 1
-	for i in x:
-		if z[i] not in output:
-			while index in s:
-				index += 1
-			output[z[i]] = index
-			s.add(index)
+	output={}
+	to_be_removed = {k for k,v in adjusted.items() if v<0}
+	initial_order = sorted(initial.items(),key=lambda x:x[1])
+	adjusted_order = sorted(adjusted.items(),key=lambda x:x[1])
+	already_assigned_values = set(adjusted.values())
+	for k,v in adjusted_order:
+		output[k] =  v
+	for k,v in initial_order:
+		if k not in output:
+			while v in already_assigned_values:
+				v = v + 1
+			output[k] = v
+			already_assigned_values.add(v)
+
+	if len(set(adjusted.keys())-to_be_removed)!=len(set(adjusted.values()))-(1 if to_be_removed else 0):
+		raise Exception("you cannot assign the same priority for two strategies",adjusted)
+
 	return output
 	
 
@@ -29,20 +29,25 @@ class ResultAccumulator():
 		self.penalty = penalty
 		self.history = []
 
-	def push(self,node,priority):
+	def push(self,node,priority,penalty = 0):
 		self.history.append((node,priority))
-		# print(" pushing", priority )
-		# if not isinstance( node,ast.AST ) and not node is None:
-			# for x in node:
-				# print(ast.dump(x))
 		if not node:
 			return None
 		if node in self.penalized:
-			priority = priority + self.penalty
-		if priority not in self.accumulator:
+			priority = self.penalize(priority,self.penalty)
+		priority = self.penalize(priority,penalty)
+		if priority < 0:
+			return 
+		elif priority not in self.accumulator:
 			self.accumulator[priority] = [node]
 		else:
 			self.accumulator[priority].append(node)
+
+	def penalize(self,priority,penalty):
+		if priority<0:
+			return priority
+		else:
+			return priority+penalty
 
 	def get_result(self):
 		visited  = set()
