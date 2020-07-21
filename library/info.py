@@ -892,12 +892,11 @@ def get_raw(root):
 
 def correspond_to_index_in_call(root, index,field,field_index):
 	x = get_argument_from_call(root,index)
-	print("entering index taking \n",ast.dump(x))
 	if not x:
 		return False
 	if x.parent_field=="value":
 		x = x.parent
-	print("inside checking for index ",(x.parent_field,x.parent_field_index),(field,field_index))
+	# print("inside checking for index ",(x.parent_field,x.parent_field_index),(field,field_index))
 	return (field, field_index)==(x.parent_field,x.parent_field_index) if x else False
 
 
