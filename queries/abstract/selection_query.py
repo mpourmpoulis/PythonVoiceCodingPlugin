@@ -44,7 +44,6 @@ class SelectionQuery(Query):
 		if build  and  build[0]:
 			m = build[2]
 			atok = build[1]
-			print("\n\n",self,result,alternatives,build,individually)
 			if individually:
 				result = [m.backward(get_source_region(atok, x)) if x else None for x in result] 
 			else:
