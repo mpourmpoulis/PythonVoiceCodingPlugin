@@ -62,7 +62,7 @@ class SelectArgument(SelectionQuery):
 
 	def process_line(self,q, root ,atok, origin  = None, select_node = None,tiebreaker = lambda x: x, 
 					line = None, transformation = None,inverse_transformation = None, priority = {}, 
-					constrained_space = (), second_tiebreaker = None
+					constrained_space = (), second_tiebreaker = None,invert_then_tiebreak  = True
 		):
 		result = None
 		alternatives = None
@@ -131,7 +131,10 @@ class SelectArgument(SelectionQuery):
 			helpful = [result] if result else []
 			if alternatives:	 
 				helpful.extend(alternatives)
-			temporary = make_flat([tiebreaker(inverse_transformation(x))  for x in helpful])
+			if invert_then_tiebreak:
+				temporary = make_flat([tiebreaker(inverse_transformation(x))  for x in helpful])
+			else:
+				temporary = tiebreaker(make_flat([inverse_transformation(x)  for x in helpful]))
 			result, alternatives = obtain_result(None,temporary)
 		
 		################################################################
@@ -144,7 +147,7 @@ class SelectArgument(SelectionQuery):
 			temporary = [x[1]  for x in temporary]
 			result,alternatives = obtain_result(None,temporary)
 			
-		if second_tiebreaker:
+		if result and second_tiebreaker:
 			alternatives = second_tiebreaker(result,alternatives)
 
 		if self.global_constrained_space:
@@ -359,7 +362,7 @@ class SelectArgument(SelectionQuery):
 			tiebreaker = lambda x: tiebreak_on_lca(statement_node,origin,x,lca),
 			transformation = transformation,
 			inverse_transformation = inverse_transformation,
-
+			invert_then_tiebreak = False
 		)	
 		return self._backward_result(result, alternatives,build)
 
