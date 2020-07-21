@@ -1,9 +1,12 @@
 import ast
 
+from copy import deepcopy
+
+import PythonVoiceCodingPlugin.library.info as info
+
 from PythonVoiceCodingPlugin.library import sorted_by_source_region,get_source_region,make_flat
 from PythonVoiceCodingPlugin.library.selection_node import nearest_node_from_offset,node_from_range
 from PythonVoiceCodingPlugin.library.info import identity,get_argument_from_call,get_keyword_argument, make_information ,correspond_to_index_in_call,get_caller,get_sub_index,get_weak_header,get_argument_from_empty_call
-import PythonVoiceCodingPlugin.library.info as info
 from PythonVoiceCodingPlugin.library.LCA import LCA
 from PythonVoiceCodingPlugin.library.level_info import LevelVisitor
 from PythonVoiceCodingPlugin.library.partial import partially_parse, line_partial
@@ -99,7 +102,7 @@ class SelectArgument(SelectionQuery):
 		if "nth" not in q:
 			if origin  and calling_node:
 				result = calling_node if calling_node in information_nodes else None
-				information_nodes = [x  for x in tiebreaker(information_nodes) if x != calling_node]
+				information_nodes = [x  for x in tiebreaker(information_nodes) if x is not calling_node]
 			else:
 				result = None
 				information_nodes = [x for x in tiebreaker(information_nodes)]
@@ -352,9 +355,9 @@ class SelectArgument(SelectionQuery):
 
 
 
-
+		q = deepcopy(query_description); del q["nth"] 
 		result, alternatives = self.process_line(
-			q = query_description,
+			q = q,
 			root = statement_node,
 			atok = atok,
 			origin = origin,
