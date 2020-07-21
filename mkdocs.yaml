@@ -1,0 +1,25 @@
+extra_css:
+- https://assets.readthedocs.org/static/css/badge_only.css
+- https://assets.readthedocs.org/static/css/readthedocs-doc-embed.css
+extra_javascript:
+- readthedocs-data.js
+- https://assets.readthedocs.org/static/core/js/readthedocs-doc-embed.js
+- https://assets.readthedocs.org/static/javascript/readthedocs-analytics.js
+google_analytics: null
+site_name: PythonVoiceCodingPlugin
+site_author: mpourmpoulis
+site_url: https://pythonvoicecodingplugin.readthedocs.io
+docs_dir: doc
+repo_url: https://github.com/mpourmpoulis/PythonVoiceCodingPlugin
+edit_uri: tree/master/doc
+
+theme:
+    name: readthedocs
+
+nav:
+    - Home: README.md
+    - Argument queries: SelectArgument.md
+    - Big ROI queries: SelectBigROI.md
+    - SubIndexing: SubIndexing.md
+    - Operations: Operations.md
+    - Collections: CollectionQueries.md
