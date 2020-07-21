@@ -11,9 +11,9 @@ def nearest_node_from_offset(root,atok,offset,special=False):
     converter = atok._line_numbers 
     original_token = atok.get_token_from_offset(offset)
     token = original_token
-    while token.string.isspace() or not token.string:
+    while token and (not token.string or token.string.isspace()):
         token = previous_token(atok,token)
-    if converter.offset_to_line(offset)[0] != converter.offset_to_line(token.startpos)[0]:
+    if not token or converter.offset_to_line(offset)[0] != converter.offset_to_line(token.startpos)[0]:
         following = next_token(atok,original_token)
         while following  and following.string.isspace():
             token = following
