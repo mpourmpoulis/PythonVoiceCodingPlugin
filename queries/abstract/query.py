@@ -6,7 +6,8 @@ class Query():
 		self.code = code
 		self.general_build = latest_build
 		self.exceptions_raised = None
-		self.data_for_storage = {}
+		self.data_for_storage = {} # data to be stored in the application state
+		self.data_for_external = {} # data to be communicated via an external API,eg to clipboard
 		self.attempt_build()
 		
 
@@ -29,6 +30,10 @@ class Query():
 
 	def _register_for_storage(self,**kwargs):
 		self.data_for_storage.update(kwargs)
+
+	def _register_for_external(self,**kwargs):
+		self.data_for_external.update(kwargs)
+
 
 def no_build_attempt(cls):
 	cls.attempt_build = lambda x: None
