@@ -1,16 +1,14 @@
 # PythonVoiceCodingPlugin
 
 [![License](https://img.shields.io/badge/License-BSD%202--Clause-orange.svg)](https://opensource.org/licenses/BSD-2-Clause)
-[![](https://img.shields.io/badge/documentation-here-green)](https://pythonvoicecodingplugin.readthedocs.io/en/latest/)
-
+![](https://img.shields.io/github/v/release/mpourmpoulis/PythonVoiceCodingPlugin.svg)
 
 [![](https://img.shields.io/badge/Caster-v0_5_11|v0_6_14|v1_0_0-blue)](https://github.com/dictation-toolbox/Caster)
 [![](https://img.shields.io/badge/Aenea-supported-red)](https://github.com/dictation-toolbox/aenea)
 ![](https://img.shields.io/badge/Platform-Windows%7CLinux-yellow)
 
-
 [![](https://img.shields.io/gitter/room/mpourmpoulis/PythonVoiceCodingPlugin.svg)](https://gitter.im/PythonVoiceCodingPlugin/community)
-![](https://img.shields.io/github/v/release/mpourmpoulis/PythonVoiceCodingPlugin.svg)
+[![](https://img.shields.io/badge/documentation-readthedocs-green)](https://pythonvoicecodingplugin.readthedocs.io/en/latest/)
 
 PythonVoiceCodingPlugin is a Sublime Text 3 plugin meant to enhance user experience 
 when coding python 3 by voice. It ships with  an integrated [Caster](https://github.com/dictation-toolbox/Caster)  grammar bundle containing voice commands that provide you with syntactical navigation capabilities! The [documentation](https://pythonvoicecodingplugin.readthedocs.io/en/latest/) contains some 100+ examples showcasing those capabilities and for any further questions or help with troubleshooting, please let me know at my gitter [channel](https://gitter.im/PythonVoiceCodingPlugin/community)!
