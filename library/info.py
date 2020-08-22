@@ -832,10 +832,11 @@ def get_sub_index(root,index):
 
 	if index is None:
 		return candidates
-	elif index<len(candidates):
-		return candidates[index]
 	else:
-		return None
+		try : 
+			return candidates[index]
+		except IndexError:
+			return None
 
 
 
