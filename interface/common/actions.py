@@ -245,7 +245,17 @@ class PopUpErrorAction(InterfaceAction):
 # hello world
 #  style=\"background-color:#000080\"
 		
+class CopyAction(object):
+	"""docstring for CopyAction"""
+	def __init__(self, text):
+		self.text = text
 
+	def execute(self,view,sublime,**kw):
+		sublime.set_clipboard(self.text)
+		text_display = "<h>Clipboard set with:</h>" + "<p>" + html.escape(self.text,quote = False) + "</p>"
+		view.show_popup(text_display,max_width=1024, max_height=10000, 
+			flags= sublime.HIDE_ON_MOUSE_MOVE_AWAY)
+	
 
 
 
