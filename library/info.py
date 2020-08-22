@@ -473,10 +473,15 @@ def get_exception_handler(root,atok):
 
 def get_positional_argument(root,index = None):
 	temporary =  root.args if match_node(root,(ast.Call )) else None	
-	return (
-		(temporary[index] if index and len(temporary)>index else temporary) 
-			if  temporary else None
-	)
+	if temporary:
+		try : 
+			return temporary[index]
+		except (IndexError,TypeError): 
+			return temporary
+	# return (
+	# 	(temporary[index] if index and len(temporary)>index else temporary) 
+	# 		if  temporary else None
+	# )
 
 def get_keyword_argument(root,index = None,only_value = True,only_keyword = False):
 	temporary =  root.keywords if match_node(root,(ast.Call )) else None
@@ -484,10 +489,16 @@ def get_keyword_argument(root,index = None,only_value = True,only_keyword = Fals
 		temporary = [x.value  for x in temporary] if temporary else None
 	elif only_keyword:
 		temporary = [get_fake(x,"arg")  for x in temporary if generic_fix(x,None)] if temporary else None
-	return (
-		(temporary[index] if index is not None and len(temporary)>index else temporary) 
-			if  temporary else None
-	)
+	if temporary:
+		try : 
+			return temporary[index]
+		except (IndexError,TypeError): 
+			return temporary
+
+	# return (
+	# 	(temporary[index] if index is not None and len(temporary)>index else temporary) 
+	# 		if  temporary else None
+	# )
 
 def get_star_argument(root,index = None):
 	temporary =  root.starargs if match_node(root,(ast.Call )) else None
@@ -516,8 +527,11 @@ def get_argument_from_call(root, index):
 	temporary = make_flat([x  for x in temporary if x])
 	temporary = [x  for x in temporary if x]
 	temporary = sorted(temporary,key= lambda x:x.first_token.startpos)
-	# print(" I would regret face", temporary)
-	return temporary[index] if temporary and len(temporary)>index else None
+	try : 
+		return temporary[index]
+	except :
+		return None
+	# return temporary[index] if temporary and len(temporary)>index else None
 
 
 
