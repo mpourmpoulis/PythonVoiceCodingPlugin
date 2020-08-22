@@ -1,5 +1,7 @@
 def result_alternatives_sequence(state,location=False,text = False,level = False):
 	mode = state["mode"]
+
+	# extract text
 	result_text = state["result_text"]
 	alternatives_text = state["alternatives_text"]
 	if mode=="single":
@@ -11,6 +13,8 @@ def result_alternatives_sequence(state,location=False,text = False,level = False
 		if result_text and len(result_text)==1 and len(result_text[0])!=1:
 			result_text = [result_text]
 		candidates_text = [x+y for x,y in zip(result_text,alternatives_text)]
+
+	# extract location
 	result = state["result"]
 	alternatives = state["alternatives"]
 	if mode=="single":
@@ -22,6 +26,8 @@ def result_alternatives_sequence(state,location=False,text = False,level = False
 		if result and len(result)==1 and len(result[0])!=1:
 			result = [result]
 		candidates_location = [x+y for x,y in zip(result,alternatives)]
+
+	# decide what we should return
 	if location and text:
 		return list(zip(candidates_location,candidates_text))
 	if location:
