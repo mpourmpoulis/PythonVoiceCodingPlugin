@@ -47,6 +47,11 @@ class Application():
 		update_changes(self.state,locations_text)
 
 
+	def _push_external(self,query,interface):
+		clipboard = query.data_for_external.get("clipboard")
+		if clipboard:
+			interface.push_action(CopyAction(text=clipboard))
+
 	def respond_to_query(self,interface,query_description,secondary=False):
 		extra = {
 			"state":self.state,"global_state":Application.global_state,
@@ -174,6 +179,7 @@ class Application():
 		for name in ["result","origin", "initial_origin"]:
 			interface.push_action(HighlightCleverAction(self.state[name],name))				
 
+		self._push_external(s,interface)
 		# print("\nBefore exiting query:\n",self.state,"\n")	
 		if secondary_query_description  and should_execute_secondary:
 			interface.push_action(ClearHighlightAction("alternatives"))
