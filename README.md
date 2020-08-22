@@ -1,26 +1,15 @@
 # PythonVoiceCodingPlugin
 
 [![License](https://img.shields.io/badge/License-BSD%202--Clause-orange.svg)](https://opensource.org/licenses/BSD-2-Clause)
-
-<!-- ![](https://img.shields.io/static/v1?label=Version&message=0.1.0&color=green) -->
-
 [![](https://img.shields.io/badge/documentation-here-green)](https://pythonvoicecodingplugin.readthedocs.io/en/latest/)
 
-<!-- ![](https://img.shields.io/static/v1?label=Caster&message=0.5.11|0.6.11|1.0.0&color=blue) -->
 
 [![](https://img.shields.io/badge/Caster-v0_5_11|v0_6_14|v1_0_0-blue)](https://github.com/dictation-toolbox/Caster)
-
-<!-- ![](https://img.shields.io/static/v1?label=Aenea&message=supported&color=red) -->
-
 [![](https://img.shields.io/badge/Aenea-supported-red)](https://github.com/dictation-toolbox/aenea)
-
-<!-- ![](https://img.shields.io/static/v1?label=Platform&message=Windows|Linux&color=yellow) -->
-
 ![](https://img.shields.io/badge/Platform-Windows%7CLinux-yellow)
 
 
 [![](https://img.shields.io/gitter/room/mpourmpoulis/PythonVoiceCodingPlugin.svg)](https://gitter.im/PythonVoiceCodingPlugin/community)
-
 ![](https://img.shields.io/github/v/release/mpourmpoulis/PythonVoiceCodingPlugin.svg)
 
 PythonVoiceCodingPlugin is a Sublime Text 3 plugin meant to enhance user experience 
