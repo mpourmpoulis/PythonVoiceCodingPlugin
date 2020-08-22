@@ -30,21 +30,25 @@ class SelectArgument(SelectionQuery):
 
 	def get_information(self,query_description):
 		# print(self,query_description)
+		def decrement_positive(x):
+			return x-1 if x>0 else x
+
 		if "argument_index" in query_description:
 			if query_description["argument_index"]==0:
 				return make_information(get_argument_from_empty_call)
-			return make_information(get_argument_from_call,query_description["argument_index"]-1)
+			else:
+				return make_information(get_argument_from_call,decrement_positive(query_description["argument_index"]))
 		elif "keyword_index" in query_description:
-			return make_information(get_keyword_argument,query_description["keyword_index"]-1,only_keyword=True)
+			return make_information(get_keyword_argument,decrement_positive(query_description["keyword_index"]),only_keyword=True)
 		elif "keyword_value_index" in query_description:
-			return make_information(get_keyword_argument,query_description["keyword_value_index"]-1,only_value=True)
+			return make_information(get_keyword_argument,decrement_positive(query_description["keyword_value_index"]),only_value=True)
 		elif "entire_keyword_index" in query_description:
-			return make_information(get_keyword_argument,query_description["entire_keyword_index"]-1,only_keyword=False,only_value = False)
+			return make_information(get_keyword_argument,decrement_positive(query_description["entire_keyword_index"]),only_keyword=False,only_value = False)
 		elif "caller" in query_description:
 			if "sub_index" not in query_description:
 				return get_caller
 			else:
-				i = query_description["sub_index"] - 1
+				i = decrement_positive(query_description["sub_index"])
 				return lambda x:get_sub_index(get_caller(x),i)
 		else:
 			return identity(match_node,ast.Call)
