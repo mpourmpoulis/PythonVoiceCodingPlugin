@@ -48,8 +48,9 @@ class SelectBigRoi(SelectionQuery):
 			definition_node = search_upwards(origin,ast.FunctionDef)
 		definition_node  = ( 
 			definition_node 
-			if definition_node  and query_description["big_roi"] not in ["import statement","import module","import value","class name",
-							"base class","decorator"]
+			if definition_node  and query_description["big_roi"] not in 
+				["import statement","import module","import value","class name",
+							"base class","decorator","class"]
 			else root
 		)
 		return build, selection, origin, definition_node
@@ -86,11 +87,13 @@ class SelectBigRoi(SelectionQuery):
 			"expression statement":(ast.Expr,(),standard),
 			"iterable":((ast.For,ast.comprehension),(),get_iterable),
 			"iterator":((ast.For,ast.comprehension),(),get_iterator),
+			"function":((ast.FunctionDef,(),standard)),
 			"definition name":((ast.FunctionDef),(),get_definition_name),
 			"definition parameter": ((ast.FunctionDef,ast.arg),(),get_arg_from_definition),
 			"definition parameter list": (ast.arguments,(),standard),
 			 # "parameter annotation" : "parameter annotation",
             "default value": (ast.AST,(),identity(is_default_value)),
+			"class":((ast.ClassDef),(),standard),
 			"class name":((ast.ClassDef),(),get_class_name),
 			"import statement":((ast.Import,ast.ImportFrom),(),get_fixed_import),
 			"import module":((ast.Import,ast.ImportFrom),(),get_module),
