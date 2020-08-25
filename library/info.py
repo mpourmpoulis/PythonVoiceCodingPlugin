@@ -153,7 +153,9 @@ def is_base(root):
 def is_default_value(root):
 	return getattr(root,"parent_field","") in ["kw_defaults","defaults"] and root  is  not None
 
-
+def is_method(root):
+	if match_node(root,ast.FunctionDef) and match_parent(root,ast.ClassDef):
+		return root
 ################################################################################################
 ################################################################################################
 #
@@ -570,7 +572,10 @@ def get_definition_name(root,atok):
 		generic_fix(root,atok)	
 	assert already_fixed(root),"Definition has not been fixed"
 	return get_fake(root,"name")
-	
+
+
+
+
 def get_definition_parameter_name(root,atok):
 	if not match_node(root,ast.arg):
 		return None 	
@@ -812,6 +817,10 @@ def get_sub_index(root,index):
 			candidates = [root.type]
 	elif match_node(root,(ast.keyword)):
 		candidates = [get_fake(root,"arg"), root.value]
+	elif match_node(root,(ast.FunctionDef)):
+		candidates = root.body
+
+
 	
 	
 	# in the following cases we Certs deeper in the tree

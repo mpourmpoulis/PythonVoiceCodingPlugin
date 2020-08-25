@@ -88,6 +88,7 @@ class SelectBigRoi(SelectionQuery):
 			"iterable":((ast.For,ast.comprehension),(),get_iterable),
 			"iterator":((ast.For,ast.comprehension),(),get_iterator),
 			"function":((ast.FunctionDef,(),standard)),
+			"method":((ast.FunctionDef,(),identity(is_method))),
 			"definition name":((ast.FunctionDef),(),get_definition_name),
 			"definition parameter": ((ast.FunctionDef,ast.arg),(),get_arg_from_definition),
 			"definition parameter list": (ast.arguments,(),standard),
@@ -161,7 +162,8 @@ class SelectBigRoi(SelectionQuery):
 				return get_sub_index(data,index)
 
 			y  = lambda x: basic_information(x)
-			y.secondary  = lambda x: modified_information(x,basic_information,index-1)
+			i = index-1 if index > 0 else index
+			y.secondary  = lambda x: modified_information(x,basic_information,i)
 			return (temporary[0],temporary[1],y)
 		else:
 			return  possibilities[query_description["big_roi"]][:2] + (basic_information,)
