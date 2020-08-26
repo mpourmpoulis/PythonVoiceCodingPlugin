@@ -10,7 +10,11 @@
 [![](https://img.shields.io/gitter/room/mpourmpoulis/PythonVoiceCodingPlugin.svg)](https://gitter.im/PythonVoiceCodingPlugin/community)
 [![](https://img.shields.io/badge/documentation-readthedocs-green)](https://pythonvoicecodingplugin.readthedocs.io/en/latest/)
 
-***PythonVoiceCodingPlugin*** is a Sublime Text 3 plugin meant to provide ***syntactical navigation capabilities*** for Python coders that are ***programming by voice***,allowing them to syntactically describe  what they want to select/operate on with voice commands such as `delete right`, `copy argument 3`, `paste part 4` , `down 2 functions second if condition` .It consists of two parts
+***PythonVoiceCodingPlugin*** is a Sublime Text 3 plugin meant to provide ***syntactical navigation capabilities*** for Python coders that are ***programming by voice*** . Users can describe  what region they want to select/operate on with ***naturally sounding voice commands*** such as 
+
+`delete right`, `copy argument 3`, `paste part 4` , `down 2 functions second if condition`,`swap red with blue`
+
+It consists of ***two parts***
 
 - the core plug-in, running inside sublime  and parsing your code
 
@@ -18,7 +22,7 @@
 
 
 
-The [documentation](https://pythonvoicecodingplugin.readthedocs.io/en/latest/) contains some *100+ examples* showcasing those capabilities and for any further questions or help with troubleshooting, please let me know at my *gitter [channel](https://gitter.im/PythonVoiceCodingPlugin/community)*!
+The [documentation](https://pythonvoicecodingplugin.readthedocs.io/en/latest/) contains some ***100+ examples*** showcasing those capabilities and for any further questions or help with troubleshooting, please let me know at my ***gitter [channel](https://gitter.im/PythonVoiceCodingPlugin/community)***!
 
 
 In case you have never heard about voice programming before, you should definitely check out [Caster](https://caster.readthedocs.io/en/latest/), [dragonfly](https://dragonfly2.readthedocs.io/en/latest/introduction.html) and [Talon](https://talonvoice.com/).
