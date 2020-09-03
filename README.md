@@ -19,7 +19,7 @@ allowing for a ***faster,more convenient and productive*** voice coding experien
 
 ![](doc/gif/arg17.gif)
 
-Needless to say, while coding PythonVoiceCodingPlugin , PythonVoiceCodingPlugin was  and is being used :)
+Needless to say, while coding PythonVoiceCodingPlugin , ***PythonVoiceCodingPlugin was  and is being used*** :)
 
 
 ## Contents
