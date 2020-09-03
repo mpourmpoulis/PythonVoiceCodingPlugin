@@ -10,24 +10,11 @@
 [![](https://img.shields.io/gitter/room/mpourmpoulis/PythonVoiceCodingPlugin.svg)](https://gitter.im/PythonVoiceCodingPlugin/community)
 [![](https://img.shields.io/badge/documentation-readthedocs-green)](https://pythonvoicecodingplugin.readthedocs.io/en/latest/)
 
-***PythonVoiceCodingPlugin*** is a Sublime Text 3 plugin meant in conjunction with ***[Caster](https://github.com/dictation-toolbox/Caster) toolkit*** to provide ***syntactical navigation capabilities*** for Python coders that are ***programming by voice*** , focusing on those who use voice input ***by need due to RSI/disabilities*** but also targeting those who simply desire ***an enhancement to their workflow*** . Users can describe  what region they want to select/operate on with ***naturally sounding voice commands*** such as 
+***PythonVoiceCodingPlugin*** is a Sublime Text 3 plugin meant in combination with ***the [Caster](https://github.com/dictation-toolbox/Caster) toolkit*** to provide ***syntactical navigation capabilities*** for Python coders that are ***programming by voice*** , focusing on those who use voice input ***by need due to RSI/disabilities*** but also targeting those who simply desire ***an enhancement to their workflow*** . Users can describe  what region they want to select/operate on with ***naturally sounding voice commands*** such as 
 
 `delete right`, `copy argument 3`, `paste part 4` , `down 2 functions second if condition`,`swap red with blue`
 
-allowing for a ***foster,more convenient and high level*** experience. To achieve this, it consists of ***two parts***
-
-- the core plug-in, running inside sublime  and parsing your code
-
-- a grammar bundle for  , defining those voice commands
-
-
-
-The ***100+ examples [documentation](https://pythonvoicecodingplugin.readthedocs.io/en/latest/)*** can showcase those capabilities and for any further questions or help with troubleshooting, please let me know at my ***gitter [channel](https://gitter.im/PythonVoiceCodingPlugin/community)***!
-
-
-In case you have never heard about voice programming before, you should definitely check out [Caster](https://caster.readthedocs.io/en/latest/), [dragonfly](https://dragonfly2.readthedocs.io/en/latest/introduction.html) and [Talon](https://talonvoice.com/).
-
-CRITICAL UPDATE: My sincerest apologies but up to release 0.1.1 a subtle yet critical installation step was not documented, which may have prevented you from using the plug-in altogether! You can find more information [here](https://github.com/mpourmpoulis/PythonVoiceCodingPlugin/issues/15) but release 0.1.2 should make that installation step redundant for most users, so simply upgrading  and [replacing the grammar files](https://github.com/mpourmpoulis/PythonVoiceCodingPlugin/issues/14) should be enough without any further action on your part! Many thanks to LexiconCode for pointing this out!
+allowing for a ***faster,more convenient and productive*** voice coding experience. The ***[installation instructions](https://pythonvoicecodingplugin.readthedocs.io/en/latest/Installation/)***  and the ***100+ gifs with examples of the [documentation](https://pythonvoicecodingplugin.readthedocs.io/en/latest/)***  should help get you started and for any further questions,do not hesitate to reach out my ***gitter [channel](https://gitter.im/PythonVoiceCodingPlugin/community)***! With many thanks to @FichteFoll and @LexiconCode
 
 ![](doc/gif/big37.gif)
 
