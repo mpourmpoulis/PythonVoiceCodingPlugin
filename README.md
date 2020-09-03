@@ -1,38 +1,25 @@
 # PythonVoiceCodingPlugin
 
 [![License](https://img.shields.io/badge/License-BSD%202--Clause-orange.svg)](https://opensource.org/licenses/BSD-2-Clause)
-
-<!-- ![](https://img.shields.io/static/v1?label=Version&message=0.1.0&color=green) -->
-
-[![](https://img.shields.io/badge/documentation-here-green)](https://pythonvoicecodingplugin.readthedocs.io/en/latest/)
-
-<!-- ![](https://img.shields.io/static/v1?label=Caster&message=0.5.11|0.6.11|1.0.0&color=blue) -->
-
-[![](https://img.shields.io/badge/Caster-v0_5_11|v0_6_14|v1_0_0-blue)](https://github.com/dictation-toolbox/Caster)
-
-<!-- ![](https://img.shields.io/static/v1?label=Aenea&message=supported&color=red) -->
-
-[![](https://img.shields.io/badge/Aenea-supported-red)](https://github.com/dictation-toolbox/aenea)
-
-<!-- ![](https://img.shields.io/static/v1?label=Platform&message=Windows|Linux&color=yellow) -->
-
-![](https://img.shields.io/badge/Platform-Windows%7CLinux-yellow)
-
-
-[![](https://img.shields.io/gitter/room/mpourmpoulis/PythonVoiceCodingPlugin.svg)](https://gitter.im/PythonVoiceCodingPlugin/community)
-
 ![](https://img.shields.io/github/v/release/mpourmpoulis/PythonVoiceCodingPlugin.svg)
 
-PythonVoiceCodingPlugin is a Sublime Text 3 plugin meant to enhance user experience 
-when coding python 3 by voice. It ships with  an integrated [Caster](https://github.com/dictation-toolbox/Caster)  grammar bundle containing voice commands that provide you with syntactical navigation capabilities! The [documentation](https://pythonvoicecodingplugin.readthedocs.io/en/latest/) contains some 100+ examples showcasing those capabilities and for any further questions or help with troubleshooting, please let me know at my gitter [channel](https://gitter.im/PythonVoiceCodingPlugin/community)!
+[![](https://img.shields.io/badge/Caster-v0_5_11|v0_6_14|v1_0_0-blue)](https://github.com/dictation-toolbox/Caster)
+[![](https://img.shields.io/badge/Aenea-supported-red)](https://github.com/dictation-toolbox/aenea)
+![](https://img.shields.io/badge/Platform-Windows%7CLinux-yellow)
 
+[![](https://img.shields.io/gitter/room/mpourmpoulis/PythonVoiceCodingPlugin.svg)](https://gitter.im/PythonVoiceCodingPlugin/community)
+[![](https://img.shields.io/badge/documentation-readthedocs-green)](https://pythonvoicecodingplugin.readthedocs.io/en/latest/)
 
-In case you have never heard about voice programming before, you should definitely check out [Caster](https://caster.readthedocs.io/en/latest/), [dragonfly](https://dragonfly2.readthedocs.io/en/latest/introduction.html) and [Talon](https://talonvoice.com/).
-
-CRITICAL UPDATE: My sincerest apologies but up to release 0.1.1 a subtle yet critical installation step was not documented, which may have prevented you from using the plug-in altogether! You can find more information [here](https://github.com/mpourmpoulis/PythonVoiceCodingPlugin/issues/15) but release 0.1.2 should make that installation step redundant for most users, so simply upgrading  and [replacing the grammar files](https://github.com/mpourmpoulis/PythonVoiceCodingPlugin/issues/14) should be enough without any further action on your part! Many thanks to LexiconCode for pointing this out!
+***PythonVoiceCodingPlugin*** is a Sublime Text 3 plugin meant ***in combination with the [Caster](https://github.com/dictation-toolbox/Caster) toolkit*** to provide ***syntactical navigation capabilities*** for Python coders that are ***programming by voice*** , focusing on those who use voice input ***by need due to RSI/disabilities*** but also targeting those who simply desire ***an enhancement to their workflow*** . Users can describe  what region they want to select/operate on with structured yet ***naturally sounding voice commands*** 
 
 ![](doc/gif/big37.gif)
+<!-- `delete right`, `copy argument 3`, `paste part 4` , `down 2 functions second if condition`,`swap red with blue` -->
 
+allowing for a ***faster,more convenient and productive*** voice coding experience. The ***[installation instructions](https://pythonvoicecodingplugin.readthedocs.io/en/latest/Installation/)***  and the ***100+ gifs with examples of the [documentation](https://pythonvoicecodingplugin.readthedocs.io/en/latest/)***  should help get you started and for any further questions,do not hesitate to reach out my ***gitter [channel](https://gitter.im/PythonVoiceCodingPlugin/community)***! With many thanks to @FichteFoll and @LexiconCode
+
+![](doc/gif/arg17.gif)
+
+Needless to say, while coding PythonVoiceCodingPlugin , ***PythonVoiceCodingPlugin was  and is being used*** :)
 
 
 ## Contents
@@ -118,7 +105,6 @@ I want to be honest. This is not exactly the best code ever written. It is far f
 
 As I said, far (really far) from perfect but nonetheless an out-of-the-box solution which I hope to be helpful ,especially for beginners to get up to speed , and a step towards the right direction. I hope you enjoy using it as much as I have enjoyed coding it:)
 
-Needless to say, while coding PythonVoiceCodingPlugin , PythonVoiceCodingPlugin was used :)
 
 ## Release and Version 
 
