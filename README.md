@@ -10,7 +10,7 @@
 [![](https://img.shields.io/gitter/room/mpourmpoulis/PythonVoiceCodingPlugin.svg)](https://gitter.im/PythonVoiceCodingPlugin/community)
 [![](https://img.shields.io/badge/documentation-readthedocs-green)](https://pythonvoicecodingplugin.readthedocs.io/en/latest/)
 
-***PythonVoiceCodingPlugin*** is a Sublime Text 3 plugin meant in combination with ***the [Caster](https://github.com/dictation-toolbox/Caster) toolkit*** to provide ***syntactical navigation capabilities*** for Python coders that are ***programming by voice*** , focusing on those who use voice input ***by need due to RSI/disabilities*** but also targeting those who simply desire ***an enhancement to their workflow*** . Users can describe  what region they want to select/operate on with ***naturally sounding voice commands*** such as 
+***PythonVoiceCodingPlugin*** is a Sublime Text 3 plugin meant ***in combination with the [Caster](https://github.com/dictation-toolbox/Caster) toolkit*** to provide ***syntactical navigation capabilities*** for Python coders that are ***programming by voice*** , focusing on those who use voice input ***by need due to RSI/disabilities*** but also targeting those who simply desire ***an enhancement to their workflow*** . Users can describe  what region they want to select/operate on with structured yet ***naturally sounding voice commands*** 
 
 ![](doc/gif/big37.gif)
 <!-- `delete right`, `copy argument 3`, `paste part 4` , `down 2 functions second if condition`,`swap red with blue` -->
@@ -19,7 +19,7 @@ allowing for a ***faster,more convenient and productive*** voice coding experien
 
 ![](doc/gif/arg17.gif)
 
-
+Needless to say, while coding PythonVoiceCodingPlugin , PythonVoiceCodingPlugin was  and is being used :)
 
 
 ## Contents
@@ -105,7 +105,6 @@ I want to be honest. This is not exactly the best code ever written. It is far f
 
 As I said, far (really far) from perfect but nonetheless an out-of-the-box solution which I hope to be helpful ,especially for beginners to get up to speed , and a step towards the right direction. I hope you enjoy using it as much as I have enjoyed coding it:)
 
-Needless to say, while coding PythonVoiceCodingPlugin , PythonVoiceCodingPlugin was used :)
 
 ## Release and Version 
 
