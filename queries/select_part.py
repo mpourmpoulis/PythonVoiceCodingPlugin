@@ -32,8 +32,6 @@ class SelectPart(SelectionQuery):
 			pass
 		second_origin = origin
 		if "nth"  in query_description:
-			# print(" hello world  ")
-			# print(translate_adjective[query_description["nth"]])
 			second_origin = get_sub_index(origin,translate_adjective[query_description["nth"]]-1)
 
 		if query_description["format"]==1:
