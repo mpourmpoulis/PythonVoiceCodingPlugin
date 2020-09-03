@@ -12,11 +12,13 @@
 
 ***PythonVoiceCodingPlugin*** is a Sublime Text 3 plugin meant in combination with ***the [Caster](https://github.com/dictation-toolbox/Caster) toolkit*** to provide ***syntactical navigation capabilities*** for Python coders that are ***programming by voice*** , focusing on those who use voice input ***by need due to RSI/disabilities*** but also targeting those who simply desire ***an enhancement to their workflow*** . Users can describe  what region they want to select/operate on with ***naturally sounding voice commands*** such as 
 
-`delete right`, `copy argument 3`, `paste part 4` , `down 2 functions second if condition`,`swap red with blue`
+![](doc/gif/big37.gif)
+<!-- `delete right`, `copy argument 3`, `paste part 4` , `down 2 functions second if condition`,`swap red with blue` -->
 
 allowing for a ***faster,more convenient and productive*** voice coding experience. The ***[installation instructions](https://pythonvoicecodingplugin.readthedocs.io/en/latest/Installation/)***  and the ***100+ gifs with examples of the [documentation](https://pythonvoicecodingplugin.readthedocs.io/en/latest/)***  should help get you started and for any further questions,do not hesitate to reach out my ***gitter [channel](https://gitter.im/PythonVoiceCodingPlugin/community)***! With many thanks to @FichteFoll and @LexiconCode
 
-![](doc/gif/big37.gif)
+![](doc/gif/arg17.gif)
+
 
 
 
