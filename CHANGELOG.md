@@ -1,5 +1,22 @@
 # Changelog
 
+## [0.2.0]
+
+### User related
+
+
+#### Added
+
+- add copy action
+
+- add cut action
+
+### Code related
+
+## [0.1.3]
+
+Various stability issues resolved
+
 ## [0.1.2]
 
 ### Added
