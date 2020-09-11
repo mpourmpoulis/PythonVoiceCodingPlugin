@@ -17,6 +17,7 @@ from PythonVoiceCodingPlugin.queries.select_part import SelectPart
 from PythonVoiceCodingPlugin.queries.select_back import SelectBack
 from PythonVoiceCodingPlugin.queries.remember_here import RememberHere
 from PythonVoiceCodingPlugin.queries.copy_alternative import CopyAlternative
+from PythonVoiceCodingPlugin.queries.cut_alternative import CutAlternative
 
 
 
@@ -36,6 +37,7 @@ def get_query(query_description):
 		"argument": SelectArgument,
 		"alternative": SelectAlternative,
 		"copy_alternative": CopyAlternative,
+		"cut_alternative": CutAlternative,
 		"big_roi": SelectBigRoi,
 		"paste_back": PasteBack,
 
@@ -82,6 +84,7 @@ def get_secondary_query(query_description):
 				"color":0,
 			},
 			"copy":dict(command="copy_alternative",format=1,color=0),
+			"cut":dict(command="cut_alternative",format=1,color=0),
 		}
 		return h[query_description["operation"]]
 
