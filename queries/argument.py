@@ -209,7 +209,8 @@ class SelectArgument(SelectionQuery):
 		f = query_description["format"]
 		possibilities = {
 			1: self.case_one,2: self.case_two,3: self.case_three,
-			4: self.case_four,5:self.case_five,6:self.case_six
+			4: self.case_four,5:self.case_five,6:self.case_six,
+			7: self.case_seven,8: self.case_eight
 		}
 		return  possibilities[f](view_information,query_description, extra)
 
@@ -462,7 +463,23 @@ class SelectArgument(SelectionQuery):
 		self.external_constrained_space = selection
 		return self.case_one(view_information,query_description,new_extra)
 
+	def case_seven(self,view_information,query_description, extra = {}):
+		################################################################	
+		#		<color> [<adjective>] argument <argument_index> 
+		###############################################################	
+		selection = self.get_colorful(view_information,query_description,extra)
+		new_extra = extra.copy()
+		new_extra.update(dict(selection=selection))
+		self.external_constrained_space = selection
+		return self.case_four(view_information,query_description,new_extra)
 
 
-
-
+	def case_eight(self,view_information,query_description, extra = {}):
+		################################################################	
+		#		<color> [<adjective>] argument <argument_index> 
+		###############################################################	
+		selection = self.get_colorful(view_information,query_description,extra)
+		new_extra = extra.copy()
+		new_extra.update(dict(selection=selection))
+		self.external_constrained_space = selection
+		return self.case_three(view_information,query_description,new_extra)
