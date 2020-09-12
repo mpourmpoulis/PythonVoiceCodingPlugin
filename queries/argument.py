@@ -190,15 +190,20 @@ class SelectArgument(SelectionQuery):
 
 		if self.global_constrained_space or self.external_constrained_space:
 			inside = lambda x,y: (y[0]<=x[0]<y[1] and y[0]<x[1]<=y[1])
+			print("alternative",alternatives)
 			def valid_region(x):
 				r = get_source_region(atok,x)
-				return (
-					(not self.global_constrained_space or inside(r,self.global_constrained_space))
-					and
-					(not self.external_constrained_space or inside(r,self.external_constrained_space))
-				)
-			result = result if valid_region(result) else None
-			alternatives = [x  for x in alternatives if valid_region(x)]
+				try :
+					return (
+						(not self.global_constrained_space or inside(r,self.global_constrained_space))
+						and
+						(not self.external_constrained_space or inside(r,self.external_constrained_space))
+					)
+				except:
+					print(self.global_constrained_space,self.external_constrained_space,r,x)
+					raise
+			result = result if result and valid_region(result) else None
+			alternatives = alternatives and [x  for x in alternatives if valid_region(x)]
 			result,alternatives = obtain_result(result,alternatives)
 
 
@@ -511,13 +516,22 @@ class SelectArgument(SelectionQuery):
 			"decorator":((ast.AST),(),identity(is_decorator)),
 			"assignment":((ast.Assign,ast.AugAssign),(),standard),
 			"expression":(ast.Expr,(),standard),
-			"comprehension":(ast.comprehension,(),standard),
+			"comprehension":((ast.ListComp,ast.SetComp,ast.DictComp,ast.GeneratorExp),(),standard),
 		}[query_description["small_block"]]
 		selector = lambda x:match_node(x,targets,exclusions) and generic_fix(x,build[1])
 		candidates = tiebreak_on_lca(definition_node,origin,find_all_nodes(definition_node, selector = selector))
 		candidates = [information(x)  for x in candidates if information(x)]
-		result, alternatives = obtain_result(None, candidates)
+		# result, alternatives = obtain_result(None, candidates)
+		candidate_results = []
+		for c in candidates:
+			new_extra = extra.copy()
+			new_extra["selection"] = self.external_constrained_space = get_source_region(atok, c)
+			print(new_extra)
+			result,alternatives = self.case_one(view_information,query_description,new_extra)
+			if result:
+				candidate_results.extend([result])
+				candidate_results.extend(alternatives or [])
+				if len(candidate_results)>6:
+					break
 
-		new_extra = extra.copy()
-		new_extra["selection"] = self.external_constrained_space = get_source_region(atok, result)
-		return self.case_one(view_information,query_description,new_extra)
+		return obtain_result(None,candidate_results)
