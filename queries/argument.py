@@ -6,7 +6,11 @@ import PythonVoiceCodingPlugin.library.info as info
 
 from PythonVoiceCodingPlugin.library import sorted_by_source_region,get_source_region,make_flat
 from PythonVoiceCodingPlugin.library.selection_node import nearest_node_from_offset,node_from_range
-from PythonVoiceCodingPlugin.library.info import identity,get_argument_from_call,get_keyword_argument, make_information ,correspond_to_index_in_call,get_caller,get_sub_index,get_weak_header,get_argument_from_empty_call
+from PythonVoiceCodingPlugin.library.info import (
+	identity,get_argument_from_call,get_keyword_argument, make_information ,
+	correspond_to_index_in_call,get_caller,get_sub_index,get_weak_header,get_argument_from_empty_call,
+	get_return_value,generic_fix
+)
 from PythonVoiceCodingPlugin.library.LCA import LCA
 from PythonVoiceCodingPlugin.library.level_info import LevelVisitor
 from PythonVoiceCodingPlugin.library.partial import partially_parse, line_partial
@@ -210,7 +214,7 @@ class SelectArgument(SelectionQuery):
 		possibilities = {
 			1: self.case_one,2: self.case_two,3: self.case_three,
 			4: self.case_four,5:self.case_five,6:self.case_six,
-			7: self.case_seven,8: self.case_eight
+			7: self.case_seven,8: self.case_eight,9:self.case_nine,
 		}
 		return  possibilities[f](view_information,query_description, extra)
 
@@ -483,3 +487,28 @@ class SelectArgument(SelectionQuery):
 		new_extra.update(dict(selection=selection))
 		self.external_constrained_space = selection
 		return self.case_three(view_information,query_description,new_extra)
+
+	def case_nine(self,view_information,query_description, extra = {}):
+		selection = self._get_selection(view_information,extra)
+		build = self.general_build if self.general_build else line_partial(self.code,selection[0])
+		if not build  or not build[0] :
+			return None,None
+		root,atok,m,r  = build
+		
+		selection = m.forward(selection)
+		origin = nearest_node_from_offset(root,atok, selection[0]) if selection[0]==selection[1] else node_from_range(root,atok, selection)
+		statement_node = self.get_statement(origin,atok)
+
+
+		definition_node = search_upwards(origin,(ast.FunctionDef,ast.ClassDef,ast.Module)) 
+		targets, exclusions, information  =  {
+			"return": ((ast.Return,ast.Yield,ast.YieldFrom),(),get_return_value),
+		}[query_description["small_block"]]
+		selector = lambda x:match_node(x,targets,exclusions) and generic_fix(x,build[1])
+		candidates = tiebreak_on_lca(definition_node,origin,find_all_nodes(definition_node, selector = selector))
+		candidates = [information(x)  for x in candidates if information(x)]
+		result, alternatives = obtain_result(None, candidates)
+
+		new_extra = extra.copy()
+		new_extra["selection"] = self.external_constrained_space = get_source_region(atok, result)
+		return self.case_one(view_information,query_description,new_extra)
