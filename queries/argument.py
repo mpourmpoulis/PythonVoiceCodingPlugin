@@ -9,7 +9,8 @@ from PythonVoiceCodingPlugin.library.selection_node import nearest_node_from_off
 from PythonVoiceCodingPlugin.library.info import (
 	identity,get_argument_from_call,get_keyword_argument, make_information ,
 	correspond_to_index_in_call,get_caller,get_sub_index,get_weak_header,get_argument_from_empty_call,
-	get_return_value,generic_fix
+	get_return_value,generic_fix,get_pure_if_condition,get_elif_condition,get_condition,
+	is_decorator,
 )
 from PythonVoiceCodingPlugin.library.LCA import LCA
 from PythonVoiceCodingPlugin.library.level_info import LevelVisitor
@@ -501,8 +502,16 @@ class SelectArgument(SelectionQuery):
 
 
 		definition_node = search_upwards(origin,(ast.FunctionDef,ast.ClassDef,ast.Module)) 
+		standard = lambda x:x
 		targets, exclusions, information  =  {
 			"return": ((ast.Return,ast.Yield,ast.YieldFrom),(),get_return_value),
+			"if":(ast.If,(),get_pure_if_condition),
+			"else if":(ast.If,(),get_elif_condition),
+			"while":(ast.While,(),get_condition),
+			"decorator":((ast.AST),(),identity(is_decorator)),
+			"assignment":((ast.Assign,ast.AugAssign),(),standard),
+			"expression":(ast.Expr,(),standard),
+			"comprehension":(ast.comprehension,(),standard),
 		}[query_description["small_block"]]
 		selector = lambda x:match_node(x,targets,exclusions) and generic_fix(x,build[1])
 		candidates = tiebreak_on_lca(definition_node,origin,find_all_nodes(definition_node, selector = selector))
