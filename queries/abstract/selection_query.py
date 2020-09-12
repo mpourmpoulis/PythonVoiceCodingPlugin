@@ -67,9 +67,10 @@ class SelectionQuery(Query):
 					return None,None
 				self.result = []
 				self.alternatives = []
-				for s in selection:
+				for i,s in enumerate(selection):
 					temporary_extra = deepcopy(extra)
 					temporary_extra["selection"] = s
+					temporary_extra["index"] = i
 					r,a = self.handle_single(view_information,query_description,temporary_extra)
 					if not isinstance(r,list):
 						r =[r]

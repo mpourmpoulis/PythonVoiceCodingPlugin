@@ -11,7 +11,15 @@
 
 - add cut action
 
+- Support for using negative indices to pick up arguments from the end of the function call
+
+- Queries of the form `<color> argument 2`
+
 ### Code related
+
+#### Changed
+
+- The default implementation for handling selection queries that do not define handle_multiple, now sets in the extra dictionary not only "selection" but"index" as well
 
 ## [0.1.3]
 

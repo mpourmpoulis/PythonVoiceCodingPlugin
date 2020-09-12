@@ -10,13 +10,17 @@ from PythonVoiceCodingPlugin.library.info import identity,get_argument_from_call
 from PythonVoiceCodingPlugin.library.LCA import LCA
 from PythonVoiceCodingPlugin.library.level_info import LevelVisitor
 from PythonVoiceCodingPlugin.library.partial import partially_parse, line_partial
-from PythonVoiceCodingPlugin.library.traverse import search_upwards,search_upwards_log, find_matching,match_node, find_all_nodes,search_upwards_for_parent
+from PythonVoiceCodingPlugin.library.traverse import (
+	search_upwards,search_upwards_log, find_matching,match_node, find_all_nodes,search_upwards_for_parent
+)
 
 from PythonVoiceCodingPlugin.queries.abstract import SelectionQuery
 from PythonVoiceCodingPlugin.queries.tiebreak import tiebreak_on_lca,tiebreak_on_visual
-from PythonVoiceCodingPlugin.queries.strategies import adjective_strategy,decode_abstract_vertical,translate_adjective,obtain_result
+from PythonVoiceCodingPlugin.queries.strategies import (
+	adjective_strategy,decode_abstract_vertical,translate_adjective,obtain_result,
+	decode_item_selection,result_alternatives_sequence
+)
 
-# 
 # a lot of this code needs rewriting at some point
 # it is a mess indeed but it works, mostly :)
 #
@@ -175,7 +179,8 @@ class SelectArgument(SelectionQuery):
 	def handle_single(self,view_information,query_description,extra = {}):
 		f = query_description["format"]
 		possibilities = {
-			1: self.case_one,2: self.case_two,3: self.case_three,4: self.case_four,5:self.case_five,
+			1: self.case_one,2: self.case_two,3: self.case_three,
+			4: self.case_four,5:self.case_five,6:self.case_six
 		}
 		return  possibilities[f](view_information,query_description, extra)
 
@@ -409,4 +414,35 @@ class SelectArgument(SelectionQuery):
 		return self._backward_result(result, alternatives,build)
 
 	
+	def case_six(self,view_information,query_description, extra = {}):
+		################################################################	
+		#		<adjective> argument <argument_index> 
+		###############################################################	
+		state = extra["state"]
+		index = extra.get("index",0)
+		candidates = result_alternatives_sequence(state,location=True)
+		if state["mode"]=="single":
+			colorful_region = decode_item_selection(candidates,query_description,"individual","color",decrement=False)
+		else:
+			colorful_region = decode_item_selection(candidates[index],query_description,"individual","color",decrement=False)
+		selection = colorful_region[0]
 
+		build = self.general_build if self.general_build else line_partial(self.code,selection[0])
+		if not build  or not build[0] :
+			return None,None
+		root,atok,m,r  = build
+		selection = m.forward(selection)
+		
+		
+		origin = nearest_node_from_offset(root,atok, selection[0]) if selection[0]==selection[1] else node_from_range(root,atok, selection)
+		statement_node = self.get_statement(origin,atok)
+		result, alternatives = self.process_line(
+			q = query_description,
+			root = statement_node,
+			atok = atok,
+			origin = origin,
+			select_node = origin if selection[0]!=selection[1] else None,
+			tiebreaker = lambda x: tiebreak_on_lca(statement_node,origin,x),
+			constrained_space = selection
+		)
+		return self._backward_result(result, alternatives,build)
