@@ -32,6 +32,8 @@ from PythonVoiceCodingPlugin.queries.strategies import (
 class SelectArgument(SelectionQuery):
 	multiple_in = True
 
+	external_constrained_space = ()
+
 	def get_information(self,query_description):
 		# print(self,query_description)
 		def decrement_positive(x):
@@ -75,6 +77,26 @@ class SelectArgument(SelectionQuery):
 					line = None, transformation = None,inverse_transformation = None, priority = {}, 
 					constrained_space = (), second_tiebreaker = None,invert_then_tiebreak  = True
 		):
+		"""
+		
+		Args:
+		    q (dict): the query description
+		    root (ast.AST): root of the area to search
+		    atok (TYPE): Description
+		    origin (ast.AST , optional): origin of the query
+		    select_node (ast.AST , optional): the node that is currently selected
+		    tiebreaker (TYPE, optional): Description
+		    line (None, optional): Description
+		    transformation (None, optional): Description
+		    inverse_transformation (None, optional): Description
+		    priority (dict, optional): Description
+		    constrained_space (tuple, optional): Description
+		    second_tiebreaker (None, optional): Description
+		    invert_then_tiebreak (bool, optional): Description
+		
+		Returns:
+		    TYPE: Description
+		"""
 		result = None
 		alternatives = None
 		additional_parameters = {"priority":priority}
@@ -161,10 +183,17 @@ class SelectArgument(SelectionQuery):
 		if result and second_tiebreaker:
 			alternatives = second_tiebreaker(result,alternatives)
 
-		if self.global_constrained_space:
+		if self.global_constrained_space or self.external_constrained_space:
 			inside = lambda x,y: (y[0]<=x[0]<y[1] and y[0]<x[1]<=y[1])
-			result = result if inside(get_source_region(atok,result),self.global_constrained_space) else None
-			alternatives = [x  for x in alternatives if inside(get_source_region(atok,x),self.global_constrained_space)]
+			def valid_region(x):
+				r = get_source_region(atok,x)
+				return (
+					(not self.global_constrained_space or inside(r,self.global_constrained_space))
+					and
+					(not self.external_constrained_space or inside(r,self.external_constrained_space))
+				)
+			result = result if valid_region(result) else None
+			alternatives = [x  for x in alternatives if valid_region(x)]
 			result,alternatives = obtain_result(result,alternatives)
 
 
@@ -205,7 +234,7 @@ class SelectArgument(SelectionQuery):
 			atok = atok,
 			origin = origin,
 			select_node = origin if selection[0]!=selection[1] else None,
-			tiebreaker = lambda x: tiebreak_on_lca(statement_node,origin,x)
+			tiebreaker = lambda x: tiebreak_on_lca(statement_node,origin,x),
 		)
 		return self._backward_result(result, alternatives,build)
 
@@ -413,11 +442,7 @@ class SelectArgument(SelectionQuery):
 		)	
 		return self._backward_result(result, alternatives,build)
 
-	
-	def case_six(self,view_information,query_description, extra = {}):
-		################################################################	
-		#		<adjective> argument <argument_index> 
-		###############################################################	
+	def get_colorful(self,view_information,query_description, extra = {}):
 		state = extra["state"]
 		index = extra.get("index",0)
 		candidates = result_alternatives_sequence(state,location=True)
@@ -425,24 +450,19 @@ class SelectArgument(SelectionQuery):
 			colorful_region = decode_item_selection(candidates,query_description,"individual","color",decrement=False)
 		else:
 			colorful_region = decode_item_selection(candidates[index],query_description,"individual","color",decrement=False)
-		selection = colorful_region[0]
+		return colorful_region[0]
+		
+	def case_six(self,view_information,query_description, extra = {}):
+		################################################################	
+		#		<color> [<adjective>] argument <argument_index> 
+		###############################################################	
+		selection = self.get_colorful(view_information,query_description,extra)
+		new_extra = extra.copy()
+		new_extra.update(dict(selection=selection))
+		self.external_constrained_space = selection
+		return self.case_one(view_information,query_description,new_extra)
 
-		build = self.general_build if self.general_build else line_partial(self.code,selection[0])
-		if not build  or not build[0] :
-			return None,None
-		root,atok,m,r  = build
-		selection = m.forward(selection)
-		
-		
-		origin = nearest_node_from_offset(root,atok, selection[0]) if selection[0]==selection[1] else node_from_range(root,atok, selection)
-		statement_node = self.get_statement(origin,atok)
-		result, alternatives = self.process_line(
-			q = query_description,
-			root = statement_node,
-			atok = atok,
-			origin = origin,
-			select_node = origin if selection[0]!=selection[1] else None,
-			tiebreaker = lambda x: tiebreak_on_lca(statement_node,origin,x),
-			constrained_space = selection
-		)
-		return self._backward_result(result, alternatives,build)
+
+
+
+
