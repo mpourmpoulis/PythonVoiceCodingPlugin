@@ -19,12 +19,12 @@ This is a SelectionQuery that was originally designed to enable you to select an
 	- [Case four: Second Inside Variant](#case-four-second-inside-variant)
 	- [Case five: Outer Keyword](#case-five-outer-keyword)
 - [Selectable](#selectable)
-		- [Argument Zero](#argument-zero)
-		- [Caller / Calling Function](#caller--calling-function)
-		- [Keyword](#keyword)
-		- [Keyword Value](#keyword-value)
-		- [Entire Keyword](#entire-keyword)
-		- [Entire Call](#entire-call)
+	- [Argument Zero](#argument-zero)
+	- [Caller / Calling Function](#caller--calling-function)
+	- [Keyword](#keyword)
+	- [Keyword Value](#keyword-value)
+	- [Entire Keyword](#entire-keyword)
+	- [Entire Call](#entire-call)
 - [Notes for users of previous versions\(pre 0.1.0\)](#notes-for-users-of-previous-versionspre-010)
 	- [Nth vs adjective](#nth-vs-adjective)
 	- [Up,Down vs Below,Above](#updown-vs-belowabove)
@@ -284,7 +284,7 @@ As was previously mentioned, with release 0.1.0 this type of query seen an expan
 "(argument <argument_index>|keyword <keyword_index>|keyword value <keyword_value_index>|entire keyword <entire_keyword_index>|<caller> [<sub_index>]|entire call)"
 ```
 
-### Argument Zero 
+## Argument Zero 
 
 I believe that by now you probably already have guessed what `argument <argument_index>` does:) So no need to go through that again. 
 
@@ -301,7 +301,7 @@ and use that to perform this task.
 
 ![](./gif/arg22.gif)
 
-### Caller / Calling Function
+## Caller / Calling Function
 
 One important feature that was missing from older versions and the first  expansion I implemented is the ability to select the caller/calling function. This corresponds to 
 
@@ -322,7 +322,7 @@ as you might quickly notice , is followed by `<sub_index>` which is of course an
 
 ![](./gif/arg12.gif)
 
-### Keyword 
+## Keyword 
 
 So great, we have seen that we can select arguments whether passed positionally or by keyword. but in the latter case, there is also one important bit, namely the the name of the keyword parameter! using
 
@@ -335,7 +335,7 @@ we can select that as well!
 ![](./gif/arg13.gif)
 
 
-### Keyword Value
+## Keyword Value
 
 A natural continuation of selecting keyword names is to provide functionality for the values for keyword passed parameters. This is achievable via
 
@@ -347,7 +347,7 @@ A natural continuation of selecting keyword names is to provide functionality fo
 
 as you can see in the example , there is some overlap with  the vanilla `argument <argument_index>` but but it can still be time-saving/reducing cognitive load in many cases, instead of counting over the arguments up to the one you want, you are only counting those that are passed via keyword parameter.
 
-### Entire Keyword 
+## Entire Keyword 
 
 and given that you can pick up keyword names and values, it would be a shame if you could not select the whole thing:P
 
@@ -365,7 +365,7 @@ is your friend!
 
 ![](./gif/arg15.gif)
 
-### Entire Call 
+## Entire Call 
 
 Last but not least, if you want the entire function call 
 
