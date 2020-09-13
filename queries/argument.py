@@ -2,7 +2,7 @@ import ast
 
 from copy import deepcopy
 
-import PythonVoiceCodingPlugin.library.info as info
+
 
 from PythonVoiceCodingPlugin.library import sorted_by_source_region,get_source_region,make_flat
 from PythonVoiceCodingPlugin.library.selection_node import nearest_node_from_offset,node_from_range
@@ -65,7 +65,6 @@ class SelectArgument(SelectionQuery):
 			return identity(match_node,ast.Call)
 	
 	def get_statement(self,origin,atok):
-		# print("\norigin\n",ast.dump(origin))
 		self.global_constrained_space = None
 		candidate_statement = search_upwards(origin,ast.stmt)
 		big = (ast.If,ast.While,ast.For,ast.FunctionDef,ast.With,ast.ClassDef,ast.Try,ast.ExceptHandler)
