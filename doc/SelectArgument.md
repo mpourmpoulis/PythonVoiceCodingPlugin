@@ -11,26 +11,28 @@ This is a SelectionQuery that was originally designed to enable you to select an
 <!-- MarkdownTOC autolink="true"  -->
 
 - [Introduction](#introduction)
-	- [Quick note for 0.0.4 users](#quick-note-for-004-users)
-- [Case one](#case-one)
-- [Case two: Using Vertical](#case-two-using-vertical)
-	- [node for 0.0.4 users](#node-for-004-users)
-	- [handling edge cases](#handling-edge-cases)
-- [Case three: Inside](#case-three-inside)
-- [Case four: Second Inside Variant](#case-four-second-inside-variant)
-- [Case five: Outer Keyword](#case-five-outer-keyword)
+- [Positional descriptions](#positional-descriptions)
+	- [Case one](#case-one)
+	- [Case two: Using Vertical](#case-two-using-vertical)
+		- [handling edge cases](#handling-edge-cases)
+	- [Case three: Inside](#case-three-inside)
+	- [Case four: Second Inside Variant](#case-four-second-inside-variant)
+	- [Case five: Outer Keyword](#case-five-outer-keyword)
 - [Selectable](#selectable)
-	- [Argument Zero](#argument-zero)
-	- [Caller / Calling Function](#caller--calling-function)
-	- [Keyword](#keyword)
-	- [Keyword Value](#keyword-value)
-	- [Entire Keyword](#entire-keyword)
-	- [Entire Call](#entire-call)
+		- [Argument Zero](#argument-zero)
+		- [Caller / Calling Function](#caller--calling-function)
+		- [Keyword](#keyword)
+		- [Keyword Value](#keyword-value)
+		- [Entire Keyword](#entire-keyword)
+		- [Entire Call](#entire-call)
+- [Notes for users of previous versions\(pre 0.1.0\)](#notes-for-users-of-previous-versionspre-010)
+	- [Nth vs adjective](#nth-vs-adjective)
+	- [Up,Down vs Below,Above](#updown-vs-belowabove)
 
 <!-- /MarkdownTOC -->
 
 
-## Introduction
+# Introduction
 
 if you open up my bundles, you will see that the corresponding rules are:
 
@@ -84,9 +86,8 @@ What you should also keep in mind is that they in general search for results in 
 "<vertical_direction> [<ndir>]"
 ```
 
-### Quick note for 0.0.4 users
 
-"nth" corresponds to what used to be "adjective",but has been seen in order to be closer to what their grammars use for ordinal adjectives and make things easier for newcomers to understand.
+# Positional descriptions
 
 ## Case one 
 
@@ -203,9 +204,8 @@ so you can see that
 
 * The whole logical line is scanned for alternatives ! 
 
-###  node for 0.0.4 users
 
-In the past the keywords up and above used to have different semantics, but with 0.1.0 this has changed, we for keywords up/sauce having now the same meaning with above. This was done so us to make things more compatible with what users might be from other grammars, and either way,judging from the personal uses of my tool,up was used nowhere near as often as below/above.
+
 
 
 ### handling edge cases
@@ -380,9 +380,15 @@ will do the job for you:)
 
 
 
+# Notes for users of previous versions(pre 0.1.0)
+
+## Nth vs adjective 
+
+"nth" corresponds to what used to be "adjective",but has been seen in order to be closer to what their grammars use for ordinal adjectives and make things easier for newcomers to understand.
 
 
 
+## Up,Down vs Below,Above
 
 
-
+In the past the keywords up and above used to have different semantics, but with 0.1.0 this has changed, we for keywords up/sauce having now the same meaning with above. This was done so us to make things more compatible with what users might be from other grammars, and either way,judging from the personal uses of my tool,up was used nowhere near as often as below/above.
