@@ -133,8 +133,8 @@ def is_store(root):
 def single(root):
 	return match_parent(root,(),ast.Attribute)
 
-def name(root):
-	return match_node(root,ast.Name)
+def is_name(root,*text):
+	return match_node(root,ast.Name)  and bool(not text or any(x for x in text if root.id==x))
 
 def is_decorator(root):
 	return getattr(root,"parent_field","")=="decorator_list"
@@ -833,6 +833,12 @@ def get_sub_index(root,index):
 	if match_node(root,(ast.Lambda)):
 		return get_sub_index(root.body,index)
 	if match_node(root,(ast.Call)):
+		if is_name(root.func,"zip","product","zip_longest","chain","range"):
+			return get_argument_from_call(root,index)
+		if is_name(root.func,"enumerate","sorted","reversed","accumulate","combinations","permutations"):
+			return get_sub_index(get_argument_from_call(root,0),index)
+		if is_name(root.func,"filter","map","takewhile","dropwhile","filterfalse"):
+			return get_sub_index(get_argument_from_call(root,1),index)
 		return get_sub_index(root.func,index)
 	if match_node(root,(ast.ExceptHandler)):
 		if root.name is None:
