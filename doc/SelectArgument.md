@@ -2,7 +2,7 @@
 
 
 
-This is a SelectionQuery that was originally designed to enable you to select an argument from a function call,hence the name. With release 0.1.0, it has also been expanded so that you can pick up the calling function, below referred to as "caller", as well as the names of the keyword passed parameters.
+This is a SelectionQuery that was originally designed to enable you to select an argument from a function call,hence the name. With release 0.1.0 onwards, it has also been expanded so that you can pick up much more such as the calling function or pieces of it, the names/values of the keyword passed parameters or navigate to empty (with no arguments)function calls
 
 ![](./gif/arg17.gif)
 
@@ -23,13 +23,19 @@ This is a SelectionQuery that was originally designed to enable you to select an
 		- [Nth adjective after inside](#nth-adjective-after-inside)
 	- [Nested function calls: Outer Keyword](#nested-function-calls-outer-keyword)
 	- [Using the alternatives: A colorful approach](#using-the-alternatives-a-colorful-approach)
-	- [Describing function calls in interesting areas of other type: Small blocks](#describing-function-calls-in-interesting-areas-of-other-type-small-blocks)
+		- [Color And Inside](#color-and-inside)
+	- [Function calls in areas of other type: Small blocks](#function-calls-in-areas-of-other-type-small-blocks)
 - [Selectable](#selectable)
-	- [Argument Zero](#argument-zero)
+	- [Arguments Classic](#arguments-classic)
+		- [Argument Zero](#argument-zero)
+		- [Negative indices](#negative-indices)
 	- [Caller / Calling Function](#caller--calling-function)
-	- [Keyword](#keyword)
-	- [Keyword Value](#keyword-value)
-	- [Entire Keyword](#entire-keyword)
+		- [Empty Caller](#empty-caller)
+		- [Or pieces of it](#or-pieces-of-it)
+	- [Keyword  Arguments](#keyword-arguments)
+		- [Keyword Name Only](#keyword-name-only)
+		- [Keyword Value Only](#keyword-value-only)
+		- [Entire Keyword](#entire-keyword)
 	- [Entire Call](#entire-call)
 - [Notes for users of previous versions\(pre 0.1.0\)](#notes-for-users-of-previous-versionspre-010)
 	- [Nth vs adjective](#nth-vs-adjective)
@@ -293,7 +299,17 @@ furthermore, by making use of the nth adjective, you can pick up other function 
 
 As of version 0.2.0 it's also possible
 
-## Describing function calls in interesting areas of other type: Small blocks
+```python
+"<color> [<nth>] argument <argument_index>" 
+```
+
+### Color And Inside
+
+`color_argument_inside`
+
+
+
+## Function calls in areas of other type: Small blocks
 
 ```python
 "[<operation>] <small_block> [<nth>] " + ARGUMENT_LIKE_INFORMATION
@@ -309,7 +325,10 @@ As was previously mentioned, with release 0.1.0 this type of query seen an expan
 "(argument <argument_index>|keyword <keyword_index>|keyword value <keyword_value_index>|entire keyword <entire_keyword_index>|<caller> [<sub_index>]|entire call)"
 ```
 
-## Argument Zero 
+## Arguments Classic
+
+
+### Argument Zero 
 
 I believe that by now you probably already have guessed what `argument <argument_index>` does:) So no need to go through that again. 
 
@@ -325,6 +344,13 @@ IntegerRefST("argument_index", 0, 10),
 and use that to perform this task. 
 
 ![](./gif/arg22.gif)
+
+
+### Negative indices
+
+With release 0.2.0 you can also use negative indices to pick up arguments from the end in a pythonic style
+
+
 
 ## Caller / Calling Function
 
@@ -343,11 +369,17 @@ Choice("caller",{
         ),
 ```
 
+### Empty Caller
+
 as you might quickly notice , is followed by `<sub_index>` which is of course an integer like all indices and is also optional unlike all the other indices you see above. If you omitt it, vein the entire caller is selected, whereas by including it, you are able to sub index the calling function and to select only a small part of it.
+
+### Or pieces of it
 
 ![](./gif/arg12.gif)
 
-## Keyword 
+## Keyword  Arguments
+
+### Keyword Name Only
 
 So great, we have seen that we can select arguments whether passed positionally or by keyword. but in the latter case, there is also one important bit, namely the the name of the keyword parameter! using
 
@@ -360,7 +392,7 @@ we can select that as well!
 ![](./gif/arg13.gif)
 
 
-## Keyword Value
+### Keyword Value Only
 
 A natural continuation of selecting keyword names is to provide functionality for the values for keyword passed parameters. This is achievable via
 
@@ -372,7 +404,7 @@ A natural continuation of selecting keyword names is to provide functionality fo
 
 as you can see in the example , there is some overlap with  the vanilla `argument <argument_index>` but but it can still be time-saving/reducing cognitive load in many cases, instead of counting over the arguments up to the one you want, you are only counting those that are passed via keyword parameter.
 
-## Entire Keyword 
+### Entire Keyword 
 
 and given that you can pick up keyword names and values, it would be a shame if you could not select the whole thing:P
 
