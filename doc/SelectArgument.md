@@ -12,12 +12,18 @@ This is a SelectionQuery that was originally designed to enable you to select an
 
 - [Introduction](#introduction)
 - [Positional descriptions](#positional-descriptions)
-	- [Case one](#case-one)
-	- [Case two: Using Vertical](#case-two-using-vertical)
+	- [Searching the current logical line](#searching-the-current-logical-line)
+		- [No description at all](#no-description-at-all)
+		- [Nth Adjective](#nth-adjective)
+	- [Searching other lines with up and down: Vertical directions](#searching-other-lines-with-up-and-down-vertical-directions)
 		- [handling edge cases](#handling-edge-cases)
-	- [Case three: Inside](#case-three-inside)
-	- [Case four: Second Inside Variant](#case-four-second-inside-variant)
-	- [Case five: Outer Keyword](#case-five-outer-keyword)
+	- [Nested function calls: Inside keyword](#nested-function-calls-inside-keyword)
+		- [Inside basics](#inside-basics)
+		- [Nth adjective before inside](#nth-adjective-before-inside)
+		- [Nth adjective after inside](#nth-adjective-after-inside)
+	- [Nested function calls: Outer Keyword](#nested-function-calls-outer-keyword)
+	- [Using the alternatives: A colorful approach](#using-the-alternatives-a-colorful-approach)
+	- [Describing function calls in interesting areas of other type: Small blocks](#describing-function-calls-in-interesting-areas-of-other-type-small-blocks)
 - [Selectable](#selectable)
 	- [Argument Zero](#argument-zero)
 	- [Caller / Calling Function](#caller--calling-function)
@@ -89,7 +95,12 @@ What you should also keep in mind is that they in general search for results in 
 
 # Positional descriptions
 
-## Case one 
+Firstly we are going to go through all the available methods to describe the function call you are interested in.
+For simplicity, we will only be using `argument <argument_index>` instead of `ARGUMENT_LIKE_INFORMATION` for the time being!
+
+## Searching the current logical line 
+
+### No description at all
 
 The most simple command is 
 
@@ -120,6 +131,7 @@ To illustrate all of the above :
 
 ![](./gif/arg2.gif)
 
+### Nth Adjective
 
 But what if you want to have more control over what you select?  In that case you might need to use an nth/ordinal adjective as a positional descriptor as well. This is done by 
 
@@ -159,7 +171,7 @@ To deal with this issue without overloading you with too many rules to learn :),
 
 The way this works is a little bit complicated but I hope you get the main idea.
 
-## Case two: Using Vertical
+## Searching other lines with up and down: Vertical directions
  
 What if you want to select something in a different line? Then you can use :
 
@@ -222,11 +234,15 @@ Finally, even though the argument query was originally designed to operate on a 
 
 
 
-## Case three: Inside
+## Nested function calls: Inside keyword
 
 now let's see something different:
 
+### Inside basics
+
 ![](./gif/arg6.gif)
+
+### Nth adjective before inside
 
 in this example we use the command:
 
@@ -240,7 +256,7 @@ The level_index parameter specifies the index of the argument of the outer  func
 ![](./gif/arg7.gif)
 
 
-## Case four: Second Inside Variant
+### Nth adjective after inside
 
 This, looks very similar to the previous one. However, instead of using the nth adjective specify the outer function call, we use it to specify which one from the nested ones we want:
 
@@ -253,7 +269,7 @@ As you can see, the syntax looks like:
 ```
 
 
-## Case five: Outer Keyword
+## Nested function calls: Outer Keyword
 
 this final rule was added in version 0.1.0 even though and more minimal version of it was one of the first rules I experimented with when this project was still just a proof of concept. 
 
@@ -273,6 +289,15 @@ furthermore, by making use of the nth adjective, you can pick up other function 
 
 ![](./gif/arg20.gif)
 
+## Using the alternatives: A colorful approach
+
+As of version 0.2.0 it's also possible
+
+## Describing function calls in interesting areas of other type: Small blocks
+
+```python
+"[<operation>] <small_block> [<nth>] " + ARGUMENT_LIKE_INFORMATION
+```
 
 
 # Selectable
