@@ -11,6 +11,7 @@ This is a SelectionQuery that was originally designed to enable you to select an
 <!-- MarkdownTOC autolink="true"  -->
 
 - [Introduction](#introduction)
+	- [The general structure of commands](#the-general-structure-of-commands)
 - [Positional descriptions](#positional-descriptions)
 	- [Searching the current logical line](#searching-the-current-logical-line)
 		- [No description at all](#no-description-at-all)
@@ -40,11 +41,14 @@ This is a SelectionQuery that was originally designed to enable you to select an
 - [Notes for users of previous versions\(pre 0.1.0\)](#notes-for-users-of-previous-versionspre-010)
 	- [Nth vs adjective](#nth-vs-adjective)
 	- [Up,Down vs Below,Above](#updown-vs-belowabove)
+- [Full specification](#full-specification)
 
 <!-- /MarkdownTOC -->
 
 
 # Introduction
+
+## The general structure of commands
 
 if you open up my bundles, you will see that the corresponding rules are:
 
@@ -242,7 +246,7 @@ Finally, even though the argument query was originally designed to operate on a 
 
 ## Nested function calls: Inside keyword
 
-now let's see something different:
+Now let's see something different:
 
 ### Inside basics
 
@@ -297,11 +301,41 @@ furthermore, by making use of the nth adjective, you can pick up other function 
 
 ## Using the alternatives: A colorful approach
 
-As of version 0.2.0 it's also possible
+Consider the following example: 
+
+- you want to grab an argument from the function call but for some reason is impractical to describe it positionally with argument queries alone
+
+- You decide to use a query of another type ( for example a [BigROI](SelectBigROI.md) query) so that you can select a bigger region contains the function call with the intent 
+
+- Unfortunately, this bigger region does not end up as the main result of the query but is suggested as a color highlighted alternative instead
+
+How do you proceed? With what we have seen so far, to achieve this you need 2 steps
+
+- select the corresponding alternative, with something like `smart red`
+
+- then use a classical argument query
+
+for a total of 3 commands, which is kind of wasteful. To address this issue release 0.2.0 introduced the ability to specify that ***you are interested in an argument that lies inside one of those alternatives*** via commands of the form
 
 ```python
 "<color> [<nth>] argument <argument_index>" 
 ```
+
+where color describes the alternative you want and can take one of the following values
+
+```python
+"blue"
+"red"
+"green"
+"yellow"
+"orange"
+```
+
+![](./gif/arg23.gif)
+
+(Technically you can also use `"main"` as a color to specify you want something from the main result, but for the time being ignore this)
+
+
 
 ### Color And Inside
 
@@ -444,3 +478,28 @@ will do the job for you:)
 
 In the past the keywords up and above used to have different semantics, but with 0.1.0 this has changed, we for keywords up/sauce having now the same meaning with above. This was done so us to make things more compatible with what users might be from other grammars, and either way,judging from the personal uses of my tool,up was used nowhere near as often as below/above.
 
+
+# Full specification
+
+```python
+{
+	"[(smart|<operation>)] [<nth>] " + ARGUMENT_LIKE_INFORMATION:
+	    lazy_value("argument",1),
+	"[(smart|<operation>)] (this|<vertical_direction> [<ndir>]) [<nth>] " + ARGUMENT_LIKE_INFORMATION:
+	    lazy_value("argument",2),
+	"[(smart|<operation>)] [<nth>] inside [<level_index>] " + ARGUMENT_LIKE_INFORMATION: 
+	    lazy_value("argument",3),
+	"[(smart|<operation>)] inside [<level_index>] <nth> " + ARGUMENT_LIKE_INFORMATION: 
+	    lazy_value("argument",4),
+	"[(smart|<operation>)] outer [<level_index>] [<nth>] " + ARGUMENT_LIKE_INFORMATION: 
+	    lazy_value("argument",5),
+	"[<operation>] <color> [<nth>] " + ARGUMENT_LIKE_INFORMATION: 
+	    lazy_value("argument",6),
+	configuration["color_argument_inside"] and "[<operation>] <color> inside [<level_index>] <nth> " + ARGUMENT_LIKE_INFORMATION: 
+	    lazy_value("argument",7),
+	configuration["color_argument_inside"] and "[<operation>] <color> [<nth>] inside [<level_index>] " + ARGUMENT_LIKE_INFORMATION: 
+	    lazy_value("argument",8),
+	"[<operation>] <small_block> [<nth>] " + ARGUMENT_LIKE_INFORMATION: 
+	    lazy_value("argument",9),
+}
+```
