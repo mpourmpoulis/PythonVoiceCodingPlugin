@@ -406,13 +406,7 @@ as you can see in the example , there is some overlap with  the vanilla `argumen
 
 ### Entire Keyword 
 
-and given that you can pick up keyword names and values, it would be a shame if you could not select the whole thing:P
-
-```python
-"keyword name = keyword value"
-```
-
-As for purposes such as say deletion you often need both the keyword name and the value. in such cases
+Finally, given that you can pick up keyword names and values separately, it would be a shame if you could not select the whole thing, that is both the keyword name and the keyword value. For such occasions
 
 ```python
 "entire keyword <entire_keyword_index>"
@@ -449,3 +443,4 @@ will do the job for you:)
 
 
 In the past the keywords up and above used to have different semantics, but with 0.1.0 this has changed, we for keywords up/sauce having now the same meaning with above. This was done so us to make things more compatible with what users might be from other grammars, and either way,judging from the personal uses of my tool,up was used nowhere near as often as below/above.
+
