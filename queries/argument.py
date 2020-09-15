@@ -10,7 +10,7 @@ from PythonVoiceCodingPlugin.library.info import (
 	identity,get_argument_from_call,get_keyword_argument, make_information ,
 	correspond_to_index_in_call,get_caller,get_sub_index,get_weak_header,get_argument_from_empty_call,
 	get_return_value,generic_fix,get_pure_if_condition,get_elif_condition,get_condition,
-	is_decorator,
+	is_decorator,get_with_items,get_body,get_arithmetic,get_boolean,get_iterable
 )
 from PythonVoiceCodingPlugin.library.LCA import LCA
 from PythonVoiceCodingPlugin.library.level_info import LevelVisitor
@@ -516,6 +516,16 @@ class SelectArgument(SelectionQuery):
 			"assignment":((ast.Assign,ast.AugAssign),(),standard),
 			"expression":(ast.Expr,(),standard),
 			"comprehension":((ast.ListComp,ast.SetComp,ast.DictComp,ast.GeneratorExp),(),standard),
+			"assert":(ast.Assert,(),standard),
+			"with":(ast.With,(),get_with_items),
+			"lambda":((ast.Lambda),(),get_body),
+			"if expression":(ast.IfExp,(),standard),
+			"comparison":((ast.Compare),(),standard),
+			"arithmetic":((ast.BinOp),(),get_arithmetic),
+			"boolean":((ast.BoolOp),(),get_boolean),
+			"iterable":((ast.For,ast.comprehension),(),get_iterable),
+
+			# lambda,with,comprehension if,indexed,raise,assert,dictionary,iterable,initialization,if expression
 		}[query_description["small_block"]]
 		selector = lambda x:match_node(x,targets,exclusions) and generic_fix(x,build[1])
 		candidates = tiebreak_on_lca(definition_node,origin,find_all_nodes(definition_node, selector = selector))
@@ -534,3 +544,14 @@ class SelectArgument(SelectionQuery):
 					break
 
 		return obtain_result(None,candidate_results)
+
+
+
+
+
+
+
+
+
+
+	
