@@ -11,6 +11,7 @@ This is a SelectionQuery that was originally designed to enable you to select an
 <!-- MarkdownTOC autolink="true"  -->
 
 - [Introduction](#introduction)
+	- [Examples](#examples)
 	- [The general structure of commands](#the-general-structure-of-commands)
 - [Positional descriptions](#positional-descriptions)
 	- [Searching the current logical line](#searching-the-current-logical-line)
@@ -47,6 +48,45 @@ This is a SelectionQuery that was originally designed to enable you to select an
 
 
 # Introduction
+
+## Examples
+
+Operation|Positional Description|Selectable
+----------|----------|------
+ | | argument 1 # this selects the first argument from the nearest function call
+ |second |argument 1 # this selects the first argument from the second function call
+cut | second | argument 1
+
+delete second caller
+delete second caller 2 # this is different from the above:)
+down 2 empty caller
+paste down 2 empty caller
+
+
+down last entire call
+down 2 last entire call
+
+copy return second argument 4
+copy if first argument 4 
+copy while first argument 4 
+copy down comparison first argument 4 
+
+swap keyword name 2
+
+up keyword value 1
+up 1 keyword value 1 # these are equivalent
+
+delete second argument -1 # delete the last argument from the second function call
+
+outer argument 4
+outer second argument 4
+
+inside second caller 5
+inside 1 second caller 5
+
+blue third keyword name 1
+red inside second argument 2
+
 
 ## The general structure of commands
 
