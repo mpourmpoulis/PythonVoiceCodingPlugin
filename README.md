@@ -10,6 +10,8 @@
 [![](https://img.shields.io/gitter/room/mpourmpoulis/PythonVoiceCodingPlugin.svg)](https://gitter.im/PythonVoiceCodingPlugin/community)
 [![](https://img.shields.io/badge/documentation-readthedocs-green)](https://pythonvoicecodingplugin.readthedocs.io/en/latest/)
 
+**WARNING** : This repository will soon be deprecated as the project has been rewritten in order to support more editors Via the language Server protocol  and more programming by voice frameworks. I expect a public release in October. Development will continue under the [PythonVoiceCodingPlugin organization](https://github.com/PythonVoiceCodingPlugin)
+
 ***PythonVoiceCodingPlugin*** is a Sublime Text 3 plugin meant ***in combination with the [Caster](https://github.com/dictation-toolbox/Caster) toolkit*** to provide ***syntactical navigation capabilities*** for Python coders that are ***programming by voice*** , focusing on those who use voice input ***by need due to RSI/disabilities*** but also targeting those who simply desire ***an enhancement to their workflow*** . Users can describe  what region they want to select/operate on with structured yet ***naturally sounding voice commands*** 
 
 ![](doc/gif/big37.gif)
